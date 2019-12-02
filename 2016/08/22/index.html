@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  
+    <meta name="keywords" content="JavaScript,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>JavaScript数据类型转换 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<meta name="referrer" content="no-referrer" />
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        JavaScript数据类型转换
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-08-22T01:15:06.000Z">
+        2016-08-22
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      阅读 <span id="busuanzi_value_page_pv"></span>
+    </span>
+    </header>
+
+    <div class="post-content">
+      <p>JavaScript是一种动态类型语言，变量没有类型限制，可以随时赋予任意值。虽然变量没有类型，但是数据本身和各种运算符是有类型的。如果运算符发现，数据的类型与预期不符，就会自动转换类型。比如，减法运算符预期两侧的运算子应该是数值，如果不是，就会自动将它们转为数值。<br><a id="more"></a></p>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>强制转换主要指使用<code>Number</code>、<code>String</code>和<code>Boolean</code>三个构造函数，手动将各种类型的值，转换成数字、字符串或者布尔值。</p>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number()"></a>Number()</h3><p>原始类型的值主要是字符串、布尔值、undefined和null，它们都能被Number转成数值或NaN。</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 数值：转换后还是原来的值</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token number">324</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 324</span>
+
+<span class="token comment" spellcheck="true">// 字符串：如果可以被解析为数值，则转换为相应的数值</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'324'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 324</span>
+
+<span class="token comment" spellcheck="true">// 字符串：如果不可以被解析为数值，返回NaN</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'324abc'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+
+<span class="token comment" spellcheck="true">// 空字符串转为0</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 0</span>
+
+<span class="token comment" spellcheck="true">// 布尔值：true 转成1，false 转成0</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 1</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 0</span>
+
+<span class="token comment" spellcheck="true">// undefined：转成 NaN</span>
+<span class="token function">Number</span><span class="token punctuation">(</span>undefined<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+
+<span class="token comment" spellcheck="true">// null：转成0</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 0</span>
+</code></pre>
+<p>Number函数将字符串转为数值，要比parseInt函数严格很多。基本上，只要有一个字符无法转成数值，整个字符串就会被转为NaN。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">'42 cats'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 42</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'42 cats'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+<span class="token comment" spellcheck="true">//上面代码中，parseInt逐个解析字符，而Number函数整体转换字符串的类型。</span>
+
+<span class="token comment" spellcheck="true">//另外，Number函数会自动过滤一个字符串前导和后缀的空格。</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'\t\v\r12.34\n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 12.34</span>
+</code></pre>
+<p>简单的规则是，Number方法的参数是对象时，将返回NaN。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">{</span>a<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+</code></pre>
+<h3 id="String"><a href="#String" class="headerlink" title="String()"></a>String()</h3><p>使用String函数，可以将任意类型的值转化成字符串。</p>
+<ul>
+<li>数值：转为相应的字符串。</li>
+<li>字符串：转换后还是原来的值。</li>
+<li>布尔值：true转为”true”，false转为”false”。</li>
+<li>undefined：转为”undefined”。</li>
+<li>null：转为”null”。<pre class=" language-js"><code class="language-js"><span class="token function">String</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "123"</span>
+<span class="token function">String</span><span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "abc"</span>
+<span class="token function">String</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "true"</span>
+<span class="token function">String</span><span class="token punctuation">(</span>undefined<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "undefined"</span>
+<span class="token function">String</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "null"</span>
+</code></pre>
+</li>
+</ul>
+<p>String方法的参数如果是对象，返回一个类型字符串；如果是数组，返回该数组的字符串形式。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">{</span>a<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "[object Object]"</span>
+<span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "1,2,3"</span>
+</code></pre>
+<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean()"></a>Boolean()</h3><p>使用Boolean函数，可以将任意类型的变量转为布尔值。</p>
+<blockquote>
+<p>它的转换规则相对简单：除了以下六个值的转换结果为false，其他的值全部为true。</p>
+</blockquote>
+<ul>
+<li>undefined</li>
+<li>null</li>
+<li>-0</li>
+<li>0或+0</li>
+<li>NaN</li>
+<li>‘’（空字符串）</li>
+</ul>
+<pre class=" language-js"><code class="language-js"><span class="token function">Boolean</span><span class="token punctuation">(</span>undefined<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token number">NaN</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+</code></pre>
+<p>注意，所有对象（包括空对象）的转换结果都是true，甚至连false对应的布尔对象new Boolean(false)也是true。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Boolean</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h2 id="自动转换"><a href="#自动转换" class="headerlink" title="自动转换"></a>自动转换</h2><p>遇到以下三种情况时，JavaScript会自动转换数据类型，即转换是自动完成的，对用户不可见。</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 1. 不同类型的数据互相运算</span>
+<span class="token number">123</span> <span class="token operator">+</span> <span class="token string">'abc'</span> <span class="token comment" spellcheck="true">// "123abc"</span>
+
+<span class="token comment" spellcheck="true">// 2. 对非布尔值类型的数据求布尔值</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'hello'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">// "hello"</span>
+
+<span class="token comment" spellcheck="true">// 3. 对非数值类型的数据使用一元运算符（即“+”和“-”）</span>
+<span class="token operator">+</span> <span class="token punctuation">{</span>foo<span class="token punctuation">:</span> <span class="token string">'bar'</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// NaN</span>
+<span class="token operator">-</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">// NaN</span>
+</code></pre>
+<h3 id="自动转换为布尔值"><a href="#自动转换为布尔值" class="headerlink" title="自动转换为布尔值"></a>自动转换为布尔值</h3><p>当JavaScript遇到预期为布尔值的地方（比如if语句的条件部分），就会将非布尔值的参数自动转换为布尔值。系统内部会自动调用Boolean函数。因此除了以上六个值，其他都是自动转为true。</p>
+<h3 id="自动转换为字符串"><a href="#自动转换为字符串" class="headerlink" title="自动转换为字符串"></a>自动转换为字符串</h3><p>当JavaScript遇到预期为字符串的地方，就会将非字符串的数据自动转为字符串。系统内部会自动调用String函数。字符串的自动转换，主要发生在加法运算时。当一个值为字符串，另一个值为非字符串，则后者转为字符串。</p>
+<h3 id="自动转换为数值"><a href="#自动转换为数值" class="headerlink" title="自动转换为数值"></a>自动转换为数值</h3><p>当JavaScript遇到预期为数值的地方，就会将参数值自动转换为数值。系统内部会自动调用Number函数。除了加法运算符有可能把运算子转为字符串，其他运算符都会把运算子自动转成数值。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://javascript.ruanyifeng.com/grammar/conversion.html" target="_blank" rel="noopener">数据类型转换</a></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#强制类型转换"><span class="toc-text">强制类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Number"><span class="toc-text">Number()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String"><span class="toc-text">String()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean"><span class="toc-text">Boolean()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动转换"><span class="toc-text">自动转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自动转换为布尔值"><span class="toc-text">自动转换为布尔值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动转换为字符串"><span class="toc-text">自动转换为字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动转换为数值"><span class="toc-text">自动转换为数值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/08/22">http://lion1ou.win/2016/08/22</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/08/21/" rel="next" title="JavaScript之立即执行函数(IIFE)">
+          JavaScript之立即执行函数(IIFE)
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/09/12/" rel="prev" title="webpack入门指南">
+            webpack入门指南
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+        <span id="busuanzi_container_site_uv">
+            本站访客数<span id="busuanzi_value_site_uv"></span>人次
+          </span>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

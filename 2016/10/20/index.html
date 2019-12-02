@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  
+    <meta name="keywords" content="NodeJs,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>NodeJs之Express与MongoDB交互 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<meta name="referrer" content="no-referrer" />
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        NodeJs之Express与MongoDB交互
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-10-20T03:20:08.000Z">
+        2016-10-20
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/">NodeJs</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      阅读 <span id="busuanzi_value_page_pv"></span>
+    </span>
+    </header>
+
+    <div class="post-content">
+      <p>mongoose是一款基于nodejs的优雅数据构建mongodb模型工具。mongodb是一款新型的json（键值对）数据类型的数据存储格式的数据库。在目前来说，使用nodejs和mongodb是为中小型企业以及个人web开发的绝配。<br><a id="more"></a></p>
+<h2 id="一、安装MongoDB"><a href="#一、安装MongoDB" class="headerlink" title="一、安装MongoDB"></a>一、安装MongoDB</h2><h3 id="1-1-Mac"><a href="#1-1-Mac" class="headerlink" title="1.1 Mac"></a>1.1 Mac</h3><h4 id="1-1-1-安装"><a href="#1-1-1-安装" class="headerlink" title="1.1.1 安装"></a>1.1.1 安装</h4><p>在终端根目录下输入</p>
+<pre class=" language-shell"><code class="language-shell"> brew install mongodb
+</code></pre>
+<p><img src="http://ww4.sinaimg.cn/large/006y8mN6gw1f8wemi1pm0j30fv06440f.jpg" alt></p>
+<p>出现上面情况说明安装成功，安装的目录就是 <code>/usr/local/Cellar/mongodb/3.2.10</code>。</p>
+<h4 id="1-1-2-配置"><a href="#1-1-2-配置" class="headerlink" title="1.1.2 配置"></a>1.1.2 配置</h4><p>第一次启动服务端,这里需要做一些准备工作.</p>
+<ul>
+<li>默认mongodb 数据文件是放到根目录 data/db 文件夹下,如果没有这个文件,请自行创建.</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">mkdir -p /data/db
+</code></pre>
+<ul>
+<li>如果你当前的环境变量还没有加入 mongod  ,手动添加的环境变量中.</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">nano ~/.bash_profile
+
+//添加mongodb安装目录到环境变量中
+export PATH=/usr/local/Cellar/mongodb/3.2.10/bin:${PATH}
+//然后覆盖保存
+</code></pre>
+<ul>
+<li>如果让环境变量马上生效? 执行下面的shell</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">source ~/.bash_profile
+</code></pre>
+<ul>
+<li>修改mongodb配置文件,配置文件默认在 /usr/local/etc 下的 mongod.conf</li>
+</ul>
+<blockquote>
+<p>由于Mac默认不显示隐藏文件，所以直接找文件夹是找不到的。要使用下面命令显示隐藏文件</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder//显示
+
+defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder//隐藏
+</code></pre>
+<blockquote>
+<p>配置文件修改后</p>
+</blockquote>
+<pre><code>systemLog:
+  destination: file
+  path: /usr/local/var/log/mongodb/mongo.log
+  logAppend: true
+storage:
+  dbPath: data/db
+net:
+  bindIp: 127.0.0.1
+</code></pre><blockquote>
+<p>修改<code>dbPath</code>为我们刚刚创建的文件夹<code>data/db</code>,如果准备连接非本地环境的mongodb数据库时,bind_ip = 0.0.0.0 即可.</p>
+</blockquote>
+<ul>
+<li>给 /data/db 文件夹赋权限</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">sudo chown `id -u` /data/db
+</code></pre>
+<ul>
+<li>启动mongoDB</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">mongod
+</code></pre>
+<p><img src="http://ww1.sinaimg.cn/large/006y8mN6gw1f8wffx2ia1j30g304iq4t.jpg" alt></p>
+<p>ok,mongodb 服务端终于启动起来了。</p>
+<h4 id="1-1-3-辅助"><a href="#1-1-3-辅助" class="headerlink" title="1.1.3 辅助"></a>1.1.3 辅助</h4><p>安装可视化工具<a href="https://robomongo.org/" target="_blank" rel="noopener">Robomongo</a>。</p>
+<h3 id="1-2-Windows"><a href="#1-2-Windows" class="headerlink" title="1.2 Windows"></a>1.2 Windows</h3><p>mongodb和nodejs的模块包不一样，它是使用c++编写的跨平台数据库，可以在官网（见参考资料）下载安装，本次安装以window 32bit为例：</p>
+<h4 id="1-2-1-下载"><a href="#1-2-1-下载" class="headerlink" title="1.2.1 下载"></a>1.2.1 下载</h4><p>下载之后解压该安装包到你想要的目录，重命名为mongodb，如图：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVagw1f8ykl57x1ej30ar083q3z.jpg" alt></p>
+<h4 id="1-2-2-新建Data"><a href="#1-2-2-新建Data" class="headerlink" title="1.2.2 新建Data"></a>1.2.2 新建Data</h4><p>打开mongodb文件夹，新建一个data文件夹用于存储数据库，当然也可以指定其他目录。</p>
+<h4 id="1-2-3-新建CMD文件"><a href="#1-2-3-新建CMD文件" class="headerlink" title="1.2.3 新建CMD文件"></a>1.2.3 新建CMD文件</h4><p>再打开mongodb\bin文件夹，新建一个cmd文件，内容为：</p>
+<pre class=" language-bash"><code class="language-bash">mongod --dbpath <span class="token string">"d:\program files\mongodb\data"</span>//自定义地址，内容为数据库文档存储文件夹。
+</code></pre>
+<h4 id="1-2-4-启动服务"><a href="#1-2-4-启动服务" class="headerlink" title="1.2.4 启动服务"></a>1.2.4 启动服务</h4><p>新建完成之后，打开该CMD，保持该CMD窗口为打开状态，后续就可以连接数据库、操作数据库了。</p>
+<h2 id="二、安装Mongoose"><a href="#二、安装Mongoose" class="headerlink" title="二、安装Mongoose"></a>二、安装Mongoose</h2><p>命令行打开项目根目录，执行<code>npm install mongoose --save</code>安装Mongoose</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVagw1f8ykyztwq9j30ib01umxz.jpg" alt></p>
+<h2 id="三、使用Mongoose"><a href="#三、使用Mongoose" class="headerlink" title="三、使用Mongoose"></a>三、使用Mongoose</h2><p>接下来我将会以一个todo list来作为实例，向大家讲解。有些内容我上篇文章已经说到过，就不多说了，请参见：<a href="http://lion1ou.win/2016/10/19/">nodejs之Express入门</a></p>
+<h3 id="3-1-连接MongoDB"><a href="#3-1-连接MongoDB" class="headerlink" title="3.1 连接MongoDB"></a>3.1 连接MongoDB</h3><p>在项目文件夹根目录上，新建db.js，内容：</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> mongoose <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"mongoose"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//引入mongoose</span>
+
+<span class="token keyword">var</span> db <span class="token operator">=</span> mongoose<span class="token punctuation">.</span>connection<span class="token punctuation">;</span>
+db<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//监听是否有异常</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Connection error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+db<span class="token punctuation">.</span><span class="token function">once</span><span class="token punctuation">(</span><span class="token string">'open'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//监听一次打开</span>
+    <span class="token comment" spellcheck="true">//在这里创建你的模式和模型</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'connected!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+mongoose<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span><span class="token string">'mongodb://localhost/todo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//连接到mongoDB的todo数据库</span>
+<span class="token comment" spellcheck="true">//该地址格式：mongodb://[username:password@]host:port/database[?options]</span>
+<span class="token comment" spellcheck="true">//默认port为27017  </span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> mongoose<span class="token punctuation">;</span>
+</code></pre>
+<p>在app.js最前面引入，</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./db'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>然后就可以，<code>npm start</code>试试，是否连接成功，记住：这时候mongoDB的服务一定要打开！！连接成功如下图：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVagw1f8yop1fgxrj30d3032mxh.jpg" alt></p>
+<h3 id="3-2-定义属性、模型、实体"><a href="#3-2-定义属性、模型、实体" class="headerlink" title="3.2 定义属性、模型、实体"></a>3.2 定义属性、模型、实体</h3><ul>
+<li>Schema(属性) ：一种以文件形式存储的数据库模型骨架，不具备数据库的操作能力</li>
+<li>Model(模型)  ：由Schema发布生成的模型，具有抽象属性和行为的数据库操作对</li>
+<li>Entity(实体) ：由Model创建的实体，他的操作也会影响数据库</li>
+</ul>
+<blockquote>
+<p>我们需要一个Schema和一个Model来将数据保存在MongoDB数据库中。Schema定义了一个集合中文档的结构，Model被用来创建将要存储在文档中的数据Entity。Schema生成Model，Model创造Entity，Model和Entity都可对数据库操作造成影响，但Model比Entity更具操作性。</p>
+</blockquote>
+<p>那么接下来我们来定义它们，在<code>db.js</code>中添加下面内容：</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> TodoSchema <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mongoose<span class="token punctuation">.</span>Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    user_id<span class="token punctuation">:</span> String<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//定义一个属性user_id，类型为String</span>
+    content<span class="token punctuation">:</span> String<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//定义一个属性content，类型为String</span>
+    updated_at<span class="token punctuation">:</span> Date <span class="token comment" spellcheck="true">//定义一个属性updated_at，类型为Date</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+mongoose<span class="token punctuation">.</span><span class="token function">model</span><span class="token punctuation">(</span><span class="token string">'Todo'</span><span class="token punctuation">,</span> TodoSchema<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将该Schema发布为Model</span>
+</code></pre>
+<p>模型定义好了，现在我们就要开始往数据库添加数据了。</p>
+<h3 id="3-3-ejs模板引擎配置"><a href="#3-3-ejs模板引擎配置" class="headerlink" title="3.3 ejs模板引擎配置"></a>3.3 ejs模板引擎配置</h3><p>我们用之前文章里的生成的脚手架，开始搭建。这里我们用到的是ejs模板引擎，所以我们需要配置一下：</p>
+<h4 id="3-3-1-安装esj-mate"><a href="#3-3-1-安装esj-mate" class="headerlink" title="3.3.1 安装esj-mate"></a>3.3.1 安装esj-mate</h4><p>命令行输入：<code>npm install ejs-mate --save</code></p>
+<h4 id="3-3-2-在app-js中引入模块，添加如下代码："><a href="#3-3-2-在app-js中引入模块，添加如下代码：" class="headerlink" title="3.3.2 在app.js中引入模块，添加如下代码："></a>3.3.2 在app.js中引入模块，添加如下代码：</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> engine <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'ejs-mate'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">///======= view engine setup  模板 开始===========//</span>
+app<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'views'</span><span class="token punctuation">,</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'views'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'view engine'</span><span class="token punctuation">,</span> <span class="token string">'ejs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token function">engine</span><span class="token punctuation">(</span><span class="token string">'ejs'</span><span class="token punctuation">,</span> engine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">///======= view engine setup  模板 结束===========//</span>
+</code></pre>
+<h4 id="3-3-3-新建views-layout-ejs"><a href="#3-3-3-新建views-layout-ejs" class="headerlink" title="3.3.3 新建views/layout.ejs"></a>3.3.3 新建views/layout.ejs</h4><pre class=" language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>
+        &lt;%= title %>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 新 Bootstrap 核心 CSS 文件 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>stylesheet<span class="token punctuation">'</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>/stylesheets/screen.css<span class="token punctuation">'</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>layout<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>container-fluid<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%-</span> <span class="token attr-name">body</span> <span class="token attr-name">-%</span><span class="token punctuation">></span></span>  <span class="token comment" spellcheck="true">&lt;!--之后我们的内容就会填充再这个里面 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- jQuery文件。务必在bootstrap.min.js 之前引入 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 最新的 Bootstrap 核心 JavaScript 文件 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
+<h3 id="3-4-新建、保存数据"><a href="#3-4-新建、保存数据" class="headerlink" title="3.4 新建、保存数据"></a>3.4 新建、保存数据</h3><h4 id="3-4-1-修改views-index-ejs"><a href="#3-4-1-修改views-index-ejs" class="headerlink" title="3.4.1 修改views/index.ejs"></a>3.4.1 修改views/index.ejs</h4><pre class=" language-html"><code class="language-html">   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">layout('layout')</span>  <span class="token attr-name">-%</span><span class="token punctuation">></span></span>  <span class="token comment" spellcheck="true">&lt;!-- 用于识别填充到模板中的内容 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>row<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-12 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span> &lt;%= title %><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>row<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-12 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/create<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">accept-charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>input<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>content<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<h4 id="3-4-2-修改routes-index-js"><a href="#3-4-2-修改routes-index-js" class="headerlink" title="3.4.2  修改routes/index.js"></a>3.4.2  修改routes/index.js</h4><pre class=" language-js"><code class="language-js">router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/create'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'req.body'</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">TodoModel</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//实例化对象，新建数据</span>
+        content<span class="token punctuation">:</span> req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>content<span class="token punctuation">,</span>
+        updated_at<span class="token punctuation">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todo<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//保存数据</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'内容'</span><span class="token punctuation">,</span> todo<span class="token punctuation">,</span> <span class="token string">'数量'</span><span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//打印保存的数据</span>
+        res<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//返回首页</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>然后启动服务，<code>npm start</code>，在页面输入框输入任何内容，回车。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVagw1f8zqveebk8j30bq03oaao.jpg" alt></p>
+<h4 id="3-4-3-问题解决"><a href="#3-4-3-问题解决" class="headerlink" title="3.4.3 问题解决"></a>3.4.3 问题解决</h4><p>若出现<code>req.body</code>为<code>undefined</code>，请检查<code>app.js</code><br>是否引入：<br><code>var bodyParser = require(&#39;body-parser&#39;); //处理请求body的中间件</code><br>是否配置：</p>
+<pre class=" language-js"><code class="language-js">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>bodyParser<span class="token punctuation">.</span><span class="token function">urlencoded</span><span class="token punctuation">(</span><span class="token punctuation">{</span> extended<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//解析 application/x-www-form-urlencoded类型</span>
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>bodyParser<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//解析 application/json类型</span>
+</code></pre>
+<p>router定义：</p>
+<pre class=" language-js"><code class="language-js">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> routes<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//在app中注册routes该接口 </span>
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token string">'/users'</span><span class="token punctuation">,</span> users<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//在app中注册users接口</span>
+</code></pre>
+<p>必须写在配置的后面。</p>
+<h3 id="3-5-查询、删除数据"><a href="#3-5-查询、删除数据" class="headerlink" title="3.5 查询、删除数据"></a>3.5 查询、删除数据</h3><h4 id="3-5-1-添加到views-index-ejs"><a href="#3-5-1-添加到views-index-ejs" class="headerlink" title="3.5.1 添加到views/index.ejs"></a>3.5.1 添加到views/index.ejs</h4><pre class=" language-html"><code class="language-html">// 显示所有待办事项
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">todos.forEach(</span> <span class="token attr-name">function(</span> <span class="token attr-name">todo</span> <span class="token attr-name">){</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>row<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>      
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>
+                &lt;%= todo.updated_at %>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-6 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>&lt;%= todo.content %><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-4 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/destroy/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Delete this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Delete<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">});</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>     
+</code></pre>
+<h4 id="3-5-2-修改routes-index-js"><a href="#3-5-2-修改routes-index-js" class="headerlink" title="3.5.2 修改routes/index.js"></a>3.5.2 修改routes/index.js</h4><pre class=" language-js"><code class="language-js">router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 查询数据库获取所有待办事项.</span>
+    TodoModel<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todos<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//渲染页面</span>
+            title<span class="token punctuation">:</span> <span class="token string">'Todo List'</span><span class="token punctuation">,</span>
+            todos<span class="token punctuation">:</span> todos
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//需要传入参数id</span>
+router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/destroy/:id'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//根据待办事项的id 来删除它</span>
+    TodoModel<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        todo<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            res<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="3-6-修改、更新数据"><a href="#3-6-修改、更新数据" class="headerlink" title="3.6 修改、更新数据"></a>3.6 修改、更新数据</h4><p>实现方式是当鼠标点击待办事项时，页面转向edit页面，将待办事项转化为input text标签。</p>
+<h5 id="3-6-1-添加router-index-js"><a href="#3-6-1-添加router-index-js" class="headerlink" title="3.6.1 添加router/index.js"></a>3.6.1 添加router/index.js</h5><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">//跳转到编辑页面</span>
+router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/edit/:id'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    TodoModel<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todos<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">'edit'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//重新渲染页面</span>
+            title<span class="token punctuation">:</span> <span class="token string">'Todo List'</span><span class="token punctuation">,</span>
+            todos<span class="token punctuation">:</span> todos<span class="token punctuation">,</span>
+            current<span class="token punctuation">:</span> req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//根据传入的数据id,更改数据</span>
+router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/update/:id'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    TodoModel<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        todo<span class="token punctuation">.</span>content <span class="token operator">=</span> req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>content<span class="token punctuation">;</span>
+        todo<span class="token punctuation">.</span>updated_at <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        todo<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todo<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            res<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="3-6-2-添加新页面views-edit-ejs"><a href="#3-6-2-添加新页面views-edit-ejs" class="headerlink" title="3.6.2 添加新页面views/edit.ejs"></a>3.6.2 添加新页面views/edit.ejs</h5><pre class=" language-html"><code class="language-html">//省略与index.ejs相同部分；主要修改以下内容
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">todos.forEach(</span> <span class="token attr-name">function(</span> <span class="token attr-name">todo</span> <span class="token attr-name">){</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>row<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>&lt;%= todo.updated_at %><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-6 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      &lt;% if( todo._id == current ){ %>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/update/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">accept-charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>content<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;%<span class="token punctuation">=</span> todo.content %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">}else{</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/edit/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Update this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&lt;%= todo.content %><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">}</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/edit/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Edit this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Edit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/destroy/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Delete this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Delete<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">});</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>     
+</code></pre>
+<h5 id="3-6-3-修改页面-views-index-ejs"><a href="#3-6-3-修改页面-views-index-ejs" class="headerlink" title="3.6.3 修改页面 views/index.ejs"></a>3.6.3 修改页面 views/index.ejs</h5><pre class=" language-html"><code class="language-html"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">todos.forEach(</span> <span class="token attr-name">function(</span> <span class="token attr-name">todo</span> <span class="token attr-name">){</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>row<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>
+                &lt;%= todo.updated_at %>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-6 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>
+                &lt;%= todo.content %>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/edit/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Edit this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Edit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>col-xs-2 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/destroy/&lt;%<span class="token punctuation">=</span> todo._id %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Delete this todo item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Delete<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">});</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>到这里Todo list基本功能已经完成了，下面我们再添加一个排序功能。</p>
+<h4 id="3-7-排序"><a href="#3-7-排序" class="headerlink" title="3.7 排序"></a>3.7 排序</h4><p>让待办事项更新时间顺序进行排序。</p>
+<h5 id="3-7-1-修改router-index-js"><a href="#3-7-1-修改router-index-js" class="headerlink" title="3.7.1 修改router/index.js"></a>3.7.1 修改router/index.js</h5><pre class=" language-js"><code class="language-js">router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 查询数据库获取所有待办事项.</span>
+    TodoModel<span class="token punctuation">.</span>
+    <span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span><span class="token string">'uadated_at'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+        <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todos<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//渲染页面</span>
+                title<span class="token punctuation">:</span> <span class="token string">'Todo List'</span><span class="token punctuation">,</span>
+                todos<span class="token punctuation">:</span> todos
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//跳转到编辑页面</span>
+router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/edit/:id'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    TodoModel<span class="token punctuation">.</span>
+    <span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span><span class="token string">'uadated_at'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+        <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> todos<span class="token punctuation">,</span> count<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">'edit'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//重新渲染页面</span>
+                title<span class="token punctuation">:</span> <span class="token string">'Todo List'</span><span class="token punctuation">,</span>
+                todos<span class="token punctuation">:</span> todos<span class="token punctuation">,</span>
+                current<span class="token punctuation">:</span> req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>源码已经上传到<a href="https://github.com/lion1ou/TodoList" target="_blank" rel="noopener">Github</a>上了，为了美观使用bootstrap简单的修改了一下，其他内容都没有变动。</strong></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、安装MongoDB"><span class="toc-text">一、安装MongoDB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Mac"><span class="toc-text">1.1 Mac</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-安装"><span class="toc-text">1.1.1 安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-配置"><span class="toc-text">1.1.2 配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-辅助"><span class="toc-text">1.1.3 辅助</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Windows"><span class="toc-text">1.2 Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-下载"><span class="toc-text">1.2.1 下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-新建Data"><span class="toc-text">1.2.2 新建Data</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-新建CMD文件"><span class="toc-text">1.2.3 新建CMD文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-启动服务"><span class="toc-text">1.2.4 启动服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、安装Mongoose"><span class="toc-text">二、安装Mongoose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、使用Mongoose"><span class="toc-text">三、使用Mongoose</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-连接MongoDB"><span class="toc-text">3.1 连接MongoDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-定义属性、模型、实体"><span class="toc-text">3.2 定义属性、模型、实体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-ejs模板引擎配置"><span class="toc-text">3.3 ejs模板引擎配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-安装esj-mate"><span class="toc-text">3.3.1 安装esj-mate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-在app-js中引入模块，添加如下代码："><span class="toc-text">3.3.2 在app.js中引入模块，添加如下代码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-3-新建views-layout-ejs"><span class="toc-text">3.3.3 新建views/layout.ejs</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-新建、保存数据"><span class="toc-text">3.4 新建、保存数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-修改views-index-ejs"><span class="toc-text">3.4.1 修改views/index.ejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-修改routes-index-js"><span class="toc-text">3.4.2  修改routes/index.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-问题解决"><span class="toc-text">3.4.3 问题解决</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-查询、删除数据"><span class="toc-text">3.5 查询、删除数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-1-添加到views-index-ejs"><span class="toc-text">3.5.1 添加到views/index.ejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-2-修改routes-index-js"><span class="toc-text">3.5.2 修改routes/index.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-修改、更新数据"><span class="toc-text">3.6 修改、更新数据</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-6-1-添加router-index-js"><span class="toc-text">3.6.1 添加router/index.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-6-2-添加新页面views-edit-ejs"><span class="toc-text">3.6.2 添加新页面views/edit.ejs</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-6-3-修改页面-views-index-ejs"><span class="toc-text">3.6.3 修改页面 views/index.ejs</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-排序"><span class="toc-text">3.7 排序</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-7-1-修改router-index-js"><span class="toc-text">3.7.1 修改router/index.js</span></a></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/10/20">http://lion1ou.win/2016/10/20</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/10/19/" rel="next" title="NodeJs之Express入门">
+          NodeJs之Express入门
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/11/09/" rel="prev" title="一个HTTP的过程发生了什么">
+            一个HTTP的过程发生了什么
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+        <span id="busuanzi_container_site_uv">
+            本站访客数<span id="busuanzi_value_site_uv"></span>人次
+          </span>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

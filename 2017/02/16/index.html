@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  
+    <meta name="keywords" content="CSS,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>CSS之BFC(块级格式化上下文) [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<meta name="referrer" content="no-referrer" />
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        CSS之BFC(块级格式化上下文)
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-02-16T03:18:52.000Z">
+        2017-02-16
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      阅读 <span id="busuanzi_value_page_pv"></span>
+    </span>
+    </header>
+
+    <div class="post-content">
+      <p>BFC是什么？从没有认识到最初的认识是一个关键且困难的过程。网上的很多文章都会写道：BFC 是一个环境。这样的写法让人看了就头疼：我们在HTML和CSS中好像从没接触过环境这个概念。</p>
+<p>下面不妨让我用通俗的方式解释一下BFC的概念：BFC可以简单的理解为某个元素的一个CSS属性，只不过这个属性不能被开发者显式的修改，拥有这个属性的元素对内部元素和外部元素会表现出一些特性（后面会讲到），这就是BFC。</p>
+<a id="more"></a>
+<h2 id="BFC-的特性"><a href="#BFC-的特性" class="headerlink" title="BFC 的特性"></a>BFC 的特性</h2><p>BFC 对布局的影响主要体现在对 float 和 margin 两个属性的处理。在我看来，BFC 让 float 和 margin 这两个属性的表现更加符合我们的直觉。</p>
+<h4 id="BFC-包裹浮动元素"><a href="#BFC-包裹浮动元素" class="headerlink" title="BFC 包裹浮动元素"></a>BFC 包裹浮动元素</h4><p>BFC的特性之一就是其高度的计算会包括所有浮动元素的高度，所以使用BFC可以包裹浮动元素，达到清除浮动的目的。</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#AAA</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span> <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#000</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p><code>overflow: hidden</code>可以触发一个元素的BFC属性，使该元素成为一个BFC容器，从而使该元素对内部元素及外部元素表现出BFC的特性</p>
+<p>运行代码可以看到，我们虽然没有进行任何清除浮动的工作，外层 div 还是包裹住了内层浮动的 div，没有造成高度塌陷的情况。</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tKfTcgy1fdcyj88jx5j30fa03c0l2.jpg" alt></p>
+<p>另外，将外层div同时设为浮动来清除内层浮动的方法，本质上也是应用了BFC的特性，因为将一个元素设为浮动也会触发该元素的BFC属性，使外层元素成为一个BFC容器。</p>
+<h4 id="BFC-包裹-margin-阻止外边距折叠"><a href="#BFC-包裹-margin-阻止外边距折叠" class="headerlink" title="BFC 包裹 margin(阻止外边距折叠)"></a>BFC 包裹 margin(阻止外边距折叠)</h4><p>BFC 对内部元素的另一个特性就是可以取消 margin 折叠(margin collapse)。这个特性我喜欢更形象的称之为包裹 margin。</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#AAA</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">margin-top</span><span class="token punctuation">:</span> <span class="token number">50</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#000</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>运行代码可以看到，内层 div 的 margin 并没有将内层 div 相对于外层 div 向下推移，而是将内外两层 div 整体向下推移：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tKfTcgy1fdcylpnq22j30fa04g0pd.jpg" alt></p>
+<p>而我们想要的结果是这样的：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tKfTcgy1fdcym3n2urj30fa04q0qo.jpg" alt></p>
+<p>内外两层 div 被整体向下推移的原因就是 margin 折叠，关于 margin 折叠的相关介绍可以<a href="http://www.w3school.com.cn/css/css_margin_collapsing.asp" target="_blank" rel="noopener">参见这里</a>。CSS 中父子元素的 margin 只要相邻，也会发生折叠，CSS 规范虽是如此，但很多时候这并不符合我们的预期：我们希望外部 div 能够包裹内部 div 的 margin，避免形成折叠，这时我们就可以使用 BFC。</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">overflow</span><span class="token punctuation">:</span>hidden<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span><span class="token hexcode">#AAA</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">width</span><span class="token punctuation">:</span><span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span><span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">margin-top</span><span class="token punctuation">:</span><span class="token number">50</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span><span class="token hexcode">#000</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>我们将外层 div 设置为一个 BFC 容器，由于 margin 折叠只会发生在同一个 BFC 中的元素之间，而不同 BFC 的元素之间以及元素及其所属的 BFC 之间不会发生 margin 折叠，因此就可以实现对 margin 的包裹。</p>
+<h4 id="BFC-可以阻止元素被浮动元素覆盖-阻止文本在浮动元素周围自动换行"><a href="#BFC-可以阻止元素被浮动元素覆盖-阻止文本在浮动元素周围自动换行" class="headerlink" title="BFC 可以阻止元素被浮动元素覆盖,阻止文本在浮动元素周围自动换行"></a>BFC 可以阻止元素被浮动元素覆盖,阻止文本在浮动元素周围自动换行</h4><p>BFC 对外部元素的独立性在于 BFC元素不会与浮动元素叠加。例如：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span> <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#000</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#AAA</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p><img src="https://ww4.sinaimg.cn/large/006tKfTcgy1fdd1j6h3rpj30fa0643y9.jpg" alt><br>可以看到，浮动的 div 由于脱离了文档流，导致正常的 div 左上角被覆盖。为了避免这种情况，我们使第二个 div 成为 BFC 容器：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span> <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#000</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#AAA</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p><img src="https://ww4.sinaimg.cn/large/006tKfTcgy1fdd1jew2loj30fa064a9t.jpg" alt><br>当第二个 div 成为 BFC 容器后，其不会再受到浮动 div 的影响，布局相对独立。这样的技巧经常用作两栏或三栏自适应布局。</p>
+<h2 id="BFC的触发条件"><a href="#BFC的触发条件" class="headerlink" title="BFC的触发条件"></a>BFC的触发条件</h2><p>BFC 可以被理解为元素的一个属性，但是这个属性无法被显式的设置，那么如何触发一个元素的 BFC 属性呢？上面的代码中使用的 overflow:hidden 就是触发 BFC 的一种方式，除了设置 overflow:hidden，下面的 CSS 属性设置都可以触发 BFC:</p>
+<ul>
+<li>父级元素，浮动元素：float 设置为除 none 之外的取值；</li>
+<li>父级元素的overflow 设置为除 visible 之外的取值；</li>
+<li>父级元素，绝对定位元素：position 设置为absolute 或 fixed；</li>
+<li>父级元素，display 设置为 table-cell、table-caption、inline-block 中的任一取值；</li>
+</ul>
+<h2 id="BFC-与-Layout"><a href="#BFC-与-Layout" class="headerlink" title="BFC 与 Layout"></a>BFC 与 Layout</h2><p>IE作为浏览器中的奇葩，当然不可能按部就班的支持BFC标准，于是乎IE中有了Layout这个东西。Layout和BFC基本是等价的，为了处理IE的兼容性，在需要触发BFC时，我们除了需要用上面的CSS属性来触发BFC，还需要针对 IE 浏览器使用<code>zoom: 1</code>来触发IE浏览器的Layout。</p>
+<p>参考链接：<a href="https://www.w3cplus.com/css/understanding-block-formatting-contexts-in-css.html" target="_blank" rel="noopener">理解CSS中BFC</a></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC-的特性"><span class="toc-text">BFC 的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC-包裹浮动元素"><span class="toc-text">BFC 包裹浮动元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC-包裹-margin-阻止外边距折叠"><span class="toc-text">BFC 包裹 margin(阻止外边距折叠)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC-可以阻止元素被浮动元素覆盖-阻止文本在浮动元素周围自动换行"><span class="toc-text">BFC 可以阻止元素被浮动元素覆盖,阻止文本在浮动元素周围自动换行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC的触发条件"><span class="toc-text">BFC的触发条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC-与-Layout"><span class="toc-text">BFC 与 Layout</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2017/02/16">http://lion1ou.win/2017/02/16</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/01/18/" rel="next" title="前后端分离之JWT用户认证">
+          前后端分离之JWT用户认证
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/02/17/" rel="prev" title="CSS之动画使用">
+            CSS之动画使用
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+        <span id="busuanzi_container_site_uv">
+            本站访客数<span id="busuanzi_value_site_uv"></span>人次
+          </span>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

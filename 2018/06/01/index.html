@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  
+    <meta name="keywords" content="ReactNative,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>ReactNative之基础内容 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<meta name="referrer" content="no-referrer" />
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之基础内容
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2018-06-01T08:33:39.000Z">
+        2018-06-01
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      阅读 <span id="busuanzi_value_page_pv"></span>
+    </span>
+    </header>
+
+    <div class="post-content">
+      <p>环境搭建完了，我开始了解一下ReactNative的基础内容吧。包括样式、高度宽度、</p>
+<a id="more"></a>
+<h3 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h3><blockquote>
+<p>在React Native中，你并不需要学习什么特殊的语法来定义样式。我们仍然是使用JavaScript来写样式。所有的核心组件都接受名为style的属性。这些样式名基本上是遵循了web上的CSS的命名，只是按照JS的语法要求使用了驼峰命名法，例如将background-color改为backgroundColor。</p>
+</blockquote>
+<ul>
+<li>使用 StyleSheet.create 来集中定义组件的样式，如：</li>
+</ul>
+<pre class=" language-jsx"><code class="language-jsx"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> AppRegistry<span class="token punctuation">,</span> StyleSheet<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> View <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react-native'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">LotsOfStyles</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>View</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>styles<span class="token punctuation">.</span>red<span class="token punctuation">}</span></span><span class="token punctuation">></span></span>just red<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>styles<span class="token punctuation">.</span>bigblue<span class="token punctuation">}</span></span><span class="token punctuation">></span></span>just bigblue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span>styles<span class="token punctuation">.</span>bigblue<span class="token punctuation">,</span> styles<span class="token punctuation">.</span>red<span class="token punctuation">]</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span>bigblue<span class="token punctuation">,</span> then red<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span>styles<span class="token punctuation">.</span>red<span class="token punctuation">,</span> styles<span class="token punctuation">.</span>bigblue<span class="token punctuation">]</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span>red<span class="token punctuation">,</span> then bigblue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>View</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> styles <span class="token operator">=</span> StyleSheet<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  bigblue<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    color<span class="token punctuation">:</span> <span class="token string">'blue'</span><span class="token punctuation">,</span>
+    fontWeight<span class="token punctuation">:</span> <span class="token string">'bold'</span><span class="token punctuation">,</span>
+    fontSize<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  red<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+AppRegistry<span class="token punctuation">.</span><span class="token function">registerComponent</span><span class="token punctuation">(</span><span class="token string">'LotsOfStyles'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> LotsOfStyles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><text> 元素布局不同于其他组件</text></li>
+</ul>
+<p>在Text内部的元素不再使用flexbox布局，而是采用文本布局。这意味着<text>内部的元素不再是一个个矩形，而可能会在行末进行折叠。</text></p>
+<ul>
+<li>样式继承限制</li>
+</ul>
+<p>在CSS中，我们可以在html上设置可继承样式（font-size），浏览器在渲染每个节点，会在渲染树上，一路向上查询，直到根节点。但在RN中，第一，你必须把你的文本节点放在<text>组件内，不能直接在<view>下放置文本。第二，不能设置全局的可继承样式，可使用组件和全局样式来实现。第三，只有在文本标签的子节点，才可以继承样式。</view></text></p>
+<pre class=" language-jsx"><code class="language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>fontWeight<span class="token punctuation">:</span> <span class="token string">'bold'</span><span class="token punctuation">}</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span>
+  I am bold
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">}</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span>
+    and red
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+</code></pre>
+<ul>
+<li>常用的样式</li>
+</ul>
+<p><a href="http://lion1ou.win/2018/05/29/">详见：样式手册</a></p>
+<h3 id="高度与宽度"><a href="#高度与宽度" class="headerlink" title="高度与宽度"></a>高度与宽度</h3><ul>
+<li><p>弹性宽高</p>
+<ul>
+<li>使用<code>flex: 1</code>来指定某个组件扩张以撑满所有剩余空间</li>
+<li>多个并列子组件使用<code>flex: 1</code>，则这几个组件平分父组件剩余空间，如果数值不同比例也相应不同</li>
+<li>前提是父组件的尺寸不为零（设置固定的width，height，或flex）</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a><a href="https://reactnative.cn/docs/0.51/network.html#content" target="_blank" rel="noopener">网络</a></h3><ul>
+<li>Fetch</li>
+</ul>
+<blockquote>
+<p>React Native提供了和web标准一致的Fetch API，用于满足开发者访问网络的需求。如果你之前使用过XMLHttpRequest(即俗称的ajax)或是其他的网络API，那么Fetch用起来将会相当容易上手。</p>
+</blockquote>
+<pre class=" language-js"><code class="language-js"><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://mywebsite.com/endpoint/'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  method<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  headers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token string">'Accept'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span><span class="token punctuation">,</span>
+    <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    firstParam<span class="token punctuation">:</span> <span class="token string">'yourValue'</span><span class="token punctuation">,</span>
+    secondParam<span class="token punctuation">:</span> <span class="token string">'yourOtherValue'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>注：默认情况下，iOS会阻止所有非HTTPS的请求。如果你请求的接口是http协议，那么首先需要添加一个App Transport Securty的例外，或者干脆完全禁用ATS，</p>
+</blockquote>
+<ul>
+<li>使用其他的网络库（Axios）</li>
+</ul>
+<blockquote>
+<p>React Native中已经内置了XMLHttpRequest API(也就是俗称的ajax)。一些基于XMLHttpRequest封装的第三方库也可以使用，例如frisbee或是axios等，但注意不能使用jQuery。</p>
+</blockquote>
+<blockquote>
+<p>需要注意的是，安全机制与网页环境有所不同：在应用中你可以访问任何网站，没有跨域的限制。</p>
+</blockquote>
+<ul>
+<li>WebSocket支持</li>
+</ul>
+<blockquote>
+<p>React Native还支持WebSocket，这种协议可以在单个TCP连接上提供全双工的通信信道。</p>
+</blockquote>
+<h3 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a><a href="https://reactnative.cn/docs/0.51/handling-touches.html#content" target="_blank" rel="noopener">触摸事件</a></h3><p>在React Native上处理点击等常见的触摸手势，不像在web 上直接在标签上绑定相应的手势事件就好了。需要在对应的标签外包裹手势组件，再使用相应的事件进行触发。</p>
+<ul>
+<li>点击、长按事件，可以使用”Touchable”开头的一系列组件。这些组件通过onPress属性接受一个点击事件的处理函数，使用onLongPress属性来实现长按事件。</li>
+</ul>
+<pre class=" language-jsx"><code class="language-jsx"><span class="token keyword">class</span> <span class="token class-name">MyButton</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">_onPressButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"You tapped the button!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TouchableHighlight</span> <span class="token attr-name">onPress</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>_onPressButton<span class="token punctuation">}</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Text</span><span class="token punctuation">></span></span>Button<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Text</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>TouchableHighlight</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// TouchableHighlight: 背景会在用户手指按下时变暗</span>
+<span class="token comment" spellcheck="true">// TouchableNativeFeedback: 在用户手指按下时形成类似墨水涟漪的视觉效果(在Android)</span>
+<span class="token comment" spellcheck="true">// TouchableOpacity: 在用户手指按下时降低按钮的透明度，而不会改变背景的颜色</span>
+<span class="token comment" spellcheck="true">// TouchableWithoutFeedback: 在处理点击事件的同时不显示任何视觉反馈</span>
+</code></pre>
+<ul>
+<li>其他事件</li>
+</ul>
+<p>如果你想实现视图的拖拽，或是实现自定义的手势，那么请参阅<a href="https://reactnative.cn/docs/0.51/panresponder.html" target="_blank" rel="noopener">PanResponder API</a>或是手势识别系统的文档。</p>
+<h3 id="平台区分"><a href="#平台区分" class="headerlink" title="平台区分"></a>平台区分</h3><p>React Native提供了一个检测当前运行平台的模块。如果组件只有一小部分代码需要依据平台定制，那么这个模块就可以派上用场。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> Platform<span class="token punctuation">,</span> StyleSheet <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react-native'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> styles <span class="token operator">=</span> StyleSheet<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  height<span class="token punctuation">:</span> <span class="token punctuation">(</span>Platform<span class="token punctuation">.</span>OS <span class="token operator">===</span> <span class="token string">'ios'</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">200</span> <span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Platform.OS在iOS上会返回ios，而在Android设备或模拟器上则会返回android。</p>
+<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a><a href="https://reactnative.cn/docs/0.51/debugging.html#content" target="_blank" rel="noopener">调试</a></h3><ul>
+<li><p>访问App内的开发菜单</p>
+<ul>
+<li>你可以通过摇晃设备或是选择iOS模拟器的”Hardware”菜单中的”Shake Gesture”选项来打开开发菜单。</li>
+<li>在iOS模拟器中运行，还可以按下Command⌘ + D 快捷键，Android模拟器对应的则是Command⌘ + M（windows上可能是F1或者F2）。</li>
+</ul>
+</li>
+<li><p>刷新JavaScript</p>
+<ul>
+<li>在iOS模拟器中按下Command⌘ + R ，Android模拟器上对应的则是按两下R。</li>
+<li>选择开发菜单中的”Enable Live Reload”可以开启自动刷新。(增加了新的资源(比如给iOS的Images.xcassets或是Andorid的res/drawable文件夹添加了图片)<br>更改了任何的原生代码)</li>
+</ul>
+</li>
+<li><p>应用内报错</p>
+<ul>
+<li>红屏或黄屏提示都只会在开发版本中显示，正式的离线包中是不会显示的。</li>
+<li>可以通过在代码中执行<code>console.disableYellowBox = true;</code>，手动关闭警告</li>
+<li>可以通过指定警告类型，来指定性关闭<code>console.ignoredYellowBox = [&#39;Warning: ...&#39;];</code></li>
+</ul>
+</li>
+<li><p>访问控制台日志</p>
+<ul>
+<li>可以在终端上执行<code>react-native log-ios</code>，或者在iOS模拟器的菜单中选择Debug → Open System Log…来查看。</li>
+<li>可以在终端上执行<code>react-native log-android</code>，或者在Android模拟器或是真机上，都可以通过在终端命令行里运行<code>adb logcat *:S ReactNative:V ReactNativeJS:V</code>命令来查看。</li>
+</ul>
+</li>
+<li><p>Chrome开发者工具</p>
+<ul>
+<li>在开发者菜单中选择”Debug JS Remotely”选项，即可以开始在Chrome中调试JavaScript代码。点击这个选项的同时会自动打开调试页面 <a href="http://localhost:8081/debugger-ui" target="_blank" rel="noopener">http://localhost:8081/debugger-ui</a>.</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#样式"><span class="toc-text">样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高度与宽度"><span class="toc-text">高度与宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#触摸事件"><span class="toc-text">触摸事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平台区分"><span class="toc-text">平台区分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试"><span class="toc-text">调试</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2018/06/01">http://lion1ou.win/2018/06/01</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2018/05/31/" rel="next" title="ReactNative之环境搭建">
+          ReactNative之环境搭建
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2018/07/05/" rel="prev" title="ReactNative之导航器配置">
+            ReactNative之导航器配置
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+        <span id="busuanzi_container_site_uv">
+            本站访客数<span id="busuanzi_value_site_uv"></span>人次
+          </span>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
