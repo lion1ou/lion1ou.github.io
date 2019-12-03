@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  
+  
+    <meta name="keywords" content="Tools,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>iTrem2使用指南 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        iTrem2使用指南
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-07-10T01:31:06.000Z">
+        2016-07-10
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tools/">Tools</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <p>iTerm2 是 MAC 下最好的终端工具。可以简单的认为，iTerm2 是配置完毕开箱即用的 tmux。<br><a id="more"></a></p>
+<h3 id="安装-iTerm2"><a href="#安装-iTerm2" class="headerlink" title="安装 iTerm2"></a>安装 <a href="http://www.iterm2.com/" target="_blank" rel="noopener">iTerm2</a></h3><p>官网下载安装，这里不赘述。</p>
+<h3 id="安装-brew"><a href="#安装-brew" class="headerlink" title="安装 brew"></a>安装 brew</h3><pre class=" language-shell"><code class="language-shell">/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre>
+<p>Homebrew安装成功后，会自动创建目录 /usr/local/Cellar 来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.</p>
+<blockquote>
+<p>注意：如果在安装过程中返回400，可以在几分钟后尝试重新安装。</p>
+</blockquote>
+<p><strong>Homebrew的使用</strong></p>
+<ul>
+<li>安装软件：brew install 软件名，例：brew install wget</li>
+<li>搜索软件：brew search 软件名，例：brew search wget</li>
+<li>卸载软件：brew uninstall 软件名，例：brew uninstall wget</li>
+<li>更新所有软件：brew update</li>
+</ul>
+<h3 id="安装并切换成-zsh"><a href="#安装并切换成-zsh" class="headerlink" title="安装并切换成 zsh"></a>安装并切换成 zsh</h3><p>安装最新的zsh， </p>
+<pre class=" language-shell"><code class="language-shell">brew install zsh
+</code></pre>
+<p>安装完成后，将zsh设置成系统默认shell，以代替bash。 </p>
+<p><strong>由于权限原因，先在命令行上执行<code>open /etc</code>打开文件夹，然后在文件夹中找到<code>shells</code>文件，复制文件到桌面，然后打开文件，在末尾添加<code>/usr/local/bin/zsh</code>，保存关闭后。复制替换原目录下的文件，此处需要输入密码验证。</strong></p>
+<p>再在终端中执行以下命令：</p>
+<pre class=" language-shell"><code class="language-shell">chsh -s /usr/local/bin/zsh
+</code></pre>
+<p>然后重新启动iTerm2，zsh就已经被配置成默认的shell了。</p>
+<h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 <a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a></h3><p>执行下面命令：</p>
+<pre class=" language-shell"><code class="language-shell">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+</code></pre>
+<p>请根据本文安装完成后，关于oh my zsh具体配置详见另一篇文章：<a href="http://lion1ou.win/2016/07/09/">oh my zsh 使用指南</a></p>
+<h3 id="安装-Powerline"><a href="#安装-Powerline" class="headerlink" title="安装 Powerline"></a>安装 <a href="http://powerline.readthedocs.io/en/latest/installation.html" target="_blank" rel="noopener">Powerline</a></h3><blockquote>
+<p>Powerline 是用 Python 写的脚本可以美化终端</p>
+</blockquote>
+<h5 id="1-安装Python-2-X"><a href="#1-安装Python-2-X" class="headerlink" title="1. 安装Python 2.X"></a>1. 安装Python 2.X</h5><p>因为 Powerline 是用 Python 写的脚本，所以我们必须确保在安装 Powerline 我们的 Mac 里面已经安装了 Python（一般来说 Mac 会自带 Python 2.X）</p>
+<pre class=" language-shell"><code class="language-shell">$ python -V
+Python 2.7.10
+
+# 我们可以在终端里面输入下面的代码来检查 Python 版本，若此命令没有返回任何讯息说明你的 Mac 里面没有安装 Python。
+</code></pre>
+<h5 id="2-安装pip"><a href="#2-安装pip" class="headerlink" title="2. 安装pip"></a>2. 安装pip</h5><p>安装 Powerline 的方法有很多种，我们可以通过 pip 或者 git 等工具，我推荐使用 pip，</p>
+<blockquote>
+<p>由于我还没有安装过 <code>pip</code> ， 所以先执行以下命令安装：</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">$ sudo easy_install pip
+# 或者执行下面代码安装
+$ wget https://bootstrap.pypa.io/get-pip.py -O - | python  
+</code></pre>
+<h5 id="3-检查Powerline"><a href="#3-检查Powerline" class="headerlink" title="3. 检查Powerline"></a>3. 检查Powerline</h5><p>用 pip 安装 Powerline </p>
+<pre class=" language-shell"><code class="language-shell">$ pip show powerline-status  # 检查是否已经安装Powerline
+
+# 如果以上命令执行后，如果出现如下信息，则说明已安装，可跳过下一步。如果没有任何反应说明没有安装，则进行下一步。
+</code></pre>
+<p><strong>Powerline 信息</strong></p>
+<pre class=" language-shell"><code class="language-shell">--
+Metadata-Version: 1.1
+Name: powerline-status
+Version: 2.2
+Summary: The ultimate statusline/prompt utility.
+Home-page: https://github.com/powerline/powerline
+Author: Kim Silkebaekken
+Author-email: kim.silkebaekken+vim@gmail.com
+License: MIT
+Location: /Users/mac/Library/Python/2.7/lib/python/site-packages #被安装到哪個路径
+Requires:
+
+# 以我的例子，我的使用者名称是 mac
+# 所以會安装到 /Users/mac/Library/Python/2.7/lib/python/site-packages 目录底下
+</code></pre>
+<h5 id="4-安装Powerline"><a href="#4-安装Powerline" class="headerlink" title="4. 安装Powerline"></a>4. 安装Powerline</h5><p>(由于权限问题，无法安装到系统目录下，所以我加上了 –user 选项，选择安装到当前用户目录下)</p>
+<pre class=" language-shell"><code class="language-shell">$ pip install --user powerline-status 
+</code></pre>
+<ul>
+<li>配置.bash_profile(如果是已经将bash切换成zsh的，跳过此处，配置.zshrc就可以了)</li>
+</ul>
+<p>创建、配置 <code>.bash_profile</code> 文件（mac 默认的配置文件，没有的话需要新建一个）让终端每次启动的时候自动运行 Powerline 脚本，新建如下：</p>
+<pre class=" language-shell"><code class="language-shell">cd ~ && l -h
+
+# 输入上述命令，查看文件夹下是否有 .bash_profile 文件，没有的话执行下面命令, 如果有就跳过下一步，
+
+touch .bash_profile  # 创建 .bash_profile 文件
+
+open .bash_profile   # 打开文件
+</code></pre>
+<ul>
+<li>配置 .zshrc</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc
+</code></pre>
+<p>只需将下面代码（其实就上面打印出来的安装路径）修改后，复制到你的 <code>bash_profile</code>或者<code>.zshrc</code>文件里就可以啦：</p>
+<p><code>. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh</code></p>
+<p><strong>需要注意的是最开始的 ‘.’ 和 ‘/powerline/…’ 中间是以空格分开的。</strong></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p>这里也有可能出现“powerline/bindings/bash/../../../scripts/powerline-config:: No such file or directory”的报错。原因没有将powerline的相关命令添加到环境变量，可以使用软链接解决:</p>
+<p>则需要将/Users/[用户名]/Library/Python/2.7/bin加入到PATH中，如下：</p>
+<pre class=" language-shell"><code class="language-shell">export PATH=/Users/[你的用户名]/Library/Python/2.7/bin:$PATH
+
+. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+</code></pre>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<h4 id="5-更换主题"><a href="#5-更换主题" class="headerlink" title="5. 更换主题"></a>5. 更换主题</h4><p>下载agnoster主题，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/fcamblor/oh-my-zsh-agnoster-fcamblor.git
+$ open oh-my-zsh-agnoster-fcamblor/
+</code></pre>
+<p>打开文件夹，双击运行install文件，主题将安装到<code>~/.oh-my-zsh/themes</code>目录下</p>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc  # 打开.zshrc
+</code></pre>
+<p>找到<code>ZSH_THEME</code>字段，改成：<code>ZSH_THEME=&quot;agnoster&quot;</code></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/1816409-20ef0157329eb98f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h5 id="6-安装Powerline字体"><a href="#6-安装Powerline字体" class="headerlink" title="6. 安装Powerline字体"></a>6. 安装Powerline字体</h5><p>通过git clone来下载powerline字体，在任意目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/Lokaltog/powerline-fonts.git
+$ cd powerline-fonts/ && ./install.sh
+</code></pre>
+<p>安装完成后，提示所有字体均已下载到/Users/mac/Library/Fonts路径下，如下提示：</p>
+<pre><code>All Powerline fonts installed to /Users/mac/Library/Fonts
+</code></pre><p>这样就说明字体库安装完了。</p>
+<p>接着打开iTerm 2<code>Preferences</code>=&gt;<code>Profile</code>=&gt;<code>Text</code>，找到<code>Font</code>和<code>Non-ASCII Font</code>的字体都设置成 带有<code>Powerline</code> 的字体，我这里设置的字体是<code>12pt Meslo LG S DZ Regular for Powerline</code>，大家可以根据喜好选择，只要是powerline字体就可以。</p>
+<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg" alt></p>
+<h5 id="7-安装配色方案"><a href="#7-安装配色方案" class="headerlink" title="7. 安装配色方案"></a>7. 安装配色方案</h5><p>下载配色方案，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/altercation/solarized.git
+$ open solarized/iterm2-colors-solarized
+</code></pre>
+<p>然后进入/Users/mac/solarized/iterm2-colors-solarized下双击 <code>Solarized Dark.itermcolors</code> 和 <code>Solarized Light.itermcolors</code> 两个文件就可以把配置文件导入到 iTerm2 里</p>
+<p>把iTerm 2的设置里的<code>Profile</code>=&gt;<code>colors</code>选项卡中里的<code>Load Presets</code>设置为刚刚下载的配色方案就可以了。</p>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg" alt></p>
+<p>大功告成，看看最后效果吧：</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg" alt></p>
+<h3 id="iTerm特色功能"><a href="#iTerm特色功能" class="headerlink" title="iTerm特色功能"></a>iTerm特色功能</h3><h5 id="特色快捷键"><a href="#特色快捷键" class="headerlink" title="特色快捷键"></a>特色快捷键</h5><ul>
+<li><p>command+; 根据上下文呼出自动完成窗口，上下键选择</p>
+</li>
+<li><p>全屏 command+enter</p>
+</li>
+<li><p>光标去哪了？command+/</p>
+</li>
+<li><p>用鼠标选中某个路径或者某个词汇就自动复制</p>
+</li>
+</ul>
+<h5 id="光标控制"><a href="#光标控制" class="headerlink" title="光标控制"></a>光标控制</h5><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl + a</td>
+<td>到行首</td>
+</tr>
+<tr>
+<td>ctrl + e</td>
+<td>行末</td>
+</tr>
+<tr>
+<td>ctrl + u</td>
+<td>删除一行</td>
+</tr>
+<tr>
+<td>⌘ + r（ctrl + l）</td>
+<td>清屏，其实是滚到新的一屏，并没有清空。</td>
+</tr>
+<tr>
+<td>ctrl + r</td>
+<td>搜索命令历史，这个大家都应该很熟悉了</td>
+</tr>
+<tr>
+<td>ctrl + d</td>
+<td>删除当前字符</td>
+</tr>
+<tr>
+<td>ctrl + h</td>
+<td>删除之前的字符</td>
+</tr>
+<tr>
+<td>ctrl + w</td>
+<td>删除光标前的单词</td>
+</tr>
+<tr>
+<td>ctrl + k</td>
+<td>删除到文本末尾</td>
+</tr>
+<tr>
+<td>ctrl + t</td>
+<td>交换光标处文本</td>
+</tr>
+<tr>
+<td>⌘ + —/+/0</td>
+<td>调整字体大小</td>
+</tr>
+<tr>
+<td>ctrl + f/b</td>
+<td>前进后退，相当于左右方向键，但是显然比移开手按方向键更快</td>
+</tr>
+<tr>
+<td>ctrl + p</td>
+<td>上一条命令，相当于方向键上</td>
+</tr>
+</tbody>
+</table>
+<h5 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h5><ul>
+<li>新建窗口：shift + command + d（横向）command + d（竖向）</li>
+<li>关闭窗口：shift + command + w</li>
+<li>前一个窗口：command + `</li>
+<li>后一个窗口：command + ~</li>
+<li>进入窗口 1,2,3：option + command + 编号</li>
+</ul>
+<h5 id="标签页操作"><a href="#标签页操作" class="headerlink" title="标签页操作"></a>标签页操作</h5><ul>
+<li>新建标签页: Command + T</li>
+<li>关闭标签页: Command + W</li>
+<li>前一个标签页: Command + 左方向键，Shift + Command + [</li>
+<li>后一个标签页: Command + 右方向键，Shitf + Command + ]</li>
+<li>进入标签页1，2，3…: Command + 标签页编号</li>
+<li>Expose 标签页: Option + Command + E（将标签页打撒到全屏，并可以全局搜索所有的标签页）</li>
+</ul>
+<h5 id="面板操作"><a href="#面板操作" class="headerlink" title="面板操作"></a>面板操作</h5><ul>
+<li>垂直分割: Command + D</li>
+<li>水平分割: Shift + Command + D</li>
+<li>前一个面板: Command + [</li>
+<li>后一个面板: Command + ]</li>
+<li>切换到上/下/左/右面板: Option + Command + 上下左右方向键</li>
+</ul>
+<h5 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h5><ul>
+<li>支持自定义全局快捷键用于显示和隐藏iTerm2 Preference -&gt; Keys －&gt; Show/hide iTerm2 with a system-wide hotkey 打上勾之后</li>
+<li>进入和退出全屏: Command + Enter</li>
+<li>查看当前终端中光标的位置: Command + /</li>
+<li>命令自动补全: Command + ;（很少用这个，还是感觉Zsh的补全更好用）</li>
+<li>开启和关闭背景半透明: Command + u</li>
+<li>清屏（重置当前终端）: Command + r</li>
+<li>文本选取</li>
+<li>文本选取有使用鼠标和不使用鼠标两种方式。</li>
+</ul>
+<h5 id="使用鼠标"><a href="#使用鼠标" class="headerlink" title="使用鼠标"></a>使用鼠标</h5><p>默认情况下，选取的文字会自动复制到剪切板，可以使用以下方式进行文本选取：</p>
+<ul>
+<li>常见的点击并拖拽方式</li>
+<li>双击选取整个单词</li>
+<li>三击选取整行</li>
+<li>选取某一部分，按住Shift，再点击某处，可以选取整个矩形内的文本（类似Windows下按住Shift可以批量选取图标）</li>
+<li>按住Command + Option，可以用鼠标画出一个矩形，用类似截图的方式选取文本 另外，还可以使用鼠标完成以下操作： 按住Command然后点击某个URL，会在浏览器中打开这个URL，点击某个文件夹，会在Finder里打开这个文件夹（再也不用open . 啦），点击某个文件名，会打开这个文件（文本文件支持MacVim，TextMate和BBEdit，如果后面跟随一个冒号和行号，文件会在行号处打开，其它格式的文件似乎不能调用默认程序打开） 选取文本之后，按住Command 同时拖动文本，可以将文本粘贴到目标位置（Drag and Drop） 鼠标中键粘贴（这个太感人了，一下子找回Linux的感觉了）</li>
+</ul>
+<h5 id="不使用鼠标"><a href="#不使用鼠标" class="headerlink" title="不使用鼠标"></a>不使用鼠标</h5><p>(这种方式最多只能选取一行文本) 使用 Command + f，会呼出一个搜索框，可以在当前面板中进行搜索，输入想要选取的部分内容，输入过程中，按Tab可以将选取部分向右扩展，按Shift + Tab向左扩展，按回车转到下一个匹配位置。使用Tab或Shift+Tab扩展得到想要的内容之后，选取内容会自动复制到剪切板，再次按Command + f隐藏搜索框。</p>
+<h5 id="位置书签"><a href="#位置书签" class="headerlink" title="位置书签"></a>位置书签</h5><p>在当前会话中按Command + Shift + m可以保存当前位置，之后可以按Command + Shift + j跳回这个位置。</p>
+<h5 id="粘贴历史"><a href="#粘贴历史" class="headerlink" title="粘贴历史"></a>粘贴历史</h5><p>使用Command + Shift + h 可以呼出粘贴历史，支持模糊检索。还可以设置将粘贴历史保存在磁盘上（Preferences -&gt; General）</p>
+<h5 id="即时回放"><a href="#即时回放" class="headerlink" title="即时回放"></a>即时回放</h5><p>使用Command + Opt + b 打开即时回放，按Esc退出。即时回放可以记录终端输出的状态，让你“穿越时间”查看终端内容。默认每个会话最多储存4MB的内容，可以在设置中更改（Preferences -&gt; Genernal -&gt; Instant Replay）。</p>
+<h5 id="窗口状态"><a href="#窗口状态" class="headerlink" title="窗口状态"></a>窗口状态</h5><p>通过 Window -&gt; Save Window Arrangement 可以保存当前窗口状态的快照，包括打开的窗口，标签页和面板。通过 Window -&gt; Restore Window Arrangement 还原。还可以在 Preferences -&gt; General -&gt; Open saved window arrangement 中设置在启动iTerm2时自动恢复窗口状态</p>
+<h3 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h3><ol>
+<li>⌘+Q关闭iTerm 2 时每次弹窗提示问题：</li>
+</ol>
+<p>iTerm 2 中，进入<code>Preference-General-Closing</code>栏目，将<code>Confirm &quot;Quit iTerm2(⌘Q)&quot;</code>command选项勾选去掉就行</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-iTerm2"><span class="toc-text">安装 iTerm2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-brew"><span class="toc-text">安装 brew</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装并切换成-zsh"><span class="toc-text">安装并切换成 zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-oh-my-zsh"><span class="toc-text">安装 oh-my-zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Powerline"><span class="toc-text">安装 Powerline</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-安装Python-2-X"><span class="toc-text">1. 安装Python 2.X</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-安装pip"><span class="toc-text">2. 安装pip</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-检查Powerline"><span class="toc-text">3. 检查Powerline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-安装Powerline"><span class="toc-text">4. 安装Powerline</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-更换主题"><span class="toc-text">5. 更换主题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#6-安装Powerline字体"><span class="toc-text">6. 安装Powerline字体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-安装配色方案"><span class="toc-text">7. 安装配色方案</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iTerm特色功能"><span class="toc-text">iTerm特色功能</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#特色快捷键"><span class="toc-text">特色快捷键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光标控制"><span class="toc-text">光标控制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#窗口操作"><span class="toc-text">窗口操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#标签页操作"><span class="toc-text">标签页操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#面板操作"><span class="toc-text">面板操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#其他功能"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用鼠标"><span class="toc-text">使用鼠标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#不使用鼠标"><span class="toc-text">不使用鼠标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#位置书签"><span class="toc-text">位置书签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#粘贴历史"><span class="toc-text">粘贴历史</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#即时回放"><span class="toc-text">即时回放</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#窗口状态"><span class="toc-text">窗口状态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题解答"><span class="toc-text">问题解答</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/07/10">http://lion1ou.win/2016/07/10</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/07/09/" rel="next" title="oh my zsh 使用指南">
+          oh my zsh 使用指南
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/07/14/" rel="prev" title="Windows下安装cordova开发环境">
+            Windows下安装cordova开发环境
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/07/10/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

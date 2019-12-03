@@ -2732,6 +2732,780 @@ normalizedSize<span class="token punctuation">:</span> <span class="token keywor
       </tags>
   </entry>
   <entry>
+    <title>云服务之nginx配置https</title>
+    <url>/2017/05/14/</url>
+    <content><![CDATA[<a id="more"></a>
+<h3 id="保证nginx已经引入ssl模块"><a href="#保证nginx已经引入ssl模块" class="headerlink" title="保证nginx已经引入ssl模块"></a>保证nginx已经引入ssl模块</h3><h3 id="SSL证书介绍"><a href="#SSL证书介绍" class="headerlink" title="SSL证书介绍"></a>SSL证书介绍</h3><p>SSL 证书是一种数字证书，它使用 Secure Socket Layer 协议在浏览器和 Web 服务器之间建立一条安全通道，从而实现：</p>
+<ol>
+<li>数据信息在客户端和服务器之间的加密传输，保证双方传递信息的安全性，不可被第三方窃听；</li>
+<li>用户可以通过服务器证书验证他所访问的网站是否真实可靠。</li>
+</ol>
+<p>HTTPS 是以安全为目标的 HTTP 通道，即 HTTP 下加入 SSL 加密层。HTTPS 不同于 HTTP 的端口，HTTP默认端口为80，HTTPS默认端口为443。</p>
+<h3 id="申请SSL证书"><a href="#申请SSL证书" class="headerlink" title="申请SSL证书"></a>申请SSL证书</h3><ul>
+<li>进入阿里云控制台，“安全（云盾）”下的“证书服务”，点击购买证书，选择免费型 DV SSL，按提示走就可以，反正不用花钱的。</li>
+<li>接下来到我的订单页面，看到证书状态是“待完成”，点击“补全”链接，根据提示完成操作，在上传相关信息时，一般选择<code>系统生成</code>。<br><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fgdmbplogfj30u5077mx8.jpg" alt></li>
+<li>然后等验证通过，一般十几二十分钟就OK</li>
+<li><p>然后下载证书，选择nginx<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgdm7pqa91j30tm0amweh.jpg" alt></p>
+</li>
+<li><p>将下载下来的证书解压，里面有两个文件一个是.key，另一个是.pem，把这两个文件传到服务器的一个目录中。</p>
+</li>
+<li>配置nginx配置文件，重启nginx即可</li>
+</ul>
+<h3 id="配置https"><a href="#配置https" class="headerlink" title="配置https"></a>配置https</h3><pre class=" language-shell"><code class="language-shell">server{
+    listen 443;
+    server_name www.lion1ou.com;
+    ssl on;
+    root /home/lion1ou/dist;
+    index index.html index.htm;
+    ssl_certificate   /home/lion1ou/cert/214128084570320.pem;
+    ssl_certificate_key  /home/lion1ou/cert/214128084570320.key;
+    ssl_session_timeout 5m;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+
+    # error_page 497 "https://$host$uri?$args";  # 这是跳转Http请求到Https
+
+    location / {
+        root /home/lion1ou/dist;
+        index index.html index.htm;
+    }
+}
+</code></pre>
+<h3 id="将http重定向到https"><a href="#将http重定向到https" class="headerlink" title="将http重定向到https"></a>将http重定向到https</h3><pre class=" language-shell"><code class="language-shell">server {
+     listen 80;
+     server_name www.chuyunt.com;
+     rewrite ^/(.*) https://$server_name$1 permanent;    #用于http重定向到Https
+}
+</code></pre>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>通过重定向跳转到https时，浏览器上会出现多次重定向，需要删除缓存才能访问的问题。   </p>
+<p>现这个问题没有解决，有解决办法的同学，可以留言告诉我。</p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云服务之ngnix部署配置</title>
+    <url>/2017/05/13/</url>
+    <content><![CDATA[<p>在项目开发中需要自己搭建配置前端服务，发布代码，所以捣鼓了一下nginx。在这里记录一下，相应的常规配置。<br><a id="more"></a></p>
+<p>nginx的配置文件根据你的安装方式，会在不同的文件夹下。如果使用在线yum安装，配置文件在<code>/etc/nginx</code>。默认配置文件已经被按模块分开了，所以只要在default.d或conf.d内新建一个.conf结尾的文件填写你的server配置就可以了。</p>
+<p>如果使用源码安装，则配置文件在你安装目录下，比如我的<code>/usr/local/nginx/conf/nginx.conf</code>，这里的配置文件是完整的，可以根据自己的需求对配置文件进行分离。</p>
+<h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><pre><code>{
+    base   # 基本配置
+    events: {}
+    http: {
+        base # 基本配置
+        server: {
+            main
+            location: {}
+        }
+    }
+}
+</code></pre><p>最外面的块是base;<br>base 包含events和http;<br>http包含upstream和多个server;<br>server又包含多个location;</p>
+<ul>
+<li>base 块设置的指令将影响其他所有设置，相当于全局设置</li>
+<li>server 块的指令主要用于指定主机和端口，设置网站，例如虚拟主机</li>
+<li>upstream 指令主要用于负载均衡，设置一系列的后端服务器</li>
+<li>location 块用于匹配网页位置，就是匹配网页的路径，匹配到的路径可以做一些事情，例如反代</li>
+</ul>
+<p>这四者之间的关系式：server继承base，location继承server，upstream既不会继承其他设置也不会被继承。在这四个部分当中，每个部分都包含若干指令，这些指令主要包含Nginx的主模块指令、事件模块指令、HTTP核心模块指令，同时每个部分还可以使用其他HTTP模块指令，例如Http SSL模块、HttpGzip Static模块和Http Addition模块等。</p>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><pre class=" language-shell"><code class="language-shell">#定义Nginx运行的用户和用户组
+user www www;
+
+#nginx进程数，建议设置为等于CPU总核心数。
+worker_processes 1;
+
+#全局错误日志定义类型，[ debug | info | notice | warn | error | crit ]
+error_log /var/log/nginx/error.log info;
+
+#进程文件
+pid /var/run/nginx.pid;
+
+#一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（系统的值ulimit -n）与nginx进程数相除，但是nginx分配请求并不均匀，所以建议与ulimit -n的值保持一致。
+worker_rlimit_nofile 65535;
+
+#工作模式与连接数上限
+events{
+    #参考事件模型，use [ kqueue | rtsig | epoll | /dev/poll | select | poll ]; epoll模型是Linux 2.6以上版本内核中的高性能网络I/O模型，如果跑在FreeBSD上面，就用kqueue模型。
+    use epoll;
+    #单个进程最大连接数（最大连接数=连接数*进程数）
+    worker_connections 65535;
+}
+
+#设定http服务器
+http{
+    include mime.types; #文件扩展名与文件类型映射表
+    default_type application/octet-stream; #默认文件类型
+    #charset utf-8; #默认编码
+    server_names_hash_bucket_size 128; #服务器名字的hash表大小
+    client_header_buffer_size 32k; #上传文件大小限制
+    large_client_header_buffers 4 64k; #设定请求缓
+    client_max_body_size 8m; #设定请求缓
+    sendfile on; #开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，对于普通应用设为 on，如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的负载。注意：如果图片显示不正常把这个改成off。
+    autoindex on; #开启目录列表访问，合适下载服务器，默认关闭。
+    tcp_nopush on; #防止网络阻塞
+    tcp_nodelay on; #防止网络阻塞
+    keepalive_timeout 120; #长连接超时时间，单位是秒
+
+    #FastCGI相关参数是为了改善网站的性能：减少资源占用，提高访问速度。下面参数看字面意思都能理解。
+    fastcgi_connect_timeout 300;
+    fastcgi_send_timeout 300;
+    fastcgi_read_timeout 300;
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 4 64k;
+    fastcgi_busy_buffers_size 128k;
+    fastcgi_temp_file_write_size 128k;
+
+    #gzip模块设置
+    gzip on; #开启gzip压缩输出
+    gzip_min_length 1k; #最小压缩文件大小
+    gzip_buffers 4 16k; #压缩缓冲区
+    gzip_http_version 1.0; #压缩版本（默认1.1，前端如果是squid2.5请使用1.0）
+    gzip_comp_level 2; #压缩等级
+    gzip_types text/plain application/x-javascript text/css application/xml;
+    #压缩类型，默认就已经包含text/html，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。
+    gzip_vary on;
+    #limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用
+
+    upstream blog.ha97.com {
+    #upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。
+    server 192.168.80.121:80 weight=3;
+    server 192.168.80.122:80 weight=2;
+    server 192.168.80.123:80 weight=3;
+    }
+
+    #虚拟主机的配置
+    server{
+        #监听端口
+        listen 80;
+        #域名可以有多个，用空格隔开
+        server_name www.ha97.com ha97.com;
+        index index.html index.htm index.php;
+        root /data/www/ha97;
+        location ~ .*\.(php|php5)?$ {
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+        }
+        #图片缓存时间设置
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+            expires 10d;
+        }
+        #JS和CSS缓存时间设置
+        location ~ .*\.(js|css)?$ {
+            expires 1h;
+        }
+        #日志格式设定
+        log_format access '$remote_addr - $remote_user [$time_local] "$request" '
+        '$status $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" $http_x_forwarded_for';
+        #定义本虚拟主机的访问日志
+        access_log /var/log/nginx/ha97access.log access;
+
+        #对 "/" 启用反向代理
+        location / {
+            proxy_pass http://127.0.0.1:88;
+            proxy_redirect off;
+            proxy_set_header X-Real-IP $remote_addr;
+            #后端的Web服务器可以通过X-Forwarded-For获取用户真实IP
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            #以下是一些反向代理的配置，可选。
+            proxy_set_header Host $host;
+            client_max_body_size 10m; #允许客户端请求的最大单文件字节数
+            client_body_buffer_size 128k; #缓冲区代理缓冲用户端请求的最大字节数，
+            proxy_connect_timeout 90; #nginx跟后端服务器连接超时时间(代理连接超时)
+            proxy_send_timeout 90; #后端服务器数据回传时间(代理发送超时)
+            proxy_read_timeout 90; #连接成功后，后端服务器响应时间(代理接收超时)
+            proxy_buffer_size 4k; #设置代理服务器（nginx）保存用户头信息的缓冲区大小
+            proxy_buffers 4 32k; #proxy_buffers缓冲区，网页平均在32k以下的设置
+            proxy_busy_buffers_size 64k; #高负荷下缓冲大小（proxy_buffers*2）
+            proxy_temp_file_write_size 64k;
+            #设定缓存文件夹大小，大于这个值，将从upstream服务器传
+        }
+
+        #设定查看Nginx状态的地址
+        location /NginxStatus {
+            stub_status on;
+            access_log on;
+            auth_basic "NginxStatus";
+            auth_basic_user_file conf/htpasswd;
+            #htpasswd文件的内容可以用apache提供的htpasswd工具来产生。
+        }
+
+        #本地动静分离反向代理配置
+        #所有jsp的页面均交由tomcat或resin处理
+        location ~ .(jsp|jspx|do)?$ {
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://127.0.0.1:8080;
+        }
+        #所有静态文件由nginx直接读取不经过tomcat或resin
+        location ~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ {
+            expires 15d; 
+        }
+        location ~ .*.(js|css)?$ { 
+            expires 1h; 
+        }
+    }
+}
+
+
+</code></pre>
+<h3 id="常见配置"><a href="#常见配置" class="headerlink" title="常见配置"></a>常见配置</h3><ul>
+<li>配置静态页面</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">server {
+    listen       80;
+    server_name  test.lion1ou.win;
+
+    location / {
+        root   /home/lion1ou/dist; # 静态文件地址
+        index  index.html index.htm; # 指定首页
+    }
+    error_page  404              /404.html;
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+     #charset koi8-r;
+    access_log  logs/lion1ou.access.log;
+}
+</code></pre>
+<ul>
+<li>配置web服务</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">server {
+    listen 80;
+    server_name test1.lion1ou.win;
+    location /{
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://127.0.0.1:8080;
+    }
+    access_log logs/8080_access.log;
+}
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云服务之nginx安装</title>
+    <url>/2017/05/12/</url>
+    <content><![CDATA[<p>Nginx是一款轻量级的网页服务器、反向代理服务器。相较于Apache、lighttpd具有占有内存少，稳定性高等优势。它最常的用途是提供反向代理服务。</p>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>各自优点</li>
+</ul>
+<p>安装nginx有两种方法，方法一是ECS服务器在线yum安装，方法二是下载并上传到ECS服务器编译安装。方法一安装是在线安装，好处是：安装方式简单，不易出错；方法二安装是先将 nginx 的源码下载下来，在自己的系统里编译生成可执行文件，然后执行，好处是：因为是在自己的系统上编译的，更符合自己系统的性能，也就是说在自己的系统上执行 nginx 服务性能效率更好。</p>
+<ul>
+<li>他们之间最大的区别是 ：<code>安装位置不同</code>。</li>
+</ul>
+<p>yum 在线安装会将 nginx 的安装文件放在系统的不同位置，可以通过命令 <code>rpm -ql nginx</code> 来查看安装路径。卸载的时候，只能通过 命令来卸载，因为我们不可能 将这些文件自己手动删除，可以通过命令 rpm -e nginx 来卸载，这个命令一般不会报错，因为 nginx 不与其他的包有依赖关系，如果提示关于 依赖包的问题 ，可以尝试 rpm -e –nodeps nginx 来卸载，这个命令相当于强制卸载，不考虑依赖问题。</p>
+<p>源码包 安装他的所有文件（包括配置文件，库文件，资源文件等）都在同一个目录下，我们想卸载的时候，直接将这个文件删除就可以，不会有任何垃圾文件存在。<br>通过源码包编译安装的软件，通常都放在 /usr/local/包名 路径下。</p>
+<ul>
+<li>启动方式不同</li>
+</ul>
+<p>yum 安装 nginx，我们可以通过 系统服务命令 service 来启动或停止</p>
+<pre class=" language-shell"><code class="language-shell">service nginx start #启动 nginx 服务
+service nginx stop #停止 nginx 服务
+service nginx restart #重启 nginx 服务
+</code></pre>
+<p>源码包 安装 nginx 启动的时候不能使用 service 来启动，需要执行 nginx 安装目录下的 sbin 目录下的 nginx 可执行程序才行，如下（我的 nginx 安装在 /usr/local/webserver/ 目录下）</p>
+<pre class=" language-shell"><code class="language-shell">/usr/local/webserver/nginx/sbin/nginx           #启动 nginx 服务
+/usr/local/webserver/nginx/sbin/nginx -s stop   #停止 nginx 服务
+</code></pre>
+<p>或者 直接进入安装目录 ，执行 ./nginx 也可以，这两种方式其实是一样的，. 表示当前目录</p>
+<pre class=" language-shell"><code class="language-shell">cd /usr/local/webserver/nginx/sbin 
+./nginx           #启动 nginx 服务
+./nginx -s stop   #停止 nginx 服务
+</code></pre>
+<h3 id="yum-在线安装"><a href="#yum-在线安装" class="headerlink" title="yum 在线安装"></a>yum 在线安装</h3><p>如果是刚买的服务器 先执行<code>yum -y update</code>,把yum更新到最新版本</p>
+<p>yum使用 yum 安装是在线安装，直接使用命令 <code>yum -y install nginx</code> 安装即可</p>
+<p>执行 <code>nginx</code> 来启动nginx服务</p>
+<p>在浏览器上打开对应的IP地址，就可以看到</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgdjzekq9yj31kw0hzq40.jpg" alt></p>
+<h3 id="源码包-安装"><a href="#源码包-安装" class="headerlink" title="源码包 安装"></a>源码包 安装</h3><p>以下命令均需root权限执行：首先安装必要的库（nginx 中gzip模块需要 zlib 库，rewrite模块需要 pcre 库，ssl 功能需要openssl库）。选定/usr/local为安装目录，以下具体版本号根据实际改变。</p>
+<ul>
+<li>安装依赖</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+</code></pre>
+<ul>
+<li><p>安装nginx</p>
+<pre class=" language-shell"><code class="language-shell">cd /usr/local/
+wget http://nginx.org/download/nginx-1.13.0.tar.gz
+tar -zxvf nginx-1.13.0.tar.gz
+cd nginx-1.13.0 
+./configure --prefix=/usr/local/nginx\ --with-http_stub_status_module\ --with-http_ssl_module\ --with-pcre\ --with-zlib
+make&&make install
+/usr/local/nginx/sbin/nginx -v
+</code></pre>
+<p>在–prefix后面接的命令是用于初始化配置nginx</p>
+</li>
+<li><p>配置选项</p>
+</li>
+</ul>
+<pre><code>以下是./configure的选项
+--prefix=&lt;path&gt; - Nginx安装路径。如果没有指定，默认为 /usr/local/nginx。
+--sbin-path=&lt;path&gt; - Nginx可执行文件安装路径。只能安装时指定，如果没有指定，默认为&lt;prefix&gt;/sbin/nginx。
+--conf-path=&lt;path&gt; - 在没有给定-c选项下默认的nginx.conf的路径。如果没有指定，默认为&lt;prefix&gt;/conf/nginx.conf。
+--pid-path=&lt;path&gt; - 在nginx.conf中没有指定pid指令的情况下，默认的nginx.pid的路径。如果没有指定，默认为 &lt;prefix&gt;/logs/nginx.pid。
+--lock-path=&lt;path&gt; - nginx.lock文件的路径。
+--error-log-path=&lt;path&gt; - 在nginx.conf中没有指定error_log指令的情况下，默认的错误日志的路径。如果没有指定，默认为 &lt;prefix&gt;/logs/error.log。
+--http-log-path=&lt;path&gt; - 在nginx.conf中没有指定access_log指令的情况下，默认的访问日志的路径。如果没有指定，默认为 &lt;prefix&gt;/logs/access.log。
+--user=&lt;user&gt; - 在nginx.conf中没有指定user指令的情况下，默认的nginx使用的用户。如果没有指定，默认为 nobody。
+--group=&lt;group&gt; - 在nginx.conf中没有指定user指令的情况下，默认的nginx使用的组。如果没有指定，默认为 nobody。
+--builddir=DIR - 指定编译的目录
+--with-rtsig_module - 启用 rtsig 模块
+--with-select_module - 允许或不允许开启SELECT模式，如果 configure 没有找到更合适的模式，
+比如：kqueue(sun os),epoll (linux kenel 2.6+), rtsig(实时信号)或者/dev/poll
+(一种类似select的模式，底层实现与SELECT基本相 同，都是采用轮训方法) SELECT模式将是默认安装模式
+--with-poll_module - 
+--with-http_ssl_module -  开启HTTP SSL模块，使NGINX可以支持HTTPS请求。这个模块需要已经安装了OPENSSL，在DEBIAN上是libssl
+--with-http_realip_module - 启用 ngx_http_realip_module
+--with-http_addition_module - 启用 ngx_http_addition_module
+--with-http_sub_module - 启用 ngx_http_sub_module
+--with-http_dav_module - 启用 ngx_http_dav_module
+--with-http_flv_module - 启用 ngx_http_flv_module
+--with-http_stub_status_module - 启用 &quot;server status&quot; 页
+--without-http_charset_module - 禁用 ngx_http_charset_module
+--without-http_gzip_module - 禁用 ngx_http_gzip_module. 如果启用，需要 zlib 。
+--without-http_ssi_module - 禁用 ngx_http_ssi_module
+--without-http_userid_module - 禁用 ngx_http_userid_module
+--without-http_access_module - 禁用 ngx_http_access_module
+--without-http_auth_basic_module - 禁用 ngx_http_auth_basic_module
+--without-http_autoindex_module - 禁用 ngx_http_autoindex_module
+--without-http_geo_module - 禁用 ngx_http_geo_module
+--without-http_map_module - 禁用 ngx_http_map_module
+--without-http_referer_module - 禁用 ngx_http_referer_module
+--without-http_rewrite_module - 禁用 ngx_http_rewrite_module. 如果启用需要 PCRE 。
+--without-http_proxy_module - 禁用 ngx_http_proxy_module
+--without-http_fastcgi_module - 禁用 ngx_http_fastcgi_module
+--without-http_memcached_module - 禁用 ngx_http_memcached_module
+--without-http_limit_zone_module - 禁用 ngx_http_limit_zone_module
+--without-http_empty_gif_module - 禁用 ngx_http_empty_gif_module
+--without-http_browser_module - 禁用 ngx_http_browser_module
+--without-http_upstream_ip_hash_module - 禁用 ngx_http_upstream_ip_hash_module
+--with-http_perl_module - 启用 ngx_http_perl_module
+--with-perl_modules_path=PATH - 指定 perl 模块的路径
+--with-perl=PATH - 指定 perl 执行文件的路径
+--http-log-path=PATH - Set path to the http access log
+--http-client-body-temp-path=PATH - Set path to the http client request body temporary files
+--http-proxy-temp-path=PATH - Set path to the http proxy temporary files
+--http-fastcgi-temp-path=PATH - Set path to the http fastcgi temporary files
+--without-http - 禁用 HTTP server
+--with-mail - 启用 IMAP4/POP3/SMTP 代理模块
+--with-mail_ssl_module - 启用 ngx_mail_ssl_module
+--with-cc=PATH - 指定 C 编译器的路径
+--with-cpp=PATH - 指定 C 预处理器的路径
+--with-cc-opt=OPTIONS - 
+--with-ld-opt=OPTIONS - 
+--with-cpu-opt=CPU - 为特定的 CPU 编译，有效的值包括：pentium, pentiumpro, pentium3, 
+pentium4, athlon, opteron, amd64, sparc32, sparc64, ppc64
+--without-pcre - 禁止 PCRE 库的使用。同时也会禁止 HTTP rewrite 模块。在 &quot;location&quot; 配置指令中的正则表达式也需要 PCRE 。
+--with-pcre=DIR - 指定 PCRE 库的源代码的路径。
+--with-pcre-opt=OPTIONS - Set additional options for PCRE building.
+--with-md5=DIR - Set path to md5 library sources.
+--with-md5-opt=OPTIONS - Set additional options for md5 building.
+--with-md5-asm - Use md5 assembler sources.
+--with-sha1=DIR - Set path to sha1 library sources.
+--with-sha1-opt=OPTIONS - Set additional options for sha1 building.
+--with-sha1-asm - Use sha1 assembler sources.
+--with-zlib=DIR - Set path to zlib library sources.
+--with-zlib-opt=OPTIONS - Set additional options for zlib building.
+--with-zlib-asm=CPU - Use zlib assembler sources optimized for specified CPU, valid values are: pentium, pentiumpro
+--with-openssl=DIR - Set path to OpenSSL library sources
+--with-openssl-opt=OPTIONS - Set additional options for OpenSSL building
+--with-debug - 启用调试日志
+--add-module=PATH - Add in a third-party module found in directory PATH
+</code></pre><ul>
+<li>启动</li>
+</ul>
+<p><code>/usr/local/nginx/sbin/nginx</code></p>
+<p>检查是否启动成功，如何出现错误详见下文：</p>
+<p>打开浏览器访问此机器的 IP，如果浏览器出现 Welcome to nginx! 则表示 Nginx 已经安装并运行成功。</p>
+<ul>
+<li>其他命令如下：</li>
+</ul>
+<p>重启： <code>/usr/local/nginx/sbin/nginx –s reload</code></p>
+<p>停止： <code>/usr/local/nginx/sbin/nginx –s stop</code></p>
+<p>测试配置文件是否正常： <code>/usr/local/nginx/sbin/nginx –t</code></p>
+<p>强制关闭： <code>pkill nginx</code></p>
+<h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><h4 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h4><p>在Centos7上编译安装openssl后，运行openssl version出现如下错误：</p>
+<pre class=" language-shell"><code class="language-shell">/usr/local/nginx/sbin/nginx: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+</code></pre>
+<p>这是由于openssl库的位置不正确造成的。</p>
+<p>解决方法：</p>
+<p>在root用户下执行：</p>
+<pre class=" language-shell"><code class="language-shell">ln -s /usr/local/lib64/libssl.so.1.1 /usr/lib64/libssl.so.1.1
+ln -s /usr/local/lib64/libcrypto.so.1.1 /usr/lib64/libcrypto.so.1.1
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nodejs进程管理</title>
+    <url>/2017/05/11/</url>
+    <content><![CDATA[<p>运行node服务时，如果直接通过node app来启动，如果报错了，整个服务就会直接停止运行。所以开发时一般都会使用supervisor，不过感觉supervisor只是拿来用作开发环境的。后来在网上找了一下，了解到目前似乎最常见的线上部署nodejs项目的有forever,pm2这两种。</p>
+<a id="more"></a>
+<p>分别的使用场合:</p>
+<ul>
+<li>supervisor 是开发环境用。</li>
+<li>forever 管理多个站点，每个站点访问量不大，不需要监控。</li>
+<li>pm2 网站访问量比较大,需要完整的监控界面。</li>
+</ul>
+<h2 id="PM2"><a href="#PM2" class="headerlink" title="PM2"></a><a href="https://pm2.keymetrics.io/" target="_blank" rel="noopener">PM2</a></h2><p>主要特性:</p>
+<ul>
+<li>内建负载均衡（使用Node cluster 集群模块）</li>
+<li>后台运行</li>
+<li>0秒停机重载，我理解大概意思是维护升级的时候不需要停机.</li>
+<li>具有Ubuntu和CentOS 的启动脚本</li>
+<li>停止不稳定的进程（避免无限循环）</li>
+<li>控制台检测</li>
+<li>提供 HTTP API</li>
+<li>远程控制和实时的接口API ( Nodejs 模块,允许和PM2进程管理器交互 )</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 安装
+npm install -g pm2
+
+# 用法
+$ npm install -g pm2      # 命令行全局安装pm2
+$ pm2 start app.js        # 启动app项目
+$ pm2 list                # 列出由pm2管理的所有进程信息，还会显示一个进程会被启动多少次，因为没处理的异常。
+
+# 其他命令
+$ pm2 monit               # 监视每个node进程的CPU和内存的使用情况
+$ pm2 logs                # 显示所有进程日志
+$ pm2 stop all            # 停止所有进程
+$ pm2 restart all         # 重启所有进程
+$ pm2 reload all          # 0秒停机重载进程 (用于 NETWORKED 进程)
+$ pm2 stop 0              # 停止指定的进程
+$ pm2 restart 0           # 重启指定的进程
+$ pm2 startup             # 产生 init 脚本 保持进程活着
+$ pm2 web                 # 运行健壮的 computer API endpoint (http://localhost:9615)
+$ pm2 delete 0            # 杀死指定的进程
+$ pm2 delete all          # 杀死全部进程
+
+# 运行进程的不同方式
+$ pm2 start app.js -i max                         # 根据有效CPU数目启动最大进程数目
+$ pm2 start app.js -i 3                           # 启动3个进程
+$ pm2 start app.js -x                             # 用fork模式启动 app.js 而不是使用 cluster
+$ pm2 start app.js -x -- -a 23                    # 用fork模式启动 app.js 并且传递参数 (-a 23)
+$ pm2 start app.js --name serverone               # 启动一个进程并把它命名为 serverone
+$ pm2 stop serverone                              # 停止 serverone 进程
+$ pm2 start app.json                              # 启动进程, 在 app.json里设置选项
+$ pm2 start app.js -i max -- -a 23                # 在--之后给 app.js 传递参数
+$ pm2 start app.js -i max -e err.log -o out.log   # 启动 并 生成一个配置文件
+</code></pre>
+<p>pm2相关文档：<a href="https://wohugb.gitbooks.io/pm2/content/" target="_blank" rel="noopener">https://wohugb.gitbooks.io/pm2/content/</a></p>
+<h2 id="forever"><a href="#forever" class="headerlink" title="forever"></a>forever</h2><p>官方的说明是说：A simple CLI tool for ensuring that a given script runs continuously（一个用来持续（或者说永远）运行一个给定脚本的简单的命令行工具）。Github地址：<a href="https://github.com/nodejitsu/forever" target="_blank" rel="noopener">https://github.com/nodejitsu/forever</a></p>
+<pre class=" language-shell"><code class="language-shell"># 安装
+
+# 记得加-g，forever要求安装到全局环境下
+
+sudo npm install forever -g
+
+
+# 启动
+
+# 1. 简单的启动
+forever start app.js
+
+# 2. 指定forever信息输出文件，当然，默认它会放到~/.forever/forever.log
+forever start -l forever.log app.js
+
+# 3. 指定app.js中的日志信息和错误日志输出文件，
+#  -o 就是console.log输出的信息，-e 就是console.error输出的信息
+forever start -o out.log -e err.log app.js
+
+# 4. 追加日志，forever默认是不能覆盖上次的启动日志，
+#  所以如果第二次启动不加-a，则会不让运行
+forever start -l forever.log -a app.js
+
+# 5. 监听当前文件夹下的所有文件改动
+forever start -w app.js
+
+
+# 文件改动监听并自动重启
+
+# 1. 监听当前文件夹下的所有文件改动（不太建议这样）
+forever start -w app.js
+
+
+# 显示所有运行的服务
+
+forever list
+
+
+# 停止操作
+
+# 1. 停止所有运行的node App
+forever stopall
+
+# 2. 停止其中一个node App
+forever stop app.js
+
+# 当然还可以这样
+# forever list 找到对应的id，然后：
+forever stop [id]
+
+
+# 重启
+
+# 1. 启动所有，重启操作跟停止操作保持一致。
+forever restartall
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>NodeJs</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云服务之Linux常用命令</title>
+    <url>/2017/04/28/</url>
+    <content><![CDATA[<p>最近通过一些渠道，买了一台阿里云的服务器，开始建一个属于自己的小网站和一些项目demo，所以开始了解Linux系统的相关知识和相关使用，入门第一步当然是命令行操作了，下面记录了一些常用的命令语句。</p>
+<a id="more"></a>
+<h2 id="Mac链接操作Linux服务器"><a href="#Mac链接操作Linux服务器" class="headerlink" title="Mac链接操作Linux服务器"></a>Mac链接操作Linux服务器</h2><h3 id="SCP命令"><a href="#SCP命令" class="headerlink" title="SCP命令"></a>SCP命令</h3><p>copy本地文件到服务器的命令如下：</p>
+<p>scp <code>local file</code> <code>remote user</code>@<code>remote machine</code>:<code>remote path</code></p>
+<p>如果想Copy远程文件到本地，则是：</p>
+<p>scp <code>remote user</code>@<code>remote machine</code>:<code>remote path</code> <code>local file</code></p>
+<h3 id="ssh命令"><a href="#ssh命令" class="headerlink" title="ssh命令"></a>ssh命令</h3><ol>
+<li>ssh 主机</li>
+</ol>
+<p><code>ssh 192.168.1.155</code><br>（表示用电脑用户登录到服务器）</p>
+<ol start="2">
+<li>ssh 用户@主机</li>
+</ol>
+<p><code>ssh user1@192.168.1.155</code><br>（表示用user1登录到服务器）</p>
+<ol start="3">
+<li>ssh 主机 -l 用户名 -p 端口</li>
+</ol>
+<p><code>ssh 192.168.1.155 -l user2 -p 8080</code><br>（表示user2用户用8080端口连接到192.168.1.155的服务器）</p>
+<h3 id="Linux防火墙的关闭和开启"><a href="#Linux防火墙的关闭和开启" class="headerlink" title="Linux防火墙的关闭和开启"></a>Linux防火墙的关闭和开启</h3><ol>
+<li>重启后生效 </li>
+</ol>
+<p>开启： chkconfig iptables on<br>关闭： chkconfig iptables off </p>
+<ol start="2">
+<li>即时生效，重启后失效 </li>
+</ol>
+<p>开启： service iptables start<br>关闭： service iptables stop </p>
+<p>需要说明的是对于Linux下的其它服务都可以用以上命令执行开启和关闭操作。 </p>
+<h2 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a>cd命令</h2><blockquote>
+<p>用于切换当前目录，参数是要切换到的目录的路径，可以是绝对路径，也可以是相对路径。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">cd /root/Docements # 切换到目录/root/Docements  
+cd ./path          # 切换到当前目录下的path目录中，“.”表示当前目录    
+cd ../path         # 切换到上层目录中的path目录中，“..”表示上一层目录  
+</code></pre>
+<h2 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h2><blockquote>
+<p>查看文件与目录的命令，以下为常用参数。</p>
+</blockquote>
+<pre><code>ls -l   # 列出长数据串，包含文件的属性与权限数据等  
+ls -a   # 列出全部的文件，连同隐藏文件（开头为.的文件）一起列出来（常用）  
+ls -d   # 仅列出目录本身，而不是列出目录的文件数据  
+ls -h   # 将文件容量以较易读的方式（GB，kB等）列出来  
+ls -R   # 连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来 
+</code></pre><p>可以组合使用</p>
+<pre><code>ls -l   # 以长数据串的形式列出当前目录下的数据文件和目录  
+ls -lR  # 以长数据串的形式列出当前目录下的所有文件  
+</code></pre><h2 id="mkdir-命令"><a href="#mkdir-命令" class="headerlink" title="mkdir 命令"></a>mkdir 命令</h2><blockquote>
+<p>mkdir 命令用来创建指定的名称的目录，要求创建目录的用户在当前目录中具有写权限，并且指定的目录名不能是当前目录中已有的目录。</p>
+</blockquote>
+<pre><code>-m  --mode   模式，设定权限&lt;模式&gt; (类似 chmod)
+-p  --parents  可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录; 
+-v  --verbose  每次创建新目录都显示信息
+    --help   显示此帮助信息并退出
+    --version  输出版本信息并退出
+</code></pre><p>实例</p>
+<pre><code>mkdir test1             # 创建一个空目录 
+mkdir -p test2/test22   # 递归创建多个目录 
+mkdir -m 777 test3      # 创建权限为777的目录 
+mkdir -v test4          # 创建新目录都显示信息
+mkdir -vp scf/{lib/,bin/,doc/{info,product},logs/{info,product},service/deploy/{info,product}}  
+# 一个命令创建项目的目录结构
+</code></pre><h2 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h2><blockquote>
+<p>该命令用于复制文件，copy之意，它还可以把多个文件一次性地复制到一个目录下。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">cp -a  # 将文件的特性一起复制  
+cp -p  # 连同文件的属性一起复制，而非使用默认方式，与-a相似，常用于备份  
+cp -i  # 若目标文件已经存在时，在覆盖时会先询问操作的进行  
+cp -r  # 递归持续复制，用于目录的复制行为  
+cp -u  # 目标文件与源文件有差异时才会复制 
+
+# 栗子
+cp -a file1 file2 #连同文件的所有特性把文件file1复制成文件file2  
+cp file1 file2 file3 dir #把文件file1、file2、file3复制到目录dir中  
+</code></pre>
+<h2 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h2><blockquote>
+<p>该命令用于移动文件、目录或更名，move之意，它的常用参数如下：</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">mv -f  # force强制的意思，如果目标文件已经存在，不会询问而直接覆盖  
+mv -i  # 若目标文件已经存在，就会询问是否覆盖  
+mv -u  # 若目标文件已经存在，且比目标文件新，才会更新 
+
+# 栗子
+mv file1 file2 file3 dir # 把文件file1、file2、file3移动到目录dir中  
+mv file1 file2 # 把文件file1重命名为file2  
+</code></pre>
+<p>注：该命令可以把一个文件或多个文件一次移动一个文件夹中，但是最后一个目标文件一定要是“目录”。</p>
+<h2 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h2><blockquote>
+<p>该命令用于删除文件或目录。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">rm -f  # 就是force的意思，忽略不存在的文件，不会出现警告消息  
+rm -i  # 互动模式，在删除前会询问用户是否操作  
+rm -r  # 递归删除，最常用于目录删除，它是一个非常危险的参数  
+
+# 栗子
+rm -i file  # 删除文件file，在删除之前会询问是否进行该操作  
+rm -fr dir  # 强制删除目录dir中的所有文件  
+</code></pre>
+<h2 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h2><p>该命令用于将某个时间点的进程运行情况选取下来并输出，process之意，它的常用参数如下：</p>
+<pre class=" language-shell"><code class="language-shell">-A ：所有的进程均显示出来  
+-a ：不与terminal有关的所有进程  
+-u ：有效用户的相关进程  
+-x ：一般与a参数一起使用，可列出较完整的信息  
+-l ：较长，较详细地将PID的信息列出  
+
+其实我们只要记住ps一般使用的命令参数搭配即可，它们并不多，如下：
+
+ps aux # 查看系统所有的进程数据  
+ps ax # 查看不与terminal有关的所有进程  
+ps -lA # 查看系统所有的进程数据  
+ps axjf # 查看连同一部分进程树状态  
+</code></pre>
+<h2 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h2><blockquote>
+<p>该命令用于向某个工作（%jobnumber）或者是某个PID（数字）传送一个信号，它通常与ps和jobs命令一起使用。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">kill -signal PID  
+</code></pre>
+<p>signal的常用参数如下：注：最前面的数字为信号的代号，使用时可以用代号代替相应的信号。</p>
+<pre class=" language-shell"><code class="language-shell">1：SIGHUP，启动被终止的进程  
+2：SIGINT，相当于输入ctrl+c，中断一个程序的进行  
+9：SIGKILL，强制中断一个进程的进行  
+15：SIGTERM，以正常的结束进程方式来终止进程  
+17：SIGSTOP，相当于输入ctrl+z，暂停一个进程的进行  
+
+# 栗子
+
+# 以正常的结束进程方式来终于第一个后台工作，可用jobs命令查看后台中的第一个工作进程  
+kill -SIGTERM %1   
+# 重新改动进程ID为PID的进程，PID可用ps命令通过管道命令加上grep命令进行筛选获得  
+kill -SIGHUP PID  
+</code></pre>
+<h2 id="killall命令"><a href="#killall命令" class="headerlink" title="killall命令"></a>killall命令</h2><blockquote>
+<p>该命令用于向一个命令启动的进程发送一个信号。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">
+killall [-iIe] [command name]  
+
+它的参数如下：
+
+-i ：交互式的意思，若需要删除时，会询问用户  
+-e ：表示后面接的command name要一致，但command name不能超过15个字符  
+-I ：命令名称忽略大小写  
+
+# 例如：  
+killall -SIGHUP syslogd # 重新启动syslogd  
+</code></pre>
+<h2 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h2><blockquote>
+<p>该命令用于对文件进行打包，默认情况并不会压缩，如果指定了相应的参数，它还会调用相应的压缩程序（如gzip和bzip等）进行压缩和解压。</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">-c ：新建打包文件  
+-t ：查看打包文件的内容含有哪些文件名  
+-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中  
+-j ：通过bzip2的支持进行压缩/解压缩  
+-z ：通过gzip的支持进行压缩/解压缩  
+-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来  
+-f filename ：filename为要处理的文件  
+-C dir ：指定压缩/解压缩的目录dir  
+
+# 上面的解说可以已经让你晕过去了，但是通常我们只需要记住下面三条命令即可：
+
+tar -jcv -f filename.tar.bz2 要被处理的文件或目录名称  # 压缩
+tar -jtv -f filename.tar.bz2  # 查询
+tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录  # 解压
+# 注：文件名并不定要以后缀tar.bz2结尾，这里主要是为了说明使用的压缩程序为bzip2
+</code></pre>
+<h2 id="chmod命令"><a href="#chmod命令" class="headerlink" title="chmod命令"></a>chmod命令</h2><blockquote>
+<p>该命令用于改变文件的权限，一般的用法如下：</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">chmod [-R] xyz 文件或目录  
+
+-R：进行递归的持续更改，即连同子目录下的所有文件都会更改 
+同时，chmod还可以使用u（user）、g（group）、o（other）、a（all）和+（加入）、-（删除）、=（设置）跟rwx搭配来对文件的权限进行更改。
+# 例如：  
+chmod 0755 file # 把file的文件权限改变为-rxwr-xr-x  
+chmod g+w file # 向file的文件权限中加入用户组可写权限  
+</code></pre>
+<h2 id="vim命令"><a href="#vim命令" class="headerlink" title="vim命令"></a>vim命令</h2><p>该命令主要用于文本编辑，它接一个或多个文件名作为参数，如果文件存在就打开，如果文件不存在就以该文件名创建一个文件。</p>
+<ul>
+<li>输入“i”，进入编辑模式</li>
+<li>使用“Esc”按钮，退出编辑模式</li>
+<li>输入“:wq”，回车，保存文件内容并退出</li>
+</ul>
+<h2 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h2><blockquote>
+<p>find是一个基于查找的功能非常强大的命令.</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">find [PATH] [option] [action]  
+
+# 与时间有关的参数：  
+find . -mtime n   # n为数字，意思为在n天之前的“一天内”被更改过的文件；  
+find . -mtime +n   # 列出在n天之前（不含n天本身）被更改过的文件名；  
+find . -mtime -n   # 列出在n天之内（含n天本身）被更改过的文件名；  
+find . -newer file   # 列出比file还要新的文件名  
+# 例如：  
+find /root -mtime 0 # 在当前目录下查找今天之内有改动的文件  
+
+# 与用户或用户组名有关的参数：  
+find . -user name   # 列出文件所有者为name的文件  
+find . -group name   # 列出文件所属用户组为name的文件  
+find . -uid n   # 列出文件所有者为用户ID为n的文件  
+find . -gid n   # 列出文件所属用户组为用户组ID为n的文件  
+# 例如：  
+find /home/ljianhui -user ljianhui # 在目录/home/ljianhui中找出所有者为ljianhui的文件  
+
+# 与文件权限及名称有关的参数：  
+find . -name filename  # 找出文件名为filename的文件  
+find . -size [+-]SIZE  # 找出比SIZE还要大（+）或小（-）的文件  
+find . -tpye TYPE  # 查找文件的类型为TYPE的文件，TYPE的值主要有 # 一般文件（f)、设备文件（b、c）、目录（d）、连接文件（l）、socket（s）、FIFO管道文件（p）；  
+find . -perm mode  # 查找文件权限刚好等于mode的文件，mode用数字表示，如0755；  
+find . -perm -mode  # 查找文件权限必须要全部包括mode权限的文件，mode用数字表示  
+find . -perm +mode  # 查找文件权限包含任一mode的权限的文件，mode用数字表示  
+# 例如：  
+find / -name passwd # 查找文件名为passwd的文件  
+find . -perm 0755 # 查找当前目录中文件权限的0755的文件  
+find . -size +12k # 查找当前目录中大于12KB的文件，注意c表示byte  
+</code></pre>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浏览器的工作原理</title>
     <url>/2017/02/26/</url>
     <content><![CDATA[<p>浏览器的主要功能是将用户选择得web资源呈现出来，它需要从服务器请求资源，并将其显示在浏览器窗口中，资源的格式通常是HTML，也包括PDF、image及其他格式。用户用URI（Uniform Resource Identifier 统一资源标识符）来指定所请求资源的位置。</p>
@@ -5268,6 +6042,623 @@ module<span class="token punctuation">:</span> <span class="token punctuation">{
       </tags>
   </entry>
   <entry>
+    <title>git学习</title>
+    <url>/2016/09/09/</url>
+    <content><![CDATA[<p>Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。<br><a id="more"></a></p>
+<h2 id="可视化软件"><a href="#可视化软件" class="headerlink" title="可视化软件"></a>可视化软件</h2><blockquote>
+<p>官网在这里：<a href="https://www.git-scm.com/" target="_blank" rel="noopener">https://www.git-scm.com/</a>，在git 官网上这种GUI工具多达十几款，在Mac平台我推荐一两款好用的软件GUI，官网GUI客户端列表：<a href="https://www.git-scm.com/downloads/guis" target="_blank" rel="noopener">https://www.git-scm.com/downloads/guis</a></p>
+</blockquote>
+<ul>
+<li>DiffMerge </li>
+</ul>
+<blockquote>
+<p>是一款可视化的文件比较（也可进行目录比较）与合并工具。该软件主要具有文件差异比较、自动化的文件合并、以及文件夹差异比较这三大功能。这里下载：<a href="http://sourcegear.com/diffmerge/" target="_blank" rel="noopener">http://sourcegear.com/diffmerge/</a></p>
+</blockquote>
+<ul>
+<li>SourceTree </li>
+</ul>
+<blockquote>
+<p>(Windows/Mac)免费，官网在这里：<a href="https://www.sourcetreeapp.com/" target="_blank" rel="noopener">https://www.sourcetreeapp.com/</a></p>
+</blockquote>
+<ul>
+<li>Gitup</li>
+</ul>
+<blockquote>
+<p>(Mac)免费开源，好玩的Gitup是 Mac OS X 的全功能开源 Git 客户端,提供快速,安全的操作,直接在硬盘上与 Git 数据库交互,操作库的图而不是操作 commits，官网在这里：<a href="http://gitup.co/" target="_blank" rel="noopener">http://gitup.co/</a></p>
+</blockquote>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><ol>
+<li>安装git for window</li>
+<li>安装TortoiseGit-1.8.16.0-64bit.msi</li>
+<li>配置path C:\Program Files\Git\bin</li>
+<li>详见<a href="http://blog.csdn.net/renfufei/article/details/41647875" target="_blank" rel="noopener">enter link description here</a></li>
+</ol>
+<h4 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h4><ol>
+<li>最为简单的方式是安装 .dmg 格式的安装包。其中带有一个正在解包图标的文件（扩展名为 .pkg ）是 Git 的安装程序</li>
+<li>点击扩展名为 .pkg 的安装程序，开始 Git 的安装</li>
+<li>安装完毕，git 会被安装到 /usr/local/git/bin/ 目录下。重启终端程序，才能让 /etc/paths.d/git 文件为 PATH 环境变量中添加的新路径注册生效。然后就可以在终端中直接运行 git 命令了。</li>
+<li>下载地址：<a href="http://code.google.com/p/git-osx-installer/" target="_blank" rel="noopener">enter link description here</a></li>
+</ol>
+<h2 id="绑定远程仓库"><a href="#绑定远程仓库" class="headerlink" title="绑定远程仓库"></a>绑定远程仓库</h2><h4 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h4><pre class=" language-shell"><code class="language-shell">git config --global user.name "xxx"          # 配置用户名   
+git config --global user.email "xxx@xxx.com" # 配置邮件  
+git config --list                            # 检查已有的配置信息
+</code></pre>
+<h4 id="创建SSH-Key"><a href="#创建SSH-Key" class="headerlink" title="创建SSH Key"></a>创建SSH Key</h4><ul>
+<li>打开终端，输入 <code>ssh-keygen -t rsa -C &quot;xxxxxx@qq.com&quot;</code> 邮箱更新为自己的</li>
+<li>回车保存默认位置</li>
+<li>输入密码,用来加密私钥(以后就要用这个密码)</li>
+<li>输入<code>cat ~/.ssh/id_rsa.pub</code>，即返回对应id_rsa.pub(公钥)信息，复制所有内容（待用）</li>
+</ul>
+<h4 id="与远程仓库绑定"><a href="#与远程仓库绑定" class="headerlink" title="与远程仓库绑定"></a>与远程仓库绑定</h4><ul>
+<li>在远程服务器,如coding/github页面内找到<code>添加公钥选项</code>,粘贴刚刚复制的内容,添加即可.</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri2y4lq6j20li0c1aam.jpg" alt="add-key.png"></p>
+<h4 id="测试是否配置成功，首次建立链接会要求信任主机："><a href="#测试是否配置成功，首次建立链接会要求信任主机：" class="headerlink" title="测试是否配置成功，首次建立链接会要求信任主机："></a>测试是否配置成功，首次建立链接会要求信任主机：</h4><p><code>ssh -T git@github.com</code></p>
+<p><code>ssh -T git@git.coding.net</code></p>
+<p><code>ssh-add ~/.ssh/id_rsa</code>  运行此命令，解决每次都需要输入密码的问题。</p>
+<p><img src="https://cdn.leoao.com/git多次输入密码.png" alt="git多次输入密码.png"></p>
+<pre><code>ssh-add ~/.ssh/id_rsa
+Enter passphrase for /Users/lionluo/.ssh/id_rsa:
+Identity added: /Users/lionluo/.ssh/id_rsa (/Users/lionluo/.ssh/id_rsa)
+</code></pre><p>可参考coding<a href="https://coding.net/help/doc/account/ssh-key.html" target="_blank" rel="noopener">官方文档</a></p>
+<blockquote>
+<p>如果返回的结果如下：</p>
+</blockquote>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5ri63qh0sj20gm01vwf5.jpg" alt="屏幕快照 2016-07-12 22.40.58.png"></p>
+<blockquote>
+<p>输入yes，就能看到</p>
+</blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri77dmgyj20j500raa8.jpg" alt="屏幕快照 2016-07-12 22.42.01.png"></p>
+<blockquote>
+<p>这样你的SSH key就配置完成了。</p>
+</blockquote>
+<blockquote>
+<p>到这里github仓库已经建好了。接下来是本地部分了。</p>
+</blockquote>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h4 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h4><pre class=" language-shell"><code class="language-shell">git init                        
+#初始化git仓库  
+
+git add .                       
+#添加所有文件到暂存区  
+
+git status                      
+#查看Git仓库状态，要随时掌握工作区的状态  
+
+git commit -m 'xxx'             
+#提交已添加的文件到git仓库  
+
+git commit -am 'xxx'            
+#将add和commit合为一步  
+
+git log /git reflog             
+#显示最近到最远的提交日志（历史）/（未来）  
+
+git reset --hard  <commitId>    
+#HEAD^--返回上个版本，  
+#HEAD~100--返回上100个版本  
+#commit_id--对应版本的commitId  
+</code></pre>
+<h4 id="远程命令"><a href="#远程命令" class="headerlink" title="远程命令"></a>远程命令</h4><ul>
+<li><code>git remote</code>命令就用于管理主机名。</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">git remote add <主机名> <网址>           
+#用于添加远程主机  
+
+git remote rm <主机名>                  
+#用于删除远程主机
+
+git remote rename <原主机名> <新主机名>   
+#用于远程主机的改名
+
+git remote (-v)                        
+#要查看远程库的信息(显示更详细的信息)  
+
+</code></pre>
+<ul>
+<li><code>git fetch</code>命令用于取回远程更新至本地  </li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">git fetch <远程主机名>             
+#将某个远程更新,全部取回本地
+
+git fetch <远程主机名> <分支名>     
+#取回特定分支的更新
+#所取回的更新，在本地主机上要用"远程主机名/分支名"的形式读取。比如origin主机的master，就要用origin/master读取。
+</code></pre>
+<ul>
+<li><code>git pull</code>取回远程主机某个分支的更新，再与本地的指定分支合并。</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">git pull origin next(:maste)    
+#取回origin主机的next分支，与当前(本地的master)分支合并
+</code></pre>
+<ul>
+<li><code>git push</code>命令用于将本地分支的更新，推送到远程主机</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">git push origin <本地分支名>:<远程分支名> 
+#提交本地的某分支，与origin主机的某分支合并
+
+git push -u origin master             
+#将本地master分支推送到origin主机,同时指定origin为默认主机，之后就可以不加任何参数使用git push
+
+git push --all origin                 
+#将本地`所有分支`推送到origin主机
+
+git push origin master                
+#将master分支推送到origin远程主机的master分支上
+#如果推送失败，先用git pull抓取远程的新提交；
+
+git push origin --tags                
+#推送包含标签(tag)   
+
+git push -f                           
+#强推，即利用强覆盖方式用你本地的代码替代git仓库内的内容
+</code></pre>
+<ul>
+<li><code>git clone</code>命令用于克隆远程仓库到本地</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">git clone  <url>                      
+#克隆远程仓库到本地
+
+git clone <版本库的网址> <本地目录名>    
+#克隆远程仓库到本地指定文件名
+
+</code></pre>
+<h4 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h4><blockquote>
+<ul>
+<li><code>master</code>分支是主分支，因此要时刻与远程同步，程序的稳定版本；</li>
+<li><code>dev</code>分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；</li>
+<li><code>bug</code>分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；</li>
+<li><code>feature</code>分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</li>
+</ul>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">git branch                         
+#查看所有分支  
+
+git branch <name>                  
+#创建分支  
+
+git checkout <name>                
+#切换分支  
+
+git checkout -b <name>             
+#创建并切换分支
+
+git checkout -b newBrach origin/master 
+#在origin/master的基础上，创建一个新分支
+
+git merge <name>                   
+#合并某分支到当前分支  
+
+git branch -d <name>               
+#删除分支
+
+git branch -a                      
+#显示所有分支
+
+git branch -r                      
+#显示所有远程分支
+
+git branch --merged                
+#显示所有已合并到当前分支的分支
+
+git branch --no-merged             
+#显示所有未合并到当前分支的分支
+
+git branch -m master master_copy   
+#本地分支改名
+</code></pre>
+<h4 id="标签操作"><a href="#标签操作" class="headerlink" title="标签操作"></a>标签操作</h4><pre class=" language-shell"><code class="language-shell">git tag <name>                        
+#用于新建一个标签，默认为HEAD，也可以指定一个commit id；  
+
+git tag -a <tagname> -m "blablabla..."
+#可以指定标签信息；  
+
+git tag -s <tagname> -m "blablabla..."
+#可以用PGP签名标签；  
+
+git tag                               
+#查看所有标签  
+
+git push origin <tagname>             
+#推送一个本地标签；  
+
+git push origin --tags                
+#推送全部未推送过的本地标签；  
+
+git tag -d <tagname>                  
+#删除一个本地标签；  
+
+git push origin :refs/tags/<tagname>  
+#删除一个远程标签。  
+</code></pre>
+<h4 id="其他使用场景"><a href="#其他使用场景" class="headerlink" title="其他使用场景"></a>其他使用场景</h4><ul>
+<li>保存进度</li>
+</ul>
+<blockquote>
+<p>修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；当手头工作没有完成时，先把工作现场<code>git stash</code>一下，然后去修复bug，修复后，再<code>git stash pop</code>，回到工作现场。</p>
+</blockquote>
+<ul>
+<li>合并分支</li>
+</ul>
+<blockquote>
+<p><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code>  合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+</blockquote>
+<ul>
+<li>撤销修改</li>
+</ul>
+<blockquote>
+<p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- &lt;fileName&gt;。</code> <code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+</blockquote>
+<blockquote>
+<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;fileName&gt;</code>，就回到了场景1，第二步按场景1操作。</p>
+</blockquote>
+<blockquote>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，则需要版本回退<code>git reset --hard HEAD^</code>，不过前提是没有推送到远程库。</p>
+</blockquote>
+<h4 id="访问本地git服务器"><a href="#访问本地git服务器" class="headerlink" title="访问本地git服务器"></a>访问本地git服务器</h4><p>ssh 指定私钥的配置管理，为本地添加 ssh 别名，编辑 ~/.ssh/config ，如果没有该文件，创建一个:</p>
+<pre class=" language-shell"><code class="language-shell">$ vi ~/.ssh/config
+</code></pre>
+<p>在 config 中添加：</p>
+<pre class=" language-shell"><code class="language-shell"># 注释说明
+# Host 别名
+# HostName  域名或 ip
+# User 登陆服务器用的账号
+# Port 端口号(默认22，可以不填，如果服务器修改了`ssh`登录端口号，此处需要修改)
+# IdentityFile 密钥文件的位置
+</code></pre>
+<p>例如设置为:</p>
+<pre class=" language-shell"><code class="language-shell">Host git.project-y.com
+HostName 192.168.126.213
+User lion1ou
+# Port (不填则为默认值) 
+# IdentityFile (不填则为默认值)
+</code></pre>
+<p>现在，可以通过 git clone 命令克隆远程仓库了：</p>
+<pre class=" language-shell"><code class="language-shell">$ git clone git@git.project-y.com:y/docs.git
+</code></pre>
+<h4 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a><code>.gitignore</code></h4><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可。</p>
+<p>如下：</p>
+<pre><code>.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+/themes/next
+</code></pre><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h4 id="出现私钥权限太开放"><a href="#出现私钥权限太开放" class="headerlink" title="出现私钥权限太开放"></a>出现私钥权限太开放</h4><pre><code>{ .ssh }  » ssh -T git@github.com                                        
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0670 for &#39;/home/Lion/.ssh/id_rsa&#39; are too open.
+It is recommended that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key &quot;/home/Lion/.ssh/id_rsa&quot;: bad permissions
+Permission denied (publickey).
+</code></pre><p><strong>解决办法：</strong></p>
+<p>执行命令：<code>chmod 600 /home/Lion/.ssh/id_rsa</code></p>
+<h4 id="出现github上传ssh-key后仍须输入密码的问题"><a href="#出现github上传ssh-key后仍须输入密码的问题" class="headerlink" title="出现github上传ssh-key后仍须输入密码的问题"></a>出现github上传ssh-key后仍须输入密码的问题</h4><p>原因是因为我们使用https方式克隆</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/Name/project.git
+</code></pre>
+<p>这样便会在你git push或者git pull时候要求输入用户名和密码 </p>
+<p><strong>解决办法：</strong></p>
+<p>使用ssh方式克隆仓库</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone git@github.com:Name/project.git
+</code></pre>
+<p>当如，如果你已经用https方式克隆了仓库，就不必删除仓库重新克隆，只需将<code>.git/config</code>文件中的</p>
+<pre class=" language-bash"><code class="language-bash">url <span class="token operator">=</span> https://github.com/Name/project.git 
+<span class="token comment" spellcheck="true"># 改成 => </span>
+url <span class="token operator">=</span> git@github.com:Name/project.git 
+</code></pre>
+<h4 id="git相关学习资源"><a href="#git相关学习资源" class="headerlink" title="git相关学习资源"></a>git相关学习资源</h4><ol>
+<li>git的详细介绍：<a href="http://blog.jobbole.com/25775/" target="_blank" rel="noopener">Git详解之一：Git起步</a></li>
+<li>git安装和配置：<a href="http://blog.csdn.net/renfufei/article/details/41647875" target="_blank" rel="noopener">Git安装与配置</a></li>
+<li>git与TortoiseGit(小乌龟)的基本操作：<a href="http://blog.csdn.net/renfufei/article/details/41647973" target="_blank" rel="noopener">Git与TortoiseGit基本操作</a></li>
+<li>git的基础教程：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰的gitgit教程</a></li>
+<li>git的使用流程：<a href="http://www.cnblogs.com/tugenhua0707/p/4050072.html" target="_blank" rel="noopener">Git使用教程</a></li>
+<li>git远程操作详解：<a href="http://www.ruanyifeng.com/blog/2014/06/git_remote.html" target="_blank" rel="noopener">阮一峰的Git远程操作详解</a></li>
+<li>git常用命令总结：<a href="http://www.haorooms.com/post/git_common_ml" target="_blank" rel="noopener">git常用命令总结</a></li>
+<li>搭建基于SSH的Git服务器：<a href="http://www.cnblogs.com/zhongxinWang/p/4236326.html" target="_blank" rel="noopener">Windows下搭建基于SSH的Git服务器</a>;<a href="http://blog.chinaunix.net/xmlrpc.php?r=blog/article&amp;uid=20078486&amp;id=3864573" target="_blank" rel="noopener">自己动手搭建Git服务器-Gitblit</a></li>
+<li>git整体介绍：<a href="https://gold.xitu.io/entry/57700fca165abd00547f788d" target="_blank" rel="noopener">30 分钟 git 命令入门到放弃 - 掘金</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gulp基础使用</title>
+    <url>/2016/09/08/</url>
+    <content><![CDATA[<p>在日常开发中，手动去做一些代码压缩，做一些流程化的动作其实很繁琐，现在我们可以通过gulp来改进我们的工作流，让我们的开发体验得到提升，并且可以直接使用less、sass等预编译样式语法，在工作流中做编译转换。<br><a id="more"></a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li><p>安装淘宝npm镜像：</p>
+<p>  <code>sudo  npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<blockquote>
+<p>之后可将<code>npm</code>修改为<code>cnpm</code>   </p>
+</blockquote>
+</li>
+<li><p>首先我们要全局安装一遍：</p>
+<p>  <code>sudo npm install gulp -g</code></p>
+<ul>
+<li>sudo是以管理员身份执行命令，一般会要求输入电脑密码</li>
+<li>npm是安装node模块的工具，执行install命令</li>
+<li>-g表示在全局环境安装，以便任何项目都能使用它</li>
+<li><p>最后，gulp是将要安装的node模块的名字</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f62e6s7kqqj20fr0hhq9k.jpg" alt></p>
+</li>
+</ul>
+</li>
+<li><p>验证是否正确安装</p>
+<p>  输入<code>gulp -v</code>验证gulp正确安装。</p>
+</li>
+<li><p>到项目目录下安装一遍</p>
+<p>  命令行输入<code>cd 当前项目路径</code>，到达当前项目目录后，</p>
+<p>  执行<code>npm install gulp --save-dev</code></p>
+<blockquote>
+<p>使用<code>—-save-dev</code>来更新package.json文件，更新devDependencies值，以表明项目需要依赖gulp。</p>
+</blockquote>
+<p>  <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f62ebq9e96j20fo0gyjxn.jpg" alt></p>
+</li>
+</ul>
+<h2 id="安装gulp插件"><a href="#安装gulp插件" class="headerlink" title="安装gulp插件"></a>安装gulp插件</h2><p>我们将要使用Gulp插件来完成我们以下任务：</p>
+<table>
+<thead>
+<tr>
+<th>插件名称</th>
+<th>插件说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gulp-htmlmin</td>
+<td>压缩html</td>
+</tr>
+<tr>
+<td>gulp-ruby-sass</td>
+<td>sass的编译</td>
+</tr>
+<tr>
+<td>gulp-autoprefixer</td>
+<td>添加CSS前缀</td>
+</tr>
+<tr>
+<td>gulp-clean-css</td>
+<td>压缩css</td>
+</tr>
+<tr>
+<td>gulp-concat</td>
+<td>合并文件</td>
+</tr>
+<tr>
+<td>gulp-uglify</td>
+<td>压缩js</td>
+</tr>
+<tr>
+<td>gulp-imagemin</td>
+<td>压缩图片</td>
+</tr>
+<tr>
+<td>gulp-ng-annotate</td>
+<td>添加angular依赖注入</td>
+</tr>
+<tr>
+<td>gulp-strip-debug</td>
+<td>去掉控制器log等语句</td>
+</tr>
+<tr>
+<td>gulp-ngmin</td>
+<td>压缩angularJs</td>
+</tr>
+<tr>
+<td>gulp-rename</td>
+<td>重命名文件</td>
+</tr>
+<tr>
+<td>gulp-livereload</td>
+<td>自动刷新页面</td>
+</tr>
+<tr>
+<td>gulp-cache</td>
+<td>图片缓存</td>
+</tr>
+<tr>
+<td>gulp-notify</td>
+<td>更改提醒</td>
+</tr>
+<tr>
+<td>del</td>
+<td>清除文件</td>
+</tr>
+</tbody>
+</table>
+<p>安装以上所有插件需要运行如下命令：</p>
+<pre class=" language-shell"><code class="language-shell">npm install gulp-htmlmin gulp-ruby-sass gulp-autoprefixer gulp-clean-css  gulp-concat gulp-uglify gulp-imagemin gulp-ng-annotate gulp-strip-debug gulp-ngmin gulp-rename gulp-livereload  gulp-cache gulp-notify  del  --save-dev
+</code></pre>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f62im06x7hj20ft0bowj8.jpg" alt></p>
+<h2 id="加载插件"><a href="#加载插件" class="headerlink" title="加载插件"></a>加载插件</h2><p>接着在项目目录下创建一个gulpfile.js文件，用于配置加载插件：</p>
+<p>引入插件：</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> gulp <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    htmlmin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-htmlmin'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    sass <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-ruby-sass'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    autoprefixer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-autoprefixer'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    minifycss <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-clean-css'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    jshint <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-jshint'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    uglify <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-uglify'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    imagemin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-imagemin'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    rename <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-rename'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    concat <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-concat'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    notify <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-notify'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    cache <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-cache'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    livereload <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-livereload'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    del <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'del'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    ngAnnotate <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-ng-annotate'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    stripDebug <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-strip-debug'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    ngmin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-ngmin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="建立任务"><a href="#建立任务" class="headerlink" title="建立任务"></a>建立任务</h2><ul>
+<li>编译sass、自动添加css前缀和压缩</li>
+</ul>
+<blockquote>
+<p>以下代码的主要目的：首先我们编译sass，添加前缀，保存到我们指定的目录下面，还没结束，我们还要压缩，给文件添加.min后缀再输出压缩文件到指定目录，最后提醒任务完成了。</p>
+</blockquote>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'styles'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'src/www/main.scss'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">sass</span><span class="token punctuation">(</span><span class="token punctuation">{</span> style<span class="token punctuation">:</span> <span class="token string">'expanded'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//将sass文件编译为css</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">autoprefixer</span><span class="token punctuation">(</span><span class="token string">'last 2 version'</span><span class="token punctuation">,</span> <span class="token string">'safari 5'</span><span class="token punctuation">,</span> <span class="token string">'ie 8'</span><span class="token punctuation">,</span> <span class="token string">'ie 9'</span><span class="token punctuation">,</span> <span class="token string">'opera 12.1'</span><span class="token punctuation">,</span> <span class="token string">'ios 6'</span><span class="token punctuation">,</span> <span class="token string">'android 4'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//添加css前缀</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/assets/css'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//保存到指定文件夹</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">{</span> suffix<span class="token punctuation">:</span> <span class="token string">'.min'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//重命名文件，添加.min</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">minifycss</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//压缩css</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/assets/css'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'Styles task complete'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//提示</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>解释一下：</p>
+</blockquote>
+<pre><code>gulp.task(&#39;styles&#39;, function () {...});
+</code></pre><blockquote>
+<p>gulp.task这个API用来创建任务，在命令行下可以输入<code>gulp styles</code>来执行上面的任务。</p>
+</blockquote>
+<pre><code>return gulp.src(&#39;src/styles/main.scss&#39;)
+</code></pre><blockquote>
+<p>gulp.src这个API设置需要处理的文件的路径，可以是多个文件以数组的形式[main.scss, vender.scss]，也可以是正则表达式/ <em> / </em> .scss。</p>
+</blockquote>
+<pre><code>.pipe(sass({ style: &#39;expanded&#39; }))
+</code></pre><blockquote>
+<p>我们使用.pipe()这个API将需要处理的文件导向sass插件，那些插件的用法可以在github上找到，为了方便大家查找我已经在上面列出来了。</p>
+</blockquote>
+<pre><code>.pipe(gulp.dest(&#39;dist/assets/css&#39;));
+</code></pre><blockquote>
+<p>gulp.dest()API设置生成文件的路径，一个任务可以有多个生成路径，一个可以输出未压缩的版本，另一个可以输出压缩后的版本。</p>
+</blockquote>
+<p>为了更好的了解<a href="http://www.gulpjs.com.cn/docs/api/" target="_blank" rel="noopener">Gulp API</a>，强烈建议看一下Gulp API文档，其实Gulp API就这么几个。</p>
+<h2 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h2><p>以下是我自己创建的任务，仅供参考：</p>
+<ul>
+<li>压缩html</li>
+</ul>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'htmlmin'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//压缩html</span>
+    <span class="token keyword">return</span> gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'src/www/index.html'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">htmlmin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            removeComments<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//清除HTML注释</span>
+            collapseWhitespace<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//压缩HTML</span>
+            minifyJS<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//压缩页面JS</span>
+            minifyCSS<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token comment" spellcheck="true">//压缩页面CSS        </span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/www/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'htmlmin task complete'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><p>压缩js</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'minCom'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//压缩comm.js</span>
+  <span class="token keyword">return</span> gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'src/www/app/comm.js'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">{</span> suffix<span class="token punctuation">:</span> <span class="token string">'.min'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//重命名</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">uglify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//压缩js</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/www/js'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'minCom task complete'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>压缩图片</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'src/www/img/*'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">imagemin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          optimizationLevel<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+          progressive<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          interlaced<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//压缩图片</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/www/img'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'Images task complete'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>这个任务使用imagemin插件把所有在src/images/目录以及其子目录下的所有图片（文件）进行压缩，我们可以进一步优化，利用缓存保存已经压缩过的图片，使用之前装过的gulp-cache插件，不过要修改一下上面的代码，将这行代码:</p>
+</blockquote>
+<pre><code>.pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
+</code></pre><blockquote>
+<p>修改成:</p>
+</blockquote>
+<pre><code>.pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+</code></pre><blockquote>
+<p>现在，只有新建或者修改过的图片才会被压缩了。</p>
+</blockquote>
+<ul>
+<li>清理数据</li>
+</ul>
+<blockquote>
+<p>在任务执行前，最好先清除之前生成的文件：</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'clean'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">del</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dist/www/css'</span><span class="token punctuation">,</span> <span class="token string">'dist/www/js'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cb<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>在这里没有必要使用Gulp插件了，可以使用NPM提供的插件。我们用一个回调函数（cb）确保在退出前完成任务。</p>
+</blockquote>
+<ul>
+<li>压缩angularJs</li>
+</ul>
+<blockquote>
+<p>合并压缩angularJs，保证依赖</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'Angularjs'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//合并压缩angular.js</span>
+    <span class="token keyword">return</span> gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token string">'src/www/app/main.js'</span><span class="token punctuation">,</span>
+            <span class="token string">'src/www/app/map/init.js'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">ngAnnotate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">ngmin</span><span class="token punctuation">(</span><span class="token punctuation">{</span> dynamic<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">stripDebug</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">uglify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> outSourceMap<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token string">'all.min.js'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'dist/www/js'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</blockquote>
+<h2 id="设置默认任务（default）"><a href="#设置默认任务（default）" class="headerlink" title="设置默认任务（default）"></a>设置默认任务（default）</h2><blockquote>
+<p>我们在命令行下输入gulp执行的就是默认任务，现在我们为默认任务指定执行上面写好的三个任务：</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'default'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'clean'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    gulp<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span> <span class="token string">'htmlmin'</span><span class="token punctuation">,</span> <span class="token string">'styles'</span><span class="token punctuation">,</span> <span class="token string">'minCom'</span><span class="token punctuation">,</span> <span class="token string">'img'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>在这个例子里面，clean任务执行完成了才会去运行其他的任务，在gulp.start()里的任务执行的顺序是不确定的，所以将要在它们之前执行的任务写在数组里面。</p>
+</blockquote>
+<h2 id="监听文件"><a href="#监听文件" class="headerlink" title="监听文件"></a>监听文件</h2><blockquote>
+<p>为了监听文件的是否修改以便执行相应的任务，我们需要创建一个新的任务，然后利用gulp.watch API实现：</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'watch'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// Watch .scss files</span>
+  gulp<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">'src/styles/**/*.scss'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'styles'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Watch .js files</span>
+  gulp<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">'src/scripts/**/*.js'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'scripts'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Watch image files</span>
+  gulp<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">'src/images/**/*'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'images'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>我们将不同类型的文件分开处理，执行对应的数组里的任务。现在我们可以在命令行输入<code>gulp watch</code>执行监听任务，当.sass、.js和图片修改时将执行对应的任务。</p>
+</blockquote>
+<ul>
+<li>自动刷新页面</li>
+</ul>
+<blockquote>
+<p>Gulp也可以实现当文件修改时自动刷新页面，我们要修改watch任务，配置LiveReload：</p>
+<pre class=" language-js"><code class="language-js">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'watch'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// Create LiveReload server  livereload.listen();</span>
+  <span class="token comment" spellcheck="true">// Watch any files in dist/, reload on change</span>
+  gulp<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dist/**'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'change'</span><span class="token punctuation">,</span> livereload<span class="token punctuation">.</span>changed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>要使这个能够工作，还需要在浏览器上安装LiveReload插件。</p>
+</blockquote>
+<p>有关于gulp的使用，我还自己写了一个脚手架，平常开发一些小项目的时候，使用的比较方便。  github地址：<a href="https://github.com/lion1ou/gulp_generator" target="_blank" rel="noopener">https://github.com/lion1ou/gulp_generator</a></p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript数据类型转换</title>
     <url>/2016/08/22/</url>
     <content><![CDATA[<p>JavaScript是一种动态类型语言，变量没有类型限制，可以随时赋予任意值。虽然变量没有类型，但是数据本身和各种运算符是有类型的。如果运算符发现，数据的类型与预期不符，就会自动转换类型。比如，减法运算符预期两侧的运算子应该是数值，如果不是，就会自动将它们转为数值。<br><a id="more"></a></p>
@@ -5747,6 +7138,948 @@ x <span class="token comment" spellcheck="true">// undefined</span>
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令行创建一个cordova项目</title>
+    <url>/2016/07/16/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="创建cordova项目"><a href="#创建cordova项目" class="headerlink" title="创建cordova项目"></a>创建cordova项目</h2><p>在某个目录下创建cordova项目，打开命令行，</p>
+<p>输入：<code>cordova create sensor com.jkinfo.sensor sensor</code></p>
+<p>创建cordova工程  &lt; 文件夹名 &gt; &lt; 包名 &gt; &lt; app名 &gt;</p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f5sa4nsp01j20cs00ut8p.jpg" alt="屏幕快照 2016-07-13 14.15.21.png"></p>
+<blockquote>
+<p>注意：当第一次创建或编译项目的时候，可能系统会自动下载一些东西，需要一些时间。</p>
+</blockquote>
+<p>文件夹目录：</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f5sa2a3kckj207y06mt90.jpg" alt="屏幕快照 2016-07-13 14.46.00.png"></p>
+<ul>
+<li><p>hooks：存放自定义cordova命令的脚本文件。每个project命令都可以定义before和after的Hook，比如：before_build、after_build。没用过，不展开了。</p>
+</li>
+<li><p>platforms：平台目录，各自的平台代码就放在这里，可以放一下平台专属的代码，现在这个目录应该是空的，后面会介绍如何创建平台。</p>
+</li>
+<li><p>plugins：插件目录，安装的插件会放在这里。后面会有专门的文章介绍开发插件。</p>
+</li>
+<li><p><strong>www</strong>：最重要的目录，存放项目主题的HTML5和JS代码的目录。app一开始打开的就是这个目录中index.html文件。</p>
+</li>
+<li><p><strong>config.xml</strong>：主要是cordova的一些配置，比如：项目使用了哪些插件、应用图标icon和启动页面SplashScreen，修改app的版本，名字等信息，还有平台的配置。</p>
+</li>
+</ul>
+<h2 id="添加平台支持"><a href="#添加平台支持" class="headerlink" title="添加平台支持"></a>添加平台支持</h2><p>用命令行打开对应的文件夹，</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5sa6299afj209t00tdfq.jpg" alt="屏幕快照 2016-07-13 14.49.32.png"></p>
+<ul>
+<li>添加平台</li>
+</ul>
+<p>输入：<code>cordova platforms add android（ios）</code></p>
+<p>Android:</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f5sa8m5bqaj20lh09nmy7.jpg" alt="A29A635B-1829-4755-80DB-1AC878C50D8E.jpg"></p>
+<p>iOS:</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f5sa7w5t1aj20dl036t9b.jpg" alt="屏幕快照 2016-07-13 14.51.14.png"></p>
+<ul>
+<li>移除平台</li>
+</ul>
+<p>输入：cordova platforms rm android  （移除android平台支持）</p>
+<p>也可以通过@版本号，来添加不同版本的android平台，如：</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5saaazgq7j20l80a275c.jpg" alt="6AEEEA6B-F4A4-4329-84F0-5D6D7CF8026B.jpg"></p>
+<p>现在就可以在www文件夹内写自己的js和html代码了。</p>
+<h2 id="添加和删除项目插件"><a href="#添加和删除项目插件" class="headerlink" title="添加和删除项目插件"></a>添加和删除项目插件</h2><ul>
+<li>添加插件</li>
+</ul>
+<p>输入:<code>cordova plugin add cordova-plugin-device</code> (cordova plugin add &lt;插件官方名称&gt;)</p>
+<blockquote>
+<p>插件搜索地址：<a href="http://cordova.apache.org/plugins/" target="_blank" rel="noopener">http://cordova.apache.org/plugins/</a></p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f5sadqmhcsj20ch01ojrl.jpg" alt="屏幕快照 2016-07-13 14.56.59.png"></p>
+<blockquote>
+<p>也可以通过github查找一些第三方插件，</p>
+</blockquote>
+<p>输入：<code>cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner.git</code>//这个是扫描二维码插件  (github项目地址)</p>
+<blockquote>
+<p>github地址：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></p>
+</blockquote>
+<ul>
+<li>删除插件</li>
+</ul>
+<p>输入：<code>cordova plugin rm cordova-plugin-device</code>（使用rm和remove都可以）</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5sal83magj20cf01yq2x.jpg" alt="3BD7D669-81CE-4AF8-A9F8-E264B37DF16D.jpg"></p>
+<ul>
+<li>插件列表</li>
+</ul>
+<p>输入：<code>cordova plugin list</code>（查看当前安装了哪些插件）</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5sam8gqrwj20d00320st.jpg" alt="608068AD-80B5-49E1-9BC0-699D2995FA25.jpg"></p>
+<h2 id="编译调试程序"><a href="#编译调试程序" class="headerlink" title="编译调试程序"></a>编译调试程序</h2><p>不是每一句代码都需要运行，根据自己的需求进行选择。</p>
+<ul>
+<li><code>cordova install android</code> //将编译好的应用程序安装到模拟器上。</li>
+<li><code>cordova emulate android</code> //在模拟器上运行（前提是创建好AVD）</li>
+<li><code>cordova serve android</code> //在浏览器运行</li>
+<li><code>cordova build android</code> //打包cordova项目到android平台。</li>
+<li><code>cordova run android</code> //通过USB直接安装到真机（该语句已经包括了build命令）</li>
+</ul>
+<p>例如：我现在是手边直接连着测试手机，所以我就会直接用cordova run android</p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f5sajqxqg0j20j007r0t9.jpg" alt="FDCAD3F7-2E1B-425F-B92B-FD89BDBBCD82.jpg"></p>
+<p>中间省略…</p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f5sajxbxxhj20iz07ct9g.jpg" alt="72B9FD8E-F27C-4AB9-97F9-8002CE5F6E96.jpg"></p>
+<p>出现LAUNCH SUCCESS则编译成功，已经安装到手机上了。</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mac下安装cordova开发环境</title>
+    <url>/2016/07/15/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="一、安装ios开发环境"><a href="#一、安装ios开发环境" class="headerlink" title="一、安装ios开发环境"></a>一、安装ios开发环境</h2><h3 id="1-安装xcode"><a href="#1-安装xcode" class="headerlink" title="1.安装xcode"></a>1.安装xcode</h3><h3 id="2-安装node-js"><a href="#2-安装node-js" class="headerlink" title="2.安装node js"></a>2.安装node js</h3><blockquote>
+<ul>
+<li>control + space 打开spotlight,输入“终端”，就打开了终端，类似win下的cmd</li>
+<li>输入 node -v , 回车;</li>
+<li>输入 npm -v , 回车;</li>
+<li>若无错，则显示版本号</li>
+</ul>
+</blockquote>
+<h3 id="3-安装cordova"><a href="#3-安装cordova" class="headerlink" title="3.安装cordova"></a>3.安装cordova</h3><pre class=" language-shell"><code class="language-shell">sudo npm install -g cordova   
+</code></pre>
+<blockquote>
+<p>如果没有sudo则会报错，原因：由于 root 用户在 OS X 中具有特殊权限，因此对于特定的管理或故障诊断任务可能非常有用，但不适合日常使用。如果使用不慎，root 用户作出的更改可能只有通过重装 OS X 才能修复。考虑使用其他方式（如 sudo 命令）来代替启用 root 用户。</p>
+</blockquote>
+<h3 id="4-安装依赖"><a href="#4-安装依赖" class="headerlink" title="4.安装依赖"></a>4.安装依赖</h3><pre class=" language-shell"><code class="language-shell">sudo npm install -g ios-deploy - -unsafe-perm=t    //代表真机运行环境  
+sudo npm install -g ios-sim                       //代表模拟器运行环境  
+</code></pre>
+<p>需要输入appleId密码</p>
+<h3 id="5-ios真机调试"><a href="#5-ios真机调试" class="headerlink" title="5.ios真机调试"></a>5.ios真机调试</h3><p>详见<a href="http://www.skyfox.org/ios-xcode7-debug-device.html" target="_blank" rel="noopener">@这里</a></p>
+<h2 id="二、安装android开发环境"><a href="#二、安装android开发环境" class="headerlink" title="二、安装android开发环境"></a>二、安装android开发环境</h2><ul>
+<li>下载jdk：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">@这里</a></li>
+<li>下载Android Studio ，<a href="http://www.android-studio.org/" target="_blank" rel="noopener">@这里</a></li>
+<li>安装后，选择标准版，然后会自行下载Android-SDK，platfroms</li>
+<li>下载完以后选择SDK Manager</li>
+</ul>
+<p><img src="http://7xvowi.com1.z0.glb.clouddn.com/blog/sdk-manager.png" alt></p>
+<ul>
+<li>选择需要下载的SDK文件</li>
+</ul>
+<p><img src="http://7xvowi.com1.z0.glb.clouddn.com/blog/downloadAndroidSdk.png" alt></p>
+<p> ＊ 显示隐藏文件：</p>
+<blockquote>
+<p>在终端（Terminal）输入如下命令，即可显示隐藏文件和文件夹</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder//显示  
+defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder//隐藏
+</code></pre>
+<ul>
+<li>在本地目录（home directory／就是你的用户目录下）中创建文件.bash_profile</li>
+<li>在文件中写入以下内容：（可能每个人都有差异，请勾选显示“资源库”选项，自行对比）</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home;  
+export ANDROID_HOME=/Users/mac/Library/Android/sdk;  
+export ANDROID_HOME_TOOLS=/Users/mac/Library/Android/sdk/platform-tools;  
+export PATH=${PATH}:${JAVA_HOME}:${ANDROID_HOME}:${ANDROID_HOME_TOOLS};
+export PATH=$PATH:/Users/mac/Library/Android/sdk/platform-tools;   
+</code></pre>
+<ul>
+<li><p>执行如下命令：</p>
+<pre class=" language-shell"><code class="language-shell">source .bash_profile
+</code></pre>
+</li>
+<li><p>验证：检查是否生效,可以看下 adb 当前版本</p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">adb -version
+</code></pre>
+<p>出现以下内容，说明环境变量设置完成。</p>
+<p><img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1f8rincw520j209504bq3e.jpg" alt></p>
+<ul>
+<li>执行Cordova命令行，<code>cordova run android</code></li>
+</ul>
+<p><img src="http://7xvowi.com1.z0.glb.clouddn.com/blog/firstRunCordova.png" alt><br>即可真机调试程序，还是出现无法安装问题，拔出手机连接线，重新连接。（首次执行cordova命令需要较长时间，下载相关依赖文件）</p>
+<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><p>若出现如下问题：</p>
+<pre class=" language-bash"><code class="language-bash">cordova build android
+ANDROID_HOME<span class="token operator">=</span>/Users/jkinfo/Library/Android/sdk
+JAVA_HOME<span class="token operator">=</span>/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
+Error: Could not <span class="token function">find</span> gradle wrapper within Android SDK. Might need to update your Android SDK.
+Looked here: /Users/jkinfo/Library/Android/sdk/tools/templates/gradle/wrapper
+</code></pre>
+<p>解决办法：</p>
+<p>去<a href="https://developer.android.com/studio/index.html#downloads" target="_blank" rel="noopener">安卓开发平台</a>下载Android tools <a href="https://dl.google.com/android/repository/tools_r25.2.3-macosx.zip" target="_blank" rel="noopener">tools_r25.2.3-macosx.zip</a> 替换现tools文件的内容</p>
+<ul>
+<li>下载上述文件，解压</li>
+<li>将解压出来的文件，与<code>/Users/jkinfo/Library/Android/sdk/tools</code>目录下的文件替换</li>
+<li>然后就可以正常的运行cordova命令了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下安装cordova开发环境</title>
+    <url>/2016/07/14/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="准备阶段："><a href="#准备阶段：" class="headerlink" title="准备阶段："></a>准备阶段：</h2><h3 id="必备："><a href="#必备：" class="headerlink" title="必备："></a>必备：</h3><ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">JDK</a>（根据自己的开发平台下载相应的安装包，可能需要FQ）</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d5lisumzj20f908i0ty.jpg" alt="46AC8FE5-B5F5-4F78-A655-4D055018F4E2.jpg"></p>
+<ul>
+<li><p><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">Nodejs</a>  （根据自己的开发平台下载相应的安装包，可能需要FQ）</p>
+</li>
+<li><p><a href="http://developer.android.com/sdk/index.html" target="_blank" rel="noopener">Android SDK Manage</a>  （根据自己的开发平台下载相应的安装包，可能需要FQ）</p>
+</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6d5mvz8qvj20lw0ckjs9.jpg" alt="B5D0789C-EF1A-4194-949C-0C33599D6B43.jpg"></p>
+<p>若没办法FQ的同学，可以去<a href="https://github.com/inferjay/AndroidDevTools/" target="_blank" rel="noopener">这里</a>找找看看，也可以直接下载链接：<a href="http://pan.baidu.com/s/1skXwktJ" target="_blank" rel="noopener">http://pan.baidu.com/s/1skXwktJ</a>（2016.4.24整理）</p>
+<h3 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h3><ul>
+<li><a href="https://www.eclipse.org/downloads/" target="_blank" rel="noopener">Eclipse</a>  （根据自己的开发平台下载相应的安装包，可能需要FQ）</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d5oeaiyvj20nb07u74t.jpg" alt="E3020D0F-093D-44EE-BA21-3B97867A4371.jpg"></p>
+<p>选择这个下载通道：</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d5oyzr6uj20el0400so.jpg" alt="7D18D751-A9ED-427A-9A32-A9F2590AFE63.jpg"></p>
+<ul>
+<li><a href="http://ant.apache.org/bindownload.cgi" target="_blank" rel="noopener">apache-ant</a></li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d5pxwi7pj20hy05rgmf.jpg" alt="DCCCC77A-F48B-47D1-8397-71896498675E.jpg"></p>
+<h2 id="配置阶段："><a href="#配置阶段：" class="headerlink" title="配置阶段："></a>配置阶段：</h2><h3 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h3><blockquote>
+<p>安装java环境，配置环境变量</p>
+</blockquote>
+<ol>
+<li><p>下载JDK，<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">link</a></p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6c2hkxorgj20f408n76s.jpg" alt="屏幕快照 2016-07-30 17.27.11.png"></p>
+<p> 根据自己的系统，下载对应的版本</p>
+</li>
+<li><p>安装JDK</p>
+<p> 默认选择，正常点击，下一步，下一步，完成安装。</p>
+</li>
+<li><p>配置环境变量</p>
+<p> 右击计算机=》属性=》高级系统设置</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6c2nylc7sj20cv0eb0t7.jpg" alt="82EECB57-DFF7-4563-8CFF-40EF0BF85935.jpg"></p>
+<ul>
+<li><p><strong>配置JAVA_HOME</strong>（如图新建JAVA_HOME，变量值配置为jdkX.X.XX文件夹的位置）</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2pxpxzxj20bx063mxd.jpg" alt="9CAC574C-8432-466E-AF8E-21C61C6F8C6D.jpg"></p>
+</li>
+<li><p><strong>配置classPath</strong></p>
+<p>在已有的classPath中添加或新建添加<code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;</code>，记得前面有个”.”。</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cdme9unqj20hm05u0tl.jpg" alt="屏幕快照 2016-07-31 00.00.26.png"></p>
+</li>
+<li><p><strong>配置Path</strong>（在已有的path中添加”%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;”，多个目录用分号隔开）</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6c2rih4t6j20bx067dg2.jpg" alt="0C62FF95-28F8-4D23-ADF3-2A6137DE90B2.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cdpplgylj20db068jsk.jpg" alt="屏幕快照 2016-07-31 00.03.30.png"></p>
+<blockquote>
+<p>(配置完成后，执行命令行时，系统会在path指定的路径中寻找该命令对应的可执行文件)</p>
+</blockquote>
+</li>
+<li><p><strong>检验安装</strong>配置是否正确</p>
+<p>组合键Windows+R后，输入cmd后，回车，打开cmd窗口，在窗口中输入<code>java -version</code>后回车，出现如下画面则表示成功！</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2tfy1vpj20em029t8x.jpg" alt="82D4068D-117F-497F-8E52-8C69943479AB.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="安装-Android-SDK"><a href="#安装-Android-SDK" class="headerlink" title="安装 Android SDK"></a>安装 Android SDK</h3><ol>
+<li><p>安装Android SDK Tool,自定义配置安装地址，下一步…下一步，OK！</p>
+</li>
+<li><p>打开Android SDK Manager，根据自己需求选择下载android SDK。</p>
+<p> （运行后出现如下界面，选择自己需要的Android版本，然后点击”Install X packages”。Installed 表示已经安装、Not installed表示没有安装!!）</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d5vy3oyjj20fx0cv0wv.jpg" alt="50B0148D-8A4D-445F-B1EB-5E4526E76931.jpg"></p>
+<p> 在新出现的界面中选择如下Accept或者Accept All,然后点击Install。Android SDK 管理器就开始下载并安装你所选的包了，我们等一段时间就OK了！</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d5wxqeyej20gm0a777d.jpg" alt="B1DB480B-D396-4F0F-963F-F044CF5B2D30.png"></p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d5xhnl0bj20fx0cv0wv.jpg" alt="50B0148D-8A4D-445F-B1EB-5E4526E76931.jpg"></p>
+<p> 注：可能会出现没有FQ无法下载的情况，我整理的分享链接里，有一个压缩包，是我自己现在在用的SDK包，将其解压到自己相应的文件夹下。</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d5yiwqa0j20go0avjs2.jpg" alt="7E97BDF0-CA45-42B6-81AE-A40D002434FE.jpg"></p>
+</li>
+<li><p>配置环境变量<br> 添加ANDROID_HOME (同添加JAVA_HOME方法)</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d5z3gbt4j20ij05at9m.jpg" alt="0E302D64-24D0-4E33-9C75-F3D1F086DEDA.png"></p>
+<p> 设置PATH中添加ANDROID_HOME目录下的tools和platform-tools目录。</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d5zlu57gj20fg0fmwhy.jpg" alt="5408706E-71DA-4480-8943-09FA4DC1418A.png"></p>
+</li>
+</ol>
+<h3 id="安装Nodejs"><a href="#安装Nodejs" class="headerlink" title="安装Nodejs"></a>安装Nodejs</h3><ol>
+<li><p>安装node.msi，自定义配置安装地址，下一步…下一步，OK！</p>
+</li>
+<li><p>找到Node.js command prompt或者直接打开cmd</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d60xte0xj206p05jt8o.jpg" alt="91D2745F-47DF-46EF-8039-FCABFF804C4F.jpg"></p>
+</li>
+<li><p>输入：node -v 查看安装版本,输出版本即安装成功</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d6184ec2j204v01ua9u.jpg" alt="1A18784A-6321-4DF9-9A60-2D758BA3A2E8.jpg"></p>
+</li>
+<li><p>安装cordova<br> 输入： npm install -g cordova   安装全局的cordova</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d61gmpi5j208401a0sj.jpg" alt="51214CBB-ADCE-4C22-B3C5-B8E12DA7BFB0.jpg"></p>
+<p> 正在安装…</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d61s3i0rj20qz07hgmw.jpg" alt="D103AEA2-8D88-4EBD-840A-367F581AC52E.jpg"></p>
+<p> 安装完成。</p>
+</li>
+<li><p>重启界面</p>
+<p> 到这里环境已经搭建完成，可以直接在命令行上创建和编译cordova项目。详见本人其他相关文章。</p>
+</li>
+</ol>
+<h2 id="下面是为习惯使用eclipse的同学准备的。"><a href="#下面是为习惯使用eclipse的同学准备的。" class="headerlink" title="下面是为习惯使用eclipse的同学准备的。"></a>下面是为习惯使用eclipse的同学准备的。</h2><h3 id="安装eclipse"><a href="#安装eclipse" class="headerlink" title="安装eclipse"></a>安装eclipse</h3><p>解压eclipse，双击Eclipse图标后，就可以启动Eclipse了,到这Eclipse就安装完毕了。</p>
+<p>注意：最好把解压包放到，之前安装JDK的同级目录上</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d636pztpj20cp08hweo.jpg" alt="14143D42-D54A-45E7-8F07-0A7529AC1041.jpg"></p>
+<h3 id="ADT安卓开发插件安装"><a href="#ADT安卓开发插件安装" class="headerlink" title="ADT安卓开发插件安装"></a>ADT安卓开发插件安装</h3><p>ADT(Android Development Tools)安卓开发工具，是安卓在Eclipse IDE环境中的开发工具，为Android开发提供开发工具的升级或者变更，简单理解为在Eclipse下开放工具的升级下载工具。</p>
+<p>通过Android开发者官网(<a href="http://developer.android.com/" target="_blank" rel="noopener">developer.android.com</a>), 我们可以知道，Eclipse可以通过两种方式安装ADT插件，在线安装、离线安装(需要先下载<a href="https://github.com/inferjay/AndroidDevTools/" target="_blank" rel="noopener">ADT插件包</a>，我整理的分享链接中也有现成的)。</p>
+<p>（eclipse离线安装ADT插件）</p>
+<ol>
+<li>下载ADT插件的zip文件（不要解压）</li>
+<li>启动Eclipse,然后在菜单栏上选择 Help &gt; Install New Software</li>
+<li>单击 Add 按钮，在右上角</li>
+<li>在”Add Repository”对话框，单击”Archive”</li>
+<li>选择下载的adt-X.X.X.zip文件并单击”确认”。</li>
+<li>在Name(名称)处输入”ADT Plugin”,单击“OK”</li>
+<li>在软件对话框中,选中”Developer Tools”复选框,然后点击”Next”</li>
+<li>在下一个窗口中，您会看到一个要下载的工具列表。单击“Next”</li>
+<li>阅读并接受许可协议，然后单击“Finish”</li>
+<li>安装完成后，重新启动Eclipse</li>
+</ol>
+<h3 id="安装配置apache-ant"><a href="#安装配置apache-ant" class="headerlink" title="安装配置apache-ant"></a>安装配置apache-ant</h3><ol>
+<li><p>解压ant 你得到的是一个压缩包，解压缩它，并把它放在一个尽量简单的目录，例如D:\ant-1.9.6</p>
+</li>
+<li><p>添加ANT_HOME (同添加JAVA_HOME方法)</p>
+</li>
+<li><p>设置PATH中添加ANT_HOME目录下的bin目录。</p>
+</li>
+<li><p>测试一下你的设置，开始–&gt;运行–&gt;cmd进入命令行–&gt;键入 ant 回车</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d65hbz3aj208j01rt8k.jpg" alt="AF08A100-709C-4A8E-BE41-C9E71E88CB0E.jpg"></p>
+</li>
+<li><p>配置成功。</p>
+</li>
+</ol>
+<p>现在可在eclipse中导入项目了，因为我很少使用eclipse，所以就不具体说明了。</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iTrem2使用指南</title>
+    <url>/2016/07/10/</url>
+    <content><![CDATA[<p>iTerm2 是 MAC 下最好的终端工具。可以简单的认为，iTerm2 是配置完毕开箱即用的 tmux。<br><a id="more"></a></p>
+<h3 id="安装-iTerm2"><a href="#安装-iTerm2" class="headerlink" title="安装 iTerm2"></a>安装 <a href="http://www.iterm2.com/" target="_blank" rel="noopener">iTerm2</a></h3><p>官网下载安装，这里不赘述。</p>
+<h3 id="安装-brew"><a href="#安装-brew" class="headerlink" title="安装 brew"></a>安装 brew</h3><pre class=" language-shell"><code class="language-shell">/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre>
+<p>Homebrew安装成功后，会自动创建目录 /usr/local/Cellar 来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.</p>
+<blockquote>
+<p>注意：如果在安装过程中返回400，可以在几分钟后尝试重新安装。</p>
+</blockquote>
+<p><strong>Homebrew的使用</strong></p>
+<ul>
+<li>安装软件：brew install 软件名，例：brew install wget</li>
+<li>搜索软件：brew search 软件名，例：brew search wget</li>
+<li>卸载软件：brew uninstall 软件名，例：brew uninstall wget</li>
+<li>更新所有软件：brew update</li>
+</ul>
+<h3 id="安装并切换成-zsh"><a href="#安装并切换成-zsh" class="headerlink" title="安装并切换成 zsh"></a>安装并切换成 zsh</h3><p>安装最新的zsh， </p>
+<pre class=" language-shell"><code class="language-shell">brew install zsh
+</code></pre>
+<p>安装完成后，将zsh设置成系统默认shell，以代替bash。 </p>
+<p><strong>由于权限原因，先在命令行上执行<code>open /etc</code>打开文件夹，然后在文件夹中找到<code>shells</code>文件，复制文件到桌面，然后打开文件，在末尾添加<code>/usr/local/bin/zsh</code>，保存关闭后。复制替换原目录下的文件，此处需要输入密码验证。</strong></p>
+<p>再在终端中执行以下命令：</p>
+<pre class=" language-shell"><code class="language-shell">chsh -s /usr/local/bin/zsh
+</code></pre>
+<p>然后重新启动iTerm2，zsh就已经被配置成默认的shell了。</p>
+<h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 <a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a></h3><p>执行下面命令：</p>
+<pre class=" language-shell"><code class="language-shell">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+</code></pre>
+<p>请根据本文安装完成后，关于oh my zsh具体配置详见另一篇文章：<a href="http://lion1ou.win/2016/07/09/">oh my zsh 使用指南</a></p>
+<h3 id="安装-Powerline"><a href="#安装-Powerline" class="headerlink" title="安装 Powerline"></a>安装 <a href="http://powerline.readthedocs.io/en/latest/installation.html" target="_blank" rel="noopener">Powerline</a></h3><blockquote>
+<p>Powerline 是用 Python 写的脚本可以美化终端</p>
+</blockquote>
+<h5 id="1-安装Python-2-X"><a href="#1-安装Python-2-X" class="headerlink" title="1. 安装Python 2.X"></a>1. 安装Python 2.X</h5><p>因为 Powerline 是用 Python 写的脚本，所以我们必须确保在安装 Powerline 我们的 Mac 里面已经安装了 Python（一般来说 Mac 会自带 Python 2.X）</p>
+<pre class=" language-shell"><code class="language-shell">$ python -V
+Python 2.7.10
+
+# 我们可以在终端里面输入下面的代码来检查 Python 版本，若此命令没有返回任何讯息说明你的 Mac 里面没有安装 Python。
+</code></pre>
+<h5 id="2-安装pip"><a href="#2-安装pip" class="headerlink" title="2. 安装pip"></a>2. 安装pip</h5><p>安装 Powerline 的方法有很多种，我们可以通过 pip 或者 git 等工具，我推荐使用 pip，</p>
+<blockquote>
+<p>由于我还没有安装过 <code>pip</code> ， 所以先执行以下命令安装：</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">$ sudo easy_install pip
+# 或者执行下面代码安装
+$ wget https://bootstrap.pypa.io/get-pip.py -O - | python  
+</code></pre>
+<h5 id="3-检查Powerline"><a href="#3-检查Powerline" class="headerlink" title="3. 检查Powerline"></a>3. 检查Powerline</h5><p>用 pip 安装 Powerline </p>
+<pre class=" language-shell"><code class="language-shell">$ pip show powerline-status  # 检查是否已经安装Powerline
+
+# 如果以上命令执行后，如果出现如下信息，则说明已安装，可跳过下一步。如果没有任何反应说明没有安装，则进行下一步。
+</code></pre>
+<p><strong>Powerline 信息</strong></p>
+<pre class=" language-shell"><code class="language-shell">--
+Metadata-Version: 1.1
+Name: powerline-status
+Version: 2.2
+Summary: The ultimate statusline/prompt utility.
+Home-page: https://github.com/powerline/powerline
+Author: Kim Silkebaekken
+Author-email: kim.silkebaekken+vim@gmail.com
+License: MIT
+Location: /Users/mac/Library/Python/2.7/lib/python/site-packages #被安装到哪個路径
+Requires:
+
+# 以我的例子，我的使用者名称是 mac
+# 所以會安装到 /Users/mac/Library/Python/2.7/lib/python/site-packages 目录底下
+</code></pre>
+<h5 id="4-安装Powerline"><a href="#4-安装Powerline" class="headerlink" title="4. 安装Powerline"></a>4. 安装Powerline</h5><p>(由于权限问题，无法安装到系统目录下，所以我加上了 –user 选项，选择安装到当前用户目录下)</p>
+<pre class=" language-shell"><code class="language-shell">$ pip install --user powerline-status 
+</code></pre>
+<ul>
+<li>配置.bash_profile(如果是已经将bash切换成zsh的，跳过此处，配置.zshrc就可以了)</li>
+</ul>
+<p>创建、配置 <code>.bash_profile</code> 文件（mac 默认的配置文件，没有的话需要新建一个）让终端每次启动的时候自动运行 Powerline 脚本，新建如下：</p>
+<pre class=" language-shell"><code class="language-shell">cd ~ && l -h
+
+# 输入上述命令，查看文件夹下是否有 .bash_profile 文件，没有的话执行下面命令, 如果有就跳过下一步，
+
+touch .bash_profile  # 创建 .bash_profile 文件
+
+open .bash_profile   # 打开文件
+</code></pre>
+<ul>
+<li>配置 .zshrc</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc
+</code></pre>
+<p>只需将下面代码（其实就上面打印出来的安装路径）修改后，复制到你的 <code>bash_profile</code>或者<code>.zshrc</code>文件里就可以啦：</p>
+<p><code>. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh</code></p>
+<p><strong>需要注意的是最开始的 ‘.’ 和 ‘/powerline/…’ 中间是以空格分开的。</strong></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p>这里也有可能出现“powerline/bindings/bash/../../../scripts/powerline-config:: No such file or directory”的报错。原因没有将powerline的相关命令添加到环境变量，可以使用软链接解决:</p>
+<p>则需要将/Users/[用户名]/Library/Python/2.7/bin加入到PATH中，如下：</p>
+<pre class=" language-shell"><code class="language-shell">export PATH=/Users/[你的用户名]/Library/Python/2.7/bin:$PATH
+
+. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+</code></pre>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<h4 id="5-更换主题"><a href="#5-更换主题" class="headerlink" title="5. 更换主题"></a>5. 更换主题</h4><p>下载agnoster主题，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/fcamblor/oh-my-zsh-agnoster-fcamblor.git
+$ open oh-my-zsh-agnoster-fcamblor/
+</code></pre>
+<p>打开文件夹，双击运行install文件，主题将安装到<code>~/.oh-my-zsh/themes</code>目录下</p>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc  # 打开.zshrc
+</code></pre>
+<p>找到<code>ZSH_THEME</code>字段，改成：<code>ZSH_THEME=&quot;agnoster&quot;</code></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/1816409-20ef0157329eb98f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h5 id="6-安装Powerline字体"><a href="#6-安装Powerline字体" class="headerlink" title="6. 安装Powerline字体"></a>6. 安装Powerline字体</h5><p>通过git clone来下载powerline字体，在任意目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/Lokaltog/powerline-fonts.git
+$ cd powerline-fonts/ && ./install.sh
+</code></pre>
+<p>安装完成后，提示所有字体均已下载到/Users/mac/Library/Fonts路径下，如下提示：</p>
+<pre><code>All Powerline fonts installed to /Users/mac/Library/Fonts
+</code></pre><p>这样就说明字体库安装完了。</p>
+<p>接着打开iTerm 2<code>Preferences</code>=&gt;<code>Profile</code>=&gt;<code>Text</code>，找到<code>Font</code>和<code>Non-ASCII Font</code>的字体都设置成 带有<code>Powerline</code> 的字体，我这里设置的字体是<code>12pt Meslo LG S DZ Regular for Powerline</code>，大家可以根据喜好选择，只要是powerline字体就可以。</p>
+<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg" alt></p>
+<h5 id="7-安装配色方案"><a href="#7-安装配色方案" class="headerlink" title="7. 安装配色方案"></a>7. 安装配色方案</h5><p>下载配色方案，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/altercation/solarized.git
+$ open solarized/iterm2-colors-solarized
+</code></pre>
+<p>然后进入/Users/mac/solarized/iterm2-colors-solarized下双击 <code>Solarized Dark.itermcolors</code> 和 <code>Solarized Light.itermcolors</code> 两个文件就可以把配置文件导入到 iTerm2 里</p>
+<p>把iTerm 2的设置里的<code>Profile</code>=&gt;<code>colors</code>选项卡中里的<code>Load Presets</code>设置为刚刚下载的配色方案就可以了。</p>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg" alt></p>
+<p>大功告成，看看最后效果吧：</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg" alt></p>
+<h3 id="iTerm特色功能"><a href="#iTerm特色功能" class="headerlink" title="iTerm特色功能"></a>iTerm特色功能</h3><h5 id="特色快捷键"><a href="#特色快捷键" class="headerlink" title="特色快捷键"></a>特色快捷键</h5><ul>
+<li><p>command+; 根据上下文呼出自动完成窗口，上下键选择</p>
+</li>
+<li><p>全屏 command+enter</p>
+</li>
+<li><p>光标去哪了？command+/</p>
+</li>
+<li><p>用鼠标选中某个路径或者某个词汇就自动复制</p>
+</li>
+</ul>
+<h5 id="光标控制"><a href="#光标控制" class="headerlink" title="光标控制"></a>光标控制</h5><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl + a</td>
+<td>到行首</td>
+</tr>
+<tr>
+<td>ctrl + e</td>
+<td>行末</td>
+</tr>
+<tr>
+<td>ctrl + u</td>
+<td>删除一行</td>
+</tr>
+<tr>
+<td>⌘ + r（ctrl + l）</td>
+<td>清屏，其实是滚到新的一屏，并没有清空。</td>
+</tr>
+<tr>
+<td>ctrl + r</td>
+<td>搜索命令历史，这个大家都应该很熟悉了</td>
+</tr>
+<tr>
+<td>ctrl + d</td>
+<td>删除当前字符</td>
+</tr>
+<tr>
+<td>ctrl + h</td>
+<td>删除之前的字符</td>
+</tr>
+<tr>
+<td>ctrl + w</td>
+<td>删除光标前的单词</td>
+</tr>
+<tr>
+<td>ctrl + k</td>
+<td>删除到文本末尾</td>
+</tr>
+<tr>
+<td>ctrl + t</td>
+<td>交换光标处文本</td>
+</tr>
+<tr>
+<td>⌘ + —/+/0</td>
+<td>调整字体大小</td>
+</tr>
+<tr>
+<td>ctrl + f/b</td>
+<td>前进后退，相当于左右方向键，但是显然比移开手按方向键更快</td>
+</tr>
+<tr>
+<td>ctrl + p</td>
+<td>上一条命令，相当于方向键上</td>
+</tr>
+</tbody>
+</table>
+<h5 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h5><ul>
+<li>新建窗口：shift + command + d（横向）command + d（竖向）</li>
+<li>关闭窗口：shift + command + w</li>
+<li>前一个窗口：command + `</li>
+<li>后一个窗口：command + ~</li>
+<li>进入窗口 1,2,3：option + command + 编号</li>
+</ul>
+<h5 id="标签页操作"><a href="#标签页操作" class="headerlink" title="标签页操作"></a>标签页操作</h5><ul>
+<li>新建标签页: Command + T</li>
+<li>关闭标签页: Command + W</li>
+<li>前一个标签页: Command + 左方向键，Shift + Command + [</li>
+<li>后一个标签页: Command + 右方向键，Shitf + Command + ]</li>
+<li>进入标签页1，2，3…: Command + 标签页编号</li>
+<li>Expose 标签页: Option + Command + E（将标签页打撒到全屏，并可以全局搜索所有的标签页）</li>
+</ul>
+<h5 id="面板操作"><a href="#面板操作" class="headerlink" title="面板操作"></a>面板操作</h5><ul>
+<li>垂直分割: Command + D</li>
+<li>水平分割: Shift + Command + D</li>
+<li>前一个面板: Command + [</li>
+<li>后一个面板: Command + ]</li>
+<li>切换到上/下/左/右面板: Option + Command + 上下左右方向键</li>
+</ul>
+<h5 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h5><ul>
+<li>支持自定义全局快捷键用于显示和隐藏iTerm2 Preference -&gt; Keys －&gt; Show/hide iTerm2 with a system-wide hotkey 打上勾之后</li>
+<li>进入和退出全屏: Command + Enter</li>
+<li>查看当前终端中光标的位置: Command + /</li>
+<li>命令自动补全: Command + ;（很少用这个，还是感觉Zsh的补全更好用）</li>
+<li>开启和关闭背景半透明: Command + u</li>
+<li>清屏（重置当前终端）: Command + r</li>
+<li>文本选取</li>
+<li>文本选取有使用鼠标和不使用鼠标两种方式。</li>
+</ul>
+<h5 id="使用鼠标"><a href="#使用鼠标" class="headerlink" title="使用鼠标"></a>使用鼠标</h5><p>默认情况下，选取的文字会自动复制到剪切板，可以使用以下方式进行文本选取：</p>
+<ul>
+<li>常见的点击并拖拽方式</li>
+<li>双击选取整个单词</li>
+<li>三击选取整行</li>
+<li>选取某一部分，按住Shift，再点击某处，可以选取整个矩形内的文本（类似Windows下按住Shift可以批量选取图标）</li>
+<li>按住Command + Option，可以用鼠标画出一个矩形，用类似截图的方式选取文本 另外，还可以使用鼠标完成以下操作： 按住Command然后点击某个URL，会在浏览器中打开这个URL，点击某个文件夹，会在Finder里打开这个文件夹（再也不用open . 啦），点击某个文件名，会打开这个文件（文本文件支持MacVim，TextMate和BBEdit，如果后面跟随一个冒号和行号，文件会在行号处打开，其它格式的文件似乎不能调用默认程序打开） 选取文本之后，按住Command 同时拖动文本，可以将文本粘贴到目标位置（Drag and Drop） 鼠标中键粘贴（这个太感人了，一下子找回Linux的感觉了）</li>
+</ul>
+<h5 id="不使用鼠标"><a href="#不使用鼠标" class="headerlink" title="不使用鼠标"></a>不使用鼠标</h5><p>(这种方式最多只能选取一行文本) 使用 Command + f，会呼出一个搜索框，可以在当前面板中进行搜索，输入想要选取的部分内容，输入过程中，按Tab可以将选取部分向右扩展，按Shift + Tab向左扩展，按回车转到下一个匹配位置。使用Tab或Shift+Tab扩展得到想要的内容之后，选取内容会自动复制到剪切板，再次按Command + f隐藏搜索框。</p>
+<h5 id="位置书签"><a href="#位置书签" class="headerlink" title="位置书签"></a>位置书签</h5><p>在当前会话中按Command + Shift + m可以保存当前位置，之后可以按Command + Shift + j跳回这个位置。</p>
+<h5 id="粘贴历史"><a href="#粘贴历史" class="headerlink" title="粘贴历史"></a>粘贴历史</h5><p>使用Command + Shift + h 可以呼出粘贴历史，支持模糊检索。还可以设置将粘贴历史保存在磁盘上（Preferences -&gt; General）</p>
+<h5 id="即时回放"><a href="#即时回放" class="headerlink" title="即时回放"></a>即时回放</h5><p>使用Command + Opt + b 打开即时回放，按Esc退出。即时回放可以记录终端输出的状态，让你“穿越时间”查看终端内容。默认每个会话最多储存4MB的内容，可以在设置中更改（Preferences -&gt; Genernal -&gt; Instant Replay）。</p>
+<h5 id="窗口状态"><a href="#窗口状态" class="headerlink" title="窗口状态"></a>窗口状态</h5><p>通过 Window -&gt; Save Window Arrangement 可以保存当前窗口状态的快照，包括打开的窗口，标签页和面板。通过 Window -&gt; Restore Window Arrangement 还原。还可以在 Preferences -&gt; General -&gt; Open saved window arrangement 中设置在启动iTerm2时自动恢复窗口状态</p>
+<h3 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h3><ol>
+<li>⌘+Q关闭iTerm 2 时每次弹窗提示问题：</li>
+</ol>
+<p>iTerm 2 中，进入<code>Preference-General-Closing</code>栏目，将<code>Confirm &quot;Quit iTerm2(⌘Q)&quot;</code>command选项勾选去掉就行</p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Tools</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>oh my zsh 使用指南</title>
+    <url>/2016/07/09/</url>
+    <content><![CDATA[<p>根据这篇文章我们已经安装好iterm2，也做了一些个性化的样式配置，接下来就是怎么让你的命令行更加方便了。<br><a id="more"></a></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>安装 <a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a>，执行下面命令：</p>
+<pre class=" language-shell"><code class="language-shell">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+</code></pre>
+<h2 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h2><p>在<code>~/.oh-my-zsh/custom/plugins/</code>中已经自带了很多插件，只是没有激活而已，我们可以根据下面的插件激活方式进行激活。</p>
+<p>打开.zshrc文件，修改<code>plugins</code></p>
+<pre><code>open ~/.zshrc
+
+# 找到plugins配置项，修改成下面：
+# plugins=(colored-man-pages zsh_reload git git-flow ruby gem python pip node npm bower sublime)
+
+source ~/.zshrc
+</code></pre><p>这样自带的插件已开启了</p>
+<h2 id="安装其他插件"><a href="#安装其他插件" class="headerlink" title="安装其他插件"></a>安装其他插件</h2><p><strong>zsh-syntax-highlighting</strong> </p>
+<blockquote>
+<p>高亮你的zsh可用命令</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">$ cd ~/.oh-my-zsh/custom/plugins       # 打开插件的文件夹
+
+$ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git   # 克隆插件项目
+</code></pre>
+<p>打开.zshrc文件，插件到plugin中</p>
+<p>plugins=( [plugins…] zsh-syntax-highlighting)</p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc    #重新加载.zshrc的修改  
+</code></pre>
+<p><strong>autojump</strong></p>
+<blockquote>
+<p>autojump 就是通过记录你在 history 中的行为把你访问过的文件夹路径都 cache 下来</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">brew install autojump
+</code></pre>
+<p>打开.zshrc文件，插件到plugin中</p>
+<p>plugins=( [plugins…] autojump)</p>
+<p>将下面命令加到.zshrc最后</p>
+<pre class=" language-shell"><code class="language-shell">[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+</code></pre>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc    #重新加载.zshrc的修改  
+</code></pre>
+<p>使用 autojump 的缩写 <code>j</code>，<code>cd</code> 命令进入 <code>~/user/github/Youthink</code> 文件夹，<br>下一次再想进入 <code>Yourhink</code> 文件夹的时候，直接 <code>j youthink</code> 即可或者只输入一部分 <code>j youth</code> 都行</p>
+<ul>
+<li>删除无效路径</li>
+</ul>
+<p><code>j --purge 无效路径</code></p>
+<p>类似组件 Z (也内置了,直接改配置文件即可)，和 autojump 除了名字不一样，基本雷同。</p>
+<p><code>z -x 无效路径</code></p>
+<h2 id="高级功能"><a href="#高级功能" class="headerlink" title="高级功能"></a>高级功能</h2><h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><ul>
+<li><p>命令历史记录</p>
+<ul>
+<li>一旦在 shell 敲入正确命令并能执行后，shell 就会存储你所敲入命令的历史记录（存放在~/.zsh_history 文件中），方便再次运行之前的命令。可以按方向键↑和↓来查看之前执行过的命令</li>
+<li>可以用 !!来执行上一条命令</li>
+<li>使用 ctrl-r 来搜索命令历史记录</li>
+</ul>
+</li>
+<li><p>命令和文件补全(按tab键)</p>
+</li>
+<li><p>命令别名</p>
+<ul>
+<li>可以简化命令输入，在 .zshrc 中添加 alias shortcut=’this is the origin command’ 一行就相当于添加了别名</li>
+<li>在命令行中输入 alias 可以查看所有的命令别名</li>
+</ul>
+</li>
+</ul>
+<p>一些比较好用的设置</p>
+<pre class=" language-shell"><code class="language-shell">alias cls='clear'
+alias ll='ls -l'
+alias la='ls -a'
+alias grep="grep --color=auto"
+alias -s html='vim'   # 在命令行直接输入后缀为 html 的文件名，会在 Vim 中打开
+alias -s rb='vim'     # 在命令行直接输入 ruby 文件，会在 Vim 中打开
+alias -s py='vim'      # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
+alias -s js='vim'
+alias -s c='vim'
+alias -s java='vim'
+alias -s txt='vim'
+alias -s gz='tar -xzvf' # 在命令行直接输入后缀为 gz 的文件名，会自动解压打开
+alias -s tgz='tar -xzvf'
+alias -s zip='unzip'
+alias -s bz2='tar -xjvf'
+</code></pre>
+<h3 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h3><p>在进入一个 git 文件夹后会切换显示的模式：</p>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jvh758m6j20oe0as0ws.jpg" alt></p>
+<p>常用命令</p>
+<table>
+<thead>
+<tr>
+<th>Alias</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gaa</td>
+<td>git add –all</td>
+</tr>
+<tr>
+<td>gb</td>
+<td>git branch</td>
+</tr>
+<tr>
+<td>gcam</td>
+<td>git commit -a -m</td>
+</tr>
+<tr>
+<td>gcf</td>
+<td>git config –list</td>
+</tr>
+<tr>
+<td>gl</td>
+<td>git pull</td>
+</tr>
+<tr>
+<td>gp</td>
+<td>git push</td>
+</tr>
+<tr>
+<td>gr</td>
+<td>git remote</td>
+</tr>
+<tr>
+<td>gra</td>
+<td>git remote add</td>
+</tr>
+<tr>
+<td>gst</td>
+<td>git status</td>
+</tr>
+</tbody>
+</table>
+<p>自带大部分 git 命令的缩写，命令内容可以参考 <code>~/.oh-my-zsh/plugins/git/git.plugin.zsh</code></p>
+<p><code>Oh My Zsh</code>提供了一套系统别名（alias），来达到相同的功能。比如gst作为git status的别名。而且 Git 插件是 Oh My Zsh 默认启用的，相当于你使用了 Oh My Zsh，你就拥有了一套高效率的别名，而且还是全球通用的。</p>
+<p>完整列表请参考：<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git" target="_blank" rel="noopener">https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git</a>或者输入<code>alias | grep git</code>命令</p>
+<h3 id="osx"><a href="#osx" class="headerlink" title="osx"></a>osx</h3><pre><code>tab - 在一个新标签打开当前目录
+cdf - cd到当前Finder目录
+quick-look - 快速浏览特殊的文件
+man-preview - 在Preview应用打开特定的man page
+trash - 将特定的文件移到垃圾桶
+</code></pre><h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><ol>
+<li>连按两次Tab会列出所有的补全列表并直接开始选择，补全项可以使用 ctrl+n/p/f/b上下左右切换</li>
+<li>更智能的历史命令。在用或者方向上键查找历史命令时，zsh支持限制查找。比如，输入ls,然后再按方向上键，则只会查找用过的ls命令。而此时使用则会仍然按之前的方式查找，忽略 ls</li>
+<li>智能跳转，安装了 autojump 之后，zsh 会自动记录你访问过的目录，通过 j 目录名 可以直接进行目录跳转，而且目录名支持模糊匹配和自动补全，例如你访问过 hadoop-1.0.0 目录，输入j hado 即可正确跳转。j –stat 可以看你的历史路径库。</li>
+<li>目录浏览和跳转：输入 d，即可列出你在这个会话里访问的目录列表，输入列表前的序号，即可直接跳转。</li>
+<li>在当前目录下输入 .. 或 … ，或直接输入当前目录名都可以跳转，你甚至不再需要输入 cd 命令了。在你知道路径的情况下，比如 /usr/local/bin 你可以输入 cd /u/l/b 然后按进行补全快速输入</li>
+<li>通配符搜索：ls -l <strong>/*.sh，可以递归显示当前目录下的 shell 文件，文件少时可以代替 find。使用 </strong>/ 来递归搜索</li>
+<li>在 .zshrc 中添加 setopt HIST_IGNORE_DUPS 可以消除重复记录，也可以利用 <code>sort -t &quot;;&quot; -k 2 -u ~/.zsh_history | sort -o ~/.zsh_history</code> 手动清除</li>
+</ol>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Tools</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sublime 插件</title>
+    <url>/2016/07/05/</url>
+    <content><![CDATA[<p>从去年刚刚接触编程到现在已经一年时间过去了，用sublime Text的时间也有大半年了。用sublime Text也是因为一个cordova项目，从刚开始只用作txt文本编辑器，到现在每天都用它来敲代码。感觉自己越来越离不开他它，所以现在对常用的插件做个记录和分享。<br><a id="more"></a></p>
+<h2 id="package-control"><a href="#package-control" class="headerlink" title="package control"></a>package control</h2><blockquote>
+<p>要在sublime Text上安装插件，那就离不开package control，它是插件的安装器，其实自身也是个插件。</p>
+</blockquote>
+<p>安装方法：从菜单 View - Show Console 或者 ctrl + ~ 快捷键，调出 console。将以下 Python 代码粘贴进去并 enter 执行，不出意外即完成安装。以下提供 ST3 和 ST2 的安装代码：（ios和window一样。）</p>
+<p><strong>Sublime Text 3：</strong></p>
+<pre><code>import urllib.request,os,hashlib; h = &#39;df21e130d211cfc94d9b0905775a7c0f&#39; + &#39;1e3d39e33b79698005270310898eea76&#39;; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &#39;http://packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &#39;wb&#39; ).write(by)
+</code></pre><p><strong>Sublime Text 2：</strong></p>
+<pre><code>import urllib2,os,hashlib; h = &#39;df21e130d211cfc94d9b0905775a7c0f&#39; + &#39;1e3d39e33b79698005270310898eea76&#39;; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( &#39;http://packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), &#39;wb&#39; ).write(by) if dh == h else None; print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h) if dh != h else &#39;Please restart Sublime Text to finish installation&#39;)
+</code></pre><h2 id="插件安装方法"><a href="#插件安装方法" class="headerlink" title="插件安装方法"></a>插件安装方法</h2><ul>
+<li><p>按下 <code>ctrl+shift+p</code>/<code>command+shift+p</code>。此时会输出一个输入框， 输入install。</p>
+</li>
+<li><p>选择<code>package contrl： install package</code> 回车 ，需要稍定一会儿，右下角状态栏会显示正在连接的提示文字。</p>
+<blockquote>
+<p>使用sublime时注意看右下角状态栏，很多插件的提示信息都显示在这里，这个状态栏很小，初次使用的人都有可能没有注意到它</p>
+</blockquote>
+</li>
+<li><p>如果要卸载插件， <code>ctrl+shift+p</code>/<code>command+shift+p</code> 输入 <code>remove</code>， 选择<code>package control:remove package</code> 然后再选择已安装的插件， 回车即可卸载。</p>
+<blockquote>
+<p>备注：如果package control 安装插件时失败了， 我们可以采用手动安装的方式， 在google上去搜索插件， 下载插件的源代码。在sublime的菜单栏点击 preferences-&gt;Browse package..  此时会打开插件目录。然后把你下载的插件源代码复制进去就可以</p>
+</blockquote>
+</li>
+<li><p>可以通过这个网址<a href="https://packagecontrol.io/" target="_blank" rel="noopener">https://packagecontrol.io/</a>来查找自己喜欢的插件，了解插件的详细信息。</p>
+</li>
+</ul>
+<h2 id="常用插件推荐"><a href="#常用插件推荐" class="headerlink" title="常用插件推荐"></a>常用插件推荐</h2><h3 id="通用类"><a href="#通用类" class="headerlink" title="通用类"></a>通用类</h3><p><strong>1. <a href="https://github.com/titoBouzout/SideBarEnhancements" target="_blank" rel="noopener">Sidebar Enhancements</a></strong><br>增强侧边栏的插件</p>
+<p>  <img src="http://ww3.sinaimg.cn/large/006tKfTcgw1f6gwprvce8j309e0kz406.jpg" alt="屏幕快照 2016-08-03 22.03.04.png"></p>
+<p><strong>2. All Autocomplete</strong></p>
+<p>Sublime Text 默认的 Autocomplete 功能只考虑当前的文件，而 AllAutocomplete 插件会搜索所有打开的文件来寻找匹配的提示词；</p>
+<p><strong>3. Auto Filename</strong> 自动补全文件路径</p>
+<p><strong>4. clickableURLs</strong> url可点击</p>
+<p><strong>5. DeleteBlankLines</strong> 删除空白行</p>
+<pre><code>快速鍵：刪除選取範圍內的空白行
+
+Mac：Ctrl + Alt + Delete
+
+Win/Linux：Ctrl + Alt + Backspace
+
+快速鍵：刪除剩餘的空白行
+
+Mac：Ctrl + Alt + Shift + Delete
+
+Win/Linux：Ctrl + Alt + Shift + Backspace
+</code></pre><p><strong>6. Insert Nums</strong> 用于添加可递增的数字 </p>
+<h3 id="代码类"><a href="#代码类" class="headerlink" title="代码类"></a>代码类</h3><p><strong>1. <a href="https://github.com/SublimeCodeIntel/SublimeCodeIntel" target="_blank" rel="noopener">Sublime Code Intel</a></strong> 实现代码智能提示和自动完成功能。</p>
+<p>目前该插件支持以下语言：</p>
+<p><code>JavaScript, Mason, XBL, XUL, RHTML, SCSS, Python, HTML, Ruby, Python3, XML, Sass, XSLT, Django, HTML5, Perl, CSS, Twig, Less, Smarty, Node.js, Tcl, TemplateToolkit, PHP</code></p>
+<blockquote>
+<p>PHP:按住alt+鼠标左键，可以实现自定义函数之间的跳转，方便查找和修改函数内容和读写代码！</p>
+</blockquote>
+<p><strong>2. SublimeLinter</strong> 代码校验工具，检查代码语法是否有错误，并提示。</p>
+<p><a href="https://gaohaoyang.github.io/2015/03/26/sublimeLinter/" target="_blank" rel="noopener">详细步骤</a></p>
+<p><strong>3. HTML-CSS-JS Prettify</strong> HTML+CSS+JAVASCRIPT+JSON快速格式化</p>
+<p>快捷键：<code>Ctrl+Shift+H/command+shift+H</code></p>
+<p><strong>4. Emmet</strong> 可以快速的编写 HTML、CSS 以及实现其他的功能，<a href="http://docs.emmet.io/cheat-sheet/" target="_blank" rel="noopener">详细语法</a></p>
+<p><strong>5. ConvertToUTF8</strong> </p>
+<p>为了支持sublime显示非utf8，如 GBK 等编码的内容</p>
+<p>支持 GBK, BIG5, EUC-KR, EUC-JP, Shift_JIS 等编码的插件</p>
+<p><strong>6. Autoprefixer</strong> 自动添加厂商前缀</p>
+<p>使用方法：按 <code>Ctrl + Shift + P</code>，然后选 <code>Autoprefix CSS</code> 或者设置键盘快捷键 – <code>Preferences &gt; Key Bindings – User</code></p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> <span class="token property">"keys"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"ctrl+alt+x"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"autoprefixer"</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+<p>配置：</p>
+<p>打开选项<code>Preferences &gt; Package Settings &gt; Autoprefixer &gt; Settings – User</code></p>
+<p>默认设置：过去2个版本（如果 Chrome 30 是最新版的，这款插件自动选 Chrome 28 – 30 的版本来判断否需要前缀）</p>
+<p>配置参数：</p>
+<pre><code>last n versions 支持过去n个版本
+n% 全球使用率大于百分之 n
+ff &gt; 20 和 ff &gt;= 20 Firefox 20 或者更新
+none 消灭前缀
+</code></pre><p><strong>7. DocBlockr</strong> 注释自动完成</p>
+<p>支持js，php等多种编程语言的注释自动补全，输入/**回车即可自动补全注释代码，而去支持自动补全注释信息，如author等。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgw1f6gbkwdni1j30cf0aggnb.jpg" alt="20150418165435271753093870.jpg"></p>
+<p><strong>8. Terminal</strong> 从当前文件或根项目文件夹中启动终端</p>
+<p>快捷键是<code>Command+Shift+T</code>，默认是调用自带终端，可以修改为iterm，要修改插件的设置如下：</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// The command to execute for the terminal, leave blank for the OS default</span>
+  <span class="token comment" spellcheck="true">// On OS X the terminal can be set to iTerm.sh to execute iTerm</span>
+  <span class="token string">"terminal"</span><span class="token punctuation">:</span> <span class="token string">"iTerm.sh"</span><span class="token punctuation">,</span>
+
+  <span class="token comment" spellcheck="true">// A list of default parameters to pass to the terminal, this can be</span>
+  <span class="token comment" spellcheck="true">// overridden by passing the "parameters" key with a list value to the args</span>
+  <span class="token comment" spellcheck="true">// dict when calling the "open_terminal" or "open_terminal_project_folder"</span>
+  <span class="token comment" spellcheck="true">// commands</span>
+  <span class="token string">"parameters"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>9. Bracket Highlighter</strong> 代码匹配</p>
+<p>简介：可匹配[], (), {}, “”, ”, <tag></tag>，高亮标记，便于查看起始和结束标记</p>
+<p>使用：点击对应代码即可</p>
+<p><strong>10. SublimeREPL</strong></p>
+<p>功能：允许你在 Sublime Text 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）</p>
+<p><a href="https://github.com/wuub/SublimeREPL" target="_blank" rel="noopener">详情链接</a></p>
+<p><strong>11.JavaScript Next</strong> 完美支持ECMAScript 6</p>
+<p>JavaScript Next 提供了比默认JavaScript Package更好的语法高亮，而且他完美支持ECMAScript 6。</p>
+<p>建议完全使用 JavaScript Next代替JavaScript Package。</p>
+<p><strong>12. CSS3</strong> CSS3语法高亮</p>
+<p>默认安装的Sublime Text对CSS3的支持让人抓狂，帧动画？别开玩笑了你只会看到一片白色的纯文本一样的代码。</p>
+<p>事实上不光CSS3，我建议用CSS3 Package完全替代原来的CSS Package来完成语法高亮。把原来的禁用了吧</p>
+<pre><code>Mac:       cmd+shift+p  -&gt; Package Control: Disable Package -&gt; CSS
+Linux/Win: ctrl+shift+p -&gt; Package Control: Disable Package -&gt; CSS
+</code></pre><p><strong>13. <a href="https://github.com/Monnoroch/ColorHighlighter" target="_blank" rel="noopener">Color Highlighter</a></strong> CSS颜色高亮</p>
+<blockquote>
+<p>Color Highlighter这个插件会检测CSS文件中的颜色码，不论是Hex码或者RGB码都能很好的显示。</p>
+</blockquote>
+<p>Color Highlighter能够设置成用背景色或者边框提示颜色，我一般在Settings里做这样的设置：</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token string">"ha_style"</span><span class="token punctuation">:</span> <span class="token string">"filled"</span><span class="token punctuation">,</span>
+  <span class="token string">"icons"</span><span class="token punctuation">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//"Filled", "outlined", "none", "colored text" in ST2.</span>
+<span class="token comment" spellcheck="true">//"Filled", "outlined", "none", "underlined" (solid, strippled, squiggly), "colored text" in ST3.</span>
+</code></pre>
+<p>效果如下：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tKfTcgw1f6gchl5fcmj30bj049q38.jpg" alt="Color_Highlighter.jpg"></p>
+<p><strong>14. GitGutter：</strong></p>
+<blockquote>
+<p>实时显示当前工作区的文件与以下四种的区别：</p>
+</blockquote>
+<pre><code>Compare against HEAD(默认选项)
+Compare against particular branch
+Compare against particular tag
+Compare against specific commit
+</code></pre><p>如果选择默认的第一个选项，就可以实时看到当前的工作区（workplace）相对于最近一次提交（HEAD）的修改。若出现无法工作情况，请先修改用户配置，<code>Preferences &gt; Package Settings &gt; GitGutter &gt; Settings – User</code></p>
+<p>mac配置：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+   <span class="token property">"git_binary"</span><span class="token operator">:</span> <span class="token string">"/usr/local/bin/git"</span><span class="token punctuation">,</span>
+   <span class="token property">"non_blocking"</span> <span class="token operator">:</span> <span class="token string">"true"</span><span class="token punctuation">,</span>//解决sublime卡顿问题
+   <span class="token property">"live_mode"</span> <span class="token operator">:</span> <span class="token string">"false"</span>//解决sublime卡顿问题
+<span class="token punctuation">}</span>
+</code></pre>
+<p>windows配置：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"git_binary"</span><span class="token operator">:</span> <span class="token string">"C:/Program Files (x86)/Git/bin/git.exe"</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>15. ESLint</strong></p>
+<blockquote>
+<p>用于检测JavaScript代码质量工具</p>
+</blockquote>
+<p><strong>安装</strong></p>
+<p>使用此插件之前要先全局安装<code>eslint</code>：<code>npm install -g eslint</code></p>
+<p><strong>使用：</strong></p>
+<ol>
+<li><p>右键选择<code>ESLint</code>或者使用快捷键：<code>Ctrl + Alt + e (Cmd + Option + e on OSX)</code></p>
+</li>
+<li><p><code>F4</code>: 跳转到下一条错误行；<code>Shift + F4</code> : 跳转到上一条错误行</p>
+</li>
+</ol>
+<p><strong>配置：</strong></p>
+<p>mac：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"node_path"</span><span class="token operator">:</span> <span class="token string">"/usr/local/bin"</span><span class="token punctuation">,</span>
+  <span class="token property">"node_modules_path"</span><span class="token operator">:</span> <span class="token string">"/usr/local/lib/node_modules"</span><span class="token punctuation">,</span>
+  <span class="token property">"config_file"</span><span class="token operator">:</span> <span class="token string">"/Users/mac/code/personal/eslint/.eslintrc.yml"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>windows:</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"node_path"</span><span class="token operator">:</span> <span class="token string">"C:/Program Files/nodejs"</span><span class="token punctuation">,</span>
+  <span class="token property">"node_modules_path"</span><span class="token operator">:</span> <span class="token string">"%APPDATA%/npm/node_modules"</span><span class="token punctuation">,</span>
+  <span class="token property">"config_file"</span><span class="token operator">:</span> <span class="token string">"/path/to/.eslintrc.js"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>16. sublime Tmpl</strong> 快速生成文件模板</p>
+<p>快捷键：</p>
+<pre><code>ctrl+alt+h //html
+ctrl+alt+j //javascript
+ctrl+alt+c //css
+ctrl+alt+p //php
+ctrl+alt+r //ruby
+ctrl+alt+shift+p //python
+</code></pre><h3 id="写作类"><a href="#写作类" class="headerlink" title="写作类"></a>写作类</h3><p><strong>1. OmniMarkupPreviewer</strong></p>
+<p>Sublime Text 内 Markdown 标签页点击鼠标右键 - 选择Preview Current Markup in Browser。 或者使用快捷键 (OSX ⌘+⌥+O; Windows, LinuxCtrl+Alt+O) 来预览。</p>
+<p>配置：<code>Sublime Text &gt; Preferences &gt; Package Settings &gt; OmniMarkupPreviewer &gt; Settings - User</code></p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">{</span>
+    <span class="token string">"renderer_options-MarkdownRenderer"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token string">"extensions"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"tables"</span><span class="token punctuation">,</span> <span class="token string">"fenced_code"</span><span class="token punctuation">,</span> <span class="token string">"codehilite"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>2. MarkdownEditing</strong></p>
+<p>MarkdownEditing是Markdown写作者必备的插件，它可以不仅可以高亮显示Markdown语法还支持很多编程语言的语法高亮显示。</p>
+<p>快捷键：</p>
+<ul>
+<li>Option + Command + V - 粘贴为链接格式；</li>
+<li>Shift + Command + K - 插入图片。</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><strong>1. 更换Sublime Text程序图标</strong></p>
+<p>不仅主题可以更换，图标也可以。在<a href="https://dribbble.com/" target="_blank" rel="noopener">Dribbble</a>上有大量重新设计的Sublime Text精美图标。更换方法：</p>
+<ol>
+<li>下载一个图标，有.icns格式的最好。如果没有，用iConvert转换之。</li>
+<li>终端执行：open /Applications/Sublime\ Text.app/Contents/Resources/</li>
+<li>替换Sublime Text 3.icns或Sublime Text 2.icns文件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Sublime</tag>
       </tags>
   </entry>
   <entry>
