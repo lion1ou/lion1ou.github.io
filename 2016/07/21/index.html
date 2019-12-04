@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  
+  
+    <meta name="keywords" content="Cordova,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>cordova项目备忘 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        cordova项目备忘
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-07-21T10:42:23.000Z">
+        2016-07-21
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cordova/">Cordova</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <a id="more"></a>
+<h2 id="iOS代码编写方式"><a href="#iOS代码编写方式" class="headerlink" title="iOS代码编写方式"></a>iOS代码编写方式</h2><p>iOS开发与Android开发有所不同，由于苹果的限制，它不能像Android开发那样直接通过命令行命令实现真机调试。</p>
+<p>iOS版本的cordova项目编译步骤：添加iOS平台=》添加所需插件=》通过<code>cordova build ios</code>命令生成.xcodeproj文件=》双击打开该文件=》通过Xcode实现真机调试</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6fgatmsvnj215o0k0jx8.jpg" alt="屏幕快照 2016-08-02 15.46.54.png"></p>
+<h2 id="缩减标题栏，修复界面的高度。"><a href="#缩减标题栏，修复界面的高度。" class="headerlink" title="缩减标题栏，修复界面的高度。"></a>缩减标题栏，修复界面的高度。</h2><p>将通过命令行生成的.xcodeproject文件直接打开运行时，会发现页面内容会显示到手机的通知栏。<br>只需要在Staging目录下Classes目录下的MainViewController.m 下重写方法如下：</p>
+<pre class=" language-objc"><code class="language-objc">-(void)viewWillAppear:(BOOL)animated
+{
+    if([[[UIDevice currentDevice]systemVersion ] floatValue]>=7)
+    {
+        CGRect viewBounds=[self.webView  bounds];
+        viewBounds.origin.y=20;
+        viewBounds.size.height=viewBounds.size.height-20;
+        self.webView.frame=viewBounds;
+        self.modalPresentationStyle=UIModalPresentationOverCurrentContext; //解决上浮的问题
+    }
+    [super viewWillDisappear:animated];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if([[[UIDevice currentDevice]systemVersion ] floatValue]>=7)
+    {
+        CGRect viewBounds=[self.webView  bounds];
+        viewBounds.origin.y=20;
+        viewBounds.size.height=viewBounds.size.height+20;
+        self.webView.frame=viewBounds;
+        self.modalPresentationStyle=UIModalPresentationOverCurrentContext; //解决相机的问题
+    }
+    [super viewWillDisappear:animated];
+}
+</code></pre>
+<h2 id="禁止上下滑动出现灰色背景"><a href="#禁止上下滑动出现灰色背景" class="headerlink" title="禁止上下滑动出现灰色背景"></a>禁止上下滑动出现灰色背景</h2><p>使用Cordova进行跨平台应用开发时，发现在iOS平台下，如果页面处于最顶端时，用户用手指往下拖动，会露出灰色空背景。同样页面在最底部的时候，继续向上拖动，下方也会露出空背景。</p>
+<p>要禁止这个拖动效果，可在 config.xml 中进行如下设置：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WebViewBounce<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DisallowOverscroll<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<h2 id="设置iOS下默认语言为中文"><a href="#设置iOS下默认语言为中文" class="headerlink" title="设置iOS下默认语言为中文"></a>设置iOS下默认语言为中文</h2><p>比如在打开键盘输入时，调用相机插件时，调用相册时，都会出现英文现象。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tKfTcgw1f6vrt0t7thj30nl0ac763.jpg" alt="2016061710444967199.jpg"></p>
+<p>使用 Xcode 打开工程，将在 plist 文件里面 Localization native development region 设置为 China 即可。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tKfTcgw1f6vrw81nswj315k0hodo9.jpg" alt="屏幕快照 2016-08-16 18.38.00.png"></p>
+<h2 id="出现submit-方法无效"><a href="#出现submit-方法无效" class="headerlink" title="出现submit()方法无效"></a>出现submit()方法无效</h2><p>在post请求时，可能出现submit()方法无效的情况，需要在config.xml中添加</p>
+<p><code>&lt;allow-navigation href=&quot;*&quot; /&gt;</code></p>
+<h2 id="长按文字区域弹出复制选择框"><a href="#长按文字区域弹出复制选择框" class="headerlink" title="长按文字区域弹出复制选择框"></a>长按文字区域弹出复制选择框</h2><p>因为是web页面，长按住某一个文字区域会弹出复制选择框(android 4.0)可以通过屏蔽</p>
+<pre class=" language-css"><code class="language-css"><span class="token selector">body </span><span class="token punctuation">{</span>
+  <span class="token property">-webkit-user-select</span><span class="token punctuation">:</span>none<span class="token punctuation">;</span>   
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="通过给按钮添加震动提高用户使用感受"><a href="#通过给按钮添加震动提高用户使用感受" class="headerlink" title="通过给按钮添加震动提高用户使用感受"></a>通过给按钮添加震动提高用户使用感受</h2><pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button .vibrate<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<pre class=" language-js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".vibrate"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token string">'tap'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//需要引入phonegap的js</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>navigator<span class="token punctuation">.</span>notification<span class="token punctuation">)</span>                       
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> navigator<span class="token punctuation">.</span>notification<span class="token punctuation">.</span><span class="token function">vibrate</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="捕捉android返回按键【需要cordova支持】"><a href="#捕捉android返回按键【需要cordova支持】" class="headerlink" title="捕捉android返回按键【需要cordova支持】"></a>捕捉android返回按键【需要cordova支持】</h2><pre class=" language-js"><code class="language-js">document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"deviceready"</span><span class="token punctuation">,</span> onDeviceReady<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">onDeviceReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 注册回退按钮事件监听器</span>
+  document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"backbutton"</span><span class="token punctuation">,</span> onBackKeyDown<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//其他页面初始化完成后的事件</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">onBackKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">//这里写上你要处理的事情</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.hangge.com/blog/cache/detail_1145.html" target="_blank" rel="noopener">如何创建、配置、开发第一个ios应用</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS代码编写方式"><span class="toc-text">iOS代码编写方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩减标题栏，修复界面的高度。"><span class="toc-text">缩减标题栏，修复界面的高度。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#禁止上下滑动出现灰色背景"><span class="toc-text">禁止上下滑动出现灰色背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置iOS下默认语言为中文"><span class="toc-text">设置iOS下默认语言为中文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#出现submit-方法无效"><span class="toc-text">出现submit()方法无效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长按文字区域弹出复制选择框"><span class="toc-text">长按文字区域弹出复制选择框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过给按钮添加震动提高用户使用感受"><span class="toc-text">通过给按钮添加震动提高用户使用感受</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#捕捉android返回按键【需要cordova支持】"><span class="toc-text">捕捉android返回按键【需要cordova支持】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/07/21">http://lion1ou.win/2016/07/21</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/07/20/" rel="next" title="Cordova启动页面和图标的设置">
+          Cordova启动页面和图标的设置
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/07/28/" rel="prev" title="iOS开发(1) - iOS开发者账号区分详解">
+            iOS开发(1) - iOS开发者账号区分详解
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/07/21/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

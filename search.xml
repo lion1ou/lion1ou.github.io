@@ -1576,6 +1576,313 @@ adb devices
       </tags>
   </entry>
   <entry>
+    <title>JavaScript之数组的常用操作函数</title>
+    <url>/2018/04/24/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>字符串的操作在js中非常繁琐，但也非常重要。在使用过程中，也会经常忘记，今天就对这个进行一下整理。</p>
+<!--more-->
+<h2 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串 String"></a>字符串 String</h2><p>String 对象用于处理文本（字符串）。</p>
+<pre><code>new String(s); // 返回一个新创建的 String 对象，存放的是字符串 s 或 s 的字符串表示。
+String(s);     // 只把 s 转换成原始的字符串，并返回转换后的值。
+</code></pre><h3 id="String-属性"><a href="#String-属性" class="headerlink" title="String 属性"></a>String 属性</h3><ul>
+<li>constructor 对创建该对象的函数的引用</li>
+<li>length  字符串的长度</li>
+<li>prototype   允许您向对象添加属性和方法<br>prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的实例上共享。因此也常用来扩展js内置对象，如下面的代码给字符串添加了一个去除两边空格的方法：</li>
+</ul>
+<pre class=" language-js"><code class="language-js">String<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>trim <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/^\s*|\s*$/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="String-函数"><a href="#String-函数" class="headerlink" title="String 函数"></a>String 函数</h3><h4 id="获取类函数"><a href="#获取类函数" class="headerlink" title="获取类函数"></a>获取类函数</h4><ul>
+<li>charAt()</li>
+</ul>
+<pre class=" language-js"><code class="language-js">StringObj<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>charAt()方法可用来获取指定位置的字符串，index为字符串索引值，从0开始到string.leng - 1，若不在这个范围将返回一个空字符串。如：</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qwertyuiop'</span>
+str<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "r"</span>
+str<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ""</span>
+</code></pre>
+<ul>
+<li>charCodeAt()</li>
+</ul>
+<p>charCodeAt()用于返回指定位置的Unicode 编码，于charAt()使用类似。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qwertyuiop'</span>
+str<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 114</span>
+str<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// NaN</span>
+</code></pre>
+<ul>
+<li>fromCharCode()</li>
+</ul>
+<p>fromCharCode()可接受一个或多个Unicode值，然后返回一个字符串。另外该方法是String 的静态方法，字符串中的每个字符都由单独的数字Unicode编码指定。</p>
+<pre class=" language-js"><code class="language-js">String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span><span class="token number">99</span><span class="token punctuation">,</span> <span class="token number">99</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "ccd"</span>
+</code></pre>
+<h4 id="查找类函数"><a href="#查找类函数" class="headerlink" title="查找类函数"></a>查找类函数</h4><ul>
+<li>indexOf()</li>
+</ul>
+<p>indexOf()用来检索指定的字符串值在字符串中首次出现的位置。它可以接收两个参数，searchvalue表示要查找的子字符串，fromindex表示查找的开始位置，省略的话则从开始位置进行检索。lastIndexOf()，从后向前搜索字符串。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'abcdabcd'</span>
+str<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 0</span>
+str<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'s'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// -1</span>
+str<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 4</span>
+</code></pre>
+<ul>
+<li>search()</li>
+</ul>
+<p>search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。它会返回第一个匹配的子字符串的起始位置，如果没有匹配的，则返回-1。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'abcdabcd'</span>
+str<span class="token punctuation">.</span><span class="token function">search</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 1</span>
+str<span class="token punctuation">.</span><span class="token function">search</span><span class="token punctuation">(</span><span class="token string">'s'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// -1</span>
+str<span class="token punctuation">.</span><span class="token function">search</span><span class="token punctuation">(</span><span class="token regex">/d/i</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 3</span>
+</code></pre>
+<ul>
+<li>match()</li>
+</ul>
+<p>match()方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。</p>
+<p>如果参数中传入的是子字符串或是没有进行全局匹配的正则表达式，那么match()方法会从开始位置执行一次匹配，如果没有匹配到结果，则返回null。否则则会返回一个数组，该数组的第0个元素存放的是匹配文本，除此之外，返回的数组还含有两个对象属性index和input，分别表示匹配文本的起始字符索引和stringObject 的引用(即原字符串)。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qwer23tyqwer23ty'</span>
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">'ba'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// null</span>
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">'y'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["y", index: 7, input: "qwer23tyqwer23ty", groups: undefined]</span>
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/y/</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["y", index: 7, input: "qwer23tyqwer23ty", groups: undefined]</span>
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/y/g</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 正则全局匹配</span>
+<span class="token comment" spellcheck="true">// ["y", "y", "y", "y"]</span>
+</code></pre>
+<p>如果参数传入的是具有全局匹配的正则表达式，那么match()从开始位置进行多次匹配，直到最后。如果没有匹配到结果，则返回null。否则则会返回一个数组，数组中存放所有符合要求的子字符串，并且没有index和input属性。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qwer23tyqwer23ty'</span>
+
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/y/g</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 正则全局匹配</span>
+<span class="token comment" spellcheck="true">// ["y", "y", "y", "y"]</span>
+
+str<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/\d/g</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 正则全局匹配</span>
+<span class="token comment" spellcheck="true">// ["2", "3", "2", "3"]</span>
+</code></pre>
+<h4 id="截取类函数"><a href="#截取类函数" class="headerlink" title="截取类函数"></a>截取类函数</h4><ul>
+<li>substring</li>
+</ul>
+<p>substring()是最常用到的字符串截取方法，它可以接收两个参数(参数不能为负值)，分别是要截取的开始位置和结束位置，它将返回一个新的字符串，其内容是从start处到end-1处的所有字符。若结束参数(end)省略，则表示从start位置一直截取到最后。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qazwsxedc'</span>
+str<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "azw"</span>
+str<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "wsxedc"</span>
+str<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "qazwsxedc"</span>
+</code></pre>
+<ul>
+<li>slice()</li>
+</ul>
+<p>slice()方法与substring()方法非常类似，它传入的两个参数也分别对应着开始位置和结束位置。而区别在于，slice()中的参数可以为负值，如果参数是负数，则该参数规定的是从字符串的尾部开始算起的位置。也就是说，-1 指字符串的最后一个字符。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'qazwsxedc'</span>
+str<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "azw"</span>
+str<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "c"</span>
+str<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "wsxedc"</span>
+</code></pre>
+<ul>
+<li>substr()</li>
+</ul>
+<p>substr()方法可在字符串中抽取从start下标开始的<code>指定数目</code>的字符。其返回值为一个字符串，包含从 stringObject的start（包括start所指的字符）处开始的length个字符。如果没有指定 length，那么返回的字符串包含从start到stringObject的结尾的字符。另外如果start为负数，则表示从字符串尾部开始算起。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'asdfghjkl'</span>
+str<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "asdf"</span>
+str<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "l"</span>
+</code></pre>
+<h4 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h4><ul>
+<li>replace()</li>
+</ul>
+<p>replace()方法用来进行字符串替换操作，它可以接收两个参数，前者为被替换的子字符串（可以是正则），后者为用来替换的文本。</p>
+<p>如果第一个参数传入的是子字符串或是没有进行全局匹配的正则表达式，那么replace()方法将只进行一次替换（即替换最前面的），返回经过一次替换后的结果字符串。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'abcdeabcde'</span>
+str<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'A'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "Abcdeabcde"</span>
+str<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/\w/</span><span class="token punctuation">,</span> <span class="token string">'Q'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "Qbcdeabcde"</span>
+</code></pre>
+<p>如果第一个参数传入的全局匹配的正则表达式，那么replace()将会对符合条件的子字符串进行多次替换，最后返回经过多次替换的结果字符串。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'abcdeabcde'</span>
+str<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/a/g</span><span class="token punctuation">,</span> <span class="token string">'A'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "AbcdeAbcde"</span>
+str<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/\w/g</span><span class="token punctuation">,</span> <span class="token string">'$'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "$$$$$$$$$$"</span>
+</code></pre>
+<ul>
+<li>split()</li>
+</ul>
+<p>split()方法用于把一个字符串分割成字符串数组。第一个参数separator表示分割位置(参考符)，第二个参数howmany表示返回数组的允许最大长度(一般情况下不设置)。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'a|b|c|d|e'</span>
+str<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'|'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["a", "b", "c", "d", "e"]</span>
+str<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["a", "|", "b", "|", "c", "|", "d", "|", "e"]</span>
+str<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'|'</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["a", "b", "c"]</span>
+</code></pre>
+<p>也可以用正则来进行分割</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'a1b2c3d4e'</span>
+str<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token regex">/\d/</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["a", "b", "c", "d", "e"]</span>
+</code></pre>
+<ul>
+<li>toLowerCase()和toUpperCase()</li>
+</ul>
+<p>toLowerCase()方法可以把字符串中的大写字母转换为小写，toUpperCase()方法可以把字符串中的小写字母转换为大写。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">'JavaScript'</span><span class="token punctuation">;</span>
+str<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// javascript</span>
+str<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// JAVASCRIPT</span>
+</code></pre>
+<h2 id="数组-Array"><a href="#数组-Array" class="headerlink" title="数组 Array"></a>数组 Array</h2><p>js对数组的操作非常频繁，但是每次用到的时候都会被搞混，都需要去查相关API，感觉这样很浪费时间。为了加深印象，所以整理一下对数组的相关操作。</p>
+<h4 id="concat"><a href="#concat" class="headerlink" title="concat()"></a>concat()</h4><p>连接两个或更多的数组，并返回结果。方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr3 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>arr2<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">,</span> arr3<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3] ["a", "b", "c", "d"] [1, 2, 3, "a", "b", "c", "d"]</span>
+<span class="token keyword">var</span> arr4 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr4<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3, 1]</span>
+</code></pre>
+<h4 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h4><p>把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> str <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'-'</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 1-2-3-4-5-6-7-8-9</span>
+<span class="token keyword">var</span> str1 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 1,2,3,4,5,6,7,8,9</span>
+</code></pre>
+<h4 id="pop"><a href="#pop" class="headerlink" title="pop()"></a>pop()</h4><p>删除并返回数组的最后一个元素，pop() 方法将删除 arrayObject 的最后一个元素，把数组长度减 1，并且返回它删除的元素的值。如果数组已经为空，则 pop() 不改变数组，并返回 undefined 值。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3, 4, 5, 6, 7, 8]   9</span>
+<span class="token keyword">var</span> arr3 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr4 <span class="token operator">=</span> arr3<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr3<span class="token punctuation">,</span> arr4<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// []   undefined</span>
+</code></pre>
+<h4 id="shift"><a href="#shift" class="headerlink" title="shift()"></a>shift()</h4><p>删除并返回数组的第一个元素，如果数组是空的，那么 shift() 方法将不进行任何操作，返回 undefined 值。请注意，该方法不创建新数组，而是直接修改原有的 arrayObject。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [2, 3, 4, 5, 6, 7, 8, 9]   1</span>
+</code></pre>
+<h3 id="unshift"><a href="#unshift" class="headerlink" title="unshift()"></a>unshift()</h3><p>向数组的开头添加一个或更多元素，并返回新的长度。unshift() 方法将把它的参数插入 arrayObject 的头部，并将已经存在的元素顺次地移到较高的下标处，以便留出空间。unshift() 方法不创建新的创建，而是直接修改原有的数组。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]     13</span>
+</code></pre>
+<h4 id="push"><a href="#push" class="headerlink" title="push()"></a>push()</h4><p>向数组的末尾添加一个或更多元素，并返回新的长度。push() 方法可把它的参数顺序添加到 arrayObject 的尾部。它直接修改 arrayObject，而不是创建一个新的数组。push() 方法和 pop() 方法使用数组提供的先进后出栈的功能。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr3 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>arr2<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">,</span> arr3<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3, 4, [5, 6, 7, 8, 9]]   [5, 6, 7, 8, 9]   5</span>
+<span class="token keyword">var</span> arr4 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr5 <span class="token operator">=</span> arr4<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr4<span class="token punctuation">,</span> arr5<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 5, 6, 7, 8, 9]  6</span>
+</code></pre>
+<h4 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h4><p>从某个已有的数组返回选定的元素，请注意，该方法并不会修改数组，而是返回一个子数组。您可使用负值从数组的尾部选取元素。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3, 4, 5, 6, 7, 8, 9]   [5, 6, 7]</span>
+<span class="token keyword">var</span> arr3 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr3<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [3, 4, 5, 6, 7, 8]</span>
+<span class="token keyword">var</span> arr4 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr4<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [6, 7, 8, 9]</span>
+</code></pre>
+<h4 id="splice"><a href="#splice" class="headerlink" title="splice()"></a>splice()</h4><p>删除元素，并向数组添加新元素。方法向/从数组中添加/删除项目，然后返回被删除的项目。该方法会改变原始数组。splice() 方法可删除从 index 处开始的零个或多个元素，并且用参数列表中声明的一个或多个值来替换那些被删除的元素。如果从 arrayObject 中删除了元素，则返回的是含有被删除的元素的数组。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 7, 8, 9]   [2, 3, 4, 5, 6]</span>
+<span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr3 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr3<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, [0, 0, 0, 0], 6, 7, 8, 9]   [3, 4, 5]</span>
+<span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr4 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr4<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 0, 0, 0, 0, 6, 7, 8, 9]   [3, 4, 5]</span>
+</code></pre>
+<h4 id="sort"><a href="#sort" class="headerlink" title="sort()"></a>sort()</h4><p>对数组的元素进行排序，规定排序顺序。参数必须是函数。对数组的引用。请注意，数组在原数组上进行排序，不生成副本。</p>
+<p>如果调用该方法时没有使用参数，将按字母顺序对数组中的元素进行排序，说得更精确点，是按照字符编码的顺序进行排序。要实现这一点，首先应把数组的元素都转换成字符串（如有必要），以便进行比较。</p>
+<p>如果想按照其他标准进行排序，就需要提供比较函数，该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下：</p>
+<p>若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。<br>若 a 等于 b，则返回 0。<br>若 a 大于 b，则返回一个大于 0 的值。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token string">'VCBJN'</span><span class="token punctuation">,</span> <span class="token string">'ksjn'</span><span class="token punctuation">,</span> <span class="token string">'adf'</span><span class="token punctuation">,</span> <span class="token string">'uuu'</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["A", "VCBJN", "adf", "ksjn", "uuu"]   ["A", "VCBJN", "adf", "ksjn", "uuu"]</span>
+<span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'11'</span><span class="token punctuation">,</span> <span class="token string">'2222'</span><span class="token punctuation">,</span> <span class="token string">'3'</span><span class="token punctuation">,</span> <span class="token string">'44'</span><span class="token punctuation">,</span> <span class="token string">'555'</span><span class="token punctuation">]</span>
+arr1<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["11", "2222", "3", "44", "555"]</span>
+<span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'11'</span><span class="token punctuation">,</span> <span class="token string">'2222'</span><span class="token punctuation">,</span> <span class="token string">'3'</span><span class="token punctuation">,</span> <span class="token string">'44'</span><span class="token punctuation">,</span> <span class="token string">'555'</span><span class="token punctuation">]</span>
+arr1<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> a<span class="token operator">-</span>b<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["3", "11", "44", "555", "2222"]</span>
+</code></pre>
+<h4 id="reverse"><a href="#reverse" class="headerlink" title="reverse()"></a>reverse()</h4><p>颠倒数组中元素的顺序。该方法会改变原来的数组，而不会创建新的数组。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [9, 8, 7, 6, 5, 4, 3, 2, 1]   [9, 8, 7, 6, 5, 4, 3, 2, 1]</span>
+</code></pre>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h4><p>把数组转换为字符串，并返回结果。当数组用于字符串环境时，JavaScript 会调用这一方法将数组自动转换成字符串。但是在某些情况下，需要显式地调用该方法。arrayObject 的字符串表示。返回值与没有参数的 join() 方法返回的字符串相同。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [1, 2, 3, 4, 5, 6, 7, 8, 9]     "1,2,3,4,5,6,7,8,9"</span>
+</code></pre>
+<h4 id="toLocaleString-NaN"><a href="#toLocaleString-NaN" class="headerlink" title="toLocaleString()"></a>toLocaleString()</h4><p>把数组转换为本地数组，并返回结果。首先调用每个数组元素的 toLocaleString() 方法，然后使用地区特定的分隔符把生成的字符串连接起来，形成一个字符串。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'jssj'</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'测试'</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">toLocaleString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ["jssj", 2, 3, "测试", 5, 6, 7, 8, 9]     "jssj,2,3,测试,5,6,7,8,9"</span>
+</code></pre>
+<h4 id="valueOf-NaN"><a href="#valueOf-NaN" class="headerlink" title="valueOf()"></a>valueOf()</h4><p>valueOf() 方法返回 Array 对象的原始值。该原始值由 Array 对象派生的所有对象继承。valueOf() 方法通常由 JavaScript 在后台自动调用，并不显式地出现在代码中。</p>
+<h4 id="toSource"><a href="#toSource" class="headerlink" title="toSource()"></a>toSource()</h4><p>返回该对象的源代码。该原始值由 Array 对象派生的所有对象继承。toSource() 方法通常由 JavaScript 在后台自动调用，并不显式地出现在代码中。只有 Gecko 核心的浏览器（比如 Firefox）支持该方法，也就是说 IE、Safari、Chrome、Opera 等浏览器均不支持该方法。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">employee</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>job<span class="token punctuation">,</span>born<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token operator">=</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>job<span class="token operator">=</span>job<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>born<span class="token operator">=</span>born<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> bill <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">employee</span><span class="token punctuation">(</span><span class="token string">"Bill Gates"</span><span class="token punctuation">,</span><span class="token string">"Engineer"</span><span class="token punctuation">,</span><span class="token number">1985</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>bill<span class="token punctuation">.</span><span class="token function">toSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//  ({name:"Bill Gates", job:"Engineer", born:1985})</span>
+</code></pre>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大学毕业后的第一个小结</title>
     <url>/2018/04/12/</url>
     <content><![CDATA[<p>不知不觉毕业已经将近三年了，干前端也有两年多了，从刚开始的门外汉也慢慢的成为一个能独立干活的职业猿了。两三年时间经历了很多次选择，从弱电到编程，从上海到杭州，但每一次的选择似乎都让自己向上又迈了一步。</p>
@@ -2223,6 +2530,51 @@ locale.Error: unsupported locale setting
       </categories>
       <tags>
         <tag>ShadowScoke</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cordova学习资源整理</title>
+    <url>/2017/12/11/</url>
+    <content><![CDATA[<p>已经好久没有做有关cordova的项目了，但是还是经常会有小伙伴来问有关cordova的问题，有一些自己也回答不上来。现在就将以前保存的资源整理整理分享出来，有需要的小伙伴自取哈~~<br><a id="more"></a></p>
+<h2 id="cordova-文档"><a href="#cordova-文档" class="headerlink" title="cordova 文档"></a>cordova 文档</h2><p>官方文档:  <a href="http://cordova.apache.org/docs/en/latest/" target="_blank" rel="noopener">http://cordova.apache.org/docs/en/latest/</a></p>
+<p>phoneGap官网: <a href="https://phonegap.com/" target="_blank" rel="noopener">https://phonegap.com/</a></p>
+<p>PhoneGap中文API: <a href="http://www.phonegapcn.com/docs/zh/cn/" target="_blank" rel="noopener">http://www.phonegapcn.com/docs/zh/cn/</a></p>
+<p>phonegap100论坛: <a href="http://www.phonegap100.com/" target="_blank" rel="noopener">http://www.phonegap100.com/</a></p>
+<h2 id="ionic"><a href="#ionic" class="headerlink" title="ionic"></a>ionic</h2><p>官网: <a href="https://ionicframework.com/docs/" target="_blank" rel="noopener">https://ionicframework.com/docs/</a></p>
+<p>ng-cordova: <a href="https://github.com/ionic-team/ng-cordova/issues/1452" target="_blank" rel="noopener">https://github.com/ionic-team/ng-cordova/issues/1452</a> (已过时)</p>
+<p>Ionic Native: <a href="https://github.com/ionic-team/ionic-native" target="_blank" rel="noopener">https://github.com/ionic-team/ionic-native</a></p>
+<p>ionic中文: <a href="http://www.ionic.wang/" target="_blank" rel="noopener">http://www.ionic.wang/</a></p>
+<h2 id="相关博客集"><a href="#相关博客集" class="headerlink" title="相关博客集"></a>相关博客集</h2><p>本人博客：<a href="http://lion1ou.win/categories/Cordova/">http://lion1ou.win/categories/Cordova/</a></p>
+<p>航歌cordova模块: <a href="http://www.hangge.com/blog/cache/category_75_1.html" target="_blank" rel="noopener">http://www.hangge.com/blog/cache/category_75_1.html</a></p>
+<p>rensanning的博客: <a href="http://rensanning.iteye.com/blog/2163892" target="_blank" rel="noopener">http://rensanning.iteye.com/blog/2163892</a></p>
+<p>神秘_博士的博客: <a href="http://blog.csdn.net/lovelyelfpop/article/category/2000185" target="_blank" rel="noopener">http://blog.csdn.net/lovelyelfpop/article/category/2000185</a></p>
+<p>csdn的cordova专栏: <a href="http://blog.csdn.net/column/details/cordova.html" target="_blank" rel="noopener">http://blog.csdn.net/column/details/cordova.html</a></p>
+<p>csdn的phoneGap专栏: <a href="http://blog.csdn.net/column/details/phonegap.html?&amp;page=1" target="_blank" rel="noopener">http://blog.csdn.net/column/details/phonegap.html?&amp;page=1</a></p>
+<h2 id="cordova入门"><a href="#cordova入门" class="headerlink" title="cordova入门"></a>cordova入门</h2><p><a href="http://www.cnblogs.com/jsStudyjj/p/4956818.html" target="_blank" rel="noopener">cordova学习-基础篇</a></p>
+<p><a href="https://segmentfault.com/a/1190000002964603" target="_blank" rel="noopener">使用Cordova API开发(上)</a></p>
+<p><a href="https://segmentfault.com/a/1190000003013808" target="_blank" rel="noopener">使用Cordova API开发(下)</a></p>
+<p><a href="http://tanglei528.blog.163.com/blog/static/43353399201401110738334/" target="_blank" rel="noopener">Phonegap navigator app 对象  </a></p>
+<h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><p><a href="http://www.cnblogs.com/tdalcn/archive/2013/12/26/3491973.html" target="_blank" rel="noopener">phonegap–app启动欢迎引导页localstorage</a></p>
+<p><a href="http://www.cnblogs.com/flyingzl/articles/3115457.html" target="_blank" rel="noopener">PhoneGap 拍照并上传到远程服务器</a></p>
+<p><a href="http://gundumw100.iteye.com/blog/2103612" target="_blank" rel="noopener">cordova读写文件（1）</a></p>
+<p><a href="http://gundumw100.iteye.com/blog/2103623" target="_blank" rel="noopener">cordova读写文件（2）</a></p>
+<p><a href="http://www.mamicode.com/info-detail-861464.html" target="_blank" rel="noopener">PhoneGap 白名单安全机制 navigator.app 加载外部页面返回以及退出介绍</a></p>
+<h2 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h2><p>cordova 插件搜索: <a href="http://cordova.apache.org/plugins/" target="_blank" rel="noopener">http://cordova.apache.org/plugins/</a></p>
+<p>BLE蓝牙: <a href="https://www.npmjs.com/package/cordova-plugin-ble-central" target="_blank" rel="noopener">https://www.npmjs.com/package/cordova-plugin-ble-central</a></p>
+<p>相机: <a href="https://www.npmjs.com/package/cordova-plugin-camera" target="_blank" rel="noopener">https://www.npmjs.com/package/cordova-plugin-camera</a></p>
+<p>媒体: <a href="https://www.npmjs.com/package/cordova-plugin-media" target="_blank" rel="noopener">https://www.npmjs.com/package/cordova-plugin-media</a></p>
+<p>APP版本: <a href="https://www.npmjs.com/package/cordova-plugin-app-version" target="_blank" rel="noopener">https://www.npmjs.com/package/cordova-plugin-app-version</a></p>
+<p>听筒播放: <a href="https://github.com/alongubkin/audiotoggle" target="_blank" rel="noopener">https://github.com/alongubkin/audiotoggle</a></p>
+<p>极光推送: <a href="https://github.com/jpush/jpush-phonegap-plugin" target="_blank" rel="noopener">https://github.com/jpush/jpush-phonegap-plugin</a></p>
+<p>社交分享: <a href="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" target="_blank" rel="noopener">https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin</a></p>
+<p>二维码扫描: <a href="http://rensanning.iteye.com/blog/2034026" target="_blank" rel="noopener">http://rensanning.iteye.com/blog/2034026</a></p>
+<p>热更新插件: <a href="http://www.phonegap100.com/article-491-1.html" target="_blank" rel="noopener">http://www.phonegap100.com/article-491-1.html</a></p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
       </tags>
   </entry>
   <entry>
@@ -3161,7 +3513,7 @@ ln -s /usr/local/lib64/libcrypto.so.1.1 /usr/lib64/libcrypto.so.1.1
       </tags>
   </entry>
   <entry>
-    <title>nodejs进程管理</title>
+    <title>云服务之nodejs进程管理</title>
     <url>/2017/05/11/</url>
     <content><![CDATA[<p>运行node服务时，如果直接通过node app来启动，如果报错了，整个服务就会直接停止运行。所以开发时一般都会使用supervisor，不过感觉supervisor只是拿来用作开发环境的。后来在网上找了一下，了解到目前似乎最常见的线上部署nodejs项目的有forever,pm2这两种。</p>
 <a id="more"></a>
@@ -3279,6 +3631,244 @@ forever restartall
       <tags>
         <tag>NodeJs</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云服务之部署node项目</title>
+    <url>/2017/05/10/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><ul>
+<li>类型：阿里云学生服务器</li>
+<li>地域：华南 1（China South 1 Zone A）   </li>
+<li>实例系列：系列 I   </li>
+<li>实例规格：1 核 2GB（标准型 s1，ecs.s1.small）   </li>
+<li>I/O 优化：非 I/O 优化实例</li>
+<li>网络类型：经典网络  </li>
+<li>公网带宽：按固定带宽  </li>
+<li>当前使用带宽 ：1Mbps</li>
+<li>系统盘：40GB 普通云盘   </li>
+<li>数据盘：无</li>
+<li>操作系统：CentOS 7.3 64位</li>
+</ul>
+<h2 id="远程连接登录"><a href="#远程连接登录" class="headerlink" title="远程连接登录"></a>远程连接登录</h2><h4 id="ssh登录管理服务器："><a href="#ssh登录管理服务器：" class="headerlink" title="ssh登录管理服务器："></a>ssh登录管理服务器：</h4><ul>
+<li>ssh 主机</li>
+</ul>
+<blockquote>
+<p>ssh 192.168.1.155（表示用电脑用户登录到服务器）</p>
+</blockquote>
+<ul>
+<li>ssh 用户@主机</li>
+</ul>
+<blockquote>
+<p>ssh <a href="mailto:root@192.168.1.155" target="_blank" rel="noopener">root@192.168.1.155</a>（表示用root登录到服务器）</p>
+</blockquote>
+<ul>
+<li>ssh 主机 -l 用户名 -p 端口</li>
+</ul>
+<blockquote>
+<p>ssh 192.168.1.155 -l user2 -p 8080 （表示user2用户用8080端口连接到192.168.1.155的服务器）</p>
+</blockquote>
+<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><ul>
+<li>为了安全起见，最好创建一个普通权限的用户用于运行程序，可以将下面的username换成任意的名字</li>
+</ul>
+<p><code>user add username</code></p>
+<ul>
+<li>给新用户分配一个密码，输入命令之后就会提示你输入新密码，然后按提示操作就好了</li>
+</ul>
+<p><code>passwd username</code></p>
+<h4 id="用scp命令上传和下载文件"><a href="#用scp命令上传和下载文件" class="headerlink" title="用scp命令上传和下载文件"></a>用scp命令上传和下载文件</h4><ul>
+<li>scp <a href="mailto:root@192.168.1.155" target="_blank" rel="noopener">root@192.168.1.155</a>:1.txt 2.txt </li>
+</ul>
+<blockquote>
+<p>（把服务器的1.txt下载到本地，并且重命名为2.txt）</p>
+</blockquote>
+<ul>
+<li>scp 2.txt <a href="mailto:root@192.168.1.155" target="_blank" rel="noopener">root@192.168.1.155</a>:3.txt </li>
+</ul>
+<blockquote>
+<p>（把本地2.txt文件上传到服务器的root目录下，并且命名为3.txt）</p>
+</blockquote>
+<ul>
+<li>scp -r 的话表示上传或者下载文件夹</li>
+<li>scp -表示加上端口信息（P为大写）</li>
+</ul>
+<h2 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h2><ul>
+<li>把yum更新到最新版本</li>
+</ul>
+<p><code>yum -y update</code></p>
+<ul>
+<li>我们将使用最新源代码构建Node.js，要进行软件的安装，需要一组用来编译源代码的开发工具：</li>
+</ul>
+<p><code>yum -y groupinstall &quot;Development Tools&quot;</code></p>
+<p><code>yum -y install screen</code> </p>
+<h2 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h2><ul>
+<li>跳转到 /usr/local/src , 这个文件夹通常用来存放软件源代码</li>
+</ul>
+<p><code>cd /usr/local/src</code></p>
+<ul>
+<li>选择下载 <a href="https://nodejs.org/dist/" target="_blank" rel="noopener">nodejs</a> 代码，也可以使用scp命令直接上传。</li>
+</ul>
+<p><code>wget http://nodejs.org/dist/v0.12.5/node-v0.12.5.tar.gz</code></p>
+<ul>
+<li>解压</li>
+</ul>
+<p><code>tar -xzvf node-v0.12.5.tar.gz</code></p>
+<ul>
+<li>进入解压后的文件夹</li>
+</ul>
+<p><code>cd node-v0.12.5</code></p>
+<ul>
+<li>执行配置脚本来进行编译预处理</li>
+</ul>
+<p><code>./configure</code></p>
+<ul>
+<li>编译源代码并安装</li>
+</ul>
+<p><code>make &amp;&amp; make install</code></p>
+<ul>
+<li><p>当编译完成后，需要使之在系统范围内可用, 编译后的二进制文件将被放置到系统路径，默认情况下，Node二进制文件应该放在<code>/user/local/bin/node</code>文件夹下。</p>
+</li>
+<li><p>执行下面，测试是否安装成功：</p>
+</li>
+</ul>
+<p><code>node -v</code><br><code>npm -v</code></p>
+<ul>
+<li>如果输出相应版本号，表示已经安装完成nodejs,可以开始部署程序了。</li>
+</ul>
+<h2 id="安装基础模块"><a href="#安装基础模块" class="headerlink" title="安装基础模块"></a>安装基础模块</h2><ul>
+<li><p>安装git</p>
+<p>  <code>yum install git</code></p>
+<p>  卸载git</p>
+<p>  <code>yum remove git</code></p>
+</li>
+</ul>
+<ul>
+<li>安装 cnpm (远离npm的龟速吧)</li>
+</ul>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<ul>
+<li>安装 express 和 forever（一个用来确保应用程序启动并且在需要时重启的非常有用的模块），这两个模块都推荐 global 安装</li>
+</ul>
+<p><code>cnpm -g install express forever</code></p>
+<ul>
+<li><p>安装 gitbook</p>
+<p>  <code>cnpm install -g gitbook</code></p>
+<p>  让gitbook支持命令行</p>
+<p>  <code>cnpm install -g gitbook-cli</code></p>
+<p>  测试安装完成</p>
+<p>  <code>gitbook -V</code></p>
+</li>
+<li><p>建立超级链接, 使node和npm命令全局有效。通过创建软链接的方法，使得在任意目录下都可以直接使用node和npm命令，不然 sudo node 时会报 “command not found”：</p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">ln -s /usr/local/node/bin/* /usr/sbin/
+</code></pre>
+<h2 id="安装mongodb"><a href="#安装mongodb" class="headerlink" title="安装mongodb"></a>安装mongodb</h2><blockquote>
+<p>软件安装位置：/usr/local/mongodb<br>数据存放位置：/var/mongodb/data<br>日志存放位置：/var/mongodb/logs</p>
+</blockquote>
+<ul>
+<li>首先下载安装包</li>
+</ul>
+<p><code>cd /usr/local</code></p>
+<p><code>wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.4.4.tgz</code></p>
+<ul>
+<li>解压安装包，重命名文件夹为mongodb</li>
+</ul>
+<p><code>tar zxvf mongodb-linux-x86_64-3.4.4.tgz</code></p>
+<p><code>mv mongodb-linux-x86_64-3.4.4 mongodb</code></p>
+<ul>
+<li>创建数据和日志存放目录</li>
+</ul>
+<p><code>mkdir /var/mongodb</code></p>
+<p><code>mkdir /var/mongodb/data</code></p>
+<p><code>mkdir /var/mongodb/logs</code></p>
+<ul>
+<li>打开rc.local文件，添加CentOS开机启动项：</li>
+</ul>
+<p><code>vim /etc/rc.d/rc.local</code></p>
+<ul>
+<li>将mongodb启动命令追加到本文件中，让mongodb开机自启动：</li>
+</ul>
+<p><code>/usr/local/mongodb/bin/mongod --dbpath=/var/mongodb/data --logpath /var/mongodb/logs/log.log -fork</code></p>
+<ul>
+<li>关闭 vim 后，直接手动启动mongodb</li>
+</ul>
+<p><code>/usr/local/mongodb/bin/mongod --dbpath=/var/mongodb/data --logpath /var/mongodb/logs/log.log -fork</code></p>
+<ul>
+<li>看到类似的信息，说明已启动成功。我在这里发了个傻，以为10210是port号，导致后面设置port时折腾了好久。其实这里的 forked process 和 port 号是两个东西， 这个是程序本身在Server上的进程。</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79gy1ffhjgs4kdej30gv02dt8l.jpg" alt></p>
+<ul>
+<li>启动mongo shell</li>
+</ul>
+<p><code>cd /usr/local/mongodb/bin/</code></p>
+<p><code>./mongo</code></p>
+<p>在 mongo shell 中创建管理员及数据库</p>
+<pre><code>use admin //admin 数据库
+db.createUser({
+user: &quot;admin&quot;,
+pwd:&quot;a7677188.&quot;,
+roles:[&quot;userAdminAnyDatabase&quot;] 
+})
+</code></pre><p>到这里 mongodb 基本已经安装设置完成了。具体数据的迁移导入可自行研究。</p>
+<h2 id="部署测试项目"><a href="#部署测试项目" class="headerlink" title="部署测试项目"></a>部署测试项目</h2><ul>
+<li>新建项目文件example.js。</li>
+</ul>
+<p><code>cd ~</code></p>
+<p><code>touch example.js</code></p>
+<ul>
+<li>使用vim编辑器打开项目文件example.js。</li>
+</ul>
+<p><code>vim example.js</code></p>
+<ul>
+<li>输入“i”，进入编辑模式,将以下项目文件内容粘贴到文件中。</li>
+<li>使用“Esc”按钮，退出编辑模式，</li>
+<li>输入“:wq”，回车，保存文件内容并退出。</li>
+</ul>
+<p>项目文件内容：</p>
+<pre><code>const http = require(&#39;http&#39;);
+const hostname = &#39;***.***.***.***(ECS公网IP地址)&#39;;
+const port = 3000;
+const server = http.createServer((req, res) =&gt; {
+    res.statusCode = 200;
+    res.setHeader(&#39;Content-Type&#39;, &#39;text/plain&#39;);
+    res.end(&#39;Hello World\n&#39;);
+});
+server.listen(port, hostname, () =&gt; {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+</code></pre><blockquote>
+<p>注：项目文件内容中的’ECS公网IP地址’处需填写实际的ECS公网IP；项目文件内容中的3000为端口号，可以自行定义。</p>
+</blockquote>
+<ul>
+<li>运行项目。</li>
+</ul>
+<p><code>node ~/example.js</code></p>
+<p>注：可以使用命令“<code>node ~/example.js &amp;</code>”将项目置于后台运行。</p>
+<ul>
+<li>使用命令查看项目端口是否存在。</li>
+</ul>
+<p><code>netstat -tpln</code></p>
+<ul>
+<li>在浏览器中输入<a href="http://IP:端口号" target="_blank" rel="noopener">http://IP:端口号</a> 访问项目。</li>
+</ul>
+<p>如果访问项目长时间没有反应，请参考这里安全组规则介绍：<a href="https://help.aliyun.com/document_detail/25471.html" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/25471.html</a>，去设置一下对应的安全组规则。</p>
+<ul>
+<li>注意，如果直接 npm start 或 node app.js 启动，则一旦退出 ssh 远程登陆，node项目 就会停止运行。</li>
+</ul>
+<p>因此我们就要使用到之前安装的 <a href="https://github.com/foreverjs/forever" target="_blank" rel="noopener"><code>forever</code></a> 来启动 node 项目了。</p>
+<p><code>forever start example.js</code></p>
+<h2 id="部署node项目"><a href="#部署node项目" class="headerlink" title="部署node项目"></a>部署node项目</h2><ul>
+<li>通过 git 从代码库上 clone 项目至服务器，</li>
+<li>执行 npm install 安装依赖</li>
+<li>执行 forever start app.js</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>NodeJs</tag>
       </tags>
   </entry>
   <entry>
@@ -7138,6 +7728,1450 @@ x <span class="token comment" spellcheck="true">// undefined</span>
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript原生绑定事件的三种方法</title>
+    <url>/2016/08/15/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>要想让 JavaScript 对用户的操作作出响应，首先要对 DOM 元素绑定事件处理函数。所谓事件处理函数，就是处理用户操作的函数，不同的操作对应不同的名称。在JavaScript中，有三种常用的绑定事件的方法：<br><a id="more"></a></p>
+<ol>
+<li>在DOM元素中直接绑定；</li>
+<li>在JavaScript代码中绑定；</li>
+<li>绑定事件监听函数。</li>
+</ol>
+<h4 id="在DOM元素中直接绑定"><a href="#在DOM元素中直接绑定" class="headerlink" title="在DOM元素中直接绑定"></a>在DOM元素中直接绑定</h4><ol>
+<li>绑定原生函数</li>
+</ol>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span>  <span class="token attr-name">onclick</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>alert(<span class="token punctuation">'</span>alert<span class="token punctuation">'</span>)<span class="token punctuation">"</span></span>  <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>点击我，弹出alert<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<input onclick="alert('alert')" type="button" value="点击我，弹出alert">
+
+<ol start="2">
+<li>绑定自定义函数<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span>  <span class="token attr-name">onclick</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>myAlert()<span class="token punctuation">"</span></span>  <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>点击我，弹出alert<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">function</span> <span class="token function">myAlert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+ <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"alert"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</code></pre>
+<input onclick="myAlert()" type="button" value="点击我，弹出alert"><script type="text/javascript">
+function myAlert(){
+ alert("alert");
+}
+</script>
+
+</li>
+</ol>
+<h4 id="在JavaScript代码中绑定"><a href="#在JavaScript代码中绑定" class="headerlink" title="在JavaScript代码中绑定"></a>在JavaScript代码中绑定</h4><pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span>  <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>demo<span class="token punctuation">"</span></span>  <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>点击我，显示 type 属性<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"demo"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>onclick<span class="token operator">=</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"type"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//  this 指当前发生事件的HTML元素，这里是&lt;div>标签</span>
+<span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</code></pre>
+<p><input id="demo" type="button" value="点击我，显示 type 属性"></p>
+<script type="text/javascript">
+document.getElementById("demo").onclick=function(){
+    alert(this.getAttribute("type"));  //  this 指当前发生事件的HTML元素，这里是<div>标签
+}
+</script>
+
+<p>通过getElement获取指定Dom元素，然后绑定一个事件，这样使javascript代码和HTML标签分离，文档结构更加清晰，便于管理和开发。</p>
+<h4 id="绑定事件监听函数"><a href="#绑定事件监听函数" class="headerlink" title="绑定事件监听函数"></a>绑定事件监听函数</h4><p>这种方式是用 addEventListener() 或 attachEvent() 来绑定事件监听函数。</p>
+<p>语法：<code>element.addEventListener(event, handle, useCapture)</code></p>
+<p>参数值：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>event</td>
+<td>必须。字符串，指定事件名。注意: 不要使用 “on” 前缀。 例如，使用 “click” ,而不是使用 “onclick”。</td>
+</tr>
+<tr>
+<td>handle</td>
+<td>必须。指定要事件触发时执行的函数。当事件对象会作为第一个参数传入函数。</td>
+</tr>
+<tr>
+<td>useCapture</td>
+<td>可选。布尔值，指定事件是否在捕获或冒泡阶段执行。可能值:true - 事件句柄在捕获阶段执行。false- false- 默认，事件句柄在冒泡阶段执行。</td>
+</tr>
+</tbody>
+</table>
+<p>attachEvent()函数语法：<code>element.attachEvent(eventName,handle)</code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eventName</td>
+<td>事件名称。注意，与addEventListener()不同，这里的事件名称有“ on ”，如鼠标单击事件 onclick ，鼠标双击事件 ondoubleclick ，鼠标移入事件 onmouseover，鼠标移出事件 onmouseout 等。</td>
+</tr>
+<tr>
+<td>handle</td>
+<td>事件句柄函数，即用来处理事件的函数。</td>
+</tr>
+</tbody>
+</table>
+<p>注意：</p>
+<blockquote>
+<p>addEventListener()是标准的绑定事件监听函数的方法，是W3C所支持的，Chrome、FireFox、Opera、Safari、IE9.0及其以上版本都支持该函数；但是，IE8.0及其以下版本不支持该方法，它使用attachEvent()来绑定事件监听函数。所以，这种绑定事件的方法必须要处理浏览器兼容问题。如果浏览器不支持 addEventListener() 方法, 你可以使用 attachEvent() 方法替代。</p>
+</blockquote>
+<p>以下实例演示了跨浏览器的解决方法：</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">addEvent</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span>type<span class="token punctuation">,</span>handle<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// Chrome、FireFox、Opera、Safari、IE9.0及其以上版本</span>
+        obj<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span>handle<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// IE8.0及其以下版本</span>
+            obj<span class="token punctuation">.</span><span class="token function">attachEvent</span><span class="token punctuation">(</span><span class="token string">'on'</span> <span class="token operator">+</span> type<span class="token punctuation">,</span>handle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// 早期浏览器</span>
+            obj<span class="token punctuation">[</span><span class="token string">'on'</span> <span class="token operator">+</span> type<span class="token punctuation">]</span> <span class="token operator">=</span> handle<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//这里写绑定事件的动作代码</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>这里使用 try{ … } catch(e){ … } 代替 if … else… 语句，避免浏览器出现错误提示。</p>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://www.w3school.com.cn/jsref/jsref_events.asp" target="_blank" rel="noopener">JavaScript 事件参考手册</a></li>
+<li><a href="http://www.itxueyuan.org/view/6338.html" target="_blank" rel="noopener">原文链接</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(7) - iOS证书多设备使用</title>
+    <url>/2016/08/04/</url>
+    <content><![CDATA[<p>在苹果开发者网站申请的证书，是授权mac设备的开发或者发布的证书，这意味着一个设备对应一个证书，但是99美元账号只允许生成3个发布证书，两个开发证书，这满足不了多mac设备的使用，使用p12文件可以解决这个问题。<br><a id="more"></a></p>
+<h2 id="导出-p12文件的原因"><a href="#导出-p12文件的原因" class="headerlink" title="导出.p12文件的原因"></a>导出.p12文件的原因</h2><p>当团队开发应用时（大于三个mac设备），想要再申请新的证书时，就会发现我们的帐号中已经不能在申请证书了。例如在iOS企业帐号($299)中，最多只能申请两个发布证书，如果再申请的话，发布证书会显示为灰色不可选状态。（一般在我们的证书界面中应该只有一个开发证书，一个发布证书，没必要生成那么多的证书，证书一般在过期之后才会重新添加。）</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tKfTcgw1f6ve9w5vovj30zm0vsjx7.jpg" alt="屏幕快照 2016-08-16 10.47.35.png"></p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>有两个解决不能添加证书的办法。</p>
+<h3 id="第一种方法——“revoke”（不推荐）："><a href="#第一种方法——“revoke”（不推荐）：" class="headerlink" title="第一种方法——“revoke”（不推荐）："></a>第一种方法——“revoke”（不推荐）：</h3><p>将以前的证书“revoke”掉，如图：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgw1f6veefkihcj30kk079dgp.jpg" alt="154900_Y416_1245365.png"></p>
+<p>然后重新生成一个新的证书。</p>
+<p>这种方法是可以的，但是会造成相应的Provisioning Profiles失效，这个可大可小。如果只有你一个人则问题不大，如果是一个团队大家都在用，你把这个证书删除了，会导致别人的描述文件失效，这意味着别人不能发布应用了（还可以开发）。而且对已部署到服务器上的应用程序<code>有影响</code>，APP会无法下载，之前下载的App也会无法通过验证而无法使用。这可是大问题，<code>所以不提倡这种做法</code>,。</p>
+<h3 id="第二种方法——“-p12”（推荐）："><a href="#第二种方法——“-p12”（推荐）：" class="headerlink" title="第二种方法——“.p12”（推荐）："></a>第二种方法——“.p12”（推荐）：</h3><h4 id="导出证书"><a href="#导出证书" class="headerlink" title="导出证书"></a>导出证书</h4><p>我们的每一个证书都可以生成一个.p12文件，这个文件是一个加密的文件，只要知道其密码，就可以供给所有的mac设备使用，使设备不需要在苹果开发者网站重新申请开发和发布证书，就能使用。</p>
+<p>注意：一般.p12文件是给与别人使用的，本机必须已经有一个带秘钥的证书才可以生成.p12文件，如图：</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tKfTcgw1f6vegipzb6j30od0f9dkg.jpg" alt="144731_h89e_1245365.png"></p>
+<p>打开钥匙串，选择我们需要的证书，右击，选择“导出“iPhone Distribition:</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tKfTcgw1f6venh0fthj30me0d7q8e.jpg" alt="145356_37Xa_1245365 (2).png"></p>
+<p>为.p12文件填一个名字，点击存储：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tKfTcgw1f6veo0i9jrj30ob0f8gou.jpg" alt="145419_4APv_1245365.png"></p>
+<p>填“密码”，“验证”(和密码相同)：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgw1f6veozh2dmj30oe0fdadd.jpg" alt="145850_riFP_1245365.png"></p>
+<p>点击好，在桌面上就形成了一个.p12文件了：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgw1f6vepd01k0j303p02v3ye.jpg" alt="145850_h08r_1245365.png"></p>
+<p>在别人的电脑上要成功安装，须具备两个文件：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tKfTcgw1f6vett8d30j30bj01xwen.jpg" alt="152539_lpaC_1245365.png"></p>
+<ol>
+<li>该证书导出的“.p12”文件（.p12文件本身就是一个加密的证书，所以用这两个文件就可以让其他mac设备使用了）。</li>
+<li>iOS开发者中的与“证书”对应的“描述文件”（这个描述文件也可以上开发者帐号上下载）</li>
+</ol>
+<h4 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h4><p>拿到这两个文件后，依次双击“证书”，“.p12“文件（需要输入密码，密码就是当时生成.p12时设定的密码，），作用是加入钥匙串中，使我们的电脑具备开发的证明，”描述文件“（作用是置于xcode中，让xcode知道我们开发的合法性），添加完后就可以使用证书来签名发布ipa了。 </p>
+<h4 id="添加开发者"><a href="#添加开发者" class="headerlink" title="添加开发者"></a>添加开发者</h4><p>若开发者需要通过企业签名进行真机调试（不是发布ipa），则需要在企业开发者帐号中添加个人开发者帐号，让个人开发者作为企业开发者帐号中团队的一员，这样就可以生成相对于个人的开发证书，进行真机调试。添加开发者的权限问题可根据需求自行设定，有包括Admin和Member两个类型。</p>
+<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><h3 id="The-certificate-used-to-sign-“APPTest”-has-either-expired-or-has-been-revoked-An-updated-certificate-is-required-to-sign-and-install-the-application"><a href="#The-certificate-used-to-sign-“APPTest”-has-either-expired-or-has-been-revoked-An-updated-certificate-is-required-to-sign-and-install-the-application" class="headerlink" title="The certificate used to sign “APPTest” has either expired or has been revoked. An updated certificate is required to sign and install the application."></a>The certificate used to sign “APPTest” has either expired or has been revoked. An updated certificate is required to sign and install the application.</h3><p>原因：ios证书过期或者被撤销了</p>
+<p>解决办法：先去钥匙串访问中找到过期证书删除后，下载最新的证书重新安装</p>
+<h3 id="process-launch-failed-failed-to-get-the-task-for-process-XXX"><a href="#process-launch-failed-failed-to-get-the-task-for-process-XXX" class="headerlink" title="process launch failed: failed to get the task for process XXX"></a>process launch failed: failed to get the task for process XXX</h3><p>原因：证书问题，必须用开发者证书才可以真机调试。</p>
+<p>解决办法：在企业帐号中添加个人开发者证书，然后生成对应的Provisioning Profiles，下载证书和Provisioning Profiles安装到Xcode上。或者修改一下包名在修改回来，会出现然后会出现一个警告，然后点击Fix Issue，然后Xcode会帮你自动完成</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(6) - iOS部署下载安装失败原因排除</title>
+    <url>/2016/08/03/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>iOS 的内测应用在安装时，很多人都遇到过安装失败的情况，安装失败的原因比较多，下面将一些常见原因总结如下，方便开发者进行排查。<br><a id="more"></a></p>
+<h4 id="在-iOS-9-中启动应用时，出现提示“未受信任的企业级开发者”"><a href="#在-iOS-9-中启动应用时，出现提示“未受信任的企业级开发者”" class="headerlink" title="在 iOS 9 中启动应用时，出现提示“未受信任的企业级开发者”"></a>在 iOS 9 中启动应用时，出现提示“未受信任的企业级开发者”</h4><blockquote>
+<p>这样问题是因为在 iOS 9 以后的版本中，苹果对企业签名的应用做了更严格了限制。</p>
+</blockquote>
+<blockquote>
+<p>只要在设置=》通用=》描述文件与设备管理=》选择相应证书验证通过即可，<a href="http://fir.im/support/articles/faq/ios9_certificate" target="_blank" rel="noopener">详情请见</a></p>
+</blockquote>
+<h4 id="在-iOS-9-中点击“安装”按钮后，没有弹出“是否安装”的提示"><a href="#在-iOS-9-中点击“安装”按钮后，没有弹出“是否安装”的提示" class="headerlink" title="在 iOS 9 中点击“安装”按钮后，没有弹出“是否安装”的提示"></a>在 iOS 9 中点击“安装”按钮后，没有弹出“是否安装”的提示</h4><blockquote>
+<p>这个问题是因为 iOS 9 的一个 Bug 导致的。出现这个问题的前提，一般是由于用户已经从苹果官方 App Store 上安装了相同的应用。</p>
+</blockquote>
+<blockquote>
+<p>先在设备中删除之前已经安装的应用，然后再从托管平台安装即可。</p>
+</blockquote>
+<h4 id="为什么在-iOS-9-中，点击“安装”按钮后，没有任何反应，桌面也没有出现应用图标，但是状态栏上的网络图标在转"><a href="#为什么在-iOS-9-中，点击“安装”按钮后，没有任何反应，桌面也没有出现应用图标，但是状态栏上的网络图标在转" class="headerlink" title="为什么在 iOS 9 中，点击“安装”按钮后，没有任何反应，桌面也没有出现应用图标，但是状态栏上的网络图标在转"></a>为什么在 iOS 9 中，点击“安装”按钮后，没有任何反应，桌面也没有出现应用图标，但是状态栏上的网络图标在转</h4><blockquote>
+<p>这是由于 iOS 9 中的一个 Bug 造成的。虽然看上去没有反应，其实应用已经在后台开始下载并安装了，状态栏上的网络图标在转就是一个证明。这个时候，只要多等待一会儿就好了，应用安装完成之后会在桌面上显示出来的。</p>
+</blockquote>
+<h4 id="安装-iOS-应用时，出现提示“无法连接到-ssl-pgyer-com”"><a href="#安装-iOS-应用时，出现提示“无法连接到-ssl-pgyer-com”" class="headerlink" title="安装 iOS 应用时，出现提示“无法连接到 ssl.pgyer.com”"></a>安装 iOS 应用时，出现提示“无法连接到 ssl.pgyer.com”</h4><p>通过蒲公英或FIR分发平台发布：</p>
+<blockquote>
+<p>这个问题一般是由于用户的网络，或者手机缓存错误造成的，可以尝试如下两个方法来解决：重启手机，然后尝试重新安装。换一个网络环境，例如换一个 Wi-Fi 热点，或由 Wi-Fi 换成 3G/4G 等，然后重新安装。</p>
+</blockquote>
+<p>通过自己的搭建的https分发平台发布：</p>
+<blockquote>
+<p>这个问题应该是因为https没有搭建好，或者是ios设备没有实现安装自签名的证书。详情见：<a href="http://lion1ou.win/2016/07/31/">tomcat+openssl构建自签名证书形式的iOS无线安装ipa环境</a>，除了这种方法还有别的方法可以搭建https分发ipa的平台。</p>
+</blockquote>
+<h4 id="应用安装过程中提示”无法下载应用程序”"><a href="#应用安装过程中提示”无法下载应用程序”" class="headerlink" title="应用安装过程中提示”无法下载应用程序”"></a>应用安装过程中提示”无法下载应用程序”</h4><p>原因一：在导出 iOS App 的安装包文件（ .ipa 文件）时，选择了 App-Store 方式。</p>
+<blockquote>
+<p>在导出 iOS 的.ipa文件时，有些开发者选择了App-Store方式，这种方式导出的.ipa文件，只适合于上传到苹果App Store，并不能通过托管平台来安装。如果是这种方式导出的 .ipa文件，传到托管平台上是不能通过安装的。</p>
+</blockquote>
+<p>原因二：在导出 iOS App 的安装包文件（ .ipa 文件）时，选择了 Ad-hoc 方式，但是没有添加设备 UDID 。</p>
+<blockquote>
+<p>在导出 iOS 的安装包文件时，如果选择了Ad-hoc方式（一般用于苹果个人开发者账户），那么，如果要某台设备可以安装，则必须要将这台设备的 UDID 添加到导出安装包时所用的证书文件中（.mobileprovision文件），才可以在这台设备上安装。</p>
+</blockquote>
+<blockquote>
+<p>使用 Ad-hoc 方式导出的安装包文件上传到蒲公英后，蒲公英会显示为“内测版”，同时会在应用管理中，显示出该安装包的证书中包含的 UDID 列表。开发者可以根据显示出的 UDID 列表，来排查某台设备的 UDID 有没有被添加到安装包的证书中。</p>
+</blockquote>
+<p>原因三：在导出 iOS App 的安装包文件（ .ipa 文件）时，选择了 In-house 方式，但是证书已过期或被撤销。</p>
+<blockquote>
+<p>在导出 iOS 的安装包文件时，如果选择了In-house方式（一般用于苹果企业开发者账户），此时，如果出现无法安装的情况，开发者可以检查一下自己的企业开发者证书是否已过期或被撤销。因为苹果对于企业开发者证书管理较为严格，所以开发者如果使用不当，可能会导致企业证书被封，被封后的企业证书导出的安装包，也是无法正确安装的。</p>
+</blockquote>
+<p>原因四：开发者在生成App安装包时，没有在 Xcode 中设置正确的 Architecture 。</p>
+<blockquote>
+<p>iOS 应用的 Architecture（架构），决定了这款 iOS 应用可以在哪些设备机型上安装。例如，如果某个应用在 Xcode 中只添加了 arm64 这一种 Architecture，那么最终打包后的安装包文件上传到托管平台后，对于 iPad mini、iPhone5 等以下设备，都是无法安装的（因为这些设备都不是 arm64 架构）。换句话说，如果需要在某个设备上可以安装，App 就必须支持那个设备的 Architecture。</p>
+</blockquote>
+<blockquote>
+<p>所以，正确的解决方法是，在生成 App 安装包时，尽可能让 App 支持更多的 Architecture。</p>
+</blockquote>
+<blockquote>
+<p>具体操作方法是：在 Xcode - Build Settings - Architecture 中，增加 armv7、armv7s、arm64，以便所有设备都可以安装。然后，将 “Build active architecture only” 设置为 NO。对于各个 iOS 设备支持的 Architecture 类型。</p>
+</blockquote>
+<p>原因五：App 支持的 iOS 系统版本，和当前设备系统版本不符。</p>
+<blockquote>
+<p>打包时 App 选择支持的 iOS 系统版本过低或者过高，都可能导致 App 无法安装成功。例如，如果某个 App 设置了只支持 iOS 7.0 以上的系统时，那么，如果在 iOS 6.1 系统上安装时，肯定是无法安装成功。</p>
+</blockquote>
+<blockquote>
+<p>因此，我们应该尽量让 App 尽可能支持更宽泛的系统版本。</p>
+</blockquote>
+<blockquote>
+<p>具体操作方式是：在Xcode - General - Deployment Info - Deployment Target中，给 App 设置一个尽量低的版本，例如 iOS 5.0。</p>
+</blockquote>
+<p>原因六：开发者上传的是一个破解的 ipa 安装包，或者是一个使用破解 Xcode 方式打包生成的 ipa 安装包，或者是通过 iTunes 生成的 ipa 安装包。</p>
+<blockquote>
+<p>通过任何非 Xcode（或 Xcode 的命令行工具）生成的安装包，都是没有办法正确在设备上安装的（越狱设备除外）。</p>
+</blockquote>
+<blockquote>
+<p>常见的不正确的打包 ipa 的方式有：</p>
+</blockquote>
+<blockquote>
+<p>通过 iTunes 导出安装包文件、通过 iTools 导出安装包文件等等。这种类型的 App 上传到托管平台后，会显示未签名的标签提示。</p>
+</blockquote>
+<p>原因七：设备上已经安装了这个App，且已经安装的 App 和要安装的 App 是用不同证书打包的。</p>
+<blockquote>
+<p>这种情况下，也会造成 App 安装失败。解决的方式很简单，开发者只需将设备上原来已经安装的 App 删除，再重新安装新的 App 即可。</p>
+</blockquote>
+<p>原因八：Info.plist 文件中的LSRequiresIPhoneOS 没有设置，或者设置了 NO。</p>
+<blockquote>
+<p>对于 iOS 的 App 来说，如果Info.plist文件中的LSRequiresIPhoneOS没有设置，或者设置了NO，那么由 Xcode 导出的安装包（.ipa包），就不会包含Payload文件夹，而是被一个叫做Applications的文件夹代替。这样的安装包在安装时，会被 iOS 判定为无效的安装包，所以无法被正确安装。</p>
+</blockquote>
+<blockquote>
+<p>只需要将Info.plist文件中的LSRequiresIPhoneOS设置为YES，然后重新打包即可。具体操作为：在 Xcode 中打开Info.plist文件，然后检查 LSRequiresIPhoneOS是否已设置，如果没有设置，就添加一个，然后将LSRequiresIPhoneOS的类型设置为Boolean，值设置为 YES。</p>
+</blockquote>
+<blockquote>
+<p>设置好以后，可以看到Info.plist文件中显示Application requires iPhone environment的值为YES。</p>
+</blockquote>
+<p>原因九：网络出现中断或异常。</p>
+<blockquote>
+<p>遇到这种情况，用户可检查自己手机的所连接的网络是否稳定、速度是否正常等。可以尝试一下其他网站，或者更换一个 Wi-Fi，或者由 Wi-Fi 换成 3G/4G 等，然后重新安装。</p>
+</blockquote>
+<p>原因十：.plist文件内的链接写错。</p>
+<blockquote>
+<p>这个问题出现在自己搭建的分发平台上，原因是.plist文件内的链接没有找到相应文件，请确保每个链接所对应的位置都有文件存在，不要写错。</p>
+</blockquote>
+<h4 id="自签名分发平台其他注意点"><a href="#自签名分发平台其他注意点" class="headerlink" title="自签名分发平台其他注意点"></a>自签名分发平台其他注意点</h4><ol>
+<li><p>配置mime</p>
+<blockquote>
+<p>对于 IIS，使用 IIS Manager 在服务器的“属性”页面中添加 MIME 类型：</p>
+</blockquote>
+<pre><code> .ipa application/octet-stream
+ .plist text/xml
+</code></pre><blockquote>
+<p>注：配置在子文件夹级别的web.config中，发布新网站时不要覆盖^_^</p>
+</blockquote>
+</li>
+<li><p>plist有中文时会有问题</p>
+<blockquote>
+<p>尽量保证plist文件中的内容都是英文，不要出现中文，可能会出现问题。并且要保证plist文件是以utf-8格式存储。</p>
+</blockquote>
+</li>
+<li><p>下载路径不能超过三级</p>
+<pre><code> https://www.xxx.com/app/download/ios/xxx.plist（错误）
+ https://www.xxx.com/app/download/xxx.plist（正确）
+</code></pre><blockquote>
+<p>尽量将plist文件和ipa等文件，放到根目录下，方便查找，也方便下载。可能会出现各种错误提示：“无法连接到…”，“此时无法下载…”，“证书有问题…”。</p>
+</blockquote>
+</li>
+<li><p>点击下载后没有反应</p>
+<blockquote>
+<p>客户端会对plist文件进行缓存，所以有时候点击安装后会没有反应，可以试试将.plist文件改个名字试试，或者清除手机缓存。</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="托管平台"><a href="#托管平台" class="headerlink" title="托管平台"></a>托管平台</h4><blockquote>
+<p>托管平台是指将APP发布于第三方平台上面，供用户安装测试。常见的托管平台有蒲公英、fir.im。</p>
+</blockquote>
+<blockquote>
+<p>App-Store: App-Store版，用于发布到苹果商店；Ad-hoc: 内测版，用于内部指定设备使用；In-house: 企业版，可在任何设备上安装，但不能滥用。</p>
+</blockquote>
+<p>本文结合蒲公英、fir.im两家应用托管平台的博文和自身实际经验整理所得，如有错误欢迎批评指正。</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(5) - tomcat+openssl构建自签名证书形式的iOS无线安装ipa环境</title>
+    <url>/2016/08/02/</url>
+    <content><![CDATA[<p>本文讲述了如何使用 openssl 制作证书、keytool生成证书申请并将证书导入证书库、如何配置tomcat，和配置当中出现问题的解释。本文用到的工具：OpenSSL.rar<a href="http://files.cnblogs.com/leeshd/OpenSSL.rar" target="_blank" rel="noopener">(点击下载)</a>；keytool(JDK中自带的工具)。<br><a id="more"></a></p>
+<blockquote>
+<p>这里下载的OpenSSL.rar,其中的openssl.cnf并没有在ssl文件夹中，需新建ssl文件夹并把openssl.cnf放入其中。</p>
+</blockquote>
+<h2 id="使用-openssl-生成根证书生成"><a href="#使用-openssl-生成根证书生成" class="headerlink" title="使用 openssl 生成根证书生成"></a>使用 openssl 生成根证书生成</h2><ol>
+<li><p>下载安装openssl、Tomcat</p>
+<p> 下载openssl后，放到任意目录下，然后命令行进入安装目录下的bin目录</p>
+<p> 安装Tomcat详见：<a href="http://lion1ou.win/2016/07/31/">Windows上Tomcat服务器的搭建</a></p>
+</li>
+<li><p>生成根证书的私钥，生成文件cakey.pem</p>
+<p> <code>openssl genrsa -out cakey.pem 1024</code></p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6ekj0c21mj20ii04q75w.jpg" alt="屏幕快照 2016-08-01 21.30.19.png"></p>
+</li>
+<li><p>根据私钥生成证书申请，生成文件careq.csr</p>
+<p> <code>openssl req -new -out careq.csr -key cakey.pem</code></p>
+<p> 若出现以下情况，则需要输入</p>
+<p> <code>set OPENSSL_CONF=C:\code\OpenSSL\ssl\openssl.cnf</code></p>
+<p>  <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cwbutrsaj20mg0203ze.jpg" alt="屏幕快照 2016-07-31 10.47.39.png"></p>
+<p>  然后再执行之前的命令效果如下：</p>
+<p>  <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cwh0sjo2j20pi09adkd.jpg" alt="屏幕快照 2016-07-31 10.52.29.png"></p>
+<p>  接着根据提示填写信息：</p>
+<p>  <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cwkj1gbsj20mq09etcx.jpg" alt="屏幕快照 2016-07-31 10.56.02.png"></p>
+</li>
+<li><p>根据根证书申请生成自签名根证书，生成文件cacert.pem</p>
+<p> <code>openssl x509 -req -in careq.csr -out cacert.pem -signkey cakey.pem -days 3650</code></p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cwoaq7xbj210204gq5d.jpg" alt="屏幕快照 2016-07-31 10.59.39.png"></p>
+<p> 至此根证书制作完毕。</p>
+</li>
+</ol>
+<h2 id="生成tomcat证书库文件和证书申请"><a href="#生成tomcat证书库文件和证书申请" class="headerlink" title="生成tomcat证书库文件和证书申请"></a>生成tomcat证书库文件和证书申请</h2><ol>
+<li><p>生成证书库文件 tomcatkey.jks</p>
+<p> keytool -genkey -alias <strong>tomcat</strong> -keyalg RSA -keysize 1024 -validity “1825” -keypass <strong>123456</strong> -keystore <strong>tomcatkey.jks</strong> -storepass <strong>123456</strong></p>
+<p> 加粗部分可以根据具体的部署情况做相应的变化</p>
+<p> 参数：</p>
+<pre><code> -alias 证书库文件中私钥的别名
+ -keypass 证书库文件私钥的密码
+ -keystore 证书库文件的存储路径
+ -storepass 证书库文件的密码
+</code></pre><blockquote>
+<p>名字和姓氏必须要输入服务器的域名或者ip地址，建议ip地址，否则部署后会提示 证书不匹配的错误</p>
+</blockquote>
+<blockquote>
+<p>剩余的部分必须和根证书填写一致。</p>
+</blockquote>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cx0dioalj21160cmafc.jpg" alt="屏幕快照 2016-07-31 11.11.14.png"></p>
+<p> 如果出现：<code>&#39;keytool&#39; 不是内部或外部命令 也不是可运行的程序</code></p>
+<blockquote>
+<p>将jdk目录下的keytool.exe文件，复制到Windows/systems32目录下。</p>
+</blockquote>
+</li>
+</ol>
+<ol start="2">
+<li><p>根据证书库文件生成证书申请，生成文件certreq.cer</p>
+<p>keytool -certreq -alias tomcat -sigalg “MD5withRSA” -file certreq.cer -keypass 123456 -keystore tomcatkey.jks -storepass 123456</p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cx3let4yj21100203zl.jpg" alt="屏幕快照 2016-07-31 11.14.23.png"></p>
+</li>
+</ol>
+<h2 id="制作服务器证书并导入证书库"><a href="#制作服务器证书并导入证书库" class="headerlink" title="制作服务器证书并导入证书库"></a>制作服务器证书并导入证书库</h2><ol>
+<li><p>用根证书签名证书申请生成根证书，生成文件tomcatcert.pem</p>
+<p>openssl ca -keyfile cakey.pem -cert cacert.pem -in certreq.cer -out tomcatcert.pem -config openssl.cnf -policy policy_anything</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cx81kavoj21160s07fc.jpg" alt="屏幕快照 2016-07-31 11.18.29.png"></p>
+<blockquote>
+<p>证书可能失败，原因是openssl证书数据库中已经存储了这个证书，错误输出：</p>
+</blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cx9kjfmuj209e01a747.jpg" alt="屏幕快照 2016-07-31 11.20.04.png"></p>
+<blockquote>
+<p>解决办法是在目录openssl/democa/index.txt，把内容清空，查看大小为0KB，这个做法会把已有的证书删除但是这个做法比较危险，有耐心可以找到那条记录并删除它，然后重新执行</p>
+</blockquote>
+</li>
+<li><p>转pem格式为cer格式，生成文件cacert.cer，tomcatcert.cer</p>
+<blockquote>
+<p>由于原有的格式都是pem格式，在导入证书库之前（即导入jks文件）需要转换成cer格式</p>
+</blockquote>
+<p>openssl x509 -in cacert.pem -out cacert.cer</p>
+<p>openssl x509 -in tomcatcert.pem -out tomcatcert.cer</p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cxe2slahj20oc02sjsc.jpg" alt="屏幕快照 2016-07-31 11.24.26.png"></p>
+</li>
+<li><p>将转换成功的cer文件导入证书库文件中</p>
+<p> 导入根证书：</p>
+<p> <code>keytool -keystore tomcatkey.jks -import -alias RootCA -file cacert.cer</code></p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cxfj371cj21160d0gt1.jpg" alt="屏幕快照 2016-07-31 11.25.37.png"></p>
+<p> 导入服务器证书：</p>
+<p> <code>keytool -keystore tomcatkey.jks -import -alias tomcat -file tomcatcert.cer</code></p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cxh3ja0gj20vo02mdgx.jpg" alt="屏幕快照 2016-07-31 11.27.15.png"></p>
+<p> 到这里，证书制作成功。</p>
+</li>
+</ol>
+<h2 id="Tomcat配置"><a href="#Tomcat配置" class="headerlink" title="Tomcat配置"></a>Tomcat配置</h2><ol>
+<li><p>server.xml</p>
+<p> 打开tomcat安装包，打开conf，打开server.xml文件，找到<connector port="8443" ...>，默认被注释掉的，修改如下：</connector></p>
+<p> <code>&lt;Connector port=&quot;443&quot; protocol=&quot;HTTP/1.1&quot; SSLEnabled=&quot;true&quot; maxThreads=&quot;150&quot; scheme=&quot;https&quot; secure=&quot;true&quot; clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot; keystoreFile=&quot;C:/code/tomcatkey.jks&quot; keystorePass=&quot;123456&quot; /&gt;</code></p>
+<blockquote>
+<p>端口设置为默认端口443，这样就可以直接访问了，不用添加端口号了</p>
+</blockquote>
+<blockquote>
+<p>clientAuth 表示是否双向认证，一般情况下，这里只需要服务器认证，所以false即可。</p>
+</blockquote>
+<blockquote>
+<p>keystoreFile 表示证书地址（相对地址或绝对地址皆可），keystorePass 与之前设置的密码一致。</p>
+</blockquote>
+</li>
+</ol>
+<ol start="2">
+<li>启动tomcat，在浏览器中输入<a href="https://ip，此时浏览器会提示不安全的连接，直接进入地址栏会出现证书错误的提示，点击错误区域按照提示安装证书。或者" target="_blank" rel="noopener">https://ip，此时浏览器会提示不安全的连接，直接进入地址栏会出现证书错误的提示，点击错误区域按照提示安装证书。或者</a> Inernet选项-内容-证书-受信任的根证书颁发机构-导入，选中之前的cacert.cer和tomcatcert.cer，就ok了</li>
+</ol>
+<h2 id="iOS设备访问安装页面"><a href="#iOS设备访问安装页面" class="headerlink" title="iOS设备访问安装页面"></a>iOS设备访问安装页面</h2><ol>
+<li><p>在ios设备的safiri中输入页面地址，点击安装连接时会提示 无法连接到xxx.xxx.xxx.xxx，那是因为safiri没有安装证书信任此连接，所以要先安装证书，才能正常。</p>
+</li>
+<li><p>在APP下载页面上添加证书下载链接，链接指向cacert.cer的地址，设备会自动跳转到安装步骤，按照步骤完成安装就可以了，注意最后证书上要有绿色的信任标记才表明安装成功，如果是红色叉号表面安装失败。</p>
+</li>
+<li><p>安装成功后就可以使用无线安装app了。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(4) - windows上tomcat服务器的搭建</title>
+    <url>/2016/07/31/</url>
+    <content><![CDATA[<p>Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试JSP 程序的首选服务器。<br><a id="more"></a></p>
+<h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><ul>
+<li>2016.07.30  初稿</li>
+<li>2016.08.08  添加修改默认主页为自己主页  </li>
+</ul>
+<h2 id="准备条件"><a href="#准备条件" class="headerlink" title="准备条件"></a>准备条件</h2><blockquote>
+<p>安装java环境，配置环境变量</p>
+</blockquote>
+<ol>
+<li><p>下载JDK，<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">link</a></p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6c2hkxorgj20f408n76s.jpg" alt="屏幕快照 2016-07-30 17.27.11.png"></p>
+<p> 根据自己的系统，下载对应的版本</p>
+</li>
+<li><p>安装JDK</p>
+<p> 默认选择，正常点击，下一步，下一步，完成安装。</p>
+</li>
+<li><p>配置环境变量</p>
+<p> 右击计算机=》属性=》高级系统设置</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6c2nylc7sj20cv0eb0t7.jpg" alt="82EECB57-DFF7-4563-8CFF-40EF0BF85935.jpg"></p>
+<ul>
+<li><p><strong>配置JAVA_HOME</strong>（如图新建JAVA_HOME，变量值配置为jdkX.X.XX文件夹的位置）</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2pxpxzxj20bx063mxd.jpg" alt="9CAC574C-8432-466E-AF8E-21C61C6F8C6D.jpg"></p>
+</li>
+<li><p><strong>配置classPath</strong></p>
+<p>在已有的classPath中添加或新建添加<code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;</code>，记得前面有个”.”。</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cdme9unqj20hm05u0tl.jpg" alt="屏幕快照 2016-07-31 00.00.26.png"></p>
+</li>
+<li><p><strong>配置Path</strong>（在已有的path中添加”%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;”，多个目录用分号隔开）</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6c2rih4t6j20bx067dg2.jpg" alt="0C62FF95-28F8-4D23-ADF3-2A6137DE90B2.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cdpplgylj20db068jsk.jpg" alt="屏幕快照 2016-07-31 00.03.30.png"></p>
+<blockquote>
+<p>(配置完成后，执行命令行时，系统会在path指定的路径中寻找该命令对应的可执行文件)</p>
+</blockquote>
+</li>
+<li><p><strong>检验安装</strong>配置是否正确</p>
+<p>组合键Windows+R后，输入cmd后，回车，打开cmd窗口，在窗口中输入<code>java -version</code>后回车，出现如下画面则表示成功！</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2tfy1vpj20em029t8x.jpg" alt="82D4068D-117F-497F-8E52-8C69943479AB.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><blockquote>
+<p>在Windows下安装Tomcat服务器的方式有两种，一种是直接安装，一种是绿色版，解压后就可以直接使用的。</p>
+</blockquote>
+<h3 id="绿色版，免安装版"><a href="#绿色版，免安装版" class="headerlink" title="绿色版，免安装版"></a>绿色版，免安装版</h3><ol>
+<li><p>下载Tomcat，<a href="http://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">link</a></p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6c37n0nt9j20kn0d977i.jpg" alt="屏幕快照 2016-07-30 17.55.29.png"></p>
+<p> 选择其中一种下载。</p>
+</li>
+<li><p>安装Tomacat</p>
+<p> 将Tomcat服务器的压缩包放在任意文件夹目录下(最好跟你的开发文件集中放置，便于管理),解压并且打开后可以看到Tomcat的目录结构如下：</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6c3git1etj203w0773yr.jpg" alt="Voila_Capture 2016-07-30_18-06-24_.png"></p>
+<p> 文件解释：</p>
+<pre><code> bin:存放启动和关闭Tomcat的脚本文件
+ conf:存放Tomcat服务器的各种配置文件
+ lib:存放Tomcat服务器的支持jar包
+ logs:存放Tomcat的日志文件
+ temp:存放Tomcat运行时产生的临时文件
+ webapps:web应用所在目录，即供外界访问的web资源的存放目录
+ work:Tomcat的工作目录
+</code></pre></li>
+<li><p>配置环境变量（可选配），详细信息：<a href="http://www.jianshu.com/p/65881a45ad4a" target="_blank" rel="noopener">link</a></p>
+</li>
+<li><p>启动服务</p>
+<p> 打开cmd命令行，进入Tomcat文件夹下的bin目录，输入<code>startup</code>命令<code>启动</code>Tomcat服务器</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cav5ktkjj20l403tjs2.jpg" alt="屏幕快照 2016-07-30 22.25.00.png"></p>
+<p> 当弹出下图中得Dos窗口，表示Tomcat服务器成功的启动了</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cavu17waj20r70fwahn.jpg" alt="屏幕快照 2016-07-30 22.25.43.png"></p>
+<p> 然后在浏览器中输入<code>http://localhost:8080/</code>当浏览器中出现下图所示的提示框表示Tomcat服务器成功的启动了</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6caygoa7oj20li0d9adi.jpg" alt="屏幕快照 2016-07-30 22.28.10.png"></p>
+<p> 打开cmd命令行，进入Tomcat文件夹下的bin目录，输入<code>shutdown</code>命令<code>关闭</code>Tomcat服务器</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6ccs56pt3j20lf03tt9e.jpg" alt="屏幕快照 2016-07-30 23.31.20.png"></p>
+<p> 直到之前自动打开的dos窗口关闭，表示服务已关闭</p>
+</li>
+</ol>
+<h3 id="安装版"><a href="#安装版" class="headerlink" title="安装版"></a>安装版</h3><p>借用人家教程，<a href="http://www.lvtao.net/server/windows-setup-tomcat.html" target="_blank" rel="noopener">link</a></p>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><blockquote>
+<p>将自己的项目部署到Tomcat服务器上</p>
+</blockquote>
+<ul>
+<li>打开webapps页面，将自己的项目放到该文件夹内，如下图：</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cc3mtqemj20d705raaz.jpg" alt="屏幕快照 2016-07-30 23.07.50.png"></p>
+<blockquote>
+<p>在前面我已经介绍过了webapps是web应用所在目录，即供外界访问的web资源的存放目录，所以就在webapps目录下部署我们自己的项目，前面介绍的输入<code>http://localhost:8080/</code>后访问的网页其实访问的就是webapps文件夹下的Tomcat自带的这些文件夹中的文件</p>
+</blockquote>
+<ul>
+<li>最后打开浏览器并且在浏览器中输入<code>http://localhost:8080/apps/index.html</code>可以访问到放在apps文件夹下的index.html页面。</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cc51vznvj20mo03ldg0.jpg" alt="屏幕快照 2016-07-30 23.09.11.png"></p>
+<h2 id="访问项目"><a href="#访问项目" class="headerlink" title="访问项目"></a>访问项目</h2><p>第一步：需要将Tomcat服务器和手机连接在同一局域网下，我的手机和电脑都连接在同一个路由器下，这样就表示手机和电脑连接在同一局域网下</p>
+<p>第二步：查看服务器的ip地址（因为Tomcat安装在电脑中，所以服务器的ip地址就是电脑的ip地址），打开命令行，使用ipconfig命令可以查看主机的ip地址)</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6ccbdf0k7j20hh0bcdhd.jpg" alt="屏幕快照 2016-07-30 23.14.17.png"></p>
+<p>第三步：确保防火墙已经关闭</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cccbkf1ej20jh0d0wha.jpg" alt="屏幕快照 2016-07-30 23.16.12.png"></p>
+<p>第四步：在手机浏览器中打开<code>http://192.168.0.8:8080/apps/index.html</code></p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6ccl57o5sj20bt045mxd.jpg" alt="1.jpg"></p>
+<h2 id="修改默认主页"><a href="#修改默认主页" class="headerlink" title="修改默认主页"></a>修改默认主页</h2><ol>
+<li><p>在webapps文件夹下创建一个myindex文件夹，在文件夹内添加自己的index.html主页面。</p>
+</li>
+<li><p>修改server.xml文件</p>
+<p> 在server.xml找到如下位置：</p>
+<p> <img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6madykbxuj30i20bitbk.jpg" alt="屏幕快照 2016-08-08 13.43.31.png"></p>
+<p> 然后在<code>&lt;Host&gt;&lt;/Host&gt;</code>标签之间添加</p>
+<pre><code>         &lt;Context path=&quot;&quot; docBase=&quot;myindex&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; /&gt;
+</code></pre><blockquote>
+<p>path是说明虚拟目录的名字，如果你要只输入ip地址就显示主页，则该键值留为空；</p>
+</blockquote>
+<blockquote>
+<p>docBase是虚拟目录的路径，它默认的是$tomcat/webapps/ROOT目录，现在是我们设置的myindex目录</p>
+</blockquote>
+<blockquote>
+<p>debug和reloadable一般都分别设置成0和true。</p>
+</blockquote>
+</li>
+<li><p>修改web.xml</p>
+<p> 如果你的主页面是名称为<code>index</code>,则这一步就不用修改了。假设你的主页面名称为<code>a.jsp</code>。</p>
+<p> 在web.xml文件中，找到如下位置：</p>
+<p> <img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6matxworoj30dn03mjs2.jpg" alt="屏幕快照 2016-08-08 13.59.29.png"></p>
+<p> 然后在<code>&lt;welcome-file-list&gt;&lt;/welcome-file-list&gt;</code>标签内，添加如自己的主页面</p>
+<pre><code>         &lt;welcome-file&gt;a.jsp&lt;/welcome-file&gt;
+</code></pre><p> 然后<code>保存</code>上述文件，<code>重启tomcat</code>，就可以在浏览器中直接输入<code>ip地址</code>访问了。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(3) - Xcode7打包签名分发ipa</title>
+    <url>/2016/07/30/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="ipa打包"><a href="#ipa打包" class="headerlink" title="ipa打包"></a>ipa打包</h2><ol>
+<li><p>在工程中选择build Settings，修改Release为你的企业帐号</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f62npoz26lj21ja0jcjye.jpg" alt="屏幕快照 2016-07-22 14.07.21.png"></p>
+</li>
+<li><p>在工程中选择<code>Product</code>-<code>Archive</code>进入打包界面,请先选择Generic iOS Device</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f62ji4vtijj20wk07276s.jpg" alt="屏幕快照 2016-07-22 11.48.12.png"></p>
+</li>
+<li><p>选择<code>Export</code>进入打包方式选择界面</p>
+</li>
+<li><p>选择Save for Enterprise Deployment选项，Next</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f62kg4sk0bj20vc0ikgq3.jpg" alt="屏幕快照 2016-07-22 12.20.59.png"></p>
+</li>
+<li><p>选择对应的企业账号，然后继续即可</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f62khx4lm1j20w80jg0ue.jpg" alt="81f8a509gw1eww9h8245vj20w80jg0ue.jpg"></p>
+</li>
+<li><p>接下来是对安装设备的要求选择，默认选择所有设备。第二个选项是指定特定类型设备方可安装。我们使用默认第一项，Next</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f62kiylxnxj20vu0ikdky.jpg" alt="屏幕快照 2016-07-22 12.23.46.png"></p>
+</li>
+<li><p>之后的界面是对应用的二次确认，确保APP配置准确无误。在窗口的左下方有一个Include manifest for over-the-air installation。该选项表示是否在生成<code>.ipa</code>文件的同时生成<code>.plist</code>文件，我们勾选上，Next</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f62kpd26bnj20v60ic76s.jpg" alt="屏幕快照 2016-07-22 12.24.23.png"></p>
+<blockquote>
+<p>over-the-air: OTA 是苹果在iOS4中新增的一项功能，目的是让企业用户能够在脱离Apple App Store的情况下通过网页无线发布 iOS 应用；简单来讲就是在Safari中点击一个链接就可以在iPhone或iPad上下载并安装应用（目前很多越狱软件都是使用的这种发布方式）。</p>
+</blockquote>
+</li>
+<li><p>接下来配置<code>.plist</code>文件，填写完之后，<code>Export</code>导出<code>.ipa</code>包和相应的<code>.plist</code>文件（建议将生成的<code>.plist</code>文件命名同APP名一致，方面后期管理）</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f62krvt9ssj20uy0iizo5.jpg" alt="屏幕快照 2016-07-22 12.31.45.png"></p>
+</li>
+<li><p>除了.ipa、.plist 这两个文件。我们还需要提供两个图片（就是配置 .plist 信息的时候填写的）</p>
+<blockquote>
+<p>一个尺寸是 57 X 57 像素，用来显示下载和安装过程中的图标。<br>一个尺寸是 512 X 512 像素，用来在 iTunes 中显示。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="分发ipa"><a href="#分发ipa" class="headerlink" title="分发ipa"></a>分发ipa</h2><ul>
+<li><p>内测分发ipa文件给测试人员主要有3种方法：</p>
+<blockquote>
+<ol>
+<li>使用iTunes将ipa同步到手机中或使用 Apple Configurator 2 安装应用；</li>
+</ol>
+<ul>
+<li>使用itms-services协议进行下载分发；</li>
+<li>使用第三方工具进行下载分发。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>使用iTunes进行内测分发</p>
+<ul>
+<li><p>使用iTunes进行分发比较麻烦，需要测试用户使用数据线连接装有iTunes的电脑上，先将ipa文件添加到iTunes，再将iTunes的App同步到手机上。由于国内用户对iTunes熟悉程度不高，故不推荐大家使用这种方式进行内测分发。</p>
+</li>
+<li><p>也可以使用 Apple Configurator 2 应用（从 App Store 上免费下载的 Mac 应用），通过 USB 连接iOs设备，等待配置设备完成，就可以添加应用到设备上。</p>
+</li>
+</ul>
+</li>
+<li><p>使用itms-services协议进行下载分发 <a href="http://help.apple.com/deployment/ios/#/apda0e3426d7" target="_blank" rel="noopener">官网文档</a></p>
+<blockquote>
+<p>相比iTunes的分发方式，使用itms-service 分发的最大好处是测试用户无需使用数据线，只需打开Safari中访问包含itms-service连接的页面，单击连接后即可下载IPA文件。</p>
+</blockquote>
+<blockquote>
+<p>itms-services的原理是itms-services指向一个plist文件，这个plist文件包含了ipa文件下载的地址，iOS设备的Safari会自动将plist中指定的ipa文件下载安装到本地。</p>
+</blockquote>
+<blockquote>
+<p>itms-services的麻烦之处就是开发者需要自己搭建一个支持https的服务器，将.plist文件存放在服务器上，然后通过页面上的链接进行访问。</p>
+</blockquote>
+<blockquote>
+<p>itms的结构参考如下</p>
+</blockquote>
+<p>  <code>&lt;a href=&quot;itms-services://?action=download-manifest&amp;url=https://xxx/test.plist&quot;&gt;安装IOS&lt;/a&gt;</code></p>
+<blockquote>
+<p>plist 的结构参考如下</p>
+</blockquote>
+</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plist</span> <span class="token attr-name">version</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>items<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>assets<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software-package<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>http://XXX/XXX.ipa<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>display-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>http://XXX/XXX.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>full-size-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>http://XXX/XXX.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>metadata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-identifier<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>com.app.XXX<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-version<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>0.0.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>appName<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plist</span><span class="token punctuation">></span></span>
+</code></pre>
+<pre><code>&gt;* URL：应用 (.ipa) 文件的完全限定 HTTPS URL
+
+&gt;* display-image：57 x 57 像素的 PNG 图像，在下载和安装过程中显示。指定图像的完全限定 URL
+
+&gt;* full-size-image：512 x 512 像素的 PNG 图像，表示 iTunes 中相应的应用
+
+&gt;* bundle-identifier：应用的包标识符，与 Xcode 项目中指定的完全一样
+
+&gt;* bundle-version：应用的包版本，在 Xcode 项目中指定
+
+&gt;* title：下载和安装过程中显示的应用的名称
+
+
+我们可以看到，虽然说用户比较方便，但对开发者而言需要写很多东西，还得搭建服务器，上OpenSSL等，比较麻烦。搭建自签名式ipa发布网站详见：[link]()
+
+还有一种方式是：将.plist文件存放到支持https的云服务上(如七牛云，github)，然后在itms-services链接中填写支持https的链接，其他文件可以放在不支持https的服务器网站上，只要.plist指向一下就好了。
+
+注意点：
+
+* ipa文件名不要出现中文，一定使用英文，否则无法下载
+* .plist文件目录不要大于三级，否则会出现无法连接到XXX
+* 只有指向.plist文件时需要https，其他链接可以使用http
+</code></pre><ul>
+<li><p>使用第三方工具进行内测分发</p>
+<blockquote>
+<p>为了避免开发者使用itms-services而带来的额外工作量，可以使用第三方工具如 <a href="http://fir.im/" target="_blank" rel="noopener">fir.im</a>，<a href="https://www.pgyer.com/" target="_blank" rel="noopener">蒲公英</a> ，将ipa快速地进行内测分发。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(2) - In House 证书申请下载</title>
+    <url>/2016/07/29/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h2><ul>
+<li>首先进入登录企业级账号Member Center,在Certificates-Production中创建一个证书:</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y22zrr1qj30oh0ikwi4.jpg" alt="屏幕快照 2016-07-18 14.43.13.png"></p>
+<ul>
+<li>选择In-House and Ad Hoc,点击继续.注意的是，如果已经创建了In-House的证书，就不能再创建了，该选项会变灰，如下图。如果要重新创建，可以先在之前的列表中将该证书Revoke掉(对已部署到服务器上的应用程序<code>有影响</code>，APP会无法下载，之前下载的App也会无法通过验证而无法使用）:</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y2ndeyrjj30pl0juq64.jpg" alt="屏幕快照 2016-07-18 15.02.54.png"></p>
+<ul>
+<li>点击下一步后,出现如下页面:</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y2t6am3hj30m50j5tbn.jpg" alt="屏幕快照 2016-07-18 15.08.25.png"></p>
+<ul>
+<li>然后在Mac系统中进入”钥匙窜访问”,选择“钥匙串访问”-“证书助理”-“从证书颁发机构请求证书”：</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79gw1f5y2v68db8j30s40fqn47.jpg" alt="屏幕快照 2016-07-18 15.06.16.png"></p>
+<ul>
+<li>输入常用邮箱地址,并存储到本地（这个信息将会通过p12文件，转到其他设备上）:</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y2vo6mu6j30zo0pcn2f.jpg" alt="屏幕快照 2016-07-18 15.07.06.png"></p>
+<ul>
+<li>再回到Apple 开发者页面，将生成的“CertificateSigningRequest.certSigningRequest”文件上传到开发者中心，</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79gw1f5y2yqbta4j30o20iu0uv.jpg" alt="屏幕快照 2016-07-18 15.13.37.png"></p>
+<ul>
+<li>点击下一步生成，最后将生成的证书下载到本地，</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79gw1f5y30qerx0j30o30isjtp.jpg" alt="屏幕快照 2016-07-18 15.14.45.png"></p>
+<ul>
+<li>双击打开。就可以在钥匙串中看到证书已经成功安装了：</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79gw1f5y351kcd7j30vu01st8t.jpg" alt="屏幕快照 2016-07-18 15.19.54.png"></p>
+<ul>
+<li>完成安装，如下图:</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79gw1f5y394lysjj310a090dik.jpg" alt="屏幕快照 2016-07-18 15.22.37.png"></p>
+<ul>
+<li>若帐号内已存在证书，且无法再创建时，请转至：<a href="http://lion1ou.win/2016/08/04/">iOS证书多人使用</a></li>
+</ul>
+<h2 id="创建APP-ID"><a href="#创建APP-ID" class="headerlink" title="创建APP ID"></a>创建APP ID</h2><p><img src="http://ww3.sinaimg.cn/large/006tNc79gw1f5y3c2fx1vj30p30ie76w.jpg" alt="屏幕快照 2016-07-18 15.26.34.png"></p>
+<ul>
+<li>填写app相关信息：</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y4bu5j66j30nn0i6tba.jpg" alt="屏幕快照 2016-07-18 16.01.00.png"></p>
+<ul>
+<li>生成相应的APP ID：</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79gw1f5y4e1v1h9j30rj0kwn02.jpg" alt="122936-794fa46561173cd4.png"></p>
+<h2 id="创建Provisioning-Profiles"><a href="#创建Provisioning-Profiles" class="headerlink" title="创建Provisioning Profiles"></a>创建Provisioning Profiles</h2><ul>
+<li>如果是刚刚申请的企业帐号可能会出现一下这种情况，那你只能乖乖的等了。</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f619cre87gj20yg0xi0v1.jpg" alt="693139-f7f5d89bde9054c6.jpeg"></p>
+<ul>
+<li>两个星期以后,就好了,如下图:</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f619fiukxqj20pi0kimzo.jpg" alt="屏幕快照 2016-07-21 09.00.31.png"></p>
+<ul>
+<li>点击 In House选项,然后下一步</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f619jxzzxxj20pd0if410.jpg" alt="屏幕快照 2016-07-21 09.00.43.png"></p>
+<ul>
+<li>下一步</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f619kv2krnj20pp0i1taq.jpg" alt="屏幕快照 2016-07-21 09.00.57.png"></p>
+<ul>
+<li>下一步</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f619lbz4hoj20p60i176b.jpg" alt="屏幕快照 2016-07-21 09.01.05.png"></p>
+<ul>
+<li>然后就可以下载安装了，安装很快，只要确保双击，应该就安装好了。</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f619mgkbihj20q50i5di0.jpg" alt="屏幕快照 2016-07-21 09.20.24.png"></p>
+<p>接下来就是通过Xcode来签名打包ipa了。详见下一篇博客。</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iOS开发(1) - iOS开发者账号区分详解</title>
+    <url>/2016/07/28/</url>
+    <content><![CDATA[<p>iOS Developer Program 目前有四种：个人版、公司版、企业版和教育版。<br><a id="more"></a></p>
+<h2 id="帐号区分"><a href="#帐号区分" class="headerlink" title="帐号区分"></a>帐号区分</h2><h3 id="个人版-99-USD-688-RMB"><a href="#个人版-99-USD-688-RMB" class="headerlink" title="个人版 - 99 USD/688 RMB"></a>个人版 - 99 USD/688 RMB</h3><ul>
+<li><p>此计划是为开发者能够自由地创造iPhone / iPod Touch/ iPad的商业应用，并且能够发布他们的应用程序在App Store上。</p>
+</li>
+<li><p>此计划每年有100台测试机器可以设置作开发以及测试用途。</p>
+</li>
+<li><p>这个程序不允许开发人员创建一个团队，团队成员添加到他们的帐户(只允许单人使用)。</p>
+</li>
+<li><p>以开发者名称作为卖方在App商店上市。</p>
+</li>
+</ul>
+<h3 id="公司版-99-USD-688-RMB"><a href="#公司版-99-USD-688-RMB" class="headerlink" title="公司版 - 99 USD/688 RMB"></a>公司版 - 99 USD/688 RMB</h3><ul>
+<li><p>公司应在邓白氏注册并拥有有效的DUNS号码。</p>
+</li>
+<li><p>此计划是对于希望开发iPhone / iPod Touch/ iPad的应用程序的公司而设。</p>
+</li>
+<li><p>此计划每年有100台测试机器可以设置作开发以及测试用途。</p>
+</li>
+<li><p>这个程序允许开发人员创建一个团队，团队成员添加到他们的帐户。</p>
+</li>
+<li><p>以公司名称将作为卖方在App商店上市。</p>
+</li>
+</ul>
+<h3 id="企业版-299-USD-1988-RMB"><a href="#企业版-299-USD-1988-RMB" class="headerlink" title="企业版 - 299 USD/1988 RMB"></a>企业版 - 299 USD/1988 RMB</h3><ul>
+<li><p>公司应在邓白氏注册并拥有有效的DUNS号码。</p>
+</li>
+<li><p>此程序所开发的应用只能发给其雇员作内部使用,设备数量没有限制。</p>
+</li>
+<li><p>这个程序允许开发人员创建一个团队，团队成员添加到他们的帐户。</p>
+</li>
+<li><p>不允许该公司在App商店出售他们的应用程序。</p>
+</li>
+</ul>
+<h3 id="教育版-0-USD-0-RMB"><a href="#教育版-0-USD-0-RMB" class="headerlink" title="教育版 - 0 USD/0 RMB"></a>教育版 - 0 USD/0 RMB</h3><ul>
+<li><p>此计划每年有100台测试机器可以设置作开发以及测试用途。</p>
+</li>
+<li><p>只能教育机构或学院内部使用(必须是苹果iOS开发者计划授权机构)</p>
+</li>
+<li><p>不能对外正式发布iOS应用程序</p>
+</li>
+</ul>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注:"></a>备注:</h3><ul>
+<li>关于在邓白氏(DUNS)</li>
+</ul>
+<blockquote>
+<p>邓白氏号码是用于验证希望申请苹果开发者帐户的相关企业或公司身份的特别号码。邓白氏号码目前被广泛应用于定位企业或公司的身份，并且拥有邓白氏号码的企业或公司可以更快捷有效地申请到苹果的开发者帐户。</p>
+</blockquote>
+<ul>
+<li>帐号管理</li>
+</ul>
+<blockquote>
+<p>企业版和公司版,可以添加多个子帐号,设置多个AppleID进行管理分配,分4种管理级别权限:</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>Admin Legal权限：超级管理员。可以管理开发者和管理app store中的应用。(一般是帐号申请者)</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>Admin权限：管理员，可以管理开发者。添加测试机子和管理团队证书。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>Member权限：是普通开发者。只能下载证书和使用证书</li>
+</ol>
+</blockquote>
+<h2 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h2><p><img src="http://ww3.sinaimg.cn/large/006tNc79gw1f5xvmxohx9j30990lmjsb.jpg" alt="屏幕快照 2016-07-18 11.00.10.png"></p>
+<p><code>上面的列表就包含了开发、调试和发布iOS应用程序所需的所有内容：Certificates、Identifiers、Devices、Provisioning Profiles。</code></p>
+<h3 id="Certificate-证书"><a href="#Certificate-证书" class="headerlink" title="Certificate(证书)"></a>Certificate(证书)</h3><blockquote>
+<p>证书是用来给应用程序签名的，只有经过签名的应用程序才能保证他的来源是可信任的，并且代码是完整的,未经修改的。在申请一个Certificate之前，我们需要先申请一个Certificate Signing Request (CSR) 文件，而这个过程中实际上是生成了一对公钥和私钥，保存在你Mac的Keychain中。</p>
+</blockquote>
+<blockquote>
+<p>代码签名正是使用这种基于非对称秘钥的加密方式，用私钥进行签名，用公钥进行验证。如下图所示，在你Mac的keychain的login中存储着相关的公钥和私钥，而证书中包含了公钥。私钥保存在你的Mac中，而苹果生成的Certificate中包含了公钥。当你用自己的私钥对代码签名后，苹果就可以用证书中的公钥来进行验证，确保是你对代码进行了签名，而不是别人冒充你，同时也确保代码的完整性等。</p>
+</blockquote>
+<blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79gw1f5xvwujngjj30jc0d30uh.jpg" alt="16182906-f0be4fe63ae142bc9755a642a3c9f983.png"></p>
+</blockquote>
+<blockquote>
+<p>你只能用私钥来进行签名，所以如果没有了私钥，就意味着你不能进行签名了，所以就无法使用这个证书了，此时你只能revoke之前的证书再申请一个。因此在申请完证书时，最好导出并保存好你的私钥。当你想与其他人或其他设备共享证书时，把私钥传给它就可以了，导出方式就是.p12文件。</p>
+</blockquote>
+<h4 id="多人使用证书-导出-p12"><a href="#多人使用证书-导出-p12" class="headerlink" title="(多人使用证书)导出.p12:"></a>(多人使用证书)导出.p12:</h4><blockquote>
+<p>.p12又称为个人信息交换证书。此证书实际包含了.cer证书（Apple开发者平台生成下载的.CER文件）以及对应的私钥信息（通过Mac钥匙串访问生成的.CSR文件）。而.p12包含了公钥和私钥，所以可以分发给团队其他成员使用。</p>
+</blockquote>
+<blockquote>
+<p>如果开发者B，登录开发者账号，下载证书（cer文件）运行，只有证书没有私钥，是不能正常使用的。所以如果有新同事加入到开发组的时候，应该从本地钥匙串中选择证书，一定要记得展开证书那一条显示出私钥并将两行都选中，右键导出2项（是否需要将两行选中有待证实），输入密码之后就生成p12文件（包含证书和私钥）给同事。</p>
+</blockquote>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gw1f5y0v1i22lj30yc05taav.jpg" alt="1192353-318f70fa4aa857c9.jpeg"></p>
+<blockquote>
+<p>另外可以给同事一份描述文件(Provisioning Profiles)(用于对应某个APP)，用于本地开发识别测试设备。需要强调一点，证书和项目关系其实并不大，证书一般有效期只有三年，当证书过期后，只需要重新生成一份证书，上传到开发者账号就行，同时因为原有证书过期，需要重新生成Provisioning Profiles文件。然后给同事们最新的p12文件和Provisioning Profiles文件就行,所以开发者账号中的证书，配置文件是可以放心操作的（比如误删了，或者找不到证书私钥了）.</p>
+</blockquote>
+<p>详细过程可转至：<a href="http://lion1ou.win/2016/08/04/">iOS证书多人使用</a></p>
+<h4 id="证书分类"><a href="#证书分类" class="headerlink" title="证书分类"></a>证书分类</h4><blockquote>
+<p>证书主要分为两类:Development(测试证书,用来开发和调试应用程序)和Production(分发证书,用来分发应用程序).</p>
+</blockquote>
+<blockquote>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6el0vkuj1j20mw0keq6u.jpg" alt="屏幕快照 2016-08-01 21.47.35.png"></p>
+</blockquote>
+<h3 id="Identifiers-App-ID-标识符"><a href="#Identifiers-App-ID-标识符" class="headerlink" title="Identifiers(App ID)(标识符)"></a>Identifiers(App ID)(标识符)</h3><blockquote>
+<p>App ID用于标识一个或者一组App，App ID应该是和Xcode中的Bundle ID是一致的或者匹配的。App ID主要有以下两种：</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>Explicit App ID：唯一的App ID，这种App ID用于唯一标识一个应用程序，例如com.ABC.demo1，标识Bundle ID为com.ABC.demo1的程序。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>Wildcard App ID：通配符App ID，用于标识一组应用程序。例如可以表示所有应用程序，而com.ABC.* 可以表示以com.ABC开头的所有应用程序。</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>每创建一个App ID，我们都可以设置该App ID所使用的APP Services，也就是其所使用的额外服务。每种额外服务都有着不同的要求，例如，如果要使用Apple Push Notification Services，则必须是一个explicit App ID，以便能唯一标识一个应用程序。下面是目前所有可选的服务和相应的配置要求。</p>
+</blockquote>
+<h3 id="Devices-设备"><a href="#Devices-设备" class="headerlink" title="Devices(设备)"></a>Devices(设备)</h3><blockquote>
+<p>Device最简单了，就是iOS设备。Devices中包含了该账户中所有可用于开发和测试的设备。 每台设备使用UDID来唯一标识，并且会被自动添加到开发者帐号中，每个账户中的设备数量限制是100个。<code>Disable</code> 一台设备也不会增加名额，只能在membership year 开始的时候才能通过删除设备来增加名额。关于设备数量的问题，详见<a href="http://blog.devtang.com/2012/04/06/about-100-devices-limit/" target="_blank" rel="noopener">这篇文章</a>。</p>
+</blockquote>
+<h3 id="Provisioning-Profiles-配置文件-描述文件"><a href="#Provisioning-Profiles-配置文件-描述文件" class="headerlink" title="Provisioning Profiles(配置文件/描述文件)"></a>Provisioning Profiles(配置文件/描述文件)</h3><blockquote>
+<p>Provisioning Profile分为两大类，一类是Development，一类是Distribution，前者是创建我们在开发环境下的配置文件，不能进行发布，后者可以创建发布到App Store或者以Ad Hoc发布的配置文件。</p>
+</blockquote>
+<blockquote>
+<p>Provisioning Profile是一个安装在调试设备上的配置文件，文件扩展名为.mobileprovision。如果说开发证书让苹果相信了你是一个合法的开发者的话，那么这个许可证就是为了让你调试的真机设备（iPhone，ipad）被认为是个合法的测试设备。这个许可证就是设备的信任凭证，会被打包到App中，当APP安装到真机上的时候，APP里的许可证信息和iPhone里的许可证进行匹配，如果匹配的话，就可以装的上了，否则就没法装上的。</p>
+</blockquote>
+<blockquote>
+<p>配置Provisioning Profile之前需要先设置好Certificates、App ID、Devices等信息</p>
+</blockquote>
+<blockquote>
+<p>苹果官方文档写明，企业证书有效期是3年，而描述文件只有1年有效期。所以当你的描述文件过期(expire)时。不用慌张，我看到网上好多朋友说删除重新生成，其实不用这么麻烦，只需要3步完成：点击过期的描述文件展开详情界面-点击<code>Edit</code>按钮-点击<code>Generate</code>按钮</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cordova项目备忘</title>
+    <url>/2016/07/21/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="iOS代码编写方式"><a href="#iOS代码编写方式" class="headerlink" title="iOS代码编写方式"></a>iOS代码编写方式</h2><p>iOS开发与Android开发有所不同，由于苹果的限制，它不能像Android开发那样直接通过命令行命令实现真机调试。</p>
+<p>iOS版本的cordova项目编译步骤：添加iOS平台=》添加所需插件=》通过<code>cordova build ios</code>命令生成.xcodeproj文件=》双击打开该文件=》通过Xcode实现真机调试</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6fgatmsvnj215o0k0jx8.jpg" alt="屏幕快照 2016-08-02 15.46.54.png"></p>
+<h2 id="缩减标题栏，修复界面的高度。"><a href="#缩减标题栏，修复界面的高度。" class="headerlink" title="缩减标题栏，修复界面的高度。"></a>缩减标题栏，修复界面的高度。</h2><p>将通过命令行生成的.xcodeproject文件直接打开运行时，会发现页面内容会显示到手机的通知栏。<br>只需要在Staging目录下Classes目录下的MainViewController.m 下重写方法如下：</p>
+<pre class=" language-objc"><code class="language-objc">-(void)viewWillAppear:(BOOL)animated
+{
+    if([[[UIDevice currentDevice]systemVersion ] floatValue]>=7)
+    {
+        CGRect viewBounds=[self.webView  bounds];
+        viewBounds.origin.y=20;
+        viewBounds.size.height=viewBounds.size.height-20;
+        self.webView.frame=viewBounds;
+        self.modalPresentationStyle=UIModalPresentationOverCurrentContext; //解决上浮的问题
+    }
+    [super viewWillDisappear:animated];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if([[[UIDevice currentDevice]systemVersion ] floatValue]>=7)
+    {
+        CGRect viewBounds=[self.webView  bounds];
+        viewBounds.origin.y=20;
+        viewBounds.size.height=viewBounds.size.height+20;
+        self.webView.frame=viewBounds;
+        self.modalPresentationStyle=UIModalPresentationOverCurrentContext; //解决相机的问题
+    }
+    [super viewWillDisappear:animated];
+}
+</code></pre>
+<h2 id="禁止上下滑动出现灰色背景"><a href="#禁止上下滑动出现灰色背景" class="headerlink" title="禁止上下滑动出现灰色背景"></a>禁止上下滑动出现灰色背景</h2><p>使用Cordova进行跨平台应用开发时，发现在iOS平台下，如果页面处于最顶端时，用户用手指往下拖动，会露出灰色空背景。同样页面在最底部的时候，继续向上拖动，下方也会露出空背景。</p>
+<p>要禁止这个拖动效果，可在 config.xml 中进行如下设置：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WebViewBounce<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DisallowOverscroll<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<h2 id="设置iOS下默认语言为中文"><a href="#设置iOS下默认语言为中文" class="headerlink" title="设置iOS下默认语言为中文"></a>设置iOS下默认语言为中文</h2><p>比如在打开键盘输入时，调用相机插件时，调用相册时，都会出现英文现象。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tKfTcgw1f6vrt0t7thj30nl0ac763.jpg" alt="2016061710444967199.jpg"></p>
+<p>使用 Xcode 打开工程，将在 plist 文件里面 Localization native development region 设置为 China 即可。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tKfTcgw1f6vrw81nswj315k0hodo9.jpg" alt="屏幕快照 2016-08-16 18.38.00.png"></p>
+<h2 id="出现submit-方法无效"><a href="#出现submit-方法无效" class="headerlink" title="出现submit()方法无效"></a>出现submit()方法无效</h2><p>在post请求时，可能出现submit()方法无效的情况，需要在config.xml中添加</p>
+<p><code>&lt;allow-navigation href=&quot;*&quot; /&gt;</code></p>
+<h2 id="长按文字区域弹出复制选择框"><a href="#长按文字区域弹出复制选择框" class="headerlink" title="长按文字区域弹出复制选择框"></a>长按文字区域弹出复制选择框</h2><p>因为是web页面，长按住某一个文字区域会弹出复制选择框(android 4.0)可以通过屏蔽</p>
+<pre class=" language-css"><code class="language-css"><span class="token selector">body </span><span class="token punctuation">{</span>
+  <span class="token property">-webkit-user-select</span><span class="token punctuation">:</span>none<span class="token punctuation">;</span>   
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="通过给按钮添加震动提高用户使用感受"><a href="#通过给按钮添加震动提高用户使用感受" class="headerlink" title="通过给按钮添加震动提高用户使用感受"></a>通过给按钮添加震动提高用户使用感受</h2><pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button .vibrate<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<pre class=" language-js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".vibrate"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token string">'tap'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//需要引入phonegap的js</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>navigator<span class="token punctuation">.</span>notification<span class="token punctuation">)</span>                       
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> navigator<span class="token punctuation">.</span>notification<span class="token punctuation">.</span><span class="token function">vibrate</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="捕捉android返回按键【需要cordova支持】"><a href="#捕捉android返回按键【需要cordova支持】" class="headerlink" title="捕捉android返回按键【需要cordova支持】"></a>捕捉android返回按键【需要cordova支持】</h2><pre class=" language-js"><code class="language-js">document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"deviceready"</span><span class="token punctuation">,</span> onDeviceReady<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">onDeviceReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 注册回退按钮事件监听器</span>
+  document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"backbutton"</span><span class="token punctuation">,</span> onBackKeyDown<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//其他页面初始化完成后的事件</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">onBackKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">//这里写上你要处理的事情</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.hangge.com/blog/cache/detail_1145.html" target="_blank" rel="noopener">如何创建、配置、开发第一个ios应用</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cordova启动页面和图标的设置</title>
+    <url>/2016/07/20/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="一、config-xml配置"><a href="#一、config-xml配置" class="headerlink" title="一、config.xml配置"></a>一、config.xml配置</h2><blockquote>
+<p>在cordova5.0版本以后，需要安装<code>cordova-plugin-splashscreen</code>插件以后才能修改和设置App的启动页面。</p>
+</blockquote>
+<h3 id="安装splashscreen插件："><a href="#安装splashscreen插件：" class="headerlink" title="安装splashscreen插件："></a>安装splashscreen插件：</h3><pre class=" language-shell"><code class="language-shell">cordova plugin add cordova-plugin-splashscreen
+
+cordova plugin add https://github.com/apache/cordova-plugin-splashscreen.git
+</code></pre>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>然后在你的config.xml文件中，添加以下代码</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>platform</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ldpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/android/drawable-ldpi/icon.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/android/drawable-mdpi/icon.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/android/drawable-hdpi/icon.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xhdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/android/drawable-xhdpi/icon.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xxhdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/android/drawable-xxhdpi/icon.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 以下是欢迎页面，可根据需要进行添加 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>land-hdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-land-hdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>land-ldpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-land-ldpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>land-mdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-land-mdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>land-xhdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-land-xhdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>port-hdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-port-hdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>port-ldpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-port-ldpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>port-mdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-port-mdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">density</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>port-xhdpi<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/android/splash-port-xhdpi.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>platform</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>platform</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ios<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iOS 8.0+ --></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPhone 6 Plus  --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-60@3x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>180<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>180<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iOS 7.0+ --></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPhone / iPod Touch  --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-60.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>60<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>60<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-60@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>120<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>120<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPad --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-76.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>76<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>76<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-76@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>152<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>152<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iOS 6.1 --></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- Spotlight Icon --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-40.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>40<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>40<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-40@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>80<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>80<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPhone / iPod Touch --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>57<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>57<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>114<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>114<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPad --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-72.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>72<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>72<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-72@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>144<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>144<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPhone Spotlight and Settings Icon --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-small.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>29<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>29<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-small@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>58<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>58<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- iPad Spotlight and Settings Icon --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-50.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>50<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>50<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>icon</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/icon/ios/icon-50@2x.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+    <span class="token comment" spellcheck="true">&lt;!-- 以下是欢迎页面，可根据需要进行添加 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default~iphone.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>320<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>480<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default@2x~iphone.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>640<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>960<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-Portrait~ipad.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>768<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1024<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-Portrait@2x~ipad.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1536<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2048<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-Landscape~ipad.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1024<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>768<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-Landscape@2x~ipad.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2048<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1536<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-568h@2x~iphone.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>640<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1136<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-667h.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>750<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1334<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-736h.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1242<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2208<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>splash</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>res/screen/ios/Default-Landscape-736h.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2208<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1242<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>platform</span><span class="token punctuation">></span></span>
+</code></pre>
+<h3 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h3><ul>
+<li>自动隐藏启动页面<code>AutoHideSplashScreen</code>（默认为：true）</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>AutoHideSplashScreen<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<ul>
+<li>显示启动页面的时间长度<code>SplashScreenDelay</code>(默认为：3000)</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SplashScreenDelay<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>3000<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<p>若想禁用启动页面，可设置为：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SplashScreenDelay<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+</code></pre>
+<p>如果是iOS平台上想禁止启动页面，还需要添加</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FadeSplashScreenDuration<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+</code></pre>
+<ul>
+<li>启动页面淡入淡出的效果</li>
+</ul>
+<p>是否显示淡入淡出效果<code>FadeSplashScreen</code>(默认为：true)</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FadeSplashScreen<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+</code></pre>
+<p>淡入淡出效果的执行时间长度<code>FadeSplashScreenDuration</code>(默认为：500)</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FadeSplashScreenDuration<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>750<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+</code></pre>
+<p>注意：<code>FadeSplashScreenDuration</code>时间是包含在<code>SplashScreenDelay</code>的时间里的。</p>
+<ul>
+<li>启动页面是否允许旋转（默认为：true）</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ShowSplashScreenSpinner<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+</code></pre>
+<ul>
+<li>插件还可以通过js代码调用，提供有以下两个方法：</li>
+</ul>
+<pre class=" language-js"><code class="language-js">navigator<span class="token punctuation">.</span>splashscreen<span class="token punctuation">.</span><span class="token function">hide</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//隐藏启动页面</span>
+navigator<span class="token punctuation">.</span>splashscreen<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//显示启动页面</span>
+</code></pre>
+<ul>
+<li>在Android平台下的特殊设置</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SplashMaintainAspectRatio<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true|false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>preference</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SplashShowOnlyFirstTime<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true|false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</code></pre>
+<p><code>SplashMaintainAspectRatio</code>：选填项，默认为false。当设置为true时，则不会拉伸图片来填充屏幕，会以图片原始比例显示图片。</p>
+<p><code>SplashShowOnlyFirstTime</code>：选填项，默认为true。当设置为false时，APP通过<code>navigator.app.exitApp()</code>代码退出app后，在下次打开APP时，还会显示启动页面。若为true时，就不会出现。</p>
+<h2 id="二、图标文件夹内容"><a href="#二、图标文件夹内容" class="headerlink" title="二、图标文件夹内容"></a>二、图标文件夹内容</h2><p>根据上面的配置信息，你需要准备好你自己的app图标和启动画面png文件：</p>
+<p>存放路径不是以<code>www文件夹</code>为依据，而是以<code>当前项目文件夹</code>为依据</p>
+<pre><code>projectRoot
+    hooks
+    platforms
+    plugins
+    www
+        css
+        img
+        js
+    res
+        screen
+            android
+            ios
+        icon
+            android
+            ios
+</code></pre><h3 id="应用程序图标"><a href="#应用程序图标" class="headerlink" title="应用程序图标"></a>应用程序图标</h3><p>可通过<a href="http://icon.wuruihong.com/" target="_blank" rel="noopener">图标工场</a>一键生成多尺寸图标。</p>
+<ul>
+<li><p>安卓图标具体规格如下（存放目录：res/icon/android/）</p>
+<pre><code>  36*36    drawable-ldpi/icon.png
+  48*48    drawable-mdpi/icon.png
+  72*72    drawable-hdpi/icon.png
+  96*96    drawable-xhdpi/icon.png
+  144*144     drawable-xxhdpi/icon.png
+</code></pre></li>
+</ul>
+<ul>
+<li><p>iOS图标具体规格如下（存放目录：res/icon/ios/）</p>
+<pre><code>  57*57   icon.png
+  114*114 icon@2x.png
+  29*29    icon-small.png
+  58*58    icon-small@2x.png
+  40*40    icon-40.png
+  80*80    icon-40@2x.png
+  50*50    icon-50.png
+  100*100    icon-50@2x.png
+  60*60    icon-60.png
+  120*120    icon-60@2x.png
+  180*180    icon-60@3x.png
+  72*72    icon-72.png
+  144*144    icon-72@2x.png
+  76*76    icon-76.png
+  152*152    icon-76@2x.png
+</code></pre></li>
+</ul>
+<h3 id="应用程序启动页面"><a href="#应用程序启动页面" class="headerlink" title="应用程序启动页面"></a>应用程序启动页面</h3><ul>
+<li><p>安卓启动画面具体规格如下（存放目录：res/screen/android/）</p>
+<pre><code>  960*720    splash-land-xhdpi.png
+  640*480    splash-land-hdpi.png
+  470*320    splash-land-mdpi.png
+  426*320    splash-land-ldpi.png
+  720*960    splash-port-xhdpi.png
+  480*640    splash-port-hdpi.png
+  320*470    splash-port-mdpi.png
+  320*426    splash-port-ldpi.png
+</code></pre></li>
+</ul>
+<ul>
+<li><p>iOS启动画面具体规格如下（存放目录：res/screen/ios/）</p>
+<pre><code>  320*480    Default~iphone.png
+  640*960    Default@2x~iphone.png
+  768*1024    Default-Portrait~ipad.png
+  1536*2048    Default-Portrait@2x~ipad.png
+  1024*768    Default-Landscape~ipad.png
+  2048*1536    Default-Landscape@2x~ipad.png
+  640*1136    Default-568h@2x~iphone.png
+  750*1334    Default-667h.png
+  1242*2208    Default-736h.png
+  2208*1242    Default-Landscape-736h.png
+</code></pre></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cordova/phoneGap开发调试工具</title>
+    <url>/2016/07/19/</url>
+    <content><![CDATA[<a id="more"></a>
+<h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p><code>Ripple Emulate</code>：使用Google模拟器，可以帮到大部分的调试，除了需要调用手机设备方面的功能除外。<code>GapDebug</code>：真机安装apk，电脑端和真机端同步调试，适用的项目phonegap/cordova/ionic。</p>
+<h2 id="二、Ripple-Emulate安装和使用"><a href="#二、Ripple-Emulate安装和使用" class="headerlink" title="二、Ripple Emulate安装和使用"></a>二、Ripple Emulate安装和使用</h2><h3 id="Apache-Ripple主页："><a href="#Apache-Ripple主页：" class="headerlink" title="Apache Ripple主页："></a>Apache Ripple主页：</h3><p><a href="http://ripple.incubator.apache.org/" target="_blank" rel="noopener">http://ripple.incubator.apache.org/</a></p>
+<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><p><code>npm install -g ripple-emulator</code></p>
+<h3 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h3><p>项目路径执行命令行：<code>ripple emulate</code> ；会在默认浏览器打开网页版的模拟器。</p>
+<h3 id="模拟项目失败可能的原因"><a href="#模拟项目失败可能的原因" class="headerlink" title="模拟项目失败可能的原因"></a>模拟项目失败可能的原因</h3><blockquote>
+<p>运行的路径内没有支持的项目。比如没有index.html文件。如果是cordova项目可能没找到platform的文件夹，这时会有cordova相关报错。</p>
+</blockquote>
+<h2 id="三、GapDebug安装和使用"><a href="#三、GapDebug安装和使用" class="headerlink" title="三、GapDebug安装和使用"></a>三、GapDebug安装和使用</h2><p>非常惊喜的发现了这个工具，可以侦听安装在设备上的app，并且进行调试。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNbRwgw1f6qxy2sqdvj30ib0avdgy.jpg" alt="connected.png"></p>
+<h3 id="用前注意"><a href="#用前注意" class="headerlink" title="用前注意"></a>用前注意</h3><ol>
+<li>国外的软件，又涉及到google，所以，这个软件下载要翻墙；第一次使用时软件会自动下载android debug tool，从google下载，所以也要翻墙。如果翻不动墙，又不能通过万能的互联网找到解决方法，那可以不用再往下看了。</li>
+<li>亲测的是最新版2.1，可以用。之前用过网上找的1.0，连接不上手机</li>
+</ol>
+<h3 id="正文开始"><a href="#正文开始" class="headerlink" title="正文开始"></a>正文开始</h3><p>(下面摘自官方指南并翻译)</p>
+<h4 id="调试移动app"><a href="#调试移动app" class="headerlink" title="调试移动app"></a>调试移动app</h4><p>使用GapDebug是非常简单的，只需要连接手机，然后就可用起来！</p>
+<h5 id="移动端配置"><a href="#移动端配置" class="headerlink" title="移动端配置"></a>移动端配置</h5><ul>
+<li><p>iOS：启用Web Inspector</p>
+<p>Settings ⇨ Safari ⇨ Advanced ⇨ Web Inspector，滑动打开</p>
+</li>
+<li><p>Android：启用USB调试</p>
+<p>Settings ⇨ Developer Options ⇨ 勾线 USB Debugging</p>
+</li>
+<li><p>允许APP应用调试</p>
+<p>以Phonegap应用为例，编辑 platforms/android/AndroidManifest.xml，添加：</p>
+<pre><code>&lt;manifest&gt;
+     ....
+     &lt;application android:debuggable=&quot;true&quot; /&gt;
+     ....
+&lt;/manifest&gt;
+</code></pre><p>如果使用Phonegap Developer App，则不需要上述设置。</p>
+</li>
+</ul>
+<h5 id="打开GapDebug"><a href="#打开GapDebug" class="headerlink" title="打开GapDebug"></a>打开GapDebug</h5><ol>
+<li><p>从windows开始菜单或Mac Finder打开GapDebug。</p>
+<p>没有连接设备的GapDebug界面：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNbRwgw1f6qseuph4bj30jg09xab2.jpg" alt="ui-no-devices-v2.png"></p>
+<p>运行后，GapDebug在你的系统上会产生一个调起快捷菜单的图标，windows是状态栏右侧的托盘，Mac在上面的通知栏上。从Windows系统托盘打开的用户界面：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6qxwvnzyqj30re08w75w.jpg" alt="openGapdebug.jpg"></p>
+</li>
+<li><p>使用USB数据线连接你的设备到你的工作站（workstation）。（USB线连接手机和你的电脑）</p>
+</li>
+<li><p>允许你的工作站作为一个信任设备。最初你的设备连接你的工作站时，你可能收到提示工作站否是可信任的连接源。选择OK或Trust。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qwl92p6nj30gq05674y.jpg" alt="android-ios-trust-50 (1).jpg"></p>
+<p>在设备界面的设备信息展示。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNbRwgw1f6qwpougquj308c05rjro.jpg" alt="device-panel-connected-android-dev-only-v22.png"></p>
+<p>USB线连接Nexus7 Android设备</p>
+<p>提示：我们建议你的设备不使用自动锁屏或休眠设置防止没有响应,并且需要开启开发者模式中的USB调试功能。</p>
+</li>
+<li><p>在你的设备上，开始你想做的调试。app将呈现在你的设备面板的设备详情下方。<br>QRConference Buddy app在设备上的呈现</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNbRwgw1f6qws6ft9kj30j4076766.jpg" alt="qr-conf-debug1.png"></p>
+</li>
+<li><p>查看连接设备和可用的app。选择一个app在一个新的追踪视图（Inspector View）开始一个调试对话。<br>调试中的安卓appQR Conference Buddy</p>
+</li>
+</ol>
+<h5 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h5><p>界面和浏览器的开发者工具都大同小异，很容易上手。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qwwh48svj30qd0ddn13.jpg" alt="user-interface-ios2.png"></p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qwwoklfdj30sb0e8gp5.jpg" alt="screencast1_v22.png"></p>
+<h5 id="实时调试（Instant-Debugging）"><a href="#实时调试（Instant-Debugging）" class="headerlink" title="实时调试（Instant Debugging）"></a>实时调试（Instant Debugging）</h5><p>app可以做实时调试，GapDebug自动检测app的运行并立即开始响应。使用这个图标切换实时调试。</p>
+<h4 id="安装一个app到你的设备"><a href="#安装一个app到你的设备" class="headerlink" title="安装一个app到你的设备"></a>安装一个app到你的设备</h4><p>在你的操作系统里你能够使用GapDebug快捷地安装一个或多个app文件到你的设备。有两个方法安装app——使用安装app图标或拖拽安装文件到你连接的设备上。安装后app会自动运行，看<a href="https://www.genuitec.com/products/gapdebug/learning-center/user-guide/#auto_start" target="_blank" rel="noopener">自动运行设置</a></p>
+<p>注意：安装到Androi设备前，设置设备允许安装Google应用商店以外的资源（国产的手机根本不用担心这个）。</p>
+<h5 id="安装app"><a href="#安装app" class="headerlink" title="安装app"></a>安装app</h5><ol>
+<li><p>点击图标</p>
+</li>
+<li><p>选择你要安装的IOS（.ipa）或android（.apk）文件</p>
+</li>
+<li><p>当安装完成后设备面板上多出一条app提示</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNbRwgw1f6qxgg77iaj30h80cidh6.jpg" alt="app_installed_notice_v2.png"></p>
+</li>
+</ol>
+<h5 id="使用拖拽文件安装"><a href="#使用拖拽文件安装" class="headerlink" title="使用拖拽文件安装"></a>使用拖拽文件安装</h5><ol>
+<li><p>打开你的文件所在的文件夹</p>
+</li>
+<li><p>将文件拖拽到设备面板上</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qxhmpincj30h80cjtak.jpg" alt="drag_and_drop_install_v2.png"></p>
+</li>
+<li><p>安装完成后会出现一个app提示。</p>
+</li>
+</ol>
+<h4 id="自动和手动运行"><a href="#自动和手动运行" class="headerlink" title="自动和手动运行"></a>自动和手动运行</h4><p>GapDebug能自动运行安卓或IOS设备上最新安装的app。另外GapDebug支持手动开启app。</p>
+<h5 id="Launch-After-Installation设置"><a href="#Launch-After-Installation设置" class="headerlink" title="Launch-After-Installation设置"></a>Launch-After-Installation设置</h5><p>app安装后GapDebug能立即运行它。这个功能节约了从安装app到调试不受干扰的时间。控制app运行功能下图有两个设置项。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNbRwgw1f6qxj7zzgjj30g708t3zx.jpg" alt="general-settings-start-app.png"></p>
+<p>“Start app after installation”项默认是勾上的。通过GapDebug安装的app会自动在你的设备上启动。</p>
+<p>“Only start app if previously running”项允许你指定app运行，仅限运行过或更新过的已安装app。</p>
+<p>注意：在IOS设备上运行app需要做其他设置。详情去看IOS设置。</p>
+<h5 id="Android设备上的手动运行app"><a href="#Android设备上的手动运行app" class="headerlink" title="Android设备上的手动运行app"></a>Android设备上的手动运行app</h5><ol>
+<li><p>点击图标的图标</p>
+</li>
+<li><p>从菜单中单击要运行的app。菜单关闭后app将立即运行</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6qxkzk5l3j30dr085gm8.jpg" alt="run-app-menu12.png"></p>
+</li>
+</ol>
+<h4 id="调试多个app"><a href="#调试多个app" class="headerlink" title="调试多个app"></a>调试多个app</h4><p>你可能需要同时调试多个app。例如，你可能同时调试一个app的IOS和Android两个版本。当你选择设备面板上的一个app时，调试选项卡打开。还有，当前激活的选项卡是蓝色的。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6qxmh1iqtj30ms0cy77y.jpg" alt="active_app_v21.png"></p>
+<p>当你选择第二个app调试时，一个新的选项卡打开。单击可以切换到另一个选项卡。两个选项卡是蓝色时因为他们同时打开的是一个调试实例。无论如何，当前使用的是高亮的，其他的是灰色的。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qxnv2e47j30ms0cyaeu.jpg" alt="multiple_active_apps2_v21.png"></p>
+<h4 id="设备视图截屏"><a href="#设备视图截屏" class="headerlink" title="设备视图截屏"></a>设备视图截屏</h4><p>点击Snapshot图标为设备视图截屏</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNbRwgw1f6qxocxpoyj30hq0cc3zl.jpg" alt="snapshot-pgdevapp1.png"></p>
+<p>从Settings设置你想如何操作截图</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qxorltasj30gu098404.jpg" alt="snap-settings.png"></p>
+<h4 id="下载、查看和清除设备日志-sysylog"><a href="#下载、查看和清除设备日志-sysylog" class="headerlink" title="下载、查看和清除设备日志(sysylog)"></a>下载、查看和清除设备日志(sysylog)</h4><p>一个设备系统日志包含主要设备和应用事件，能够帮助诊断应用或系统级别错误。</p>
+<h5 id="下载和查看日志"><a href="#下载和查看日志" class="headerlink" title="下载和查看日志"></a>下载和查看日志</h5><p>操作如图，点击菜单的Syslog选项</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6qxp6njjaj308b04oaa4.jpg" alt="syslog-menu.png"></p>
+<p>从Settings中设置你想对日志的操作</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6qxqlq4klj30go09etaf.jpg" alt="syslog-settings.png"></p>
+<p>选项1，下载；选项2，打开；选项3，下载并打开</p>
+<h5 id="清除日志"><a href="#清除日志" class="headerlink" title="清除日志"></a>清除日志</h5><p>高亮的Clear Syslog项点击后清除日志</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNbRwgw1f6qxroha1xj305p04pq2y.jpg" alt="syslog-clear-menu.png"></p>
+<h4 id="重启和设备关机"><a href="#重启和设备关机" class="headerlink" title="重启和设备关机"></a>重启和设备关机</h4><p><img src="http://ww2.sinaimg.cn/large/006tNbRwgw1f6qxsm3vdzj308904owek.jpg" alt="restart-shutdown-menu.png"></p>
+<p>Restart重启，Power Off关机</p>
+<p>##参考</p>
+<p><a href="http://blog.csdn.net/lucy_100/article/details/49820393" target="_blank" rel="noopener">文章</a></p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>签名打包Android版apk</title>
+    <url>/2016/07/17/</url>
+    <content><![CDATA[<p>首先是关于apk签名，Android程序的安装是以包名（package name）进行区分的，就是同样的包名会被认作是同一个程序。这样就可以进行升级、替换。但是包名是一个可以被查看的字符串，这样就可能被伪造，然后其他人就可以自己创建一个应用去替代你的应用，结果可想而知。而签名就是为了防止这样的情况发生，当你的程序被签名后安装，只有同样包名与签名的程序才能被替换安装。而签名是不可能简单被伪造的，从而保证了程序的安全性。<br><a id="more"></a></p>
+<blockquote>
+<p>打包签名apk可以通过命令行、eclipse和android studio，这里先介绍命令行和eclipse方式，其他的之后补上。</p>
+</blockquote>
+<h2 id="使用命令行打包签名apk"><a href="#使用命令行打包签名apk" class="headerlink" title="使用命令行打包签名apk"></a>使用命令行打包签名apk</h2><ol>
+<li>打包apk</li>
+</ol>
+<pre class=" language-shell"><code class="language-shell">cordova bulid android              //用于测试的打包方式，生成已签名apk
+cordova build --release android    //生成没有签名的apk
+</code></pre>
+<pre><code>&gt;第一个命令生成的是一个Cordova-debug.apk，很明显是用来进行本地开发测试使用的，注意这个apk是有签名的，所以能被安装在手机上，但是这个不能用来上架。
+
+&gt;因为只有在绝对同样的环境下进行打包，才能保证这个apk的签名相同，意味着你这台机器必须始终保持正常并且系统和打包工具等不作修改。这明显是不合理的。
+
+&gt;所以，我们必须采用生产的方式打包，就是第二个命令，这个命令生成的是一个无签名的apk，他无法安装在手机上，必须进行签名。
+</code></pre><ol start="2">
+<li>生成签名文件</li>
+</ol>
+<pre class=" language-shell"><code class="language-shell">keytool -genkey -v -keystore demo.keystore -alias demo.keystore -keyalg RSA -validity 20000
+</code></pre>
+<pre><code>&gt;keytool是工具名称；
+
+&gt;-genkey意味着执行的是生成数字证书操作；
+
+&gt;-v表示将生成证书的详细信息打印出来；
+
+&gt;-keystore demo.keystore 表示证书的文件名；
+
+&gt;-alias demo.keystore 表示证书的别名；
+
+&gt;-keyalg RSA 生成密钥文件所采用的算法；
+
+&gt;-validity 20000 该数字证书的有效期，单位是天；
+
+输入后会让你输入密码，并回答一些关于你公司和地区的问题，回答完后截屏记录，防止忘记。
+</code></pre><ul>
+<li>签名apk</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">jarsigner -verbose -keystore /yourpath/demo.keystore -signedjar /yourpath/demo_signed.apk  /yourpath/demo.apk  /yourpath/demo.keystore
+</code></pre>
+<pre><code>&gt;jarsigner是工具名称，
+
+&gt;-verbose表示将签名过程中的详细信息打印出来；
+
+&gt;/yourpath/  （根据自己的情况配置）相对于当前命令行所在文件夹的位置，可将下列文件放在同一目录下;
+
+&gt;-keystore   /yourpath/demo.keystore   刚刚生成的签名文件；
+
+&gt;-signedjar  /yourpath/demo_signed.apk  签名后的apk名称
+
+&gt;/yourpath/demo.apk  需要签名的apk
+
+&gt;/yourpath/demo.keystore 证书的别名
+</code></pre><ul>
+<li><p>查看apk的签名</p>
+<p>  查看签名是否成功，可将签名后的文件，后缀名apk的改为zip，解压。在该目录下，输入如下命令：</p>
+<pre class=" language-shell"><code class="language-shell">  keytool -printcert -file META-INF/CERT.RSA
+</code></pre>
+<blockquote>
+<p>META-INF/TEST.RSA   根据自己的情况配置</p>
+</blockquote>
+<p>  输入命令行后，会出现类似下图信息</p>
+<p>  <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d81otra6j214203ymz4.jpg" alt="13E87187-23B8-4A4B-9C1D-92BC260982B6.jpg"></p>
+</li>
+</ul>
+<h2 id="使用eclipse打包签名apk"><a href="#使用eclipse打包签名apk" class="headerlink" title="使用eclipse打包签名apk"></a>使用eclipse打包签名apk</h2><ol>
+<li><p>首先，选择Export…如下图：</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d83mf0ynj20el0bk3zt.jpg" alt="5F2BDF7A-EABD-4C88-B534-129F3BBFD10E.jpg"></p>
+</li>
+<li><p>创建密钥库keystore,输入密钥库导出位置和密码，记住密码，下次Use existing keystore会用到。</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6d8407cj9j20eh0f7q44.jpg" alt="733A2366-A67B-4DAB-A71B-4CEE8F53AB63.jpg"></p>
+</li>
+<li><p>填写密钥库信息，填写一些apk文件的密码，使用期限和组织单位的信息。</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6d84a3idij20ei0f90ug.jpg" alt="904EF7A1-CDFE-4157-BCAB-DF46401B914A.jpg"></p>
+</li>
+<li><p>生成带签名的apk文件，到此就结束了。</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6d855j9p2j20eh0f6dgx.jpg" alt="F096A79B-CA8D-412E-B1A8-C82CB3879D92.jpg"></p>
+</li>
+</ol>
+<p>若有不对之处，请批评指正，谢谢！</p>
+]]></content>
+      <categories>
+        <category>Cordova</category>
+      </categories>
+      <tags>
+        <tag>Cordova</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>

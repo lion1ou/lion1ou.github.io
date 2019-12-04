@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  
+  
+    <meta name="keywords" content="Cordova,iOS,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>iOS开发(4) - windows上tomcat服务器的搭建 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        iOS开发(4) - windows上tomcat服务器的搭建
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-07-31T08:56:16.000Z">
+        2016-07-31
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cordova/">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <p>Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试JSP 程序的首选服务器。<br><a id="more"></a></p>
+<h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><ul>
+<li>2016.07.30  初稿</li>
+<li>2016.08.08  添加修改默认主页为自己主页  </li>
+</ul>
+<h2 id="准备条件"><a href="#准备条件" class="headerlink" title="准备条件"></a>准备条件</h2><blockquote>
+<p>安装java环境，配置环境变量</p>
+</blockquote>
+<ol>
+<li><p>下载JDK，<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">link</a></p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6c2hkxorgj20f408n76s.jpg" alt="屏幕快照 2016-07-30 17.27.11.png"></p>
+<p> 根据自己的系统，下载对应的版本</p>
+</li>
+<li><p>安装JDK</p>
+<p> 默认选择，正常点击，下一步，下一步，完成安装。</p>
+</li>
+<li><p>配置环境变量</p>
+<p> 右击计算机=》属性=》高级系统设置</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6c2nylc7sj20cv0eb0t7.jpg" alt="82EECB57-DFF7-4563-8CFF-40EF0BF85935.jpg"></p>
+<ul>
+<li><p><strong>配置JAVA_HOME</strong>（如图新建JAVA_HOME，变量值配置为jdkX.X.XX文件夹的位置）</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2pxpxzxj20bx063mxd.jpg" alt="9CAC574C-8432-466E-AF8E-21C61C6F8C6D.jpg"></p>
+</li>
+<li><p><strong>配置classPath</strong></p>
+<p>在已有的classPath中添加或新建添加<code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;</code>，记得前面有个”.”。</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cdme9unqj20hm05u0tl.jpg" alt="屏幕快照 2016-07-31 00.00.26.png"></p>
+</li>
+<li><p><strong>配置Path</strong>（在已有的path中添加”%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;”，多个目录用分号隔开）</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6c2rih4t6j20bx067dg2.jpg" alt="0C62FF95-28F8-4D23-ADF3-2A6137DE90B2.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cdpplgylj20db068jsk.jpg" alt="屏幕快照 2016-07-31 00.03.30.png"></p>
+<blockquote>
+<p>(配置完成后，执行命令行时，系统会在path指定的路径中寻找该命令对应的可执行文件)</p>
+</blockquote>
+</li>
+<li><p><strong>检验安装</strong>配置是否正确</p>
+<p>组合键Windows+R后，输入cmd后，回车，打开cmd窗口，在窗口中输入<code>java -version</code>后回车，出现如下画面则表示成功！</p>
+<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6c2tfy1vpj20em029t8x.jpg" alt="82D4068D-117F-497F-8E52-8C69943479AB.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><blockquote>
+<p>在Windows下安装Tomcat服务器的方式有两种，一种是直接安装，一种是绿色版，解压后就可以直接使用的。</p>
+</blockquote>
+<h3 id="绿色版，免安装版"><a href="#绿色版，免安装版" class="headerlink" title="绿色版，免安装版"></a>绿色版，免安装版</h3><ol>
+<li><p>下载Tomcat，<a href="http://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">link</a></p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6c37n0nt9j20kn0d977i.jpg" alt="屏幕快照 2016-07-30 17.55.29.png"></p>
+<p> 选择其中一种下载。</p>
+</li>
+<li><p>安装Tomacat</p>
+<p> 将Tomcat服务器的压缩包放在任意文件夹目录下(最好跟你的开发文件集中放置，便于管理),解压并且打开后可以看到Tomcat的目录结构如下：</p>
+<p> <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6c3git1etj203w0773yr.jpg" alt="Voila_Capture 2016-07-30_18-06-24_.png"></p>
+<p> 文件解释：</p>
+<pre><code> bin:存放启动和关闭Tomcat的脚本文件
+ conf:存放Tomcat服务器的各种配置文件
+ lib:存放Tomcat服务器的支持jar包
+ logs:存放Tomcat的日志文件
+ temp:存放Tomcat运行时产生的临时文件
+ webapps:web应用所在目录，即供外界访问的web资源的存放目录
+ work:Tomcat的工作目录
+</code></pre></li>
+<li><p>配置环境变量（可选配），详细信息：<a href="http://www.jianshu.com/p/65881a45ad4a" target="_blank" rel="noopener">link</a></p>
+</li>
+<li><p>启动服务</p>
+<p> 打开cmd命令行，进入Tomcat文件夹下的bin目录，输入<code>startup</code>命令<code>启动</code>Tomcat服务器</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cav5ktkjj20l403tjs2.jpg" alt="屏幕快照 2016-07-30 22.25.00.png"></p>
+<p> 当弹出下图中得Dos窗口，表示Tomcat服务器成功的启动了</p>
+<p> <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f6cavu17waj20r70fwahn.jpg" alt="屏幕快照 2016-07-30 22.25.43.png"></p>
+<p> 然后在浏览器中输入<code>http://localhost:8080/</code>当浏览器中出现下图所示的提示框表示Tomcat服务器成功的启动了</p>
+<p> <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6caygoa7oj20li0d9adi.jpg" alt="屏幕快照 2016-07-30 22.28.10.png"></p>
+<p> 打开cmd命令行，进入Tomcat文件夹下的bin目录，输入<code>shutdown</code>命令<code>关闭</code>Tomcat服务器</p>
+<p> <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6ccs56pt3j20lf03tt9e.jpg" alt="屏幕快照 2016-07-30 23.31.20.png"></p>
+<p> 直到之前自动打开的dos窗口关闭，表示服务已关闭</p>
+</li>
+</ol>
+<h3 id="安装版"><a href="#安装版" class="headerlink" title="安装版"></a>安装版</h3><p>借用人家教程，<a href="http://www.lvtao.net/server/windows-setup-tomcat.html" target="_blank" rel="noopener">link</a></p>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><blockquote>
+<p>将自己的项目部署到Tomcat服务器上</p>
+</blockquote>
+<ul>
+<li>打开webapps页面，将自己的项目放到该文件夹内，如下图：</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6cc3mtqemj20d705raaz.jpg" alt="屏幕快照 2016-07-30 23.07.50.png"></p>
+<blockquote>
+<p>在前面我已经介绍过了webapps是web应用所在目录，即供外界访问的web资源的存放目录，所以就在webapps目录下部署我们自己的项目，前面介绍的输入<code>http://localhost:8080/</code>后访问的网页其实访问的就是webapps文件夹下的Tomcat自带的这些文件夹中的文件</p>
+</blockquote>
+<ul>
+<li>最后打开浏览器并且在浏览器中输入<code>http://localhost:8080/apps/index.html</code>可以访问到放在apps文件夹下的index.html页面。</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6cc51vznvj20mo03ldg0.jpg" alt="屏幕快照 2016-07-30 23.09.11.png"></p>
+<h2 id="访问项目"><a href="#访问项目" class="headerlink" title="访问项目"></a>访问项目</h2><p>第一步：需要将Tomcat服务器和手机连接在同一局域网下，我的手机和电脑都连接在同一个路由器下，这样就表示手机和电脑连接在同一局域网下</p>
+<p>第二步：查看服务器的ip地址（因为Tomcat安装在电脑中，所以服务器的ip地址就是电脑的ip地址），打开命令行，使用ipconfig命令可以查看主机的ip地址)</p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6ccbdf0k7j20hh0bcdhd.jpg" alt="屏幕快照 2016-07-30 23.14.17.png"></p>
+<p>第三步：确保防火墙已经关闭</p>
+<p><img src="http://ww4.sinaimg.cn/large/72f96cbagw1f6cccbkf1ej20jh0d0wha.jpg" alt="屏幕快照 2016-07-30 23.16.12.png"></p>
+<p>第四步：在手机浏览器中打开<code>http://192.168.0.8:8080/apps/index.html</code></p>
+<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f6ccl57o5sj20bt045mxd.jpg" alt="1.jpg"></p>
+<h2 id="修改默认主页"><a href="#修改默认主页" class="headerlink" title="修改默认主页"></a>修改默认主页</h2><ol>
+<li><p>在webapps文件夹下创建一个myindex文件夹，在文件夹内添加自己的index.html主页面。</p>
+</li>
+<li><p>修改server.xml文件</p>
+<p> 在server.xml找到如下位置：</p>
+<p> <img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6madykbxuj30i20bitbk.jpg" alt="屏幕快照 2016-08-08 13.43.31.png"></p>
+<p> 然后在<code>&lt;Host&gt;&lt;/Host&gt;</code>标签之间添加</p>
+<pre><code>         &lt;Context path=&quot;&quot; docBase=&quot;myindex&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; /&gt;
+</code></pre><blockquote>
+<p>path是说明虚拟目录的名字，如果你要只输入ip地址就显示主页，则该键值留为空；</p>
+</blockquote>
+<blockquote>
+<p>docBase是虚拟目录的路径，它默认的是$tomcat/webapps/ROOT目录，现在是我们设置的myindex目录</p>
+</blockquote>
+<blockquote>
+<p>debug和reloadable一般都分别设置成0和true。</p>
+</blockquote>
+</li>
+<li><p>修改web.xml</p>
+<p> 如果你的主页面是名称为<code>index</code>,则这一步就不用修改了。假设你的主页面名称为<code>a.jsp</code>。</p>
+<p> 在web.xml文件中，找到如下位置：</p>
+<p> <img src="http://ww1.sinaimg.cn/large/006tNbRwgw1f6matxworoj30dn03mjs2.jpg" alt="屏幕快照 2016-08-08 13.59.29.png"></p>
+<p> 然后在<code>&lt;welcome-file-list&gt;&lt;/welcome-file-list&gt;</code>标签内，添加如自己的主页面</p>
+<pre><code>         &lt;welcome-file&gt;a.jsp&lt;/welcome-file&gt;
+</code></pre><p> 然后<code>保存</code>上述文件，<code>重启tomcat</code>，就可以在浏览器中直接输入<code>ip地址</code>访问了。</p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#更新日志"><span class="toc-text">更新日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备条件"><span class="toc-text">准备条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绿色版，免安装版"><span class="toc-text">绿色版，免安装版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装版"><span class="toc-text">安装版</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署项目"><span class="toc-text">部署项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问项目"><span class="toc-text">访问项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改默认主页"><span class="toc-text">修改默认主页</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/07/31">http://lion1ou.win/2016/07/31</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/07/30/" rel="next" title="iOS开发(3) - Xcode7打包签名分发ipa">
+          iOS开发(3) - Xcode7打包签名分发ipa
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/08/02/" rel="prev" title="iOS开发(5) - tomcat+openssl构建自签名证书形式的iOS无线安装ipa环境">
+            iOS开发(5) - tomcat+openssl构建自签名证书形式的iOS无线安装ipa环境
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/07/31/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>
