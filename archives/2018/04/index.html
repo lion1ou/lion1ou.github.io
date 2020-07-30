@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -76,25 +87,6 @@
   <div class="archives">
     
     <div class="archive" >
-  <a class="post-go" href="/2018/04/24/">
-    <div>
-      <span class="date">
-        04-24
-      </span>
-      <span class="slash">/</span>
-      JavaScript之数组的常用操作函数
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!---->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
   <a class="post-go" href="/2018/04/12/">
     <div>
       <span class="date">
@@ -106,25 +98,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>不知不觉毕业已经将近三年了，干前端也有两年多了，从刚开始的门外汉也慢慢的成为一个能独立干活的职业猿了。两三年时间经历了很多次选择，从弱电到编程，从上海到杭州，但每一次的选择似乎都让自己向上又迈了一步。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2018/04/11/">
-    <div>
-      <span class="date">
-        04-11
-      </span>
-      <span class="slash">/</span>
-      VueJs之Toast插件
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!---->
     <!--</div>-->
   </a>
 

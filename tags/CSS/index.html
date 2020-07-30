@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -66,78 +77,12 @@
   
     <div class="tag-item">
       
-        <a href="/2017/02/17/">
-          CSS之动画使用
-        </a>
-      
-      <time class="time" datetime="2017-02-17T08:47:16.000Z">
-        2017-02-17
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
-        <a href="/2017/02/16/">
-          CSS之BFC(块级格式化上下文)
-        </a>
-      
-      <time class="time" datetime="2017-02-16T03:18:52.000Z">
-        2017-02-16
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
-        <a href="/2016/10/17/">
-          CSS之垂直居中
-        </a>
-      
-      <time class="time" datetime="2016-10-17T12:32:34.000Z">
-        2016-10-17
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
-        <a href="/2016/10/16/">
-          CSS之修改input range样式
-        </a>
-      
-      <time class="time" datetime="2016-10-16T12:33:59.000Z">
-        2016-10-16
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
         <a href="/2016/10/15/">
           CSS之flex布局
         </a>
       
       <time class="time" datetime="2016-10-15T05:39:06.000Z">
         2016-10-15
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
-        <a href="/2016/10/14/">
-          CSS之清除浮动float
-        </a>
-      
-      <time class="time" datetime="2016-10-14T02:21:51.000Z">
-        2016-10-14
-      </time>
-    </div>
-  
-    <div class="tag-item">
-      
-        <a href="/2016/10/10/">
-          CSS之响应式页面布局
-        </a>
-      
-      <time class="time" datetime="2016-10-10T08:36:42.000Z">
-        2016-10-10
       </time>
     </div>
   

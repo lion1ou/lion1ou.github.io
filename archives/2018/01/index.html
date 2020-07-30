@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -75,44 +86,6 @@
   </h3>
   <div class="archives">
     
-    <div class="archive" >
-  <a class="post-go" href="/2018/01/27/">
-    <div>
-      <span class="date">
-        01-27
-      </span>
-      <span class="slash">/</span>
-      javaScript事件详解
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!---->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2018/01/26/">
-    <div>
-      <span class="date">
-        01-26
-      </span>
-      <span class="slash">/</span>
-      call、apply和bind的区别
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>JavaScript的一大特点是，函数存在<code>定义时的上下文</code>和<code>运行时的上下文</code>以及<code>上下文是可以改变的</code>这样的概念。call、apply和bind都是为了改变某个函数运行时的上下文而存在的，换句话说，就是为了改变函数体内部this的指向。以下是三个相似点：</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
     <div class="archive" >
   <a class="post-go" href="/2018/01/06/">
     <div>

@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="CSS,">
   
@@ -330,16 +341,16 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2016/10/14/" rel="next" title="CSS之清除浮动float">
-          CSS之清除浮动float
+          <a href="/2016/09/09/" rel="next" title="git学习">
+          git学习
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2016/10/16/" rel="prev" title="CSS之修改input range样式">
-            CSS之修改input range样式
+          <a href="/2017/01/18/" rel="prev" title="前后端分离之JWT用户认证">
+            前后端分离之JWT用户认证
           </a>
           <span>〉</span>
         

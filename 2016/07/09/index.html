@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="Tools,">
   
@@ -20,7 +31,7 @@
   
   
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <title>oh my zsh 使用指南 [ lion1ou ]</title>
+  <title>打造一套得心应手的终端工具 [ lion1ou ]</title>
   
     <!-- stylesheets list from config.yml -->
     
@@ -65,7 +76,7 @@
   <article class="post" id="post">
     <header class="post-header text-center">
       <h1 class="title">
-        oh my zsh 使用指南
+        打造一套得心应手的终端工具
       </h1>
       <span>
         
@@ -87,20 +98,155 @@
     </header>
 
     <div class="post-content">
-      <p>根据这篇文章我们已经安装好iterm2，也做了一些个性化的样式配置，接下来就是怎么让你的命令行更加方便了。<br><a id="more"></a></p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>安装 <a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a>，执行下面命令：</p>
+      <p>iTerm2 是 MAC 下最好的终端工具。可以简单的认为，iTerm2 是配置完毕开箱即用的 tmux。</p>
+<a id="more"></a>
+<h3 id="安装-iTerm2"><a href="#安装-iTerm2" class="headerlink" title="安装 iTerm2"></a>安装 <a href="http://www.iterm2.com/" target="_blank" rel="noopener">iTerm2</a></h3><p>官网下载安装，这里不赘述。</p>
+<h3 id="iTerm特色功能"><a href="#iTerm特色功能" class="headerlink" title="iTerm特色功能"></a>iTerm特色功能</h3><h5 id="特色快捷键"><a href="#特色快捷键" class="headerlink" title="特色快捷键"></a>特色快捷键</h5><ul>
+<li><p>command+; 根据上下文呼出自动完成窗口，上下键选择</p>
+</li>
+<li><p>全屏 command+enter</p>
+</li>
+<li><p>光标去哪了？command+/ （很少用这个，还是感觉Zsh的补全更好用）</p>
+</li>
+<li><p>用鼠标选中某个路径或者某个词汇就自动复制</p>
+</li>
+</ul>
+<h5 id="光标控制"><a href="#光标控制" class="headerlink" title="光标控制"></a>光标控制</h5><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl + a</td>
+<td>到行首</td>
+</tr>
+<tr>
+<td>ctrl + e</td>
+<td>行末</td>
+</tr>
+<tr>
+<td>ctrl + u</td>
+<td>删除一行</td>
+</tr>
+<tr>
+<td>⌘ + r（ctrl + l）</td>
+<td>清屏，其实是滚到新的一屏，并没有清空。</td>
+</tr>
+<tr>
+<td>ctrl + r</td>
+<td>搜索命令历史，这个大家都应该很熟悉了</td>
+</tr>
+<tr>
+<td>ctrl + d</td>
+<td>删除当前字符</td>
+</tr>
+<tr>
+<td>ctrl + h</td>
+<td>删除之前的字符</td>
+</tr>
+<tr>
+<td>ctrl + w</td>
+<td>删除光标前的单词</td>
+</tr>
+<tr>
+<td>ctrl + k</td>
+<td>删除到文本末尾</td>
+</tr>
+<tr>
+<td>ctrl + t</td>
+<td>交换光标处文本</td>
+</tr>
+<tr>
+<td>⌘ + —/+/0</td>
+<td>调整字体大小</td>
+</tr>
+<tr>
+<td>ctrl + f/b</td>
+<td>前进后退，相当于左右方向键，但是显然比移开手按方向键更快</td>
+</tr>
+<tr>
+<td>ctrl + p</td>
+<td>上一条命令，相当于方向键上</td>
+</tr>
+</tbody>
+</table>
+<h5 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h5><ul>
+<li>新建窗口：shift + command + d（横向）command + d（竖向）</li>
+<li>关闭窗口：shift + command + w</li>
+<li>前一个窗口：command + `</li>
+<li>后一个窗口：command + ~</li>
+<li>进入窗口 1,2,3：option + command + 编号</li>
+</ul>
+<h5 id="标签页操作"><a href="#标签页操作" class="headerlink" title="标签页操作"></a>标签页操作</h5><ul>
+<li>新建标签页: Command + T</li>
+<li>关闭标签页: Command + W</li>
+<li>前一个标签页: Command + 左方向键，Shift + Command + [</li>
+<li>后一个标签页: Command + 右方向键，Shitf + Command + ]</li>
+<li>进入标签页1，2，3…: Command + 标签页编号</li>
+<li>Expose 标签页: Option + Command + E（将标签页打撒到全屏，并可以全局搜索所有的标签页）</li>
+</ul>
+<h5 id="面板操作"><a href="#面板操作" class="headerlink" title="面板操作"></a>面板操作</h5><ul>
+<li>垂直分割: Command + D</li>
+<li>水平分割: Shift + Command + D</li>
+<li>前一个面板: Command + [</li>
+<li>后一个面板: Command + ]</li>
+<li>切换到上/下/左/右面板: Option + Command + 上下左右方向键</li>
+</ul>
+<h5 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h5><ul>
+<li>支持自定义全局快捷键用于显示和隐藏iTerm2 Preference -&gt; Keys －&gt; Show/hide iTerm2 with a system-wide hotkey 打上勾之后</li>
+<li>进入和退出全屏: Command + Enter</li>
+<li>开启和关闭背景半透明: Command + u</li>
+<li>文本选取<ul>
+<li>常见的点击并拖拽方式</li>
+<li>双击选取整个单词</li>
+<li>三击选取整行</li>
+<li>选取某一部分，按住Shift，再点击某处，可以选取整个矩形内的文本（类似Windows下按住Shift可以批量选取图标）</li>
+<li>按住Command + Option，可以用鼠标画出一个矩形，用类似截图的方式选取文本 另外，还可以使用鼠标完成以下操作： 按住Command然后点击某个URL，会在浏览器中打开这个URL，点击某个文件夹，会在Finder里打开这个文件夹（再也不用open . 啦），点击某个文件名，会打开这个文件（文本文件支持MacVim，TextMate和BBEdit，如果后面跟随一个冒号和行号，文件会在行号处打开，其它格式的文件似乎不能调用默认程序打开） 选取文本之后，按住Command 同时拖动文本，可以将文本粘贴到目标位置（Drag and Drop） 鼠标中键粘贴（这个太感人了，一下子找回Linux的感觉了）</li>
+</ul>
+</li>
+</ul>
+<h5 id="位置书签"><a href="#位置书签" class="headerlink" title="位置书签"></a>位置书签</h5><p>在当前会话中按Command + Shift + m可以保存当前位置，之后可以按Command + Shift + j跳回这个位置。</p>
+<h5 id="粘贴历史"><a href="#粘贴历史" class="headerlink" title="粘贴历史"></a>粘贴历史</h5><p>使用Command + Shift + h 可以呼出粘贴历史，支持模糊检索。还可以设置将粘贴历史保存在磁盘上（Preferences -&gt; General）</p>
+<h5 id="即时回放"><a href="#即时回放" class="headerlink" title="即时回放"></a>即时回放</h5><p>使用Command + Opt + b 打开即时回放，按Esc退出。即时回放可以记录终端输出的状态，让你“穿越时间”查看终端内容。默认每个会话最多储存4MB的内容，可以在设置中更改（Preferences -&gt; Genernal -&gt; Instant Replay）。</p>
+<h5 id="窗口状态"><a href="#窗口状态" class="headerlink" title="窗口状态"></a>窗口状态</h5><p>通过 Window -&gt; Save Window Arrangement 可以保存当前窗口状态的快照，包括打开的窗口，标签页和面板。通过 Window -&gt; Restore Window Arrangement 还原。还可以在 Preferences -&gt; General -&gt; Open saved window arrangement 中设置在启动iTerm2时自动恢复窗口状态</p>
+<h2 id="让它变得好用"><a href="#让它变得好用" class="headerlink" title="让它变得好用"></a>让它变得好用</h2><h3 id="安装-brew"><a href="#安装-brew" class="headerlink" title="安装 brew"></a>安装 brew</h3><pre class=" language-shell"><code class="language-shell">/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre>
+<p>Homebrew安装成功后，会自动创建目录 <code>/usr/local/Cellar</code> 来存放Homebrew安装的程序。 这时就可以开始使用 brew 命令了.</p>
+<blockquote>
+<p>注意：如果在安装过程中返回400，可以在几分钟后尝试重新安装。</p>
+</blockquote>
+<p><strong>Homebrew的使用</strong></p>
+<ul>
+<li>安装软件：brew install 软件名，例：brew install wget</li>
+<li>搜索软件：brew search 软件名，例：brew search wget</li>
+<li>卸载软件：brew uninstall 软件名，例：brew uninstall wget</li>
+<li>更新所有软件：brew update</li>
+</ul>
+<h3 id="安装并切换成-zsh"><a href="#安装并切换成-zsh" class="headerlink" title="安装并切换成 zsh"></a>安装并切换成 zsh</h3><pre class=" language-bash"><code class="language-bash">brew <span class="token function">install</span> zsh
+</code></pre>
+<p>安装完成后，将zsh设置成系统默认shell，以代替bash。 </p>
+<p><strong>由于权限原因，先在命令行上执行<code>open /etc</code>打开文件夹，然后在文件夹中找到<code>shells</code>文件，复制文件到桌面，然后打开文件，在末尾添加<code>/usr/local/bin/zsh</code>，保存关闭后。复制替换原目录下的文件，此处需要输入密码验证。</strong></p>
+<p>再在终端中执行以下命令：</p>
+<pre class=" language-shell"><code class="language-shell">chsh -s /usr/local/bin/zsh
+</code></pre>
+<p>然后重新启动iTerm2，zsh就已经被配置成默认的shell了。</p>
+<h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 <a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a></h3><p>执行下面命令：</p>
 <pre class=" language-shell"><code class="language-shell">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 </code></pre>
-<h2 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h2><p>在<code>~/.oh-my-zsh/custom/plugins/</code>中已经自带了很多插件，只是没有激活而已，我们可以根据下面的插件激活方式进行激活。</p>
+<h3 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h3><p>在<code>~/.oh-my-zsh/custom/plugins/</code>中已经自带了很多插件，只是没有激活而已，我们可以根据下面的插件激活方式进行激活。</p>
 <p>打开.zshrc文件，修改<code>plugins</code></p>
-<pre><code>open ~/.zshrc
+<pre class=" language-bash"><code class="language-bash"><span class="token function">open</span> ~/.zshrc
 
-# 找到plugins配置项，修改成下面：
-# plugins=(colored-man-pages zsh_reload git git-flow ruby gem python pip node npm bower sublime)
+<span class="token comment" spellcheck="true"># 找到plugins配置项，修改成下面：</span>
+plugins<span class="token operator">=</span><span class="token punctuation">(</span>colored-man-pages zsh_reload <span class="token function">git</span> git-flow ruby gem python pip node <span class="token function">npm</span> bower sublime<span class="token punctuation">)</span>
 
-source ~/.zshrc
-</code></pre><p>这样自带的插件已开启了</p>
-<h2 id="安装其他插件"><a href="#安装其他插件" class="headerlink" title="安装其他插件"></a>安装其他插件</h2><p><strong>zsh-syntax-highlighting</strong> </p>
+<span class="token function">source</span> ~/.zshrc
+</code></pre>
+<p>这样自带的插件已开启了</p>
+<h3 id="安装其他插件"><a href="#安装其他插件" class="headerlink" title="安装其他插件"></a>安装其他插件</h3><p><strong>zsh-syntax-highlighting</strong> </p>
 <blockquote>
 <p>高亮你的zsh可用命令</p>
 </blockquote>
@@ -120,23 +266,21 @@ $ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git   # 克隆插
 </code></pre>
 <p>打开.zshrc文件，插件到plugin中</p>
 <p>plugins=( [plugins…] autojump)</p>
-<p>将下面命令加到.zshrc最后</p>
+<p>将下面命令加到<code>.zshrc</code>最后</p>
 <pre class=" language-shell"><code class="language-shell">[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 </code></pre>
 <pre class=" language-shell"><code class="language-shell">source ~/.zshrc    #重新加载.zshrc的修改  
 </code></pre>
+<blockquote>
 <p>使用 autojump 的缩写 <code>j</code>，<code>cd</code> 命令进入 <code>~/user/github/Youthink</code> 文件夹，<br>下一次再想进入 <code>Yourhink</code> 文件夹的时候，直接 <code>j youthink</code> 即可或者只输入一部分 <code>j youth</code> 都行</p>
-<ul>
-<li>删除无效路径</li>
-</ul>
+</blockquote>
+<p>删除无效路径</p>
 <p><code>j --purge 无效路径</code></p>
-<p>类似组件 Z (也内置了,直接改配置文件即可)，和 autojump 除了名字不一样，基本雷同。</p>
-<p><code>z -x 无效路径</code></p>
-<h2 id="高级功能"><a href="#高级功能" class="headerlink" title="高级功能"></a>高级功能</h2><h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><ul>
+<h3 id="其他功能-1"><a href="#其他功能-1" class="headerlink" title="其他功能"></a>其他功能</h3><ul>
 <li><p>命令历史记录</p>
 <ul>
 <li>一旦在 shell 敲入正确命令并能执行后，shell 就会存储你所敲入命令的历史记录（存放在~/.zsh_history 文件中），方便再次运行之前的命令。可以按方向键↑和↓来查看之前执行过的命令</li>
-<li>可以用 !!来执行上一条命令</li>
+<li>可以用 !! 来执行上一条命令</li>
 <li>使用 ctrl-r 来搜索命令历史记录</li>
 </ul>
 </li>
@@ -166,7 +310,7 @@ alias -s tgz='tar -xzvf'
 alias -s zip='unzip'
 alias -s bz2='tar -xjvf'
 </code></pre>
-<h3 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h3><p>在进入一个 git 文件夹后会切换显示的模式：</p>
+<h3 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h3><p>在进入一个 git 文件夹后会切换显示的模式（不过需要配合字体才展示，下面会讲到）：</p>
 <p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jvh758m6j20oe0as0ws.jpg" alt></p>
 <p>常用命令</p>
 <table>
@@ -218,12 +362,7 @@ alias -s bz2='tar -xjvf'
 <p>自带大部分 git 命令的缩写，命令内容可以参考 <code>~/.oh-my-zsh/plugins/git/git.plugin.zsh</code></p>
 <p><code>Oh My Zsh</code>提供了一套系统别名（alias），来达到相同的功能。比如gst作为git status的别名。而且 Git 插件是 Oh My Zsh 默认启用的，相当于你使用了 Oh My Zsh，你就拥有了一套高效率的别名，而且还是全球通用的。</p>
 <p>完整列表请参考：<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git" target="_blank" rel="noopener">https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git</a>或者输入<code>alias | grep git</code>命令</p>
-<h3 id="osx"><a href="#osx" class="headerlink" title="osx"></a>osx</h3><pre><code>tab - 在一个新标签打开当前目录
-cdf - cd到当前Finder目录
-quick-look - 快速浏览特殊的文件
-man-preview - 在Preview应用打开特定的man page
-trash - 将特定的文件移到垃圾桶
-</code></pre><h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><ol>
+<h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><ol>
 <li>连按两次Tab会列出所有的补全列表并直接开始选择，补全项可以使用 ctrl+n/p/f/b上下左右切换</li>
 <li>更智能的历史命令。在用或者方向上键查找历史命令时，zsh支持限制查找。比如，输入ls,然后再按方向上键，则只会查找用过的ls命令。而此时使用则会仍然按之前的方式查找，忽略 ls</li>
 <li>智能跳转，安装了 autojump 之后，zsh 会自动记录你访问过的目录，通过 j 目录名 可以直接进行目录跳转，而且目录名支持模糊匹配和自动补全，例如你访问过 hadoop-1.0.0 目录，输入j hado 即可正确跳转。j –stat 可以看你的历史路径库。</li>
@@ -232,6 +371,109 @@ trash - 将特定的文件移到垃圾桶
 <li>通配符搜索：ls -l <strong>/*.sh，可以递归显示当前目录下的 shell 文件，文件少时可以代替 find。使用 </strong>/ 来递归搜索</li>
 <li>在 .zshrc 中添加 setopt HIST_IGNORE_DUPS 可以消除重复记录，也可以利用 <code>sort -t &quot;;&quot; -k 2 -u ~/.zsh_history | sort -o ~/.zsh_history</code> 手动清除</li>
 </ol>
+<h2 id="让它变得好看"><a href="#让它变得好看" class="headerlink" title="让它变得好看"></a>让它变得好看</h2><h3 id="安装-Powerline"><a href="#安装-Powerline" class="headerlink" title="安装 Powerline"></a>安装 <a href="http://powerline.readthedocs.io/en/latest/installation.html" target="_blank" rel="noopener">Powerline</a></h3><blockquote>
+<p>Powerline 是用 Python 写的脚本可以美化终端</p>
+</blockquote>
+<h5 id="1-安装Python-2-X"><a href="#1-安装Python-2-X" class="headerlink" title="1. 安装Python 2.X"></a>1. 安装Python 2.X</h5><p>因为 Powerline 是用 Python 写的脚本，所以我们必须确保在安装 Powerline 我们的 Mac 里面已经安装了 Python（一般来说 Mac 会自带 Python 2.X）</p>
+<pre class=" language-shell"><code class="language-shell">$ python -V
+Python 2.7.10
+
+# 我们可以在终端里面输入下面的代码来检查 Python 版本，若此命令没有返回任何讯息说明你的 Mac 里面没有安装 Python。
+</code></pre>
+<h5 id="2-安装pip"><a href="#2-安装pip" class="headerlink" title="2. 安装pip"></a>2. 安装pip</h5><p>安装 Powerline 的方法有很多种，我们可以通过 pip 或者 git 等工具，我推荐使用 pip，</p>
+<blockquote>
+<p>由于我还没有安装过 <code>pip</code> ， 所以先执行以下命令安装：</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">$ sudo easy_install pip
+# 或者执行下面代码安装
+$ wget https://bootstrap.pypa.io/get-pip.py -O - | python  
+</code></pre>
+<h5 id="3-检查Powerline"><a href="#3-检查Powerline" class="headerlink" title="3. 检查Powerline"></a>3. 检查Powerline</h5><p>用 pip 安装 Powerline </p>
+<pre class=" language-shell"><code class="language-shell">$ pip show powerline-status  # 检查是否已经安装Powerline
+
+# 如果以上命令执行后，如果出现如下信息，则说明已安装，可跳过下一步。如果没有任何反应说明没有安装，则进行下一步。
+</code></pre>
+<p><strong>Powerline 信息</strong></p>
+<pre class=" language-shell"><code class="language-shell">--
+Metadata-Version: 1.1
+Name: powerline-status
+Version: 2.2
+Summary: The ultimate statusline/prompt utility.
+Home-page: https://github.com/powerline/powerline
+Author: Kim Silkebaekken
+Author-email: kim.silkebaekken+vim@gmail.com
+License: MIT
+Location: /Users/mac/Library/Python/2.7/lib/python/site-packages #被安装到哪個路径
+Requires:
+
+# 以我的例子，我的使用者名称是 mac
+# 所以會安装到 /Users/mac/Library/Python/2.7/lib/python/site-packages 目录底下
+</code></pre>
+<h5 id="4-安装Powerline"><a href="#4-安装Powerline" class="headerlink" title="4. 安装Powerline"></a>4. 安装Powerline</h5><p>(由于权限问题，无法安装到系统目录下，所以我加上了 –user 选项，选择安装到当前用户目录下)</p>
+<pre class=" language-shell"><code class="language-shell">$ pip install --user powerline-status 
+</code></pre>
+<ul>
+<li>配置.bash_profile(如果是已经根据上面步骤，将bash切换成zsh的，跳过此处，配置.zshrc就可以了)</li>
+</ul>
+<p>创建、配置 <code>.bash_profile</code> 文件（mac 默认的配置文件，没有的话需要新建一个）让终端每次启动的时候自动运行 Powerline 脚本，新建如下：</p>
+<pre class=" language-shell"><code class="language-shell">cd ~ && l -h
+
+# 输入上述命令，查看文件夹下是否有 .bash_profile 文件，没有的话执行下面命令, 如果有就跳过下一步，
+
+touch .bash_profile  # 创建 .bash_profile 文件
+
+open .bash_profile   # 打开文件
+</code></pre>
+<ul>
+<li>配置 .zshrc</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc
+</code></pre>
+<p>只需将下面代码（其实就上面打印出来的安装路径）修改后，复制到你的 <code>bash_profile</code>或者<code>.zshrc</code>文件里就可以啦：</p>
+<p><code>. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh</code></p>
+<p><strong>需要注意的是最开始的 ‘.’ 和 ‘/powerline/…’ 中间是以空格分开的。</strong></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p>这里也有可能出现“powerline/bindings/bash/../../../scripts/powerline-config:: No such file or directory”的报错。原因没有将powerline的相关命令添加到环境变量，可以使用软链接解决:</p>
+<p>则需要将/Users/[用户名]/Library/Python/2.7/bin加入到PATH中，如下：</p>
+<pre class=" language-shell"><code class="language-shell">export PATH=/Users/[你的用户名]/Library/Python/2.7/bin:$PATH
+
+. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+</code></pre>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<h5 id="5-更换主题"><a href="#5-更换主题" class="headerlink" title="5. 更换主题"></a>5. 更换主题</h5><p>下载agnoster主题，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/fcamblor/oh-my-zsh-agnoster-fcamblor.git
+$ open oh-my-zsh-agnoster-fcamblor/
+</code></pre>
+<p>打开文件夹，双击运行install文件，主题将安装到<code>~/.oh-my-zsh/themes</code>目录下</p>
+<pre class=" language-shell"><code class="language-shell">open ~/.zshrc  # 打开.zshrc
+</code></pre>
+<p>找到<code>ZSH_THEME</code>字段，改成：<code>ZSH_THEME=&quot;agnoster&quot;</code></p>
+<pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/1816409-20ef0157329eb98f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h5 id="6-安装Powerline字体"><a href="#6-安装Powerline字体" class="headerlink" title="6. 安装Powerline字体"></a>6. 安装Powerline字体</h5><p>通过git clone来下载powerline字体，在任意目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/Lokaltog/powerline-fonts.git
+$ cd powerline-fonts/ && ./install.sh
+</code></pre>
+<p>安装完成后，提示所有字体均已下载到/Users/mac/Library/Fonts路径下，如下提示：</p>
+<pre><code>All Powerline fonts installed to /Users/mac/Library/Fonts
+</code></pre><p>这样就说明字体库安装完了。</p>
+<p>接着打开iTerm 2<code>Preferences</code>=&gt;<code>Profile</code>=&gt;<code>Text</code>，找到<code>Font</code>和<code>Non-ASCII Font</code>的字体都设置成 带有<code>Powerline</code> 的字体，我这里设置的字体是<code>12pt Meslo LG S DZ Regular for Powerline</code>，大家可以根据喜好选择，只要是powerline字体就可以。</p>
+<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg" alt></p>
+<h5 id="7-安装配色方案"><a href="#7-安装配色方案" class="headerlink" title="7. 安装配色方案"></a>7. 安装配色方案</h5><p>下载配色方案，同样在任何目录下，执行下列命令</p>
+<pre class=" language-shell"><code class="language-shell">$ cd ~
+$ git clone https://github.com/altercation/solarized.git
+$ open solarized/iterm2-colors-solarized
+</code></pre>
+<p>然后进入/Users/mac/solarized/iterm2-colors-solarized下双击 <code>Solarized Dark.itermcolors</code> 和 <code>Solarized Light.itermcolors</code> 两个文件就可以把配置文件导入到 iTerm2 里</p>
+<p>把iTerm 2的设置里的<code>Profile</code>=&gt;<code>colors</code>选项卡中里的<code>Load Presets</code>设置为刚刚下载的配色方案就可以了。</p>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg" alt></p>
+<p>大功告成，看看最后效果吧：</p>
+<p><img src="https://cdn.leoao.com/blog/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg?imageslim" alt></p>
 
     </div>
 
@@ -243,7 +485,7 @@ trash - 将特定的文件移到垃圾桶
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启插件"><span class="toc-text">开启插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装其他插件"><span class="toc-text">安装其他插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级功能"><span class="toc-text">高级功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快捷键"><span class="toc-text">快捷键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git插件"><span class="toc-text">Git插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#osx"><span class="toc-text">osx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用技巧"><span class="toc-text">使用技巧</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-iTerm2"><span class="toc-text">安装 iTerm2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iTerm特色功能"><span class="toc-text">iTerm特色功能</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#特色快捷键"><span class="toc-text">特色快捷键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光标控制"><span class="toc-text">光标控制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#窗口操作"><span class="toc-text">窗口操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#标签页操作"><span class="toc-text">标签页操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#面板操作"><span class="toc-text">面板操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#其他功能"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#位置书签"><span class="toc-text">位置书签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#粘贴历史"><span class="toc-text">粘贴历史</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#即时回放"><span class="toc-text">即时回放</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#窗口状态"><span class="toc-text">窗口状态</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#让它变得好用"><span class="toc-text">让它变得好用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-brew"><span class="toc-text">安装 brew</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装并切换成-zsh"><span class="toc-text">安装并切换成 zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-oh-my-zsh"><span class="toc-text">安装 oh-my-zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启插件"><span class="toc-text">开启插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装其他插件"><span class="toc-text">安装其他插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他功能-1"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git插件"><span class="toc-text">Git插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用技巧"><span class="toc-text">使用技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#让它变得好看"><span class="toc-text">让它变得好看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Powerline"><span class="toc-text">安装 Powerline</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-安装Python-2-X"><span class="toc-text">1. 安装Python 2.X</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-安装pip"><span class="toc-text">2. 安装pip</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-检查Powerline"><span class="toc-text">3. 检查Powerline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-安装Powerline"><span class="toc-text">4. 安装Powerline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-更换主题"><span class="toc-text">5. 更换主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-安装Powerline字体"><span class="toc-text">6. 安装Powerline字体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-安装配色方案"><span class="toc-text">7. 安装配色方案</span></a></li></ol></li></ol></li></ol>
   </div>
 
 
@@ -273,16 +515,16 @@ trash - 将特定的文件移到垃圾桶
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2016/07/05/" rel="next" title="sublime 插件">
-          sublime 插件
+          <a href="/2016/07/01/" rel="next" title="hexo博客搭建和配置">
+          hexo博客搭建和配置
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2016/07/10/" rel="prev" title="iTrem2使用指南">
-            iTrem2使用指南
+          <a href="/2016/09/09/" rel="prev" title="git学习">
+            git学习
           </a>
           <span>〉</span>
         

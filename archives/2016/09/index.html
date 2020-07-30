@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -76,25 +87,6 @@
   <div class="archives">
     
     <div class="archive" >
-  <a class="post-go" href="/2016/09/12/">
-    <div>
-      <span class="date">
-        09-12
-      </span>
-      <span class="slash">/</span>
-      webpack入门指南
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p><a href="https://github.com/webpack" target="_blank" rel="noopener">Webpack</a> 是德国开发者 Tobias Koppers 开发的模块加载器，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、 AMD 模块、 ES6 模块、CSS、图片、 JSON、Coffeescript、 LESS 等。<br>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
   <a class="post-go" href="/2016/09/09/">
     <div>
       <span class="date">
@@ -106,25 +98,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。<br>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2016/09/08/">
-    <div>
-      <span class="date">
-        09-08
-      </span>
-      <span class="slash">/</span>
-      gulp基础使用
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>在日常开发中，手动去做一些代码压缩，做一些流程化的动作其实很繁琐，现在我们可以通过gulp来改进我们的工作流，让我们的开发体验得到提升，并且可以直接使用less、sass等预编译样式语法，在工作流中做编译转换。<br>-->
     <!--</div>-->
   </a>
 

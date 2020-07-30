@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="HTML,">
   
@@ -90,7 +101,7 @@
       <p>在实际开发过程中，经常会接到产品关于分享海报，生成海报，照片合成等需求，这里就简单总结一下。关于一次海报合成的填坑过程，欢迎指正。</p>
 <a id="more"></a>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>要用代码来实现多张外部图片和文字的合并而且要上传到七牛云，再将图片链接通过客户端分享出去。图片背景需要支持用户自定义更换。</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fm1oo98m8yj31kw0wkwip.jpg" alt></p>
+<p><img src="https://cdn.leoao.com/blog/2179333-a8b12e03cacd6e46.webp?imageslim" alt></p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><p>在一个canvas上多次调用drawImage函数，分别绘制在canvas中，多次之后canvas中是多个图片合并的效果，然后再调用toDataURL函数将canvas转成dataURL格式的图片，再将dataURL格式装换为blob文件，上传至七牛云。</p>
 <h3 id="需要注意的坑"><a href="#需要注意的坑" class="headerlink" title="需要注意的坑"></a>需要注意的坑</h3><h4 id="canvas图片模糊的问题"><a href="#canvas图片模糊的问题" class="headerlink" title="canvas图片模糊的问题"></a>canvas图片模糊的问题</h4><blockquote>
 <p>将canvas的长宽设为样式长宽的2倍或更大， 如下：</p>
@@ -216,16 +227,16 @@ xhr<span class="token punctuation">.</span><span class="token function">send</sp
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2017/07/26/" rel="next" title="VueJs之组件">
-          VueJs之组件
+          <a href="/2017/02/26/" rel="next" title="浏览器的工作原理">
+          浏览器的工作原理
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2017/12/11/" rel="prev" title="cordova学习资源整理">
-            cordova学习资源整理
+          <a href="/2018/01/06/" rel="prev" title="使用AWS搭建一年免费的Shadowscoke">
+            使用AWS搭建一年免费的Shadowscoke
           </a>
           <span>〉</span>
         

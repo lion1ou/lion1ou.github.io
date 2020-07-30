@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="Hexo,">
   
@@ -104,16 +115,16 @@
 <li><p>注册帐号（此步跳过）</p>
 </li>
 <li><p>创建代码库</p>
-<p>  <img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5rbimjev5j20c9063t8x.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5rbimjev5j20c9063t8x.jpg" alt></p>
 </li>
 <li><p>填写名称</p>
 <blockquote>
 <p>名称必须是<code>**.github.io</code>这种格式</p>
 </blockquote>
-<p>  <img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1f9jptq1saaj20jq0hbdhp.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jptq1saaj20jq0hbdhp.jpg" alt></p>
 </li>
 <li><p>填写完后，创建成功后出现如下页面：</p>
-<p>  <img src="http://ww3.sinaimg.cn/large/65e4f1e6jw1f9jpvmep5cj20nh0hgtbb.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6jw1f9jpvmep5cj20nh0hgtbb.jpg" alt></p>
 <blockquote>
 <p>到这里github仓库已经建好了。接下来是本地部分了。</p>
 </blockquote>
@@ -124,13 +135,13 @@
 <blockquote>
 <p>在命令行前面多加 <strong>sudo</strong> 是为了获取权限，可能需要输入密码（Mac才需要）</p>
 </blockquote>
-<p>  <img src="http://ww3.sinaimg.cn/large/65e4f1e6jw1f9jpxzbcsoj20pd04w763.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6jw1f9jpxzbcsoj20pd04w763.jpg" alt></p>
 <blockquote>
 <p>安装全局的hexo，可能你会看到一个WARN，但是不用担心，这不会影响你的正常使用。若出现长时间不动作情况，请看最后面。</p>
 </blockquote>
 </li>
 <li><p>安装完后，执行 <code>hexo -v</code> 命令，验证是否安装完成</p>
-<p>  <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5rh2p9z19j207905v74u.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5rh2p9z19j207905v74u.jpg" alt></p>
 <blockquote>
 <p>安装过程中，若出现未提及错误，请查阅<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
@@ -138,7 +149,7 @@
 </ul>
 <h3 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h3><ul>
 <li><p><code>cd</code>到自己认为合适位置，执行<code>hexo init lion1ou</code></p>
-<p>  <img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1f9jq5rt5hcj20e903et9l.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jq5rt5hcj20e903et9l.jpg" alt></p>
 <blockquote>
 <p>在该文件夹下创建<code>lion1ou</code>文件夹，并初始化hexo项目</p>
 </blockquote>
@@ -148,20 +159,20 @@
 <p><code>npm install</code>将会自动安装该项目所需要的组件和依赖，只需要等待npm操作即可</p>
 </blockquote>
 <p>  文件夹目录中最少含有以下几项：</p>
-<p>  <img src="http://ww1.sinaimg.cn/large/72f96cbagw1f6elz6tq9lj204h04bt8s.jpg" alt="屏幕快照 2016-08-01 22.20.35.png"></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f6elz6tq9lj204h04bt8s.jpg" alt></p>
 </li>
 </ul>
 <h3 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h3><ul>
 <li><p>在<code>source/_posts</code>目录下编辑Markdown文件</p>
 </li>
 <li><p>执行 <code>hexo generate</code>命令生成静态文件，可简写成 <code>hexo g</code></p>
-<p>  <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ridnsopmj209n073wgm.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ridnsopmj209n073wgm.jpg" alt></p>
 </li>
 <li><p>执行 <code>hexo server</code> 启动Hexo自带服务，可简写成 <code>hexo s</code></p>
 <blockquote>
 <p>默认情况下，访问网址为： <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>浏览到你刚建完的本地静态网站。</p>
 </blockquote>
-<p>  <img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f9jqf11sdgj20yj0dhtbx.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jqf11sdgj20yj0dhtbx.jpg" alt></p>
 <blockquote>
 <p>到这里hexo项目本地项目也已经创建完成了。</p>
 </blockquote>
@@ -185,9 +196,9 @@
 </li>
 <li><p>安装后执行<code>hexo deploy</code>，部署代码至Github</p>
 <blockquote>
-<p>如出现帐号验证提示，请按照提示，分别输入自己的Github账号用户名和密码，开始提交。如需配置Github SHH验证，请参见<a href="http://lion1ou.win/2016/09/10/">github之配置SHH</a></p>
+<p>如出现帐号验证提示，请按照提示，分别输入自己的Github账号用户名和密码，开始提交。如需配置Github SHH验证，请参见<a href="http://lion1ou.win/2016/09/11/">git学习</a></p>
 </blockquote>
-<p>  <img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5rie1aos8j20gs03y0ti.jpg" alt="屏幕快照 2016-07-12 22.44.45.png"></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5rie1aos8j20gs03y0ti.jpg" alt></p>
 <blockquote>
 <p>部署完毕后，访问<a href="https://lion1ou.github.io" target="_blank" rel="noopener">https://lion1ou.github.io</a>（更换为自己的地址）</p>
 </blockquote>
@@ -195,22 +206,22 @@
 </ul>
 <h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><ul>
 <li><p>执行<code>hexo new &#39;article title&#39;</code> </p>
-<p>  <img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f9jqwghl7nj20e6011mxf.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jqwghl7nj20e6011mxf.jpg" alt></p>
 <blockquote>
 <p>source/_posts目录下，创建一篇以「article title」为题目的Markdown文件，供你编辑。</p>
 </blockquote>
 </li>
 <li><p>新建的文件头会有一些yml信息，如下所示：</p>
-<p>  <img src="http://ww4.sinaimg.cn/large/72f96cbagw1f5rfrsnu6vj20rs07240p.jpg" alt="屏幕快照 2016-07-12 21.17.57.png"></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5rfrsnu6vj20rs07240p.jpg" alt></p>
 </li>
 <li><p>编辑完成后，执行<code>hexo g</code></p>
-<p>  <img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f9js9ab9swj20dd02mdg7.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9js9ab9swj20dd02mdg7.jpg" alt></p>
 <blockquote>
 <p>将该文件渲染成浏览器能识别的HTML网页和其他Hexo附带文件。</p>
 </blockquote>
 </li>
 <li><p>再执行<code>hexo d</code></p>
-<p>  <img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f9jsa618bhj20cn02v0td.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jsa618bhj20cn02v0td.jpg" alt></p>
 <blockquote>
 <p>将渲染后文件部署至Github，这样就完成了一个操作。</p>
 </blockquote>
@@ -239,15 +250,15 @@
 <li><p>域名申请，可以在阿里云注册，本人的<a href="http://lion1ou.win">lion1ou.win</a>就是阿里云注册的，25RMB/五年，这里不赘述。</p>
 </li>
 <li><p>source/目录下创建<strong>CNAME</strong>文件(不需要后缀名)，并填入自己注册的域名地址(不需要加www)。</p>
-<p>  <img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1f9jiy5j30yj20f002u0sm.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jiy5j30yj20f002u0sm.jpg" alt></p>
 </li>
 <li><p>部署至Github</p>
 </li>
 <li><p>前往阿里云控制台，找到自己的域名，点击解析</p>
-<p>  <img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f9jsdecvxwj20r501ymx9.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jsdecvxwj20r501ymx9.jpg" alt></p>
 </li>
 <li><p>添加域名解析，如下图所示（要注意的是记录值：<code>lion1ou.github.io.</code>后面还有一个点）</p>
-<p>  <img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f9jsg7jk2hj20uo01vaad.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9jsg7jk2hj20uo01vaad.jpg" alt></p>
 </li>
 <li><p>然后等待一会，再访问<a href="http://lion1ou.win">lion1ou.win</a>，就ok了。</p>
 </li>
@@ -256,7 +267,7 @@
 <li><p>在 Coding 上创建一个与您的用户名（Global Key）相同的项目。</p>
 </li>
 <li><p>如图选择 Pages 服务，并开启服务</p>
-<p>  <img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1f9kgh88kaij21kw0gggo5.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9kgh88kaij21kw0gggo5.jpg" alt></p>
 </li>
 <li><p>修改根目录下 <code>_config.yml</code> 文件</p>
 <pre><code>  deploy:
@@ -279,13 +290,13 @@
 </blockquote>
 </li>
 <li><p>解析域名</p>
-<p>  <img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f9nfqwtr5zj21kw06n0ub.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9nfqwtr5zj21kw06n0ub.jpg" alt></p>
 <blockquote>
 <p>如上图将coding的地址设置为默认，将github的地址设为海外，coding的记录值是固定的<code>pages.coding.me</code>不用修改。</p>
 </blockquote>
 </li>
 <li><p>绑定域名</p>
-<p>  <img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f9nftwnvn5j21h00c675s.jpg" alt></p>
+<p>  <img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f9nftwnvn5j21h00c675s.jpg" alt></p>
 <blockquote>
 <p>如上图在coding Pages服务页面，添加域名绑定，然后你就可以通过以上域名访问了。</p>
 </blockquote>
@@ -439,8 +450,8 @@
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2016/07/05/" rel="prev" title="sublime 插件">
-            sublime 插件
+          <a href="/2016/07/09/" rel="prev" title="打造一套得心应手的终端工具">
+            打造一套得心应手的终端工具
           </a>
           <span>〉</span>
         

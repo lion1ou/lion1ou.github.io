@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -76,25 +87,6 @@
   <div class="archives">
     
     <div class="archive" >
-  <a class="post-go" href="/2017/12/11/">
-    <div>
-      <span class="date">
-        12-11
-      </span>
-      <span class="slash">/</span>
-      cordova学习资源整理
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>已经好久没有做有关cordova的项目了，但是还是经常会有小伙伴来问有关cordova的问题，有一些自己也回答不上来。现在就将以前保存的资源整理整理分享出来，有需要的小伙伴自取哈~~<br>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
   <a class="post-go" href="/2017/12/01/">
     <div>
       <span class="date">
@@ -106,177 +98,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>在实际开发过程中，经常会接到产品关于分享海报，生成海报，照片合成等需求，这里就简单总结一下。关于一次海报合成的填坑过程，欢迎指正。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/07/26/">
-    <div>
-      <span class="date">
-        07-26
-      </span>
-      <span class="slash">/</span>
-      VueJs之组件
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>组件 (Component) 是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素，Vue.js的编译器为它添加特殊功能。在有些情况下，组件也可以是原生 HTML 元素的形式，以 is 特性扩展。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/07/26/">
-    <div>
-      <span class="date">
-        07-26
-      </span>
-      <span class="slash">/</span>
-      VueJs之过滤器
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>Vue.js 允许你自定义过滤器，可被用作一些常见的文本格式化。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/06/29/">
-    <div>
-      <span class="date">
-        06-29
-      </span>
-      <span class="slash">/</span>
-      VueJS之Vuex使用指南
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>Vuex 是 状态管理的编程模式 + 工具库，适用于 Vue.js 编写的应用。它作为一个集中化的 store （状态存储），服务于应用中的所有组件，其中的规则保证了状态只会在可预测的方式下修改。另外，它能与 Vue 官方提供的 devtools 扩展 集成，提供高级功能，如，无需配置就可以基于时间轴调试，以及状态快照的 导入 / 导出。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/05/14/">
-    <div>
-      <span class="date">
-        05-14
-      </span>
-      <span class="slash">/</span>
-      云服务之nginx配置https
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!---->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/05/13/">
-    <div>
-      <span class="date">
-        05-13
-      </span>
-      <span class="slash">/</span>
-      云服务之ngnix部署配置
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>在项目开发中需要自己搭建配置前端服务，发布代码，所以捣鼓了一下nginx。在这里记录一下，相应的常规配置。<br>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/05/12/">
-    <div>
-      <span class="date">
-        05-12
-      </span>
-      <span class="slash">/</span>
-      云服务之nginx安装
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>Nginx是一款轻量级的网页服务器、反向代理服务器。相较于Apache、lighttpd具有占有内存少，稳定性高等优势。它最常的用途是提供反向代理服务。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/05/11/">
-    <div>
-      <span class="date">
-        05-11
-      </span>
-      <span class="slash">/</span>
-      云服务之nodejs进程管理
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>运行node服务时，如果直接通过node app来启动，如果报错了，整个服务就会直接停止运行。所以开发时一般都会使用supervisor，不过感觉supervisor只是拿来用作开发环境的。后来在网上找了一下，了解到目前似乎最常见的线上部署nodejs项目的有forever,pm2这两种。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/05/10/">
-    <div>
-      <span class="date">
-        05-10
-      </span>
-      <span class="slash">/</span>
-      云服务之部署node项目
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!---->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/04/28/">
-    <div>
-      <span class="date">
-        04-28
-      </span>
-      <span class="slash">/</span>
-      云服务之Linux常用命令
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>最近通过一些渠道，买了一台阿里云的服务器，开始建一个属于自己的小网站和一些项目demo，所以开始了解Linux系统的相关知识和相关使用，入门第一步当然是命令行操作了，下面记录了一些常用的命令语句。</p>-->
     <!--</div>-->
   </a>
 
@@ -304,45 +125,6 @@
 
 
     <div class="archive" >
-  <a class="post-go" href="/2017/02/17/">
-    <div>
-      <span class="date">
-        02-17
-      </span>
-      <span class="slash">/</span>
-      CSS之动画使用
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>CSS动画的两大组成部分：transition和animation。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/02/16/">
-    <div>
-      <span class="date">
-        02-16
-      </span>
-      <span class="slash">/</span>
-      CSS之BFC(块级格式化上下文)
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>BFC是什么？从没有认识到最初的认识是一个关键且困难的过程。网上的很多文章都会写道：BFC 是一个环境。这样的写法让人看了就头疼：我们在HTML和CSS中好像从没接触过环境这个概念。</p>
-<p>下面不妨让我用通俗的方式解释一下BFC的概念：BFC可以简单的理解为某个元素的一个CSS属性，只不过这个属性不能被开发者显式的修改，拥有这个属性的元素对内部元素和外部元素会表现出一些特性（后面会讲到），这就是BFC。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
   <a class="post-go" href="/2017/01/18/">
     <div>
       <span class="date">
@@ -354,44 +136,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>在前后端分离开发时为什么需要用户认证呢？原因是由于HTTP协定是不储存状态的(stateless)，这意味着当我们透过帐号密码验证一个使用者时，当下一个request请求时它就把刚刚的资料忘了。于是我们的程序就不知道谁是谁，就要再验证一次。所以为了保证系统安全，我们就需要验证用户否处于登录状态。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/01/17/">
-    <div>
-      <span class="date">
-        01-17
-      </span>
-      <span class="slash">/</span>
-      前后端分离之跨域问题
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>最近在做的一个项目，原本是通过SpringMVC结合freemarker模板引擎和JSP实现HTML页面和后端的数据交互，现在为了业务需要，要将前后端拆分出来。使用Restful API的形式进行交互。然后刚上路就遇到坑了，在这里记录一下如何填坑，以防不时之需。这里介绍的方法是SpringMVC架构通过CROS协议解决跨域问题。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/01/11/">
-    <div>
-      <span class="date">
-        01-11
-      </span>
-      <span class="slash">/</span>
-      ESLint入门指南
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>ESLint 是一个插件化的 javascript 代码检测工具，它可以用于检查常见的 JavaScript 代码错误，也可以进行代码风格检查，这样我们就可以根据自己的喜好指定一套 ESLint 配置，然后应用到所编写的项目上，从而实现辅助编码规范的执行，有效控制项目代码的质量。</p>-->
     <!--</div>-->
   </a>
 

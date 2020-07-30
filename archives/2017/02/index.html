@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -87,45 +98,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>浏览器的主要功能是将用户选择得web资源呈现出来，它需要从服务器请求资源，并将其显示在浏览器窗口中，资源的格式通常是HTML，也包括PDF、image及其他格式。用户用URI（Uniform Resource Identifier 统一资源标识符）来指定所请求资源的位置。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/02/17/">
-    <div>
-      <span class="date">
-        02-17
-      </span>
-      <span class="slash">/</span>
-      CSS之动画使用
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>CSS动画的两大组成部分：transition和animation。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/02/16/">
-    <div>
-      <span class="date">
-        02-16
-      </span>
-      <span class="slash">/</span>
-      CSS之BFC(块级格式化上下文)
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>BFC是什么？从没有认识到最初的认识是一个关键且困难的过程。网上的很多文章都会写道：BFC 是一个环境。这样的写法让人看了就头疼：我们在HTML和CSS中好像从没接触过环境这个概念。</p>
-<p>下面不妨让我用通俗的方式解释一下BFC的概念：BFC可以简单的理解为某个元素的一个CSS属性，只不过这个属性不能被开发者显式的修改，拥有这个属性的元素对内部元素和外部元素会表现出一些特性（后面会讲到），这就是BFC。</p>-->
     <!--</div>-->
   </a>
 

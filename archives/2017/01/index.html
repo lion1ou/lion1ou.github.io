@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="undefined">
   
@@ -87,44 +98,6 @@
 
     <!--<div class="excerpt">-->
       <!--<p>在前后端分离开发时为什么需要用户认证呢？原因是由于HTTP协定是不储存状态的(stateless)，这意味着当我们透过帐号密码验证一个使用者时，当下一个request请求时它就把刚刚的资料忘了。于是我们的程序就不知道谁是谁，就要再验证一次。所以为了保证系统安全，我们就需要验证用户否处于登录状态。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/01/17/">
-    <div>
-      <span class="date">
-        01-17
-      </span>
-      <span class="slash">/</span>
-      前后端分离之跨域问题
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>最近在做的一个项目，原本是通过SpringMVC结合freemarker模板引擎和JSP实现HTML页面和后端的数据交互，现在为了业务需要，要将前后端拆分出来。使用Restful API的形式进行交互。然后刚上路就遇到坑了，在这里记录一下如何填坑，以防不时之需。这里介绍的方法是SpringMVC架构通过CROS协议解决跨域问题。</p>-->
-    <!--</div>-->
-  </a>
-
-</div>
-    
-
-
-    <div class="archive" >
-  <a class="post-go" href="/2017/01/11/">
-    <div>
-      <span class="date">
-        01-11
-      </span>
-      <span class="slash">/</span>
-      ESLint入门指南
-    </div>
-
-    <!--<div class="excerpt">-->
-      <!--<p>ESLint 是一个插件化的 javascript 代码检测工具，它可以用于检查常见的 JavaScript 代码错误，也可以进行代码风格检查，这样我们就可以根据自己的喜好指定一套 ESLint 配置，然后应用到所编写的项目上，从而实现辅助编码规范的执行，有效控制项目代码的质量。</p>-->
     <!--</div>-->
   </a>
 

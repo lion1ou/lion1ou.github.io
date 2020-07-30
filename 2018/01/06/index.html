@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="ShadowScoke,">
   
@@ -89,7 +100,7 @@
     <div class="post-content">
       <p>作为一个前端开发，不能使用Google，那不就是相当于失去了左板右臂，这怎么可以？ 但是要钱的FQ服务又有点贵，不舍得花钱，那今天我们就来薅一把亚马逊爸爸的羊毛。</p>
 <a id="more"></a>
-<h2 id="第-1-章-创建服务器展开目录"><a href="#第-1-章-创建服务器展开目录" class="headerlink" title="第 1 章 创建服务器展开目录"></a>第 1 章 创建服务器展开目录</h2><h3 id="1-1-原理"><a href="#1-1-原理" class="headerlink" title="1.1 原理"></a>1.1 原理</h3><p>众所周知目前的网页访问基本都是 C/S 模式，而在中国由于客户机向服务器的发起的请求，如果是禁网则可以被 GWF 识别封杀，那么我们的原理就是让一个客户机（对我们来说它就是我们的代理人）在国外替我们拿到数据然后再传回来，为了防止传回的数据被 GWF 识别，我们要对数据加密，目前比较优秀的即使 shadowsocks。</p>
+<h2 id="创建服务器展开目录"><a href="#创建服务器展开目录" class="headerlink" title="创建服务器展开目录"></a>创建服务器展开目录</h2><h3 id="1-1-原理"><a href="#1-1-原理" class="headerlink" title="1.1 原理"></a>1.1 原理</h3><p>众所周知目前的网页访问基本都是 C/S 模式，而在中国由于客户机向服务器的发起的请求，如果是禁网则可以被 GWF 识别封杀，那么我们的原理就是让一个客户机（对我们来说它就是我们的代理人）在国外替我们拿到数据然后再传回来，为了防止传回的数据被 GWF 识别，我们要对数据加密，目前比较优秀的即使 shadowsocks。</p>
 <h3 id="1-2-服务器架设"><a href="#1-2-服务器架设" class="headerlink" title="1.2 服务器架设"></a>1.2 服务器架设</h3><p>这里利用的是 AWS（Amazon Web Services)，是亚马逊提供的在线虚拟主机服务。现在 AWS 提供的基础服务免费一年，流量每月 15G，只要你不是天天上网下大文件的话，一般不会超。<br>之所以选择 AWS，首先是因为它比较稳定，并且它有东京的节点。网上很多其他主机商的节点都远在美国，距离近延迟低是铁律。<br>虽然中国人都喜欢免费的东西，但还是建议有钱的豪还是选择付费。</p>
 <h4 id="1-2-1-申请-AWS-账号"><a href="#1-2-1-申请-AWS-账号" class="headerlink" title="1.2.1 申请 AWS 账号"></a>1.2.1 申请 AWS 账号</h4><p>如果以下任何一步中出现灰色页面一个橘黄圈圈不停在转的话，多刷新几次就好。</p>
 <ol>
@@ -112,7 +123,7 @@
 <li>保存好之后，点“启动实例”。至此为止，你的服务器已经创建好。</li>
 <li>点击页面中第一个绿色框里你的服务器名字，这里是“i-405c2fe5”，跳转到以下页面。这里有几个关键信息需要记下 。一个是<code>公有DNS</code>，另一个要往右边拉一下滚动条，<code>公有IP</code>，拿笔写下来。</li>
 </ol>
-<h2 id="第-2-章-远程连接服务器展开目录"><a href="#第-2-章-远程连接服务器展开目录" class="headerlink" title="第 2 章 远程连接服务器展开目录"></a>第 2 章 远程连接服务器展开目录</h2><h3 id="2-1-原理"><a href="#2-1-原理" class="headerlink" title="2.1 原理"></a>2.1 原理</h3><p>有计算机只是的应该懂得，远程连接服务器指的就是用一个终端（什么是终端？终端就是客户端）连接服务器，然后在服务器做一些列的操作。常用的终端 xshell，putty 都可以。</p>
+<h2 id="远程连接服务器展开目录"><a href="#远程连接服务器展开目录" class="headerlink" title="远程连接服务器展开目录"></a>远程连接服务器展开目录</h2><h3 id="2-1-原理"><a href="#2-1-原理" class="headerlink" title="2.1 原理"></a>2.1 原理</h3><p>有计算机只是的应该懂得，远程连接服务器指的就是用一个终端（什么是终端？终端就是客户端）连接服务器，然后在服务器做一些列的操作。常用的终端 xshell，putty 都可以。</p>
 <h3 id="2-2-连接"><a href="#2-2-连接" class="headerlink" title="2.2 连接"></a>2.2 连接</h3><h4 id="2-2-1-Windows-平台"><a href="#2-2-1-Windows-平台" class="headerlink" title="2.2.1 Windows 平台"></a>2.2.1 Windows 平台</h4><p>在 Windows 中，我们需要用到两个软件，一个叫 “putty”，一个叫 “puttygen”。putty 可以把它看做是一个连接你和服务器的超时空隧道，但是它不认识 aws 提供的钥匙（就是你刚才下载的 r3.pem），首先我们要配一把新钥匙。</p>
 <ol>
 <li>打开 puttygen。选中菜单栏中的 “密钥（k）”，选中下拉菜单 “SSH-2 RSA”。</li>
@@ -139,7 +150,7 @@
 </li>
 <li>出现 ubuntu@ip-x-x-x-x:!$ 表示连接成功。</li>
 </ol>
-<h2 id="第-3-章-搭建-shadowsocks-服务端展开目录"><a href="#第-3-章-搭建-shadowsocks-服务端展开目录" class="headerlink" title="第 3 章 搭建 shadowsocks 服务端展开目录"></a>第 3 章 搭建 shadowsocks 服务端展开目录</h2><h3 id="3-1-安装"><a href="#3-1-安装" class="headerlink" title="3.1 安装"></a>3.1 安装</h3><ol>
+<h2 id="搭建-shadowsocks-服务端展开目录"><a href="#搭建-shadowsocks-服务端展开目录" class="headerlink" title="搭建 shadowsocks 服务端展开目录"></a>搭建 shadowsocks 服务端展开目录</h2><h3 id="3-1-安装"><a href="#3-1-安装" class="headerlink" title="3.1 安装"></a>3.1 安装</h3><ol>
 <li><p>连接上之后，首先要将我们当前登录的用户提升至 root 权限，输入如下代码并回车</p>
 <p> <code>sudo -s</code></p>
 <p> 你会发现光标前面的 “$” 变成了 “#”，并且行首的“ubuntu” 也变成了“root”。</p>
@@ -234,7 +245,7 @@
 <li>如果之前有添加多用户的话，需要在这里把所有分配出去的端口都分别添加上去</li>
 <li>保存退出</li>
 </ul>
-<h2 id="第-4-章-客户端配置展开目录"><a href="#第-4-章-客户端配置展开目录" class="headerlink" title="第 4 章 客户端配置展开目录"></a>第 4 章 客户端配置展开目录</h2><p>有了运行在服务器上的服务端，还需要本地的客户端。客户端已经大牛写好了，</p>
+<h2 id="客户端配置展开目录"><a href="#客户端配置展开目录" class="headerlink" title="客户端配置展开目录"></a>客户端配置展开目录</h2><p>有了运行在服务器上的服务端，还需要本地的客户端。客户端已经大牛写好了，</p>
 <p>放在 github 上的 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients#os-x" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients#os-x</a></p>
 <p>可以找对应平台下载，android 可以在 play 商店下载。</p>
 <p>通用设置就是：</p>
@@ -246,7 +257,7 @@
 <li>启用系统代理</li>
 <li>代理方式：自动模式（只有被墙的才会走代理），全局代理（国内网站也会走代理）</li>
 </ul>
-<h2 id="第-5-章-错误记录"><a href="#第-5-章-错误记录" class="headerlink" title="第 5 章 错误记录"></a>第 5 章 错误记录</h2><p>在安装 Shadowsocks 时，使用 pip install 命令出现了下面这个错误：</p>
+<h2 id="错误记录"><a href="#错误记录" class="headerlink" title="错误记录"></a>错误记录</h2><p>在安装 Shadowsocks 时，使用 pip install 命令出现了下面这个错误：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pip install shadowsocks</span>
 Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span>:
   File <span class="token string">"/usr/bin/pip"</span>, line 11, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
@@ -270,7 +281,7 @@ locale.Error: unsupported locale setting
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第-1-章-创建服务器展开目录"><span class="toc-text">第 1 章 创建服务器展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-原理"><span class="toc-text">1.1 原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-服务器架设"><span class="toc-text">1.2 服务器架设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-申请-AWS-账号"><span class="toc-text">1.2.1 申请 AWS 账号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-创建服务器"><span class="toc-text">1.2.2 创建服务器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-2-章-远程连接服务器展开目录"><span class="toc-text">第 2 章 远程连接服务器展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-原理"><span class="toc-text">2.1 原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-连接"><span class="toc-text">2.2 连接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Windows-平台"><span class="toc-text">2.2.1 Windows 平台</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Mac-平台"><span class="toc-text">2.2.2 Mac 平台</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-3-章-搭建-shadowsocks-服务端展开目录"><span class="toc-text">第 3 章 搭建 shadowsocks 服务端展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-安装"><span class="toc-text">3.1 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-配置-shadowsokcet"><span class="toc-text">3.2 配置 shadowsokcet</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-主要是修改其中的一个配置文件。"><span class="toc-text">3.2.1 主要是修改其中的一个配置文件。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-单一用户配置（推荐）"><span class="toc-text">3.2.2 单一用户配置（推荐）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-多用户配置（进阶）"><span class="toc-text">3.2.3 多用户配置（进阶）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-运行-SS"><span class="toc-text">3.3 运行 SS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-直接输入如下命令并回车"><span class="toc-text">3.3.1 直接输入如下命令并回车</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-添加开机启动项，让以后服务器重启之后-SS-会自动开始工作。"><span class="toc-text">3.3.2 添加开机启动项，让以后服务器重启之后 SS 会自动开始工作。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-打开服务区端口"><span class="toc-text">3.4 打开服务区端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-4-章-客户端配置展开目录"><span class="toc-text">第 4 章 客户端配置展开目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-5-章-错误记录"><span class="toc-text">第 5 章 错误记录</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建服务器展开目录"><span class="toc-text">创建服务器展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-原理"><span class="toc-text">1.1 原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-服务器架设"><span class="toc-text">1.2 服务器架设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-申请-AWS-账号"><span class="toc-text">1.2.1 申请 AWS 账号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-创建服务器"><span class="toc-text">1.2.2 创建服务器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程连接服务器展开目录"><span class="toc-text">远程连接服务器展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-原理"><span class="toc-text">2.1 原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-连接"><span class="toc-text">2.2 连接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Windows-平台"><span class="toc-text">2.2.1 Windows 平台</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Mac-平台"><span class="toc-text">2.2.2 Mac 平台</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建-shadowsocks-服务端展开目录"><span class="toc-text">搭建 shadowsocks 服务端展开目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-安装"><span class="toc-text">3.1 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-配置-shadowsokcet"><span class="toc-text">3.2 配置 shadowsokcet</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-主要是修改其中的一个配置文件。"><span class="toc-text">3.2.1 主要是修改其中的一个配置文件。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-单一用户配置（推荐）"><span class="toc-text">3.2.2 单一用户配置（推荐）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-多用户配置（进阶）"><span class="toc-text">3.2.3 多用户配置（进阶）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-运行-SS"><span class="toc-text">3.3 运行 SS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-直接输入如下命令并回车"><span class="toc-text">3.3.1 直接输入如下命令并回车</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-添加开机启动项，让以后服务器重启之后-SS-会自动开始工作。"><span class="toc-text">3.3.2 添加开机启动项，让以后服务器重启之后 SS 会自动开始工作。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-打开服务区端口"><span class="toc-text">3.4 打开服务区端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置展开目录"><span class="toc-text">客户端配置展开目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误记录"><span class="toc-text">错误记录</span></a></li></ol>
   </div>
 
 
@@ -300,16 +311,16 @@ locale.Error: unsupported locale setting
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2017/12/11/" rel="next" title="cordova学习资源整理">
-          cordova学习资源整理
+          <a href="/2017/12/01/" rel="next" title="canvas 图片合成填坑记">
+          canvas 图片合成填坑记
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2018/01/26/" rel="prev" title="call、apply和bind的区别">
-            call、apply和bind的区别
+          <a href="/2018/04/12/" rel="prev" title="大学毕业后的第一个小结">
+            大学毕业后的第一个小结
           </a>
           <span>〉</span>
         

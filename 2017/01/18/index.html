@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="JWT,">
   
@@ -163,7 +174,12 @@
 </ul>
 <p>Session方式来存储用户id，一开始用户的Session只会存储在一台服务器上。对于有多个子域名的站点，每个子域名至少会对应一台不同的服务器，例如：<code>www.taobao.com</code>，<code>nv.taobao.com</code>，<code>nz.taobao.com</code>，<code>login.taobao.com</code>。所以如果要实现在<code>login.taobao.com</code>登录后，在其他的子域名下依然可以取到Session，这要求我们在多台服务器上同步Session。使用JWT的方式则没有这个问题的存在，因为用户的状态已经被传送到了客户端。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>JWT的主要作用在于（一）可附带用户信息，后端直接通过JWT获取相关信息。（二）使用本地保存，通过HTTP Header中的Authorization位提交验证。但其实关于JWT存放到哪里一直有很多讨论，有人说存放到本地存储，有人说存 cookie。个人偏向于放在本地存储，如果你有什么意见和看法欢迎提出。</p>
-<p>参考：<a href="https://segmentfault.com/a/1190000005783306" target="_blank" rel="noopener">1</a> <a href="http://blog.rainy.im/2015/06/10/react-jwt-pretty-good-practice/" target="_blank" rel="noopener">2</a> <a href="https://ruiming.me/archives/41" target="_blank" rel="noopener">3</a></p>
+<p>参考：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000005783306" target="_blank" rel="noopener">1.Node 實作 jwt 驗證 API</a> </li>
+<li><a href="http://blog.rainy.im/2015/06/10/react-jwt-pretty-good-practice/" target="_blank" rel="noopener">2.JWT 在前后端分离中的应用与实践</a> </li>
+<li><a href="https://ruiming.me/archives/41" target="_blank" rel="noopener">3.关于前后端分离鉴权的思考</a></li>
+</ul>
 
     </div>
 
@@ -205,16 +221,16 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2017/01/17/" rel="next" title="前后端分离之跨域问题">
-          前后端分离之跨域问题
+          <a href="/2016/10/15/" rel="next" title="CSS之flex布局">
+          CSS之flex布局
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2017/02/16/" rel="prev" title="CSS之BFC(块级格式化上下文)">
-            CSS之BFC(块级格式化上下文)
+          <a href="/2017/02/26/" rel="prev" title="浏览器的工作原理">
+            浏览器的工作原理
           </a>
           <span>〉</span>
         

@@ -10,7 +10,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="referrer" content="no-referrer">
   <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
   
     <meta name="keywords" content="Git,">
   
@@ -139,6 +150,7 @@ git config --list                            # 检查已有的配置信息
 <p><code>ssh -T git@git.coding.net</code></p>
 <p><code>ssh-add ~/.ssh/id_rsa</code>  运行此命令，解决每次都需要输入密码的问题。</p>
 <p><img src="https://cdn.leoao.com/git多次输入密码.png" alt="git多次输入密码.png"></p>
+<p><code>git config --global credential.helper store</code></p>
 <pre><code>ssh-add ~/.ssh/id_rsa
 Enter passphrase for /Users/lionluo/.ssh/id_rsa:
 Identity added: /Users/lionluo/.ssh/id_rsa (/Users/lionluo/.ssh/id_rsa)
@@ -443,16 +455,16 @@ url <span class="token operator">=</span> git@github.com:Name/project.git
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2016/09/08/" rel="next" title="gulp基础使用">
-          gulp基础使用
+          <a href="/2016/07/09/" rel="next" title="打造一套得心应手的终端工具">
+          打造一套得心应手的终端工具
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2016/09/12/" rel="prev" title="webpack入门指南">
-            webpack入门指南
+          <a href="/2016/10/15/" rel="prev" title="CSS之flex布局">
+            CSS之flex布局
           </a>
           <span>〉</span>
         
