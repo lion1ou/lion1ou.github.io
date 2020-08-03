@@ -145,11 +145,11 @@ git config --list                            # 检查已有的配置信息
 <h4 id="与远程仓库绑定"><a href="#与远程仓库绑定" class="headerlink" title="与远程仓库绑定"></a>与远程仓库绑定</h4><ul>
 <li>在远程服务器,如coding/github页面内找到<code>添加公钥选项</code>,粘贴刚刚复制的内容,添加即可.</li>
 </ul>
-<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri2y4lq6j20li0c1aam.jpg" alt="add-key.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri2y4lq6j20li0c1aam.jpg" alt="add-key.png"></p>
 <h4 id="测试是否配置成功，首次建立链接会要求信任主机："><a href="#测试是否配置成功，首次建立链接会要求信任主机：" class="headerlink" title="测试是否配置成功，首次建立链接会要求信任主机："></a>测试是否配置成功，首次建立链接会要求信任主机：</h4><p><code>ssh -T git@github.com</code></p>
 <p><code>ssh -T git@git.coding.net</code></p>
 <p><code>ssh-add ~/.ssh/id_rsa</code>  运行此命令，解决每次都需要输入密码的问题。</p>
-<p><img src="https://cdn.leoao.com/git多次输入密码.png" alt="git多次输入密码.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/git多次输入密码.png" alt="git多次输入密码.png"></p>
 <p><code>git config --global credential.helper store</code></p>
 <pre><code>ssh-add ~/.ssh/id_rsa
 Enter passphrase for /Users/lionluo/.ssh/id_rsa:
@@ -158,11 +158,11 @@ Identity added: /Users/lionluo/.ssh/id_rsa (/Users/lionluo/.ssh/id_rsa)
 <blockquote>
 <p>如果返回的结果如下：</p>
 </blockquote>
-<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5ri63qh0sj20gm01vwf5.jpg" alt="屏幕快照 2016-07-12 22.40.58.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri63qh0sj20gm01vwf5.jpg" alt></p>
 <blockquote>
 <p>输入yes，就能看到</p>
 </blockquote>
-<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri77dmgyj20j500raa8.jpg" alt="屏幕快照 2016-07-12 22.42.01.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri77dmgyj20j500raa8.jpg" alt></p>
 <blockquote>
 <p>这样你的SSH key就配置完成了。</p>
 </blockquote>

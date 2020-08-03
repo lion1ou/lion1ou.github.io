@@ -101,7 +101,7 @@
       <p>在实际开发过程中，经常会接到产品关于分享海报，生成海报，照片合成等需求，这里就简单总结一下。关于一次海报合成的填坑过程，欢迎指正。</p>
 <a id="more"></a>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>要用代码来实现多张外部图片和文字的合并而且要上传到七牛云，再将图片链接通过客户端分享出去。图片背景需要支持用户自定义更换。</p>
-<p><img src="https://cdn.leoao.com/blog/2179333-a8b12e03cacd6e46.webp?imageslim" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/WX20200803-120638@2x.png" alt></p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><p>在一个canvas上多次调用drawImage函数，分别绘制在canvas中，多次之后canvas中是多个图片合并的效果，然后再调用toDataURL函数将canvas转成dataURL格式的图片，再将dataURL格式装换为blob文件，上传至七牛云。</p>
 <h3 id="需要注意的坑"><a href="#需要注意的坑" class="headerlink" title="需要注意的坑"></a>需要注意的坑</h3><h4 id="canvas图片模糊的问题"><a href="#canvas图片模糊的问题" class="headerlink" title="canvas图片模糊的问题"></a>canvas图片模糊的问题</h4><blockquote>
 <p>将canvas的长宽设为样式长宽的2倍或更大， 如下：</p>

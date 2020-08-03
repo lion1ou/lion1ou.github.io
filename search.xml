@@ -687,7 +687,7 @@ locale.Error: unsupported locale setting
     <content><![CDATA[<p>在实际开发过程中，经常会接到产品关于分享海报，生成海报，照片合成等需求，这里就简单总结一下。关于一次海报合成的填坑过程，欢迎指正。</p>
 <a id="more"></a>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>要用代码来实现多张外部图片和文字的合并而且要上传到七牛云，再将图片链接通过客户端分享出去。图片背景需要支持用户自定义更换。</p>
-<p><img src="https://cdn.leoao.com/blog/2179333-a8b12e03cacd6e46.webp?imageslim" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/WX20200803-120638@2x.png" alt></p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><p>在一个canvas上多次调用drawImage函数，分别绘制在canvas中，多次之后canvas中是多个图片合并的效果，然后再调用toDataURL函数将canvas转成dataURL格式的图片，再将dataURL格式装换为blob文件，上传至七牛云。</p>
 <h3 id="需要注意的坑"><a href="#需要注意的坑" class="headerlink" title="需要注意的坑"></a>需要注意的坑</h3><h4 id="canvas图片模糊的问题"><a href="#canvas图片模糊的问题" class="headerlink" title="canvas图片模糊的问题"></a>canvas图片模糊的问题</h4><blockquote>
 <p>将canvas的长宽设为样式长宽的2倍或更大， 如下：</p>
@@ -794,10 +794,10 @@ xhr<span class="token punctuation">.</span><span class="token function">send</sp
 <li>JS解释器————用来解释执行JS代码</li>
 <li>数据存储————属于持久层，浏览器需要在硬盘中保存类似cookie的各种数据，HTML5定义了web database技术，这是一种轻量级完整的客户端存储技术</li>
 </ul>
-<p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fdniynfby8j30dw09f0tk.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79ly1fdniynfby8j30dw09f0tk.jpg" alt></p>
 <h2 id="常用那几种浏览器测试？有哪些内核-Layout-Engine"><a href="#常用那几种浏览器测试？有哪些内核-Layout-Engine" class="headerlink" title="常用那几种浏览器测试？有哪些内核(Layout Engine)?"></a>常用那几种浏览器测试？有哪些内核(Layout Engine)?</h2><p>Ie(Ie内核) 火狐（Gecko） Safari，谷歌（webkit） opear(Presto)</p>
 <h2 id="浏览器的基本流程"><a href="#浏览器的基本流程" class="headerlink" title="浏览器的基本流程"></a>浏览器的基本流程</h2><p>解析html以构建dom树-&gt;解析CSS转化为CSSOM(CSS Object Model)-&gt;构建render树-&gt;布局render树-&gt;绘制render树</p>
-<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1fdniz86rwcj30hi084q32.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79ly1fdniz86rwcj30hi084q32.jpg" alt></p>
 <ol>
 <li>渲染引擎开始解析html，并将标签转化为内容树中的dom节点。</li>
 <li>解析外部CSS文件及style标签中的样式信息。</li>
@@ -806,8 +806,8 @@ xhr<span class="token punctuation">.</span><span class="token function">send</sp
 <li>绘制，即遍历render树，并使用UI后端层绘制每个节点。</li>
 </ol>
 <p>值得注意的是，这个过程是逐步完成的，为了更好的用户体验，渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render树。它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容。</p>
-<p><img src="https://ww2.sinaimg.cn/large/006tNc79gy1fdnizs50rvj30hc081754.jpg" alt="webkit主流程"></p>
-<p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fdnj083n8gj30hc082dg2.jpg" alt="Geoko主流程"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fdnizs50rvj30hc081754.jpg" alt="webkit主流程"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fdnj083n8gj30hc082dg2.jpg" alt="Geoko主流程"></p>
 <p>尽管webkit和Gecko使用的术语稍有不同，他们的主要流程基本相同。Gecko称可见的格式化元素组成的树为frame树，每个元素都是一个frame，webkit则使用render树这个名词来命名由渲染对象组成的树。Webkit中元素的定位称为布局，而Gecko中称为回流。Webkit称利用dom节点及样式信息去构建render树的过程为attachment，Gecko在html和dom树之间附加了一层，这层称为内容接收器，相当制造dom元素的工厂。</p>
 <h2 id="重排（reflow）和重绘（repaint）"><a href="#重排（reflow）和重绘（repaint）" class="headerlink" title="重排（reflow）和重绘（repaint）"></a>重排（reflow）和重绘（repaint）</h2><p>网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。以下三种情况，会导致网页重新渲染。</p>
 <ul>
@@ -962,7 +962,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <p>  负载中包含了所有用户所需要的信息，避免了多次查询数据库</p>
 </li>
 </ul>
-<h4 id="JWT-组成"><a href="#JWT-组成" class="headerlink" title="JWT 组成"></a>JWT 组成</h4><p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fbv54tfilmj31120b2wl9.jpg" alt></p>
+<h4 id="JWT-组成"><a href="#JWT-组成" class="headerlink" title="JWT 组成"></a>JWT 组成</h4><p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fbv54tfilmj31120b2wl9.jpg" alt></p>
 <ul>
 <li>Header 头部</li>
 </ul>
@@ -1006,7 +1006,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <p>在这里大家一定会问一个问题：Base64是一种编码，是可逆的，那么我的信息不就被暴露了吗？</p>
 <p>是的。所以，在JWT中，不应该在负载里面加入任何敏感的数据。在上面的例子中，我们传输的是用户的User ID。这个值实际上不是什么敏感内容，一般情况下被知道也是安全的。但是像密码这样的内容就不能被放在JWT中了。如果将用户的密码放在了JWT中，那么怀有恶意的第三方通过Base64解码就能很快地知道你的密码了。</p>
 <p>因此JWT适合用于向Web应用传递一些非敏感信息。JWT还经常用于设计用户认证和授权系统，甚至实现Web应用的单点登录。</p>
-<h3 id="JWT-使用"><a href="#JWT-使用" class="headerlink" title="JWT 使用"></a>JWT 使用</h3><p><img src="https://ww3.sinaimg.cn/large/006tNc79gy1fbv63pzqocj30pj0h8t9m.jpg" alt></p>
+<h3 id="JWT-使用"><a href="#JWT-使用" class="headerlink" title="JWT 使用"></a>JWT 使用</h3><p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fbv63pzqocj30pj0h8t9m.jpg" alt></p>
 <ol>
 <li>首先，前端通过Web表单将自己的用户名和密码发送到后端的接口。这一过程一般是一个HTTP POST请求。建议的方式是通过SSL加密的传输（https协议），从而避免敏感信息被嗅探。</li>
 <li>后端核对用户名和密码成功后，将用户的id等其他信息作为JWT Payload（负载），将其与头部分别进行Base64编码拼接后签名，形成一个JWT。形成的JWT就是一个形同lll.zzz.xxx的字符串。</li>
@@ -1059,7 +1059,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 </code></pre>
 <p>注意，设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。</p>
 <h2 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h2><p>采用Flex布局的元素，称为Flex容器（flex container），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称”项目”。</p>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8rrdgidh0j20fn099aaz.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rrdgidh0j20fn099aaz.jpg" alt></p>
 <p>容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。<br>项目默认沿主轴排列。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size。</p>
 <h2 id="三、容器的属性"><a href="#三、容器的属性" class="headerlink" title="三、容器的属性"></a>三、容器的属性</h2><p>以下6个属性设置在容器上。</p>
 <ul>
@@ -1082,7 +1082,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>column：主轴为垂直方向，起点在上沿。</li>
 <li>column-reverse：主轴为垂直方向，起点在下沿。</li>
 </ul>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rsdtp9qdj20ll08maaq.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rsdtp9qdj20ll08maaq.jpg" alt></p>
 <h3 id="3-2-flex-wrap属性"><a href="#3-2-flex-wrap属性" class="headerlink" title="3.2 flex-wrap属性"></a>3.2 flex-wrap属性</h3><p>默认情况下，项目都排在一条线（又称”轴线”）上。flex-wrap属性定义：如果一条轴线排不下，如何换行。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span></span><span class="token punctuation">{</span>
   <span class="token property">flex-wrap</span><span class="token punctuation">:</span> nowrap | wrap | wrap-reverse<span class="token punctuation">;</span>
@@ -1094,7 +1094,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>wrap：换行，第一行在上方。</li>
 <li>wrap-reverse：换行，第一行在下方。</li>
 </ul>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rsoimbfwj20ut063gmf.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rsoimbfwj20ut063gmf.jpg" alt></p>
 <h3 id="3-3-flex-flow"><a href="#3-3-flex-flow" class="headerlink" title="3.3 flex-flow"></a>3.3 flex-flow</h3><p>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-flow</span><span class="token punctuation">:</span> &lt;flex-direction> || &lt;flex-wrap><span class="token punctuation">;</span>
@@ -1113,7 +1113,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>space-between：两端对齐，项目之间的间隔都相等。</li>
 <li>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
 </ul>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8ru36d2lbj211s0963zi.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ru36d2lbj211s0963zi.jpg" alt></p>
 <h3 id="3-5-align-items属性"><a href="#3-5-align-items属性" class="headerlink" title="3.5 align-items属性"></a>3.5 align-items属性</h3><p>align-items属性定义项目在交叉轴上如何对齐。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">align-items</span><span class="token punctuation">:</span> flex-start | flex-end | center | baseline | stretch<span class="token punctuation">;</span>
@@ -1127,7 +1127,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>baseline: 项目的第一行文字的基线对齐。</li>
 <li>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
 </ul>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rukqzhcdj21hd078wgb.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rukqzhcdj21hd078wgb.jpg" alt></p>
 <h3 id="3-6-align-content属性"><a href="#3-6-align-content属性" class="headerlink" title="3.6 align-content属性"></a>3.6 align-content属性</h3><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">align-content</span><span class="token punctuation">:</span> flex-start | flex-end | center | space-between | space-around | stretch<span class="token punctuation">;</span>
@@ -1142,7 +1142,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
 <li>stretch（默认值）：轴线占满整个交叉轴。</li>
 </ul>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8ruj72ym1j21h207ctb8.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruj72ym1j21h207ctb8.jpg" alt></p>
 <h2 id="四、项目的属性"><a href="#四、项目的属性" class="headerlink" title="四、项目的属性"></a>四、项目的属性</h2><p>以下6个属性设置在项目上。</p>
 <ul>
 <li>order 属性定义项目的排列顺序。数值越小，排列越靠前，默认为0</li>
@@ -1165,7 +1165,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
     <span class="token property">order</span><span class="token punctuation">:</span> -<span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8ruqnnbp1j20g702qmx7.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruqnnbp1j20g702qmx7.jpg" alt></p>
 <h3 id="4-2-flex-grow属性"><a href="#4-2-flex-grow属性" class="headerlink" title="4.2 flex-grow属性"></a>4.2 flex-grow属性</h3><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-grow</span><span class="token punctuation">:</span> &lt;number><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* default 0 */</span>
@@ -1176,7 +1176,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rux8pi27j20pk02o0so.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rux8pi27j20pk02o0so.jpg" alt></p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item-1</span> </span><span class="token punctuation">{</span>
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -1184,7 +1184,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8ruwcgvsbj20pj02saa6.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruwcgvsbj20pj02saa6.jpg" alt></p>
 <h3 id="4-3-flex-shrink属性"><a href="#4-3-flex-shrink属性" class="headerlink" title="4.3 flex-shrink属性"></a>4.3 flex-shrink属性</h3><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-shrink</span><span class="token punctuation">:</span> &lt;number><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* default 1 */</span>
@@ -1197,7 +1197,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
      <span class="token property">flex-shrink</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rv1zbvvmj20cv02k0sq.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rv1zbvvmj20cv02k0sq.jpg" alt></p>
 <p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
 <h3 id="4-4-flex-basis属性"><a href="#4-4-flex-basis属性" class="headerlink" title="4.4 flex-basis属性"></a>4.4 flex-basis属性</h3><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
@@ -1214,7 +1214,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
    <span class="token property">flex</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">100%</span> <span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rvk5mf5xj20av02tdfp.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rvk5mf5xj20av02tdfp.jpg" alt></p>
 <p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。<br><strong>建议优先使用这个属性</strong>，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
 <h3 id="4-6-align-self属性"><a href="#4-6-align-self属性" class="headerlink" title="4.6 align-self属性"></a>4.6 align-self属性</h3><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
@@ -1225,7 +1225,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
     <span class="token property">align-self</span><span class="token punctuation">:</span> flex-end<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8rvn5tluvj209804wmx6.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rvn5tluvj209804wmx6.jpg" alt></p>
 <p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
 <h2 id="问题记录："><a href="#问题记录：" class="headerlink" title="问题记录："></a>问题记录：</h2><ol>
 <li>在ios8设备上，会出现flex无法换行成功的问题</li>
@@ -1236,7 +1236,7 @@ elements<span class="token punctuation">.</span><span class="token function">for
 <li>修改 autoprefixer 配置如：<code>&quot;autoprefixer&quot;: { browsers: &#39;last 2 version, android &gt;= 4.0, ios &gt;= 8.0&#39; }</code></li>
 <li>手动强制添加 webkit 前缀</li>
 </ol>
-<p><img src="http://cdn.chuyunt.com/006tNc79gy1fmkrpf4bcxj31kw0n6abd.jpg" alt="flex样式不换行"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fmkrpf4bcxj31kw0n6abd.jpg" alt="flex样式不换行"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">阮一峰老师教程</a></li>
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">另一篇文章</a></li>
@@ -1299,11 +1299,11 @@ git config --list                            # 检查已有的配置信息
 <h4 id="与远程仓库绑定"><a href="#与远程仓库绑定" class="headerlink" title="与远程仓库绑定"></a>与远程仓库绑定</h4><ul>
 <li>在远程服务器,如coding/github页面内找到<code>添加公钥选项</code>,粘贴刚刚复制的内容,添加即可.</li>
 </ul>
-<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri2y4lq6j20li0c1aam.jpg" alt="add-key.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri2y4lq6j20li0c1aam.jpg" alt="add-key.png"></p>
 <h4 id="测试是否配置成功，首次建立链接会要求信任主机："><a href="#测试是否配置成功，首次建立链接会要求信任主机：" class="headerlink" title="测试是否配置成功，首次建立链接会要求信任主机："></a>测试是否配置成功，首次建立链接会要求信任主机：</h4><p><code>ssh -T git@github.com</code></p>
 <p><code>ssh -T git@git.coding.net</code></p>
 <p><code>ssh-add ~/.ssh/id_rsa</code>  运行此命令，解决每次都需要输入密码的问题。</p>
-<p><img src="https://cdn.leoao.com/git多次输入密码.png" alt="git多次输入密码.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/git多次输入密码.png" alt="git多次输入密码.png"></p>
 <p><code>git config --global credential.helper store</code></p>
 <pre><code>ssh-add ~/.ssh/id_rsa
 Enter passphrase for /Users/lionluo/.ssh/id_rsa:
@@ -1312,11 +1312,11 @@ Identity added: /Users/lionluo/.ssh/id_rsa (/Users/lionluo/.ssh/id_rsa)
 <blockquote>
 <p>如果返回的结果如下：</p>
 </blockquote>
-<p><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f5ri63qh0sj20gm01vwf5.jpg" alt="屏幕快照 2016-07-12 22.40.58.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri63qh0sj20gm01vwf5.jpg" alt></p>
 <blockquote>
 <p>输入yes，就能看到</p>
 </blockquote>
-<p><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f5ri77dmgyj20j500raa8.jpg" alt="屏幕快照 2016-07-12 22.42.01.png"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5ri77dmgyj20j500raa8.jpg" alt></p>
 <blockquote>
 <p>这样你的SSH key就配置完成了。</p>
 </blockquote>
@@ -1792,7 +1792,7 @@ alias -s zip='unzip'
 alias -s bz2='tar -xjvf'
 </code></pre>
 <h3 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h3><p>在进入一个 git 文件夹后会切换显示的模式（不过需要配合字体才展示，下面会讲到）：</p>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jvh758m6j20oe0as0ws.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7jvh758m6j20oe0as0ws.jpg" alt></p>
 <p>常用命令</p>
 <table>
 <thead>
@@ -1934,7 +1934,7 @@ $ open oh-my-zsh-agnoster-fcamblor/
 <p>找到<code>ZSH_THEME</code>字段，改成：<code>ZSH_THEME=&quot;agnoster&quot;</code></p>
 <pre class=" language-shell"><code class="language-shell">source ~/.zshrc # 保存后执行
 </code></pre>
-<p><img src="http://upload-images.jianshu.io/upload_images/1816409-20ef0157329eb98f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/1816409-20ef0157329eb98f.png" alt></p>
 <h5 id="6-安装Powerline字体"><a href="#6-安装Powerline字体" class="headerlink" title="6. 安装Powerline字体"></a>6. 安装Powerline字体</h5><p>通过git clone来下载powerline字体，在任意目录下，执行下列命令</p>
 <pre class=" language-shell"><code class="language-shell">$ cd ~
 $ git clone https://github.com/Lokaltog/powerline-fonts.git
@@ -1944,7 +1944,7 @@ $ cd powerline-fonts/ && ./install.sh
 <pre><code>All Powerline fonts installed to /Users/mac/Library/Fonts
 </code></pre><p>这样就说明字体库安装完了。</p>
 <p>接着打开iTerm 2<code>Preferences</code>=&gt;<code>Profile</code>=&gt;<code>Text</code>，找到<code>Font</code>和<code>Non-ASCII Font</code>的字体都设置成 带有<code>Powerline</code> 的字体，我这里设置的字体是<code>12pt Meslo LG S DZ Regular for Powerline</code>，大家可以根据喜好选择，只要是powerline字体就可以。</p>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg" alt></p>
 <h5 id="7-安装配色方案"><a href="#7-安装配色方案" class="headerlink" title="7. 安装配色方案"></a>7. 安装配色方案</h5><p>下载配色方案，同样在任何目录下，执行下列命令</p>
 <pre class=" language-shell"><code class="language-shell">$ cd ~
 $ git clone https://github.com/altercation/solarized.git
@@ -1952,9 +1952,9 @@ $ open solarized/iterm2-colors-solarized
 </code></pre>
 <p>然后进入/Users/mac/solarized/iterm2-colors-solarized下双击 <code>Solarized Dark.itermcolors</code> 和 <code>Solarized Light.itermcolors</code> 两个文件就可以把配置文件导入到 iTerm2 里</p>
 <p>把iTerm 2的设置里的<code>Profile</code>=&gt;<code>colors</code>选项卡中里的<code>Load Presets</code>设置为刚刚下载的配色方案就可以了。</p>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg" alt></p>
 <p>大功告成，看看最后效果吧：</p>
-<p><img src="https://cdn.leoao.com/blog/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg?imageslim" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg" alt></p>
 ]]></content>
       <categories>
         <category>前端技术</category>

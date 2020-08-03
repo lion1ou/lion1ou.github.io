@@ -118,7 +118,7 @@
 </code></pre>
 <p>注意，设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。</p>
 <h2 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h2><p>采用Flex布局的元素，称为Flex容器（flex container），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称”项目”。</p>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8rrdgidh0j20fn099aaz.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rrdgidh0j20fn099aaz.jpg" alt></p>
 <p>容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。<br>项目默认沿主轴排列。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size。</p>
 <h2 id="三、容器的属性"><a href="#三、容器的属性" class="headerlink" title="三、容器的属性"></a>三、容器的属性</h2><p>以下6个属性设置在容器上。</p>
 <ul>
@@ -141,7 +141,7 @@
 <li>column：主轴为垂直方向，起点在上沿。</li>
 <li>column-reverse：主轴为垂直方向，起点在下沿。</li>
 </ul>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rsdtp9qdj20ll08maaq.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rsdtp9qdj20ll08maaq.jpg" alt></p>
 <h3 id="3-2-flex-wrap属性"><a href="#3-2-flex-wrap属性" class="headerlink" title="3.2 flex-wrap属性"></a>3.2 flex-wrap属性</h3><p>默认情况下，项目都排在一条线（又称”轴线”）上。flex-wrap属性定义：如果一条轴线排不下，如何换行。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span></span><span class="token punctuation">{</span>
   <span class="token property">flex-wrap</span><span class="token punctuation">:</span> nowrap | wrap | wrap-reverse<span class="token punctuation">;</span>
@@ -153,7 +153,7 @@
 <li>wrap：换行，第一行在上方。</li>
 <li>wrap-reverse：换行，第一行在下方。</li>
 </ul>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rsoimbfwj20ut063gmf.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rsoimbfwj20ut063gmf.jpg" alt></p>
 <h3 id="3-3-flex-flow"><a href="#3-3-flex-flow" class="headerlink" title="3.3 flex-flow"></a>3.3 flex-flow</h3><p>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-flow</span><span class="token punctuation">:</span> &lt;flex-direction> || &lt;flex-wrap><span class="token punctuation">;</span>
@@ -172,7 +172,7 @@
 <li>space-between：两端对齐，项目之间的间隔都相等。</li>
 <li>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
 </ul>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8ru36d2lbj211s0963zi.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ru36d2lbj211s0963zi.jpg" alt></p>
 <h3 id="3-5-align-items属性"><a href="#3-5-align-items属性" class="headerlink" title="3.5 align-items属性"></a>3.5 align-items属性</h3><p>align-items属性定义项目在交叉轴上如何对齐。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">align-items</span><span class="token punctuation">:</span> flex-start | flex-end | center | baseline | stretch<span class="token punctuation">;</span>
@@ -186,7 +186,7 @@
 <li>baseline: 项目的第一行文字的基线对齐。</li>
 <li>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
 </ul>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rukqzhcdj21hd078wgb.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rukqzhcdj21hd078wgb.jpg" alt></p>
 <h3 id="3-6-align-content属性"><a href="#3-6-align-content属性" class="headerlink" title="3.6 align-content属性"></a>3.6 align-content属性</h3><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.box</span> </span><span class="token punctuation">{</span>
   <span class="token property">align-content</span><span class="token punctuation">:</span> flex-start | flex-end | center | space-between | space-around | stretch<span class="token punctuation">;</span>
@@ -201,7 +201,7 @@
 <li>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
 <li>stretch（默认值）：轴线占满整个交叉轴。</li>
 </ul>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8ruj72ym1j21h207ctb8.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruj72ym1j21h207ctb8.jpg" alt></p>
 <h2 id="四、项目的属性"><a href="#四、项目的属性" class="headerlink" title="四、项目的属性"></a>四、项目的属性</h2><p>以下6个属性设置在项目上。</p>
 <ul>
 <li>order 属性定义项目的排列顺序。数值越小，排列越靠前，默认为0</li>
@@ -224,7 +224,7 @@
     <span class="token property">order</span><span class="token punctuation">:</span> -<span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8ruqnnbp1j20g702qmx7.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruqnnbp1j20g702qmx7.jpg" alt></p>
 <h3 id="4-2-flex-grow属性"><a href="#4-2-flex-grow属性" class="headerlink" title="4.2 flex-grow属性"></a>4.2 flex-grow属性</h3><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-grow</span><span class="token punctuation">:</span> &lt;number><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* default 0 */</span>
@@ -235,7 +235,7 @@
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rux8pi27j20pk02o0so.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rux8pi27j20pk02o0so.jpg" alt></p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item-1</span> </span><span class="token punctuation">{</span>
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -243,7 +243,7 @@
      <span class="token property">flex-grow</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8ruwcgvsbj20pj02saa6.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8ruwcgvsbj20pj02saa6.jpg" alt></p>
 <h3 id="4-3-flex-shrink属性"><a href="#4-3-flex-shrink属性" class="headerlink" title="4.3 flex-shrink属性"></a>4.3 flex-shrink属性</h3><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
   <span class="token property">flex-shrink</span><span class="token punctuation">:</span> &lt;number><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* default 1 */</span>
@@ -256,7 +256,7 @@
      <span class="token property">flex-shrink</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1f8rv1zbvvmj20cv02k0sq.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rv1zbvvmj20cv02k0sq.jpg" alt></p>
 <p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
 <h3 id="4-4-flex-basis属性"><a href="#4-4-flex-basis属性" class="headerlink" title="4.4 flex-basis属性"></a>4.4 flex-basis属性</h3><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
@@ -273,7 +273,7 @@
    <span class="token property">flex</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">100%</span> <span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6gw1f8rvk5mf5xj20av02tdfp.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rvk5mf5xj20av02tdfp.jpg" alt></p>
 <p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。<br><strong>建议优先使用这个属性</strong>，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
 <h3 id="4-6-align-self属性"><a href="#4-6-align-self属性" class="headerlink" title="4.6 align-self属性"></a>4.6 align-self属性</h3><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
 <pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.item</span> </span><span class="token punctuation">{</span>
@@ -284,7 +284,7 @@
     <span class="token property">align-self</span><span class="token punctuation">:</span> flex-end<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1f8rvn5tluvj209804wmx6.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f8rvn5tluvj209804wmx6.jpg" alt></p>
 <p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
 <h2 id="问题记录："><a href="#问题记录：" class="headerlink" title="问题记录："></a>问题记录：</h2><ol>
 <li>在ios8设备上，会出现flex无法换行成功的问题</li>
@@ -295,7 +295,7 @@
 <li>修改 autoprefixer 配置如：<code>&quot;autoprefixer&quot;: { browsers: &#39;last 2 version, android &gt;= 4.0, ios &gt;= 8.0&#39; }</code></li>
 <li>手动强制添加 webkit 前缀</li>
 </ol>
-<p><img src="http://cdn.chuyunt.com/006tNc79gy1fmkrpf4bcxj31kw0n6abd.jpg" alt="flex样式不换行"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fmkrpf4bcxj31kw0n6abd.jpg" alt="flex样式不换行"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">阮一峰老师教程</a></li>
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">另一篇文章</a></li>
