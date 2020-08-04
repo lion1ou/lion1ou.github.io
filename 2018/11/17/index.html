@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="ReactNative,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>ReactNative之iconfont使用 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之iconfont使用
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2018-11-16T16:10:16.000Z">
+        2018-11-17
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <p>iconfont 显示成图形图标的字体，因为字体是矢量化图形，具有分辨率无关的特性，在任何分辨率和 ppi 下面，都可以做到完美缩放，不像传统位图如：png，jpg 一样，放大后会有锯齿或者模糊。<br>为什么使用 iconfont 对比图片大小来说容量更小，支持样式修改(大小，颜色)，适应多分辨率，网上有很多现成的 iconfont 资源可以使用。</p>
+<a id="more"></a>
+<h3 id="在-RN-中使用-iconfont"><a href="#在-RN-中使用-iconfont" class="headerlink" title="在 RN 中使用 iconfont"></a>在 RN 中使用 iconfont</h3><p>简单介绍完 iconfont，现在说说在 RN 中整么用它。这里推荐使用 react-native-vector-icons，它会把字体文件转换成相应的 iconSets 在 RN 供我们使用。</p>
+<ul>
+<li>安装 react-native-vector-icons</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">npm</span> i --save react-native-vector-icons
+</code></pre>
+<h3 id="ios-下配置"><a href="#ios-下配置" class="headerlink" title="ios 下配置"></a>ios 下配置</h3><p>用 XCode 打开项目目录下的 ios，为了管理字体，我们新建一个 fonts 目录，字体文件统一放在里面，把字体文件拖进这个文件夹。会有弹框提示并且记得 Add to targets 选中当前项目。</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon1.png" alt></p>
+<p>确保 Build Phases 的 Copy Bundle REsources 中有字体文件</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon2.png" alt></p>
+<p>接着修改 info.plist，在 information Property List 下新增 Fonts provided by application，在 Fonts provided by application 下在增加字体文件，到这里 ios 就配置好了。</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon3.png" alt></p>
+<h3 id="android-配置"><a href="#android-配置" class="headerlink" title="android 配置"></a>android 配置</h3><p>安卓下会从 android/app/src/main/assets/fonts 目录读取字体文件，所以我们需要把字体文件<code>*.ttf</code>放在这个目录下，然后在 android/app/build.gradle 文件中按需增加下面的配置。</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//使用内置的iconSets</span>
+apply from<span class="token operator">:</span> <span class="token string">"../../node_modules/react-native-vector-icons/fonts.gradle"</span>
+<span class="token comment" spellcheck="true">//使用自定义iconSets</span>
+project<span class="token punctuation">.</span>ext<span class="token punctuation">.</span>vectoricons <span class="token operator">=</span> <span class="token punctuation">[</span>
+   iconFontNames<span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">'iconfont.ttf'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">// Name of the font files you want to copy</span>
+<span class="token punctuation">]</span>
+</code></pre>
+<p>使用内置的 iconSets</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> Icon from <span class="token string">'react-native-vector-icons/FontAwesome'</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>Icon name<span class="token operator">=</span><span class="token string">'rocket'</span> size<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">60</span><span class="token punctuation">}</span> color<span class="token operator">=</span><span class="token string">"#4F8EF7"</span> <span class="token operator">/</span><span class="token operator">></span>
+</code></pre>
+<p>上面的方式引用的是 react-native-vector-icons 内置的一种 iconSets, 除了 FontAwesome 还有其他 iconSets，可以到<a href="https://github.com/oblador/react-native-vector-icons" target="_blank" rel="noopener">react-native-vector-icons</a>查看</p>
+<p>虽然内置了很多 iconSets 给我们使用，但往往我们做项目时一般都会使用自己的 iconfont，整么使用自己的 iconfont 呢？</p>
+<p>react-native-vector-icons/FontAwesome 这个返回的是一个 iconSets，简单理解这个 iconSets 是一个可以帮我们显示字体图标的组件。其中 name 对应图标在 glyphMap.json 文件中对应的 key。</p>
+<p>看 react-native-vector-icons/FontAwesome 的源码</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * FontAwesome icon set component.
+ * Usage: &lt;FontAwesome name="icon-name" size={20} color="#4F8EF7" />
+ */</span>
+
+<span class="token keyword">import</span> createIconSet from <span class="token string">'./lib/create-icon-set'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> glyphMap from <span class="token string">'./glyphmaps/FontAwesome.json'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> iconSet <span class="token operator">=</span> <span class="token function">createIconSet</span><span class="token punctuation">(</span>glyphMap<span class="token punctuation">,</span> <span class="token string">'FontAwesome'</span><span class="token punctuation">,</span> <span class="token string">'FontAwesome.ttf'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+export <span class="token keyword">default</span> iconSet<span class="token punctuation">;</span>
+</code></pre>
+<p>createIconSet(glyphMap, fontFamily, fontFile)</p>
+<p>参数说明：</p>
+<ul>
+<li>glyphMap: json 对象(key 是图标的 name, value 是图标对应的 10 进制数)</li>
+<li>fontFamily: 字体库对应的 fontFamily</li>
+<li>fontFile：字体文件名称(注意这里只声明字体库名称，字体库路径分平台配置)</li>
+</ul>
+<p>看 glyphMap 对应的 glyphmaps/FontAwesome.json</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"glass"</span><span class="token operator">:</span> <span class="token number">61440</span><span class="token punctuation">,</span>
+  <span class="token property">"music"</span><span class="token operator">:</span> <span class="token number">61441</span><span class="token punctuation">,</span>
+  <span class="token property">"search"</span><span class="token operator">:</span> <span class="token number">61442</span><span class="token punctuation">,</span>
+  <span class="token property">"envelope-o"</span><span class="token operator">:</span> <span class="token number">61443</span><span class="token punctuation">,</span>
+  <span class="token property">"heart"</span><span class="token operator">:</span> <span class="token number">61444</span><span class="token punctuation">,</span>
+  <span class="token property">"star"</span><span class="token operator">:</span> <span class="token number">61445</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>总结一下：</p>
+<p>就是根据字体文件(.ttf|.otf)和 glyphMap.json 创建对应的 IconSets，所以要想使用自定义的 iconfont 我们需要准备这两样东西。</p>
+<h3 id="使用自定义的-iconSets"><a href="#使用自定义的-iconSets" class="headerlink" title="使用自定义的 iconSets"></a>使用自定义的 iconSets</h3><p>看完上面的源码分析，我们开始自定义 iconSets，先准备一套 iconfont，作者习惯使用阿里巴巴矢量图标库，这里就拿这个来作为栗子。选取你需要的图标，添加为一个项目，如下：</p>
+<p>项目默认的 fontFamily 为 iconfont，还记得上面创建 iconSets 函数的第二个参数吗，每次对应的就是这个，这里我修改一下。</p>
+<p>下载项目，里面的 iconfont.ttf 就是我们需要的 iconfont 了。</p>
+<p>回想一下，创建 createIconSet 需要的东西，还少了 glyphMap，glyphMap 整么来呢。看这里</p>
+<p>其中 e69b 是图标对应的 16 进制 unicode 我们需要的是 10 进制，所以把它转换一下， 下面使用的是 js</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">"e69b"</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">59035</span><span class="token punctuation">;</span>
+</code></pre>
+<p>每个图标都需要转换一次很麻烦，所以基于阿里巴巴图标矢量库下载的文件，我用 js 写了一个生成 json 的工具类。把刚下载下来的 iconfont.css，iconfont.json, genJson.js 放在同一目录。�node 执行 genJson.js，所需要的 json 对象就被写入 iconfont.json 中了。</p>
+<pre class=" language-css"><code class="language-css"><span class="token comment" spellcheck="true">/*iconfont.css*/</span>
+<span class="token comment" spellcheck="true">/* ...省略... */</span>
+<span class="token selector"><span class="token class">.ica</span> </span><span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">"ica"</span> <span class="token important">!important</span><span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">16</span>px<span class="token punctuation">;</span>
+  <span class="token property">font-style</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+  <span class="token property">-webkit-font-smoothing</span><span class="token punctuation">:</span> antialiased<span class="token punctuation">;</span>
+  <span class="token property">-moz-osx-font-smoothing</span><span class="token punctuation">:</span> grayscale<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-all</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e696"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-back</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e697"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-cart</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e698"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-category</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e699"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-close</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e69a"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.icon-comments</span><span class="token pseudo-element">:before</span> </span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"\e69b"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/*genJson.js*/</span>
+<span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"path"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> oldPath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">"iconfont.css"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> newPath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">"iconfont.json"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> gen <span class="token operator">=</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> readline <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"readline"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> fRead <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span>oldPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> fWrite <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span>newPath<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    flags<span class="token punctuation">:</span> <span class="token string">"w+"</span><span class="token punctuation">,</span>
+    defaultEncoding<span class="token punctuation">:</span> <span class="token string">"utf8"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> objReadLine <span class="token operator">=</span> readline<span class="token punctuation">.</span><span class="token function">createInterface</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    input<span class="token punctuation">:</span> fRead<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">var</span> ret <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  objReadLine<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>line<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    line <span class="token operator">=</span> line <span class="token operator">&amp;&amp;</span> line<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>line<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token string">":before"</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span>line<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token string">"content"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> keyMatch <span class="token operator">=</span> line<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/\.(.*?):/</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> valueMatch <span class="token operator">=</span> line<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/content:.*?\\(.*?);/</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> key <span class="token operator">=</span> keyMatch <span class="token operator">&amp;&amp;</span> keyMatch<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> value <span class="token operator">=</span> valueMatch <span class="token operator">&amp;&amp;</span> valueMatch<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    key <span class="token operator">&amp;&amp;</span> value <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>ret<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  objReadLine<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"close"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"readline close"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fWrite<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"utf8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">gen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>创建 iconSets 需要的东西都准备好了，开始创建吧。</p>
+<pre class=" language-js"><code class="language-js">／<span class="token operator">*</span>iconfont<span class="token punctuation">.</span>json<span class="token operator">*</span>／
+<span class="token punctuation">{</span>
+  <span class="token string">"icon-comments"</span><span class="token punctuation">:</span>  <span class="token number">59035</span><span class="token punctuation">,</span>
+  <span class="token string">"icon-close"</span><span class="token punctuation">:</span> <span class="token number">59034</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/*iconSets.js*/</span>
+
+<span class="token keyword">import</span> createIconSet <span class="token keyword">from</span> <span class="token string">'react-native-vector-icons/lib/create-icon-set'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> glyphMap <span class="token keyword">from</span> <span class="token string">'./assets/fonts/iconfont.json'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> iconSet <span class="token operator">=</span> <span class="token function">createIconSet</span><span class="token punctuation">(</span>glyphMap<span class="token punctuation">,</span> <span class="token string">"ica"</span><span class="token punctuation">,</span> <span class="token string">'iconfont.ttf'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> iconSet<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* componet.js*/</span>
+<span class="token operator">...</span>
+<span class="token keyword">import</span> Icon <span class="token keyword">from</span> <span class="token string">'./iconSets'</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>Icon name<span class="token operator">=</span><span class="token string">'icon-comments'</span> size<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">60</span><span class="token punctuation">}</span> color<span class="token operator">=</span><span class="token string">"#4F8EF7"</span> <span class="token operator">/</span><span class="token operator">></span>
+</code></pre>
+<p>运行一下，看字体显示出来了</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#在-RN-中使用-iconfont"><span class="toc-text">在 RN 中使用 iconfont</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios-下配置"><span class="toc-text">ios 下配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android-配置"><span class="toc-text">android 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用自定义的-iconSets"><span class="toc-text">使用自定义的 iconSets</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2018/11/17">http://lion1ou.win/2018/11/17</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2018/05/29/" rel="next" title="ReactNative之样式手册">
+          ReactNative之样式手册
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2018/12/17/" rel="prev" title="ReactNative之入门全解">
+            ReactNative之入门全解
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2018/11/17/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>
