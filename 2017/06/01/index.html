@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="Charles,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>抓包工具Charles使用 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        抓包工具Charles使用
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-06-01T02:16:26.000Z">
+        2017-06-01
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Charles/">Charles</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <p>Charles 其实是一款代理服务器，通过成为电脑或者浏览器的代理，然后截取请求和请求结果达到分析抓包的目的。该软件是用 Java 写的，能够在 Windows，Mac，Linux 上使用。开发 iOS 都在 Mac 系统上吧，安装 Charles 的时候要先装好 Java 环境。</p>
+<a id="more"></a>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ul>
+<li>支持 SSL 代理。可以截取分析 SSL 的请求。</li>
+<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
+<li>支持 AJAX 调试。可以自动将 json 或 xml 数据格式化，方便查看。</li>
+<li>支持 AMF 调试。可以将 Flash Remoting 或 Flex Remoting 信息格式化，方便查看。</li>
+<li>支持重发网络请求，方便后端调试。</li>
+<li>支持修改网络请求参数。</li>
+<li>支持网络请求的截获并动态修改。</li>
+<li>检查 HTML，CSS 和 RSS 内容是否符合 W3C 标准。</li>
+</ul>
+<h3 id="抓包开始"><a href="#抓包开始" class="headerlink" title="抓包开始"></a>抓包开始</h3><ol>
+<li>打开 Charles,点左上角 Proxy=&gt; 勾选 macOS Proxy 和 Start Recording</li>
+<li>这样你的浏览器访问的请求都被抓取过来了。</li>
+</ol>
+<p>注：如果在使用 ss，请先关闭 ss。然后重启 Charles，就可以使用了。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5hy626noj31960m8jve.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5i5eg23vj31kw11bn1z.jpg" alt></p>
+<p>如果你发现返回的是乱码，首先看是在 http 请求还是 https 请求，如果是 http 请求，那么应该就是返回来的中文乱码,解决方案是找到该软件显示包内容，Contents 目录下的 info.plist，打开文件找到 vmoption,添加-Dfile.encoding=UTF-8 即可。</p>
+<p>如果是 https 请求出现的乱码，如下图这种情况</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5ifs1f26j31kw0y1dm2.jpg" alt></p>
+<p>这时候你就需要安装 Charles 的 CA 证书了，首先到去 <a href="http://www.charlesproxy.com/ssl.zip" target="_blank" rel="noopener">http://www.charlesproxy.com/ssl.zip</a> 下载 CA 证书文件。双击 crt 文件，选择总是信任就可以了，当然如果要抓取 iPhone 设备上的 HTTPS 请求，需要在 iPhone 上也安装一个证书，在手机浏览器输入这个网址：<a href="http://charlesproxy.com/getssl" target="_blank" rel="noopener">http://charlesproxy.com/getssl</a> ，点击安装即可。然后你就可以告别那烦人的乱码，可以愉快地抓包了。</p>
+<h3 id="真机抓包"><a href="#真机抓包" class="headerlink" title="真机抓包"></a>真机抓包</h3><p>抓取真机上的数据非常的简单，首先使手机和电脑在一个局域网内，不一定非要是一个 ip 段，只要是同一个路由器下就可以了。按照上面说的把证书安装好，然后找到电脑的 IP，你可以选择在终端输入 ifconfig en0 来获取，也可以选择打开网络偏好设置来查看。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5ihwgwb9j31120l2jth.jpg" alt></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5ikfcwvcj31220kgt9r.jpg" alt></p>
+<p>打开 Charles 的代理设置：Proxy-&gt;Proxy Settings，设置一下端口号，默认的是 8888，这个只要不和其他程序的冲突即可,并且勾选 Enable transparent HTTP proxying。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5iql4ahuj30zm0bijrz.jpg" alt></p>
+<p>在手机上连接上和电脑在同一局域网的网络上，然后设置 HTTP 代理。端口号就是刚刚在 Charles 上设置的那个。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5j8868qlj318h0w2gsg.jpg" alt></p>
+<p>然后在手机上随便打开一个网址，这是 Charles 会弹出一个框让你确认是否代理，点击 allow 就可以了，然后你就会在 Charles 上发现手机上的请求了。</p>
+<h3 id="过滤内容"><a href="#过滤内容" class="headerlink" title="过滤内容"></a>过滤内容</h3><p>在 Charles 的菜单栏选择 Proxy-&gt;Recording Settings，然后选择 Include 栏，选择 Add，然后填入需要监控的协议，主机地址，端口号,这样就达到了过滤的目的。如下图：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jcnvwfdj30ze0nk3zb.jpg" alt></p>
+<p>还有一种方法就是在一个网址上右击，选择 Focus，然后其他的请求就会被放到一个叫 Other Host 的文件夹里面，这样也达到了过滤的目的。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jdneybcj31kw0xu791.jpg" alt></p>
+<h3 id="断点调试"><a href="#断点调试" class="headerlink" title="断点调试"></a>断点调试</h3><p>断点的功能搞开发不会不知道，在 Charles 发起一个请求的时候，我们是可以给某个请求打一个断点的，然后来观察或者修改请求或者返回的内容，但是在这过程中药注意请求的超时时间问题。要针对某一个请求设置断点，只需要在这个请求网址右击选择 Breakpoints 就可以断点某一个请求了。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jg97hqmj31kw0y8wj5.jpg" alt></p>
+<h3 id="模拟低网速"><a href="#模拟低网速" class="headerlink" title="模拟低网速"></a>模拟低网速</h3><p>有时候在开发的时候我们想要模拟一下网络慢的情况，这时候 Charles 他是可以帮助到你的，在 Proxy-&gt;Throttle Setting，然后选择 Enable Throttling，在 Throttle Preset 下选择网络类型即可，具体设置你可以自行拿捏。设置完以后下次使用就可以直接点击小乌龟了。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jidrhskj31kw0yraef.jpg" alt></p>
+<h3 id="请求重定向"><a href="#请求重定向" class="headerlink" title="请求重定向"></a>请求重定向</h3><p>请求重定向的作用是什么呢？开发中一般都是测试环境，如果我们想对比一下和线上版本的区别的话，可以讲测试的请求重定向到正式环境下。在选择 Tools-&gt;`Map Remote 下：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jmtw4r6j31ks0vkq58.jpg" alt></p>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3><p>有时候我们会测一下请求的参数不同会带来不同的返回结果以测试是否达到业务需求，或者需要不同的返回结果来验证我们对数据的处理是否正确，这时候需要后台的同事配合，但是有了 Charles，我们可以自己把控接口返回来的内容，比如数据的空与否，数据的长短等等。在 Tools-&gt;Rewrite Settings 下：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fg5jrllbc3j31kw0sjmz6.jpg" alt></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>Charles 还有一下其他的妙用。慢慢的去发掘吧！</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要功能"><span class="toc-text">主要功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抓包开始"><span class="toc-text">抓包开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#真机抓包"><span class="toc-text">真机抓包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤内容"><span class="toc-text">过滤内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#断点调试"><span class="toc-text">断点调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟低网速"><span class="toc-text">模拟低网速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求重定向"><span class="toc-text">请求重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内容替换"><span class="toc-text">内容替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2017/06/01">http://lion1ou.win/2017/06/01</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/05/13/" rel="next" title="云服务之ngnix安装配置">
+          云服务之ngnix安装配置
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/12/01/" rel="prev" title="canvas 图片合成填坑记">
+            canvas 图片合成填坑记
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2017/06/01/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

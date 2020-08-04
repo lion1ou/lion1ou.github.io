@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="CSS,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>CSS之动画使用 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        CSS之动画使用
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-02-17T08:47:16.000Z">
+        2017-02-17
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <p>CSS 动画的两大组成部分：transition 和 animation。</p>
+<a id="more"></a>
+<h2 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h2><h2 id="CSS-Transition"><a href="#CSS-Transition" class="headerlink" title="CSS Transition"></a>CSS Transition</h2><p>在 CSS3 引入 Transition（过渡）这个概念之前，CSS 是没有时间轴的。也就是说，所有的状态变化，都是即时完成。如下：</p>
+<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.animation1</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.animation1</span><span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+示例：
+
+<style type="text/css">
+.animation1 {
+    height: 100px;
+    width: 100px;
+    background: red;
+}
+
+.animation1:hover {
+    height: 200px;
+    width: 200px;
+    background: blue;
+} 
+</style>
+<div style="width:100%;height:200px;">
+    <div class="animation1"></div>
+</div>
+
+<h3 id="transition-的基本使用"><a href="#transition-的基本使用" class="headerlink" title="transition 的基本使用"></a>transition 的基本使用</h3><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.animation2</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 规定设置过渡效果的 CSS 属性的名称。 */</span>
+  <span class="token property">transition-property</span><span class="token punctuation">:</span> background width height<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 定义过渡效果何时开始。 */</span>
+  <span class="token property">transition-delay</span><span class="token punctuation">:</span> <span class="token number">0</span>s<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 规定完成过渡效果需要多少秒或毫秒。 */</span>
+  <span class="token property">transition-duration</span><span class="token punctuation">:</span> <span class="token number">2</span>s<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 
+    规定速度效果的速度曲线。
+    默认为ease：规定慢速开始，然后变快，然后慢速结束的过渡效果，加速更快，减速更慢cubic-bezier(0.25, 0.1, 0.25, 1)
+    linear：匀速， 
+    ease-in：加速， 
+    ease-out：减速，
+    ease-in-out：慢速开始和结束, 加速和减速的速度相同 cubic-bezier(0.42, 0, 0.58 1)
+    cubic-bezier函数：自定义速度模式（贝塞尔曲线）
+    */</span>
+  <span class="token property">transition-timing-function</span><span class="token punctuation">:</span> ease<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.animation2</span><span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+添加动画效果后：
+
+<style type="text/css" media="screen">
+.animation2 {
+    height: 100px;
+    width: 100px;
+    background: red;
+    transition-property: background width height;
+    transition-delay: 0s;
+    transition-duration: 2s;
+    transition-timing-function: ease;
+}
+
+.animation2:hover {
+    height: 200px;  
+    width: 200px;
+    background: blue;
+}
+</style>
+<div style="width:100%;height:200px;">
+    <div class="animation2"></div>
+</div>
+
+<h3 id="transition-的使用注意"><a href="#transition-的使用注意" class="headerlink" title="transition 的使用注意"></a>transition 的使用注意</h3><ul>
+<li>目前，各大浏览器（包括 IE10）都已经支持无前缀的 transition，所以 transition 已经可以很安全地不加浏览器前缀。</li>
+</ul>
+<ol start="2">
+<li><p>不是所有的 CSS 属性都支持 transition，完整的列表查看<a href="http://oli.jp/2010/css-animatable-properties/" target="_blank" rel="noopener">这里</a>，以及具体的<a href="http://leaverou.github.io/animatable/" target="_blank" rel="noopener">效果</a>。</p>
+</li>
+<li><p>transition 需要明确知道，开始状态和结束状态的具体数值，才能计算出中间状态。比如，height 从 0px 变化到 100px，transition 可以算出中间状态。但是，transition 没法算出 0px 到 auto 的中间状态，也就是说，如果开始或结束的设置是 height: auto，那么就不会产生动画效果。类似的情况还有，display: none 到 block，background: url(foo.jpg)到 url(bar.jpg)等等。</p>
+</li>
+</ol>
+<h3 id="transition-的局限"><a href="#transition-的局限" class="headerlink" title="transition 的局限"></a>transition 的局限</h3><p>transition 的优点在于简单易用，但是它有几个很大的局限。</p>
+<ul>
+<li>transition 需要事件触发，所以没法在网页加载时自动发生。</li>
+<li>transition 是一次性的，不能重复发生，除非一再触发。</li>
+<li>transition 只能定义开始状态和结束状态，不能定义中间状态，也就是说只有两个状态。</li>
+<li>一条 transition 规则，只能定义一个属性的变化，不能涉及多个属性。</li>
+</ul>
+<p>CSS Animation 就是为了解决这些问题而提出的。</p>
+<h2 id="CSS-Animation"><a href="#CSS-Animation" class="headerlink" title="CSS Animation"></a>CSS Animation</h2><p>CSS Animation 需要指定动画一个周期持续的时间，以及动画效果的名称。</p>
+<h3 id="CSS-Animation-的基本使用"><a href="#CSS-Animation-的基本使用" class="headerlink" title="CSS Animation 的基本使用"></a>CSS Animation 的基本使用</h3><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.animation3</span> </span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100</span>px<span class="token punctuation">;</span>
+  <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">1</span>px solid <span class="token hexcode">#777</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.animation3</span><span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/* 为 @keyframes 动画规定名称 */</span>
+  <span class="token property">animation-name</span><span class="token punctuation">:</span> myanimation<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 定义动画完成一个周期所需要的时间 */</span>
+  <span class="token property">animation-duration</span><span class="token punctuation">:</span> <span class="token number">2</span>s<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 规定动画的速度曲线。ease默认。动画以低速开始，然后加快，在结束前变慢。linear：匀速;ease-in：加速;ease-out：减速;cubic-bezier函数：自定义速度模式 ease-in-out 动画以低速开始和结束。  */</span>
+  <span class="token property">animation-timing-function</span><span class="token punctuation">:</span> linear<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 定义动画何时开始。 允许负值，-2s 使动画马上开始，但跳过 2 秒进入动画。*/</span>
+  <span class="token property">animation-delay</span><span class="token punctuation">:</span> <span class="token number">0</span>s<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 定义动画的播放次数。n 定义动画播放次数的数值。infinite 规定动画应该无限次播放。 */</span>
+  <span class="token property">animation-iteration-count</span><span class="token punctuation">:</span> infinite<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>当鼠标悬停在 div 元素上时，会产生名为 myanimation 的动画效果，持续时间为 2 秒。为此，我们还需要用 keyframes 关键字，定义 myanimation 效果。myanimation 效果一共有三个状态，分别为起始（0%）、中点（50%）和结束（100%）。如果有需要，完全可以插入更多状态。</p>
+<pre class=" language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@keyframes</span> myanimation</span> <span class="token punctuation">{</span>
+  <span class="token selector">0% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">50% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">100% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>效果如下：</p>
+<p><style type="text/css" media="screen"><br>.animation3 {<br>    height: 100px;<br>    width: 100px;<br>    border: 1px solid #777;<br>}<br>.animation3:hover {<br>    animation-name: myanimation;<br>    animation-duration: 2s;<br>    animation-timing-function: linear;<br>    animation-delay: 0s;<br>    animation-iteration-count: infinite ;<br>}<br>@keyframes myanimation {<br>    0% {<br>        background: red;<br>    }<br>    50% {<br>        background: blue;<br>    }<br>    100% {<br>        background: green;<br>    }<br>}<br></style></p>
+<div style="width:100%;height:100px;"><br>    <div class="animation3"></div><br></div>
+
+<h3 id="animation-fill-mode"><a href="#animation-fill-mode" class="headerlink" title="animation-fill-mode"></a>animation-fill-mode</h3><p>动画结束以后，会立即从结束状态跳回到起始状态。如果想让动画保持在结束状态，需要使用 animation-fill-mode 属性。animation-fill-mode 还可以使用下列值:</p>
+<ul>
+<li>none：默认值，回到动画没开始时的状态。</li>
+<li>forwards：当动画完成后，保持最后一个属性值</li>
+<li>backwards：让动画回到第一帧的状态。</li>
+<li>both: 根据 animation-direction（见后）轮流应用 forwards 和 backwards 规则。</li>
+</ul>
+<p><style type="text/css" media="screen"><br>.animation4 {<br>    height: 100px;<br>    width: 100px;<br>    border: 1px solid #777;<br>}<br>.animation4:hover {<br>    animation-name: myanimation;<br>    animation-duration: 2s;<br>    animation-timing-function: ease;<br>    animation-delay: 0s;<br>    animation-fill-mode: forwards;<br>}<br>@keyframes myanimation {<br>    0% {<br>        background: red;<br>    }<br>    50% {<br>        background: blue;<br>    }<br>    100% {<br>        background: green;<br>    }<br>}<br></style></p>
+<div style="width:100%;height:100px;"><br>    <div class="animation4"></div><br></div><br>### animation-direction<br>动画循环播放时，每次都是从结束状态跳回到起始状态，再开始播放。animation-direction属性，可以改变这种行为。<br><br>默认情况是，animation-direction 等于 normal。还可以等于取 alternate、reverse、alternate-reverse 等值。它们的含义见下图（假定动画连续播放三次）。<br><br><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fddem5a5boj30jg05ejrc.jpg" alt><br><br>### keyframes 的写法<br><br>keyframes 关键字用来定义动画的各个状态，它的写法相当自由。<br><br><code>css
+@keyframes rainbow {
+  0% {
+    background: #c00;
+  }
+  50% {
+    background: orange;
+  }
+  100% {
+    background: yellowgreen;
+  }
+}</code><br><br>0%可以用 from 代表，100%可以用 to 代表，因此上面的代码等同于下面的形式。<br><br><code>css
+@keyframes rainbow {
+  from {
+    background: #c00;
+  }
+  50% {
+    background: orange;
+  }
+  to {
+    background: yellowgreen;
+  }
+}</code><br><br>如果省略某个状态，浏览器会自动推算中间状态，所以下面都是合法的写法。<br><br><code>css
+@keyframes rainbow {
+  50% {
+    background: orange;
+  }
+  to {
+    background: yellowgreen;
+  }
+}
+
+@keyframes rainbow {
+  to {
+    background: yellowgreen;
+  }
+}</code><br><br>甚至，可以把多个状态写在一行。<br><br><code>css
+@keyframes pound {
+  from，to {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}</code><br><br>另外一点需要注意的是，浏览器从一个状态向另一个状态过渡，是平滑过渡。steps 函数可以实现分步过渡。<br><br><code>div:hover {
+  animation: 1s rainbow infinite steps(10);
+}</code><br><br><a href="http://dabblet.com/gist/1745856" target="_blank" rel="noopener">例子</a><br><br>### animation-play-state<br><br>有时，动画播放过程中，会突然停止。这时，默认行为是跳回到动画的开始状态。<br><br><code>css
+.animation6 {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #777;
+  animation-name: myanimation;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+.animation6:hover {
+  animation-play-state: running;
+}
+@keyframes myanimation {
+  0% {
+    background: red;
+  }
+  50% {
+    background: blue;
+  }
+  100% {
+    background: green;
+  }
+}</code><br><br><style type="text/css" media="screen"><br>.animation5,.animation6{<br>    display: inline-block;<br>}<br>.animation5 {<br>    height: 100px;<br>    width: 100px;<br>    border: 1px solid #777;<br>}<br>.animation5:hover {<br>    animation-name: myanimation;<br>    animation-duration: 2s;<br>    animation-timing-function: ease;<br>    animation-delay: 0s;<br>    animation-fill-mode: forwards;<br>}<br>.animation6 {<br>    height: 100px;<br>    width: 100px;<br>    border: 1px solid #777;<br>    animation-name: myanimation;<br>    animation-duration: 2s;<br>    animation-timing-function: ease;<br>    animation-delay: 0s;<br>    animation-iteration-count: infinite ;<br>    animation-play-state: paused;<br>}<br>.animation6:hover {<br>    animation-play-state: running;<br>}<br>@keyframes myanimation {<br>    0% {<br>        background: red;<br>    }<br>    50% {<br>        background: blue;<br>    }<br>    100% {<br>        background: green;<br>    }<br>}<br></style><br><div style="width:100%;height:100px;"><br>    <div class="animation5"></div><br>    <div class="animation6"></div><br></div>
+
+<h3 id="浏览器前缀"><a href="#浏览器前缀" class="headerlink" title="浏览器前缀"></a>浏览器前缀</h3><p>目前，IE10 和 Firefox（&gt;=16）支持没有前缀的 animation，而 chrome 不支持，所以必须使用 webkit 前缀。也就是说，实际运用中，代码必须写成下面的样子。</p>
+<pre class=" language-css"><code class="language-css"><span class="token selector">div<span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+  <span class="token property">-webkit-animation</span><span class="token punctuation">:</span> <span class="token number">1</span>s myanimation<span class="token punctuation">;</span>
+  <span class="token property">animation</span><span class="token punctuation">:</span> <span class="token number">1</span>s myanimation<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token atrule"><span class="token rule">@-webkit-keyframes</span> myanimation</span> <span class="token punctuation">{</span>
+  <span class="token selector">0% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">50% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">100% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token atrule"><span class="token rule">@keyframes</span> myanimation</span> <span class="token punctuation">{</span>
+  <span class="token selector">0% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">50% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">100% </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>参考连接：<a href="http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html</a></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#translate"><span class="toc-text">translate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Transition"><span class="toc-text">CSS Transition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#transition-的基本使用"><span class="toc-text">transition 的基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transition-的使用注意"><span class="toc-text">transition 的使用注意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transition-的局限"><span class="toc-text">transition 的局限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Animation"><span class="toc-text">CSS Animation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-Animation-的基本使用"><span class="toc-text">CSS Animation 的基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#animation-fill-mode"><span class="toc-text">animation-fill-mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器前缀"><span class="toc-text">浏览器前缀</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2017/02/17">http://lion1ou.win/2017/02/17</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/02/16/" rel="next" title="CSS之BFC(块级格式化上下文)">
+          CSS之BFC(块级格式化上下文)
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/02/26/" rel="prev" title="浏览器的工作原理">
+            浏览器的工作原理
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2017/02/17/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>
