@@ -167,11 +167,7 @@
 <li>可以直接在本地浏览器上打开，修改浏览器 UA</li>
 </ol>
 <p><img src="https://cdn.leoao.com/blog/1590560264882-902d7337-665c-4527-90b5-35fb80c54bc9.png?imageslim" alt></p>
-<ol>
-<li>先登录测试环境 ia 后台，获取登录态</li>
-</ol>
-<p><img src="https://cdn.leoao.com/blog/1590560264965-79726710-a16f-4006-b539-422702c16a53.png?imageslim" alt></p>
-<ol>
+<ol start="2">
 <li>这样基本可以完成 90%的页面开发需求，剩下的就需要真机调试完成</li>
 </ol>
 <h4 id="真机调试"><a href="#真机调试" class="headerlink" title="真机调试"></a>真机调试</h4><ol>
@@ -183,8 +179,6 @@
 <li>根据上面描述的 Android 调试方式操作，连接电脑，打开 chrome 调试工具页面，就可以正常调试了</li>
 </ol>
 <p><img src="https://cdn.leoao.com/blog/1590560264898-79d6ba01-f3ff-4ea2-b48a-dbef1d3e8214.png?imageslim" alt></p>
-<h3 id="调试本地代码"><a href="#调试本地代码" class="headerlink" title="调试本地代码"></a>调试本地代码</h3><p>上面列出来的方法，其实可以通过 charles，将手机代理到电脑上，然后在相应的 APP 中打开本地的测试链接，也是可以在对应环境下开发调试代码的。</p>
-<p>注意： 安卓环境下，线上包需要开启 https 代理的话，要使用以下命令来启动 App，记住是用 ADB 命令启动 APP，不是点击打开 APP<br>教练端：<code>adb shell am start -n com.leoao.coach/com.leoao.coach.main.SplashActivity --es http_setting &quot;test&quot;</code><br>用户端：<code>adb shell am start -n com.leoao.fitness/com.leoao.fitness.main.SplashActivity --es http_setting &quot;test&quot;</code></p>
 <h3 id="远程调试工具"><a href="#远程调试工具" class="headerlink" title="远程调试工具"></a>远程调试工具</h3><h4 id="spy-debugger"><a href="#spy-debugger" class="headerlink" title="spy-debugger"></a><a href="https://github.com/wuchangming/spy-debugger" target="_blank" rel="noopener">spy-debugger</a></h4><blockquote>
 <p>一站式页面调试、抓包工具。远程调试任何手机浏览器页面，任何手机移动端 webview（如：微信，HybridApp 等）。支持 HTTP/HTTPS，无需 USB 连接设备。</p>
 </blockquote>
@@ -212,7 +206,8 @@
 <p><img src="https://cdn.leoao.com/blog/1590560264857-95135243-f222-40b4-9af3-569f1d08ba81.png?imageslim" alt></p>
 <blockquote>
 </blockquote>
-<h3 id="React-native"><a href="#React-native" class="headerlink" title="React native"></a>React native</h3><p><img src="https://cdn.leoao.com/blog/1590562837789-ec10160c-e0d7-4244-a24a-a4a65cc0a2ca.png?imageslim" alt="image.png"><br>相关调试方式： <a href="https://reactnative.cn/docs/debugging.html" target="_blank" rel="noopener">https://reactnative.cn/docs/debugging.html</a></p>
+<h3 id="React-native"><a href="#React-native" class="headerlink" title="React native"></a>React native</h3><p>相关调试方式，可以查看官网： <a href="https://reactnative.cn/docs/debugging.html" target="_blank" rel="noopener">https://reactnative.cn/docs/debugging.html</a></p>
+<p><img src="https://cdn.leoao.com/blog/1590562837789-ec10160c-e0d7-4244-a24a-a4a65cc0a2ca.png?imageslim" alt="image.png"></p>
 <p>参考链接：<a href="https://aotu.io/notes/2017/02/24/Mobile-debug/index.html" target="_blank" rel="noopener">https://aotu.io/notes/2017/02/24/Mobile-debug/index.html</a></p>
 
     </div>
@@ -225,7 +220,7 @@
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#网页调试"><span class="toc-text">网页调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-APP-调试"><span class="toc-text">Android APP 调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOS-APP-调试"><span class="toc-text">IOS APP 调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信环境"><span class="toc-text">微信环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#钉钉微应用"><span class="toc-text">钉钉微应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#本地开发"><span class="toc-text">本地开发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#真机调试"><span class="toc-text">真机调试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试本地代码"><span class="toc-text">调试本地代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程调试工具"><span class="toc-text">远程调试工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#spy-debugger"><span class="toc-text">spy-debugger</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Weinre-调试工具"><span class="toc-text">Weinre 调试工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Eruda"><span class="toc-text">Eruda</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mobile-Debug"><span class="toc-text">Mobile Debug</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-native"><span class="toc-text">React native</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#网页调试"><span class="toc-text">网页调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-APP-调试"><span class="toc-text">Android APP 调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOS-APP-调试"><span class="toc-text">IOS APP 调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信环境"><span class="toc-text">微信环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#钉钉微应用"><span class="toc-text">钉钉微应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#本地开发"><span class="toc-text">本地开发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#真机调试"><span class="toc-text">真机调试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程调试工具"><span class="toc-text">远程调试工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#spy-debugger"><span class="toc-text">spy-debugger</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Weinre-调试工具"><span class="toc-text">Weinre 调试工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Eruda"><span class="toc-text">Eruda</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mobile-Debug"><span class="toc-text">Mobile Debug</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-native"><span class="toc-text">React native</span></a></li></ol>
   </div>
 
 

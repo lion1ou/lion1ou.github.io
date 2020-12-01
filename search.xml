@@ -419,11 +419,7 @@
 <li>可以直接在本地浏览器上打开，修改浏览器 UA</li>
 </ol>
 <p><img src="https://cdn.leoao.com/blog/1590560264882-902d7337-665c-4527-90b5-35fb80c54bc9.png?imageslim" alt></p>
-<ol>
-<li>先登录测试环境 ia 后台，获取登录态</li>
-</ol>
-<p><img src="https://cdn.leoao.com/blog/1590560264965-79726710-a16f-4006-b539-422702c16a53.png?imageslim" alt></p>
-<ol>
+<ol start="2">
 <li>这样基本可以完成 90%的页面开发需求，剩下的就需要真机调试完成</li>
 </ol>
 <h4 id="真机调试"><a href="#真机调试" class="headerlink" title="真机调试"></a>真机调试</h4><ol>
@@ -435,8 +431,6 @@
 <li>根据上面描述的 Android 调试方式操作，连接电脑，打开 chrome 调试工具页面，就可以正常调试了</li>
 </ol>
 <p><img src="https://cdn.leoao.com/blog/1590560264898-79d6ba01-f3ff-4ea2-b48a-dbef1d3e8214.png?imageslim" alt></p>
-<h3 id="调试本地代码"><a href="#调试本地代码" class="headerlink" title="调试本地代码"></a>调试本地代码</h3><p>上面列出来的方法，其实可以通过 charles，将手机代理到电脑上，然后在相应的 APP 中打开本地的测试链接，也是可以在对应环境下开发调试代码的。</p>
-<p>注意： 安卓环境下，线上包需要开启 https 代理的话，要使用以下命令来启动 App，记住是用 ADB 命令启动 APP，不是点击打开 APP<br>教练端：<code>adb shell am start -n com.leoao.coach/com.leoao.coach.main.SplashActivity --es http_setting &quot;test&quot;</code><br>用户端：<code>adb shell am start -n com.leoao.fitness/com.leoao.fitness.main.SplashActivity --es http_setting &quot;test&quot;</code></p>
 <h3 id="远程调试工具"><a href="#远程调试工具" class="headerlink" title="远程调试工具"></a>远程调试工具</h3><h4 id="spy-debugger"><a href="#spy-debugger" class="headerlink" title="spy-debugger"></a><a href="https://github.com/wuchangming/spy-debugger" target="_blank" rel="noopener">spy-debugger</a></h4><blockquote>
 <p>一站式页面调试、抓包工具。远程调试任何手机浏览器页面，任何手机移动端 webview（如：微信，HybridApp 等）。支持 HTTP/HTTPS，无需 USB 连接设备。</p>
 </blockquote>
@@ -464,7 +458,8 @@
 <p><img src="https://cdn.leoao.com/blog/1590560264857-95135243-f222-40b4-9af3-569f1d08ba81.png?imageslim" alt></p>
 <blockquote>
 </blockquote>
-<h3 id="React-native"><a href="#React-native" class="headerlink" title="React native"></a>React native</h3><p><img src="https://cdn.leoao.com/blog/1590562837789-ec10160c-e0d7-4244-a24a-a4a65cc0a2ca.png?imageslim" alt="image.png"><br>相关调试方式： <a href="https://reactnative.cn/docs/debugging.html" target="_blank" rel="noopener">https://reactnative.cn/docs/debugging.html</a></p>
+<h3 id="React-native"><a href="#React-native" class="headerlink" title="React native"></a>React native</h3><p>相关调试方式，可以查看官网： <a href="https://reactnative.cn/docs/debugging.html" target="_blank" rel="noopener">https://reactnative.cn/docs/debugging.html</a></p>
+<p><img src="https://cdn.leoao.com/blog/1590562837789-ec10160c-e0d7-4244-a24a-a4a65cc0a2ca.png?imageslim" alt="image.png"></p>
 <p>参考链接：<a href="https://aotu.io/notes/2017/02/24/Mobile-debug/index.html" target="_blank" rel="noopener">https://aotu.io/notes/2017/02/24/Mobile-debug/index.html</a></p>
 ]]></content>
       <categories>
@@ -9450,7 +9445,7 @@ ctrl+alt+shift+p //python
   <entry>
     <title>hexo博客搭建和配置</title>
     <url>/2016/07/01/</url>
-    <content><![CDATA[<p>从工作开始，一路过来都是在学习。由于不是计算机专业，所以只能比其他人更勤奋才行。从刚进公司学习.net，到后来业务需要而接触web前端、cordova、H5等，各种全新的知识给我带了极大的冲击。感觉接触到的知识太乱，天天都是在迷迷糊糊中学了忘，忘了学。这样的过程触使我决定开始做一些备忘，于是就在博客园上开始记录一些东西。用了一段时间后，觉得在博客园上编辑太繁琐，翻出来查看时太麻烦，再加上刚接触Markdown，所以很想直接用Markdown来编辑记录，于是找到了Hexo + GitHub Page建立<a href="https://lion1ou.github.io" target="_blank" rel="noopener">个人博客</a>。<br><a id="more"></a></p>
+    <content><![CDATA[<p>从工作开始，一路过来都是在学习。由于不是计算机专业，所以只能比其他人更勤奋才行。从刚进公司学习 .net，到后来业务需要而接触web前端、cordova、H5等，各种全新的知识给我带了极大的冲击。感觉接触到的知识太乱，天天都是在迷迷糊糊中学了忘，忘了学。这样的过程触使我决定开始做一些备忘，于是就在博客园上开始记录一些东西。用了一段时间后，觉得在博客园上编辑太繁琐，翻出来查看时太麻烦，再加上刚接触Markdown，所以很想直接用Markdown来编辑记录，于是找到了Hexo + GitHub Page建立<a href="https://lion1ou.github.io" target="_blank" rel="noopener">个人博客</a>。<br><a id="more"></a></p>
 <h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><ul>
 <li>2016.11.07 重新排版总结，添加域名配置、双线部署内容</li>
 <li>2016.07.01 首次整理分享</li>
