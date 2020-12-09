@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="ES6,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>ES6入门(五) - 数组的扩展 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ES6入门(五) - 数组的扩展
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-09-17T07:15:11.000Z">
+        2016-09-17
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <h2 id="一、Array-from"><a href="#一、Array-from" class="headerlink" title="一、Array.from()"></a>一、Array.from()</h2><p>Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。</p>
+<p>只要是部署了Iterator接口的数据结构，Array.from都能将其转为数组。<br><a id="more"></a></p>
+<h2 id="二、Array-of"><a href="#二、Array-of" class="headerlink" title="二、Array.of()"></a>二、Array.of()</h2><p>Array.of()方法用于将一组值，转换为数组。</p>
+<pre class=" language-js"><code class="language-js">Array<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// [3,11,8]</span>
+Array<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// [3]</span>
+Array<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">// 1</span>
+</code></pre>
+<p>这个方法的主要目的，是弥补数组构造函数Array()的不足。因为参数个数的不同，会导致Array()的行为有差异。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// []</span>
+<span class="token function">Array</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// [, , ,]</span>
+<span class="token function">Array</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// [3, 11, 8]</span>
+</code></pre>
+<p>上面代码中，Array方法没有参数、一个参数、三个参数时，返回结果都不一样。只有当参数个数不少于2个时，Array()才会返回由参数组成的新数组。参数个数只有一个时，实际上是指定数组的长度。</p>
+<h2 id="三、数组实例的copyWithin"><a href="#三、数组实例的copyWithin" class="headerlink" title="三、数组实例的copyWithin()"></a>三、数组实例的copyWithin()</h2><p>数组实例的copyWithin方法，在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。</p>
+<pre class=" language-js"><code class="language-js">Array<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">copyWithin</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> end <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+</code></pre>
+<p>它接受三个参数。</p>
+<ul>
+<li>target（必需）：从该位置开始替换数据。</li>
+<li>start（可选）：从该位置开始读取数据，默认为0。如果为负值，表示倒数。</li>
+<li>end（可选）：到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数。<br>这三个参数都应该是数值，如果不是，会自动转为数值。<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">copyWithin</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [4, 5, 3, 4, 5]</span>
+</code></pre>
+上面代码表示将从3号位直到数组结束的成员（4和5），复制到从0号位开始的位置，结果覆盖了原来的1和2。</li>
+</ul>
+<h2 id="四、数组实例的find-和findIndex"><a href="#四、数组实例的find-和findIndex" class="headerlink" title="四、数组实例的find()和findIndex()"></a>四、数组实例的find()和findIndex()</h2><p>数组实例的find方法，用于找出第一个符合条件的数组成员。它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined。</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> index<span class="token punctuation">,</span> arr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> value <span class="token operator">></span> <span class="token number">9</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 10</span>
+</code></pre>
+<p>上面代码中，find方法的回调函数可以接受三个参数，依次为当前的值、当前的位置和原数组。</p>
+<p>数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的<code>位置</code>，如果所有成员都不符合条件，则返回-1。</p>
+<p>这两个方法都可以发现<code>NaN</code>，弥补了数组的IndexOf方法的不足。</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">NaN</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token number">NaN</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// -1</span>
+
+<span class="token punctuation">[</span><span class="token number">NaN</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span>y <span class="token operator">=</span><span class="token operator">></span> Object<span class="token punctuation">.</span><span class="token function">is</span><span class="token punctuation">(</span><span class="token number">NaN</span><span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 0</span>
+</code></pre>
+<p>上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到。</p>
+<h2 id="五、数组实例的fill"><a href="#五、数组实例的fill" class="headerlink" title="五、数组实例的fill()"></a>五、数组实例的fill()</h2><p>fill方法使用给定值，填充一个数组。</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [7, 7, 7]</span>
+
+<span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// [7, 7, 7]</span>
+</code></pre>
+<p>fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置。</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// ['a', 7, 'c']</span>
+</code></pre>
+<h2 id="六、数组实例的entries-，keys-和values"><a href="#六、数组实例的entries-，keys-和values" class="headerlink" title="六、数组实例的entries()，keys()和values()"></a>六、数组实例的entries()，keys()和values()</h2><p>ES6提供三个新的方法——entries()，keys()和values()——用于遍历数组。它们都返回一个遍历器对象（详见《Iterator》一章），可以用for…of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> index <span class="token keyword">of</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 0</span>
+<span class="token comment" spellcheck="true">// 1</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> elem <span class="token keyword">of</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>elem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 'a'</span>
+<span class="token comment" spellcheck="true">// 'b'</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">[</span>index<span class="token punctuation">,</span> elem<span class="token punctuation">]</span> <span class="token keyword">of</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> elem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 0 "a"</span>
+<span class="token comment" spellcheck="true">// 1 "b"</span>
+</code></pre>
+<h2 id="七、数组实例的includes"><a href="#七、数组实例的includes" class="headerlink" title="七、数组实例的includes()"></a>七、数组实例的includes()</h2><p>Array.prototype.includes方法返回一个布尔值，表示某个数组是否包含给定的值，与字符串的includes方法类似。该方法属于ES7，但Babel转码器已经支持。</p>
+<pre class=" language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// true</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// false</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">NaN</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token number">NaN</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h2 id="八、数组的空位"><a href="#八、数组的空位" class="headerlink" title="八、数组的空位"></a>八、数组的空位</h2><p>数组的空位指，数组的某一个位置没有任何值。比如，Array构造函数返回的数组都是空位。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">Array</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// [, , ,]</span>
+</code></pre>
+<p>注意，空位不是undefined，一个位置的值等于undefined，依然是有值的。空位是没有任何值，in运算符可以说明这一点。</p>
+<pre class=" language-js"><code class="language-js"><span class="token number">0</span> <span class="token keyword">in</span> <span class="token punctuation">[</span>undefined<span class="token punctuation">,</span> undefined<span class="token punctuation">,</span> undefined<span class="token punctuation">]</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token number">0</span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token punctuation">,</span> <span class="token punctuation">,</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">// false</span>
+</code></pre>
+<p>上面代码说明，第一个数组的0号位置是有值的，第二个数组的0号位置没有值。</p>
+<p>ES6则是明确将空位转为undefined。</p>
+<ul>
+<li>Array.from方法会将数组的空位，转为undefined，也就是说，这个方法不会忽略空位。</li>
+<li>扩展运算符（…）也会将空位转为undefined。</li>
+<li>copyWithin()会连空位一起拷贝。</li>
+<li>fill()会将空位视为正常的数组位置。</li>
+<li>for…of循环也会遍历空位。</li>
+<li>entries()、keys()、values()、find()和findIndex()会将空位处理成undefined。<br>由于空位的处理规则非常不统一，所以建议避免出现空位。</li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Array-from"><span class="toc-text">一、Array.from()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Array-of"><span class="toc-text">二、Array.of()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、数组实例的copyWithin"><span class="toc-text">三、数组实例的copyWithin()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、数组实例的find-和findIndex"><span class="toc-text">四、数组实例的find()和findIndex()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、数组实例的fill"><span class="toc-text">五、数组实例的fill()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、数组实例的entries-，keys-和values"><span class="toc-text">六、数组实例的entries()，keys()和values()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、数组实例的includes"><span class="toc-text">七、数组实例的includes()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、数组的空位"><span class="toc-text">八、数组的空位</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/09/17">http://lion1ou.win/2016/09/17</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/09/16/" rel="next" title="ES6入门(四) - 数值的扩展">
+          ES6入门(四) - 数值的扩展
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/09/18/" rel="prev" title="ES6入门(六) - 函数的扩展">
+            ES6入门(六) - 函数的扩展
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/09/17/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="ES6,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>ES6入门(三) - 字符串的扩展 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ES6入门(三) - 字符串的扩展
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-09-15T02:47:47.000Z">
+        2016-09-15
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <h2 id="一、字符的Unicode表示法"><a href="#一、字符的Unicode表示法" class="headerlink" title="一、字符的Unicode表示法"></a>一、字符的Unicode表示法</h2><p>ES6添加新的解读方式，只要将码点放入大括号，就能正确解读该字符。</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">"\u{20BB7}"</span>
+<span class="token comment" spellcheck="true">// "𠮷"</span>
+
+<span class="token string">"\u{41}\u{42}\u{43}"</span>
+<span class="token comment" spellcheck="true">// "ABC"</span>
+
+<span class="token keyword">let</span> hello <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+hell\u<span class="token punctuation">{</span>6F<span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// 123</span>
+
+<span class="token string">'\u{1F680}'</span> <span class="token operator">===</span> <span class="token string">'\uD83D\uDE80'</span>
+<span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<a id="more"></a>
+<p>有了这种表示法之后，JavaScript共有6种方法可以表示一个字符。</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">'\z'</span> <span class="token operator">===</span> <span class="token string">'z'</span>  <span class="token comment" spellcheck="true">// true</span>
+<span class="token string">'\172'</span> <span class="token operator">===</span> <span class="token string">'z'</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token string">'\x7A'</span> <span class="token operator">===</span> <span class="token string">'z'</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token string">'\u007A'</span> <span class="token operator">===</span> <span class="token string">'z'</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token string">'\u{7A}'</span> <span class="token operator">===</span> <span class="token string">'z'</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h2 id="二、codePointAt"><a href="#二、codePointAt" class="headerlink" title="二、codePointAt()"></a>二、codePointAt()</h2><p>codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">is32Bit</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> c<span class="token punctuation">.</span><span class="token function">codePointAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0xFFFF</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">is32Bit</span><span class="token punctuation">(</span><span class="token string">"𠮷"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token function">is32Bit</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// false</span>
+</code></pre>
+<h2 id="三、String-fromCodePoint"><a href="#三、String-fromCodePoint" class="headerlink" title="三、String.fromCodePoint()"></a>三、String.fromCodePoint()</h2><p>ES6提供了String.fromCodePoint方法，可以识别0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt方法相反。</p>
+<pre class=" language-js"><code class="language-js">String<span class="token punctuation">.</span><span class="token function">fromCodePoint</span><span class="token punctuation">(</span><span class="token number">0x20BB7</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// "𠮷"</span>
+String<span class="token punctuation">.</span><span class="token function">fromCodePoint</span><span class="token punctuation">(</span><span class="token number">0x78</span><span class="token punctuation">,</span> <span class="token number">0x1f680</span><span class="token punctuation">,</span> <span class="token number">0x79</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'x\uD83D\uDE80y'</span>
+<span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h2 id="四、字符串的遍历器接口"><a href="#四、字符串的遍历器接口" class="headerlink" title="四、字符串的遍历器接口"></a>四、字符串的遍历器接口</h2><p>ES6为字符串添加了遍历器接口（详见《Iterator》一章），使得字符串可以被for…of循环遍历。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> codePoint <span class="token keyword">of</span> <span class="token string">'foo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>codePoint<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// "f"</span>
+<span class="token comment" spellcheck="true">// "o"</span>
+<span class="token comment" spellcheck="true">// "o"</span>
+</code></pre>
+<p>这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> text <span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCodePoint</span><span class="token punctuation">(</span><span class="token number">0x20BB7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> text<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>text<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// " "</span>
+<span class="token comment" spellcheck="true">// " "</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token keyword">of</span> text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// "𠮷"</span>
+</code></pre>
+<h2 id="五、at"><a href="#五、at" class="headerlink" title="五、at()"></a>五、at()</h2><p>相较于ES5对字符串对象提供charAt方法，at()方法可以识别Unicode编号大于0xffff的字符，返回正确的字符。</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">'abc'</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "a"</span>
+<span class="token string">'𠮷'</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "\uD842"</span>
+
+<span class="token string">'abc'</span><span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "a"</span>
+<span class="token string">'𠮷'</span><span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// "𠮷"</span>
+</code></pre>
+<h2 id="六、normalize"><a href="#六、normalize" class="headerlink" title="六、normalize()"></a>六、normalize()</h2><p>ES6提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为Unicode正规化。</p>
+<p>许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode提供了两种方法。一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">'\u01D1'</span><span class="token operator">===</span><span class="token string">'\u004F\u030C'</span> <span class="token comment" spellcheck="true">//false</span>
+
+<span class="token string">'\u01D1'</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">// 1</span>
+<span class="token string">'\u004F\u030C'</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">// 2</span>
+
+
+<span class="token string">'\u01D1'</span><span class="token punctuation">.</span><span class="token function">normalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'\u004F\u030C'</span><span class="token punctuation">.</span><span class="token function">normalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h2 id="七、includes-startsWith-endsWith"><a href="#七、includes-startsWith-endsWith" class="headerlink" title="七、includes(), startsWith(), endsWith()"></a>七、includes(), startsWith(), endsWith()</h2><p>传统上，JavaScript只有indexOf方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6又提供了三种新方法。</p>
+<ul>
+<li>includes()：返回布尔值，表示是否找到了参数字符串。</li>
+<li>startsWith()：返回布尔值，表示参数字符串是否在源字符串的头部。</li>
+<li>endsWith()：返回布尔值，表示参数字符串是否在源字符串的尾部。<br>这三个方法都支持第二个参数，表示开始搜索的位置。<br><code>`</code>js<br>var s = ‘Hello world!’;</li>
+</ul>
+<p>s.startsWith(‘world’, 6) // true<br>s.endsWith(‘Hello’, 5) // true<br>s.includes(‘Hello’, 6) // false</p>
+<pre><code>
+## 八、repeat()
+repeat方法返回一个新字符串，表示将原字符串重复n次。
+```js
+&#39;x&#39;.repeat(3) // &quot;xxx&quot;
+&#39;hello&#39;.repeat(2) // &quot;hellohello&quot;
+&#39;na&#39;.repeat(0) // &quot;&quot;
+</code></pre><ul>
+<li>参数如果是小数，会被取整 </li>
+<li>参数是负数或者Infinity，会报错</li>
+<li>参数是0到-1之间的小数，则等同于0</li>
+<li>参数NaN等同于0</li>
+<li>参数是字符串，则会先转换成数字</li>
+</ul>
+<h2 id="九、padStart-，padEnd"><a href="#九、padStart-，padEnd" class="headerlink" title="九、padStart()，padEnd()"></a>九、padStart()，padEnd()</h2><p>ES7推出了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart用于头部补全，padEnd用于尾部补全。</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">'x'</span><span class="token punctuation">.</span><span class="token function">padStart</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">'ab'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 'ababx'</span>
+<span class="token string">'x'</span><span class="token punctuation">.</span><span class="token function">padStart</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">'ab'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 'abax'</span>
+
+<span class="token string">'x'</span><span class="token punctuation">.</span><span class="token function">padEnd</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">'ab'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 'xabab'</span>
+<span class="token string">'x'</span><span class="token punctuation">.</span><span class="token function">padEnd</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">'ab'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 'xaba'</span>
+</code></pre>
+<p>padStart和padEnd一共接受两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。</p>
+<ul>
+<li>如果原字符串的长度，等于或大于指定的最小长度，则返回原字符串。</li>
+<li>如果补全的字符串与原字符串，两者的长度之和超过了指定长度，则会截去超出位数的补全字符串。</li>
+<li>如果省略第二个参数，则会用空格补全长度。<br><code>`</code>js<br>‘xxx’.padStart(2, ‘ab’) // ‘xxx’<br>‘xxx’.padEnd(2, ‘ab’) // ‘xxx’</li>
+</ul>
+<p>‘abc’.padStart(10, ‘0123456789’)<br>// ‘0123456abc’</p>
+<p>‘x’.padStart(4) // ‘   x’<br>‘x’.padEnd(4) // ‘x   ‘</p>
+<pre><code>用途：
+* padStart的常见用途是为数值补全指定位数。
+* 提示字符串格式。
+```js
+&#39;123456&#39;.padStart(10, &#39;0&#39;) // &quot;0000123456&quot;
+
+&#39;12&#39;.padStart(10, &#39;YYYY-MM-DD&#39;) // &quot;YYYY-MM-12&quot;
+&#39;09-12&#39;.padStart(10, &#39;YYYY-MM-DD&#39;) // &quot;YYYY-09-12&quot;
+</code></pre><h2 id="十、模板字符串"><a href="#十、模板字符串" class="headerlink" title="十、模板字符串"></a>十、模板字符串</h2><p>统的JavaScript语言，输出模板通常是这样写的。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#result'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>
+  <span class="token string">'There are &lt;b>'</span> <span class="token operator">+</span> basket<span class="token punctuation">.</span>count <span class="token operator">+</span> <span class="token string">'&lt;/b> '</span> <span class="token operator">+</span>
+  <span class="token string">'items in your basket, '</span> <span class="token operator">+</span>
+  <span class="token string">'&lt;em>'</span> <span class="token operator">+</span> basket<span class="token punctuation">.</span>onSale <span class="token operator">+</span>
+  <span class="token string">'&lt;/em> are on sale!'</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上面这种写法相当繁琐不方便，ES6引入了模板字符串解决这个问题。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#result'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`
+  There are &lt;b></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>basket<span class="token punctuation">.</span>count<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&lt;/b> items
+   in your basket, &lt;em></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>basket<span class="token punctuation">.</span>onSale<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&lt;/em>
+  are on sale!
+`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。</p>
+<p>注意点：</p>
+<ul>
+<li>在表示多行字符串时，所有的空格和缩进都会保留，如果不想要换行，则使用trim方法消除它。<pre class=" language-js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#list'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`
+&lt;ul>
+&lt;li>first&lt;/li>
+&lt;li>second&lt;/li>
+&lt;/ul>
+`</span></span><span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li>模板字符串中嵌入变量，需要将变量名写在${}之中</li>
+<li>大括号内部可以放入任意的JavaScript表达式，可以进行运算，以及引用对象属性<br><code>`</code>js<br>var x = 1;<br>var y = 2;</li>
+</ul>
+<p><code>${x} + ${y} = ${x + y}</code><br>// “1 + 2 = 3”</p>
+<p><code>${x} + ${y * 2} = ${x + y * 2}</code><br>// “1 + 4 = 5”</p>
+<p>var obj = {x: 1, y: 2};<br><code>${obj.x + obj.y}</code><br>// 3</p>
+<pre><code>* 模板字符串之中还能调用函数。
+```js
+function fn() {
+  return &quot;Hello World&quot;;
+}
+
+`foo ${fn()} bar`
+// foo Hello World bar
+</code></pre><ul>
+<li>模板字符串可以嵌套<pre class=" language-js"><code class="language-js"><span class="token keyword">const</span> tmpl <span class="token operator">=</span> addrs <span class="token operator">=</span><span class="token operator">></span> <span class="token template-string"><span class="token string">`
+&lt;table>
+${addrs.map(addr => `</span></span>
+  <span class="token operator">&lt;</span>tr<span class="token operator">></span><span class="token operator">&lt;</span>td<span class="token operator">></span>$<span class="token punctuation">{</span>addr<span class="token punctuation">.</span>first<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+  <span class="token operator">&lt;</span>tr<span class="token operator">></span><span class="token operator">&lt;</span>td<span class="token operator">></span>$<span class="token punctuation">{</span>addr<span class="token punctuation">.</span>last<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+<span class="token template-string"><span class="token string">`).join('')}
+&lt;/table>
+`</span></span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+</ul>
+<h2 id="十一、模板编译"><a href="#十一、模板编译" class="headerlink" title="十一、模板编译"></a>十一、模板编译</h2><p>形成一个模板编译函数compile，</p>
+<h2 id="十二、标签模板"><a href="#十二、标签模板" class="headerlink" title="十二、标签模板"></a>十二、标签模板</h2><p>紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。</p>
+<pre class=" language-js"><code class="language-js">alert<span class="token template-string"><span class="token string">`123`</span></span>
+<span class="token comment" spellcheck="true">// 等同于</span>
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span>
+</code></pre>
+<p>标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数。</p>
+<h2 id="十三、String-raw"><a href="#十三、String-raw" class="headerlink" title="十三、String.raw()"></a>十三、String.raw()</h2><p>ES6还为原生的String对象，提供了一个raw方法。</p>
+<p>String.raw方法，往往用来充当模板字符串的处理函数，返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，对应于替换变量后的模板字符串。</p>
+<pre class=" language-js"><code class="language-js">String<span class="token punctuation">.</span>raw<span class="token template-string"><span class="token string">`Hi\n</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token number">2</span><span class="token operator">+</span><span class="token number">3</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">!`</span></span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// "Hi\\n5!"</span>
+
+String<span class="token punctuation">.</span>raw<span class="token template-string"><span class="token string">`Hi\u000A!`</span></span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 'Hi\\u000A!'</span>
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、字符的Unicode表示法"><span class="toc-text">一、字符的Unicode表示法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、codePointAt"><span class="toc-text">二、codePointAt()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、String-fromCodePoint"><span class="toc-text">三、String.fromCodePoint()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、字符串的遍历器接口"><span class="toc-text">四、字符串的遍历器接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、at"><span class="toc-text">五、at()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、normalize"><span class="toc-text">六、normalize()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、includes-startsWith-endsWith"><span class="toc-text">七、includes(), startsWith(), endsWith()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九、padStart-，padEnd"><span class="toc-text">九、padStart()，padEnd()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十、模板字符串"><span class="toc-text">十、模板字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十一、模板编译"><span class="toc-text">十一、模板编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十二、标签模板"><span class="toc-text">十二、标签模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十三、String-raw"><span class="toc-text">十三、String.raw()</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/09/15">http://lion1ou.win/2016/09/15</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/09/14/" rel="next" title="ES6入门(二) - 变量的解构赋值">
+          ES6入门(二) - 变量的解构赋值
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/09/16/" rel="prev" title="ES6入门(四) - 数值的扩展">
+            ES6入门(四) - 数值的扩展
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/09/15/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

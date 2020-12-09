@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <!-- <script async referrerpolicy="no-referrer-when-downgrade" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script>
+    (function visitReport() {
+      const userAgent = window.navigator.userAgent
+      const performance = JSON.stringify(window.performance.timing)
+      const href = window.location.href
+      const url = `http://www.chuyunt.com/proxy/visit?ua=${userAgent}&pf=${performance}&href=${href}`
+      const img = new Image()
+      img.onload = () => {}
+      img.onerror = () => {}
+      img.src = url
+    })()
+  </script>
+  
+    <meta name="keywords" content="ES6,">
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>ES6入门(四) - 数值的扩展 [ lion1ou ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ES6入门(四) - 数值的扩展
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-09-16T06:41:59.000Z">
+        2016-09-16
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+      </span>
+    </span>
+      <!-- <span class="slash">/</span> -->
+      <!-- <span class="read"> -->
+      <!-- 阅读 <span id="busuanzi_value_page_pv"></span> -->
+      <!-- </span> -->
+    </header>
+
+    <div class="post-content">
+      <h2 id="一、二进制和八进制的表示法"><a href="#一、二进制和八进制的表示法" class="headerlink" title="一、二进制和八进制的表示法"></a>一、二进制和八进制的表示法</h2><p>ES6提供了二进制和八进制数值的新的写法，分别用前缀0b（或0B）和0o（或0O）表示。</p>
+<pre class=" language-js"><code class="language-js"><span class="token number">0b111110111</span> <span class="token operator">===</span> <span class="token number">503</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token number">0o767</span> <span class="token operator">===</span> <span class="token number">503</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<p>如果要将0b和0o前缀的字符串数值转为十进制，要使用Number方法。</p>
+<pre class=" language-js"><code class="language-js"><span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'0b111'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 7</span>
+<span class="token function">Number</span><span class="token punctuation">(</span><span class="token string">'0o10'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 8</span>
+</code></pre>
+<a id="more"></a>
+<h2 id="二、Number-isFinite-和Number-isNaN"><a href="#二、Number-isFinite-和Number-isNaN" class="headerlink" title="二、Number.isFinite()和Number.isNaN()"></a>二、Number.isFinite()和Number.isNaN()</h2><p>Number.isFinite()用来检查一个数值是否为有限的（finite）。<br>Number.isNaN()用来检查一个值是否为NaN。<br>这两个新方法只对数值有效，非数值一律返回false。</p>
+<h2 id="三、Number-parseInt-和Number-parseFloat"><a href="#三、Number-parseInt-和Number-parseFloat" class="headerlink" title="三、Number.parseInt()和Number.parseFloat()"></a>三、Number.parseInt()和Number.parseFloat()</h2><p>ES6将全局方法parseInt()和parseFloat()，移植到Number对象上面，行为完全保持不变。</p>
+<h2 id="四、Number-isInteger"><a href="#四、Number-isInteger" class="headerlink" title="四、Number.isInteger()"></a>四、Number.isInteger()</h2><p>用来判断一个值是否为整数。需要注意的是，在JavaScript内部，整数和浮点数是同样的储存方法，所以3和3.0被视为同一个值。</p>
+<h2 id="五、Number-EPSILON"><a href="#五、Number-EPSILON" class="headerlink" title="五、Number.EPSILON"></a>五、Number.EPSILON</h2><p>ES6在Number对象上面，新增一个极小的常量Number.EPSILON。</p>
+<pre class=" language-js"><code class="language-js">Number<span class="token punctuation">.</span>EPSILON
+<span class="token comment" spellcheck="true">// 2.220446049250313e-16</span>
+Number<span class="token punctuation">.</span>EPSILON<span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// '0.00000000000000022204'</span>
+</code></pre>
+<p>引入一个这么小的量的目的，在于为浮点数计算，设置一个误差范围。我们知道浮点数计算是不精确的。但是如果这个误差能够小于Number.EPSILON，我们就可以认为得到了正确结果。因此，Number.EPSILON的实质是一个可以接受的误差范围。</p>
+<h2 id="六、安全整数和Number-isSafeInteger"><a href="#六、安全整数和Number-isSafeInteger" class="headerlink" title="六、安全整数和Number.isSafeInteger()"></a>六、安全整数和Number.isSafeInteger()</h2><p>JavaScript能够准确表示的整数范围在-2^53到2^53之间（不含两个端点），超过这个范围，无法精确表示这个值。</p>
+<pre class=" language-js"><code class="language-js">Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">53</span><span class="token punctuation">)</span> <span class="token operator">===</span> Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">53</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token comment" spellcheck="true">// true</span>
+<span class="token comment" spellcheck="true">//无法判断</span>
+</code></pre>
+<p>ES6引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。</p>
+<p>Number.isSafeInteger()则是用来判断一个整数是否落在这个范围之内。</p>
+<h2 id="七、Math对象的扩展"><a href="#七、Math对象的扩展" class="headerlink" title="七、Math对象的扩展"></a>七、Math对象的扩展</h2><p>ES6在Math对象上新增了17个与数学相关的方法。所有这些方法都是静态方法，只能在Math对象上调用。</p>
+<h2 id="八、指数运算符"><a href="#八、指数运算符" class="headerlink" title="八、指数运算符"></a>八、指数运算符</h2><p>ES7新增了一个指数运算符（**），目前Babel转码器已经支持。</p>
+<pre class=" language-js"><code class="language-js"><span class="token number">2</span> <span class="token operator">**</span> <span class="token number">2</span> <span class="token comment" spellcheck="true">// 4</span>
+<span class="token number">2</span> <span class="token operator">**</span> <span class="token number">3</span> <span class="token comment" spellcheck="true">// 8</span>
+</code></pre>
+<p>指数运算符可以与等号结合，形成一个新的赋值运算符（**=）。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+a <span class="token operator">**</span><span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 等同于 a = a * a;</span>
+
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+b <span class="token operator">**</span><span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 等同于 b = b * b * b;</span>
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、二进制和八进制的表示法"><span class="toc-text">一、二进制和八进制的表示法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Number-isFinite-和Number-isNaN"><span class="toc-text">二、Number.isFinite()和Number.isNaN()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、Number-parseInt-和Number-parseFloat"><span class="toc-text">三、Number.parseInt()和Number.parseFloat()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、Number-isInteger"><span class="toc-text">四、Number.isInteger()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、Number-EPSILON"><span class="toc-text">五、Number.EPSILON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、安全整数和Number-isSafeInteger"><span class="toc-text">六、安全整数和Number.isSafeInteger()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、Math对象的扩展"><span class="toc-text">七、Math对象的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、指数运算符"><span class="toc-text">八、指数运算符</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 </span>
+    <div>转载请注明原文链接 <a href="http://lion1ou.win/2016/09/16">http://lion1ou.win/2016/09/16</a></div>
+</div>
+<div class="share" style="width: 100%;">
+
+  <div style="margin: auto; text-align: center;">
+    
+    
+  </div>
+  
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">
+    
+  </div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/09/15/" rel="next" title="ES6入门(三) - 字符串的扩展">
+          ES6入门(三) - 字符串的扩展
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/09/17/" rel="prev" title="ES6入门(五) - 数组的扩展">
+            ES6入门(五) - 数组的扩展
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'http://lion1ou.win/2016/09/16/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="http://lion1ou.win">首页</a> |
+        
+        
+        
+        <a class="bottom-item" href="https://github.com/lion1ou" target="_blank">GitHub</a>
+        
+    </div>
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme Modified From xoxo</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?670319318804add6c99a71df6601f645";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-153662927-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+</body>
+</html>

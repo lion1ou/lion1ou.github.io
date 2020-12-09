@@ -204,6 +204,25 @@
 
 
     <div class="archive" >
+  <a class="post-go" href="/2016/10/17/">
+    <div>
+      <span class="date">
+        10-17
+      </span>
+      <span class="slash">/</span>
+      CSS之垂直居中
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<p>在实际工作过程中经常会碰到水平垂直居中的问题,这里手机总结了几种水平垂直居中的常用方法。</p>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
   <a class="post-go" href="/2016/10/16/">
     <div>
       <span class="date">
@@ -273,6 +292,164 @@
 
     <!--<div class="excerpt">-->
       <!--<p>要说到”响应式布局设计”，我们先来介绍一下另外一个名词：”自适应网页设计”（Responsive Web Design），最早是Ethan Marcotte在2010年提出的。指的是可以自动识别屏幕宽度、并对页面的布局会基于一定的因素搭建做出相应调整的网页设计。自适应布局能够提供一种更加实用的解决方案，使得项目的实现成本更低，并且更加易于测试。自适应布局可以被看作是响应式布局的一个更加廉价的替代品，换句话说自适应网页设计就是一个精简版的响应式布局。当固定宽度与流动宽度结合起来时，自适应就变成了响应式，响应式网页设计指的是页面的布局（流动网格、灵活的图像及媒介查询），响应式布局等于流动网格布局，而自适应布局等于使用固定分割点来进行布局。</p>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/18/">
+    <div>
+      <span class="date">
+        09-18
+      </span>
+      <span class="slash">/</span>
+      ES6入门(六) - 函数的扩展
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、函数参数的默认值"><a href="#一、函数参数的默认值" class="headerlink" title="一、函数参数的默认值"></a>一、函数参数的默认值</h2><p>在ES6之前，不能直接为函数的参数指定默认值，只能采用变通的方法。</p>
+<pre><code class="js">function log(x, y) {
+  y = y || &#39;World&#39;;
+  console.log(x, y);
+}
+
+log(&#39;Hello&#39;) // Hello World
+log(&#39;Hello&#39;, &#39;China&#39;) // Hello China
+log(&#39;Hello&#39;, &#39;&#39;) // Hello World
+</code></pre>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/17/">
+    <div>
+      <span class="date">
+        09-17
+      </span>
+      <span class="slash">/</span>
+      ES6入门(五) - 数组的扩展
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、Array-from"><a href="#一、Array-from" class="headerlink" title="一、Array.from()"></a>一、Array.from()</h2><p>Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。</p>
+<p>只要是部署了Iterator接口的数据结构，Array.from都能将其转为数组。<br>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/16/">
+    <div>
+      <span class="date">
+        09-16
+      </span>
+      <span class="slash">/</span>
+      ES6入门(四) - 数值的扩展
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、二进制和八进制的表示法"><a href="#一、二进制和八进制的表示法" class="headerlink" title="一、二进制和八进制的表示法"></a>一、二进制和八进制的表示法</h2><p>ES6提供了二进制和八进制数值的新的写法，分别用前缀0b（或0B）和0o（或0O）表示。</p>
+<pre><code class="js">0b111110111 === 503 // true
+0o767 === 503 // true
+</code></pre>
+<p>如果要将0b和0o前缀的字符串数值转为十进制，要使用Number方法。</p>
+<pre><code class="js">Number(&#39;0b111&#39;)  // 7
+Number(&#39;0o10&#39;)  // 8
+</code></pre>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/15/">
+    <div>
+      <span class="date">
+        09-15
+      </span>
+      <span class="slash">/</span>
+      ES6入门(三) - 字符串的扩展
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、字符的Unicode表示法"><a href="#一、字符的Unicode表示法" class="headerlink" title="一、字符的Unicode表示法"></a>一、字符的Unicode表示法</h2><p>ES6添加新的解读方式，只要将码点放入大括号，就能正确解读该字符。</p>
+<pre><code class="js">&quot;\u{20BB7}&quot;
+// &quot;𠮷&quot;
+
+&quot;\u{41}\u{42}\u{43}&quot;
+// &quot;ABC&quot;
+
+let hello = 123;
+hell\u{6F} // 123
+
+&#39;\u{1F680}&#39; === &#39;\uD83D\uDE80&#39;
+// true
+</code></pre>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/14/">
+    <div>
+      <span class="date">
+        09-14
+      </span>
+      <span class="slash">/</span>
+      ES6入门(二) - 变量的解构赋值
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、数组的解构赋值"><a href="#一、数组的解构赋值" class="headerlink" title="一、数组的解构赋值"></a>一、数组的解构赋值</h2><p>ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。</p>
+<pre><code class="js">//以前，为变量赋值，只能直接指定值。
+var a = 1;
+var b = 2;
+var c = 3;
+//ES6允许写成下面这样。
+var [a, b, c] = [1, 2, 3];
+</code></pre>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/09/13/">
+    <div>
+      <span class="date">
+        09-13
+      </span>
+      <span class="slash">/</span>
+      ES6入门(一) - let和const命令
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="一、let命令"><a href="#一、let命令" class="headerlink" title="一、let命令"></a>一、let命令</h2><h3 id="1-声明只在代码块内有效"><a href="#1-声明只在代码块内有效" class="headerlink" title="1. 声明只在代码块内有效"></a>1. 声明只在代码块内有效</h3><p>let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。</p>
+<pre><code class="js">{
+  let a = 10;
+  var b = 1;
+}
+
+a // ReferenceError: a is not defined.
+b // 1
+</code></pre>-->
     <!--</div>-->
   </a>
 
@@ -357,6 +534,44 @@
 
 
     <div class="archive" >
+  <a class="post-go" href="/2016/08/22/">
+    <div>
+      <span class="date">
+        08-22
+      </span>
+      <span class="slash">/</span>
+      JavaScript数据类型转换
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<p>JavaScript是一种动态类型语言，变量没有类型限制，可以随时赋予任意值。虽然变量没有类型，但是数据本身和各种运算符是有类型的。如果运算符发现，数据的类型与预期不符，就会自动转换类型。比如，减法运算符预期两侧的运算子应该是数值，如果不是，就会自动将它们转为数值。<br>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/08/21/">
+    <div>
+      <span class="date">
+        08-21
+      </span>
+      <span class="slash">/</span>
+      JavaScript之立即执行函数(IIFE)
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<p>在javascript里，每个函数，当被调用时，都会创建一个新的执行上下文。因为在函数里定义的变量和函数是唯一在内部被访问的变量，而不是在外部被访问的变量，当调用函数时，函数提供的上下文提供了一个非常简单的方法创建私有变量。<br>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
   <a class="post-go" href="/2016/08/20/">
     <div>
       <span class="date">
@@ -368,6 +583,63 @@
 
     <!--<div class="excerpt">-->
       <!--<p>我们经常会看到，一些站点在首次进入的时候会先显示一个进度条，等资源加载完毕后再呈现页面，然后整个页面的操作就会非常流畅，因为之后没必要再等待加载资源了。尤其是在移动端，或者是页游中，这样做能避免页面出现白屏（等待加载图片），很大程度提升用户体验。那这种技术是如何实现的呢？其实非常简单，本文就来从基础细节探究一番。<br>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/08/19/">
+    <div>
+      <span class="date">
+        08-19
+      </span>
+      <span class="slash">/</span>
+      JavaScript之闭包
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<p>在前端学习中，一直提到 JavaScript 闭包，那闭包到底是什么呢？</p>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/08/17/">
+    <div>
+      <span class="date">
+        08-17
+      </span>
+      <span class="slash">/</span>
+      JavaScript之操作数组
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<p>这里记录一些数组的常用操作方法，方便之后的查阅</p>-->
+    <!--</div>-->
+  </a>
+
+</div>
+    
+
+
+    <div class="archive" >
+  <a class="post-go" href="/2016/08/15/">
+    <div>
+      <span class="date">
+        08-15
+      </span>
+      <span class="slash">/</span>
+      JavaScript原生绑定事件的三种方法
+    </div>
+
+    <!--<div class="excerpt">-->
+      <!--<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>要想让 JavaScript 对用户的操作作出响应，首先要对 DOM 元素绑定事件处理函数。所谓事件处理函数，就是处理用户操作的函数，不同的操作对应不同的名称。在 JavaScript 中，有三种常用的绑定事件的方法：</p>-->
     <!--</div>-->
   </a>
 
