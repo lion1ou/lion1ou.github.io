@@ -78,6 +78,80 @@
     
 
       <article class="recent-post-item">
+        <a class="title" href="/2020/11/02/"><h2>前端监控系列-数据上报</h2></a>
+        <div class="post-meta">
+          
+          <time class="time" datetime="2020-11-02T07:10:40.000Z">
+            2020-11-02
+          </time>
+          
+          <span class="slash">/</span>
+          
+          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+          
+
+        </div>
+
+        
+          <div class="post-excerpt">
+            <p>性能监控和错误上报只是辅助功能，不应阻塞页面加载，因此只有当页面完成加载后，我们才进行数据获取和上报（实际上，页面加载完成前也获取不到必要信息），性能数据可以在页面加载完之后上报，尽量不要对页面性能造成影响。</p>
+          </div>
+        
+        <a class="more" href="/2020/11/02/"> 阅读全文 > </a>
+      </article>
+    
+
+      <article class="recent-post-item">
+        <a class="title" href="/2020/11/01/"><h2>前端监控系列-错误监控</h2></a>
+        <div class="post-meta">
+          
+          <time class="time" datetime="2020-11-01T07:05:38.000Z">
+            2020-11-01
+          </time>
+          
+          <span class="slash">/</span>
+          
+          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+          
+
+        </div>
+
+        
+          <div class="post-excerpt">
+            <p>错误监控主要是为了在sls看板上，能更加全面的展示我们项目的情况，所以这边加了个错误上报的口子，其实错误上报很简单，只需要全局捕获几种类型的错误就好了。</p>
+          </div>
+        
+        <a class="more" href="/2020/11/01/"> 阅读全文 > </a>
+      </article>
+    
+
+      <article class="recent-post-item">
+        <a class="title" href="/2020/10/30/"><h2>前端监控系列-性能监控</h2></a>
+        <div class="post-meta">
+          
+          <time class="time" datetime="2020-10-30T07:00:29.000Z">
+            2020-10-30
+          </time>
+          
+          <span class="slash">/</span>
+          
+          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+          
+
+        </div>
+
+        
+          <div class="post-excerpt">
+            <p>什么是性能监控，主要要监控哪些指标，有什么意义呢？</p>
+<p>我们经常会遇到这样一个情况，发布在线上的页面，有一天老板或者是其他同学跟你反馈，你的页面怎么这么慢，是不是有bug。然后你会自己打开对应的页面，看了看感觉速度正常，也算是秒开吧。然后你再关闭缓存，再试了一下，还是好的呀，哪里慢了？这个时候你就很难评估出来这个页面到底是真慢还是某个设备的网络问题。</p>
+<p>这种在单个设备上的表现，其实很难准确反映我们的页面在线上运行的真实情况。线上环境包括不同的设备、不同的宿主环境、不同的运营商网络、不同的地区这些关联因素，所以我们就需要有一套可以监控线上环境运行情况的系统。</p>
+          </div>
+        
+        <a class="more" href="/2020/10/30/"> 阅读全文 > </a>
+      </article>
+    
+
+      <article class="recent-post-item">
         <a class="title" href="/2020/06/23/"><h2>通过ESLint和Prettier统一团队代码规范.</h2></a>
         <div class="post-meta">
           
@@ -1223,86 +1297,6 @@ var [a, b, c] = [1, 2, 3];
           </div>
         
         <a class="more" href="/2016/09/14/"> 阅读全文 > </a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2016/09/13/"><h2>ES6入门(一) - let和const命令</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2016-09-13T03:31:44.000Z">
-            2016-09-13
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
-          
-
-        </div>
-
-        
-          <div class="post-excerpt">
-            <h2 id="一、let命令"><a href="#一、let命令" class="headerlink" title="一、let命令"></a>一、let命令</h2><h3 id="1-声明只在代码块内有效"><a href="#1-声明只在代码块内有效" class="headerlink" title="1. 声明只在代码块内有效"></a>1. 声明只在代码块内有效</h3><p>let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。</p>
-<pre><code class="js">{
-  let a = 10;
-  var b = 1;
-}
-
-a // ReferenceError: a is not defined.
-b // 1
-</code></pre>
-          </div>
-        
-        <a class="more" href="/2016/09/13/"> 阅读全文 > </a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2016/09/12/"><h2>webpack入门指南</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2016-09-12T07:57:36.000Z">
-            2016-09-12
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/Webpack/">Webpack</a></li></ul>
-          
-
-        </div>
-
-        
-          <div class="post-excerpt">
-            <p><a href="https://github.com/webpack" target="_blank" rel="noopener">Webpack</a> 是德国开发者 Tobias Koppers 开发的模块加载器，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、 AMD 模块、 ES6 模块、CSS、图片、 JSON、Coffeescript、 LESS 等。<br>
-          </div>
-        
-        <a class="more" href="/2016/09/12/"> 阅读全文 > </a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2016/09/09/"><h2>git学习</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2016-09-09T04:49:02.000Z">
-            2016-09-09
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/Git/">Git</a></li></ul>
-          
-
-        </div>
-
-        
-          <div class="post-excerpt">
-            <p>Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。<br>
-          </div>
-        
-        <a class="more" href="/2016/09/09/"> 阅读全文 > </a>
       </article>
     
   </div>
