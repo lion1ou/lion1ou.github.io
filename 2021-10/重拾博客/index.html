@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="杂记," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>重拾博客 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        重拾博客
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2021-10-10T14:10:30.000Z">
+            2021-10-10 22:10
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.5k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">5 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E6%9D%82%E8%AE%B0/" rel="tag">杂记</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>已经有将近一年没有发文章了，中间换了一次主题，然后大致配置了一下，就一直没关注了。 然后一直忙，直到这段时间，翻了翻博客发现，评价好像有问题，数据统计分析也有问题。而且之前在阿里云申请的lion1ou.win的域名被签到国际站了，而且还备案不了。而且由于刚换工作，周末时间也空闲了一些。然后就萌生重拾博客的想法，顺便再梳理一下自己做过的一些小项目。说干就干，9月底开始动手。</p>
+<span id="more"></span>
+
+
+<h2 id="升级Hexo"><a href="#升级Hexo" class="headerlink" title="升级Hexo"></a>升级Hexo</h2><h3 id="升级依赖，修改配置"><a href="#升级依赖，修改配置" class="headerlink" title="升级依赖，修改配置"></a>升级依赖，修改配置</h3><ol>
+<li>修改 <code>package.json</code> 将默认依赖全部升级到了最新版本</li>
+</ol>
+<p><img src="https://cdn.chuyunt.com/picGo/update-hexo.png?imageslim"></p>
+<ol start="2">
+<li>根据官网完完整整的修改了一遍config</li>
+</ol>
+<blockquote>
+<p>这里就不展开了，官网有非常详细的说明，比之前完善了不少。 地址在这：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">https://hexo.io/zh-cn/docs/configuration</a></p>
+</blockquote>
+<ol start="3">
+<li>整理原来使用的插件和大家都在用的hexo插件</li>
+</ol>
+<h3 id="添加插件"><a href="#添加插件" class="headerlink" title="添加插件"></a>添加插件</h3><ol>
+<li><strong>字数统计</strong>：<a target="_blank" rel="noopener" href="https://github.com/willin/hexo-wordcount">https://github.com/willin/hexo-wordcount</a></li>
+</ol>
+<blockquote>
+<p>在文章中显示文章字数、阅读时长信息</p>
+</blockquote>
+<pre><code class="bash">npm i --save hexo-wordcount
+</code></pre>
+<pre><code class="yml">postInfo:
+  date: true
+  update: false
+  wordCount: false # 设置文章字数统计为 true.
+  totalCount: false # 设置站点文章总字数统计为 true.
+  min2read: false # 阅读时长.
+  readCount: false # 阅读次数.
+</code></pre>
+<p>如果是使用现成的主题，只需要配置对应的config就会好了，如果是自己搞主题，就根据readme，想好添加到那个地方吧。</p>
+<pre><code class="js">// 字数统计 WordCount
+wordcount(post.content)
+
+// 阅读时长预计 Min2Read
+min2read(post.content)
+
+// 设置阅读速度 Set Reading Speed: (p.s. (v3.0.0 added))
+min2read(post.content, &#123;cn: 300, en: 160&#125;)
+
+// 总字数统计 TotalCount
+totalcount(site)
+</code></pre>
+<ol start="2">
+<li><strong>添加 RSS 订阅支持</strong>: <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-generator-feed">https://github.com/hexojs/hexo-generator-feed</a></li>
+</ol>
+<blockquote>
+<p>感觉RSS订阅应该是博客最标志性功能之一吧，这个还是要加上的</p>
+</blockquote>
+<pre><code class="bash">npm install hexo-generator-feed --save
+</code></pre>
+<pre><code class="yml">feed:
+  enable: true
+  type: 
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss2.xml
+  limit: 10
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: &#39; &#39;
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:
+</code></pre>
+<ol start="3">
+<li><strong>生成网站地图</strong></li>
+</ol>
+<pre><code class="bash">npm install hexo-generator-sitemap --save     
+</code></pre>
+<pre><code class="yml">sitemap:
+  path: sitemap.xml
+  template: ./sitemap_template.xml
+  rel: false
+  tags: true
+  categories: true
+</code></pre>
+<p>可用于提交给百度</p>
+<pre><code class="bash">npm install hexo-generator-baidu-sitemap --save
+</code></pre>
+<pre><code class="yml">baidusitemap:
+  path: baidusitemap.xml
+</code></pre>
+<ol start="4">
+<li><strong>本地搜索</strong>: <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search">https://github.com/wzpan/hexo-generator-search</a></li>
+</ol>
+<pre><code class="yml">search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+  limit: 100
+</code></pre>
+<blockquote>
+<p>如果只是这样，本地搜索还是不可用的，还需要相应的主题是支持的，主题内会有相应的逻辑来匹配对应的搜索情况。</p>
+</blockquote>
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><p>因为之前接过 google analysis，然后就去看了看站点的数据情况，整体流量还是很少的，主要来源还是谷歌搜索，另外还有一些其他博客平台，因为之前有些文章在多个平台发布过，并被多个网站收录了，吸引了一些流量。</p>
+<ul>
+<li>页面访问量数据</li>
+</ul>
+<p><img src="https://cdn.chuyunt.com/picGo/google-analysis.png?imageslim"></p>
+<ul>
+<li>站点来源数据</li>
+</ul>
+<p><img src="https://cdn.chuyunt.com/picGo/20211010214303.png?imageslim"></p>
+<p>根据谷歌分析的一些数据，对站点的文章做了大量的删减，去除了一批内容比较陈旧，或者流量为零的文章。</p>
+<blockquote>
+<p>这里补充一下，其实站点之前也接入了百度统计，但是在百度统计看到的数据与谷歌分析的还是有一定差距，而且百度统计只能看到最近30天的数据。所有有需要的同学，还是推荐使用谷歌</p>
+</blockquote>
+<h2 id="域名迁移"><a href="#域名迁移" class="headerlink" title="域名迁移"></a>域名迁移</h2><ul>
+<li>买域名</li>
+</ul>
+<p>接下来就是迁移域名了，首先要买一个新域名，在aliyun上对比了一下价格和可备案，并且跟博客有点关系。所以就有了现在的 lion1ou.tech </p>
+<ul>
+<li>新域名备案</li>
+</ul>
+<p>域名备案还是一个比较麻烦的过程，需要等待几天的审核时间。</p>
+<ul>
+<li>老域名续费</li>
+</ul>
+<p>担心老域名马上过期的话，其他外部来源将完全访问不了该站点，所以就去给老域名续了一下。由于老域名是在aliyun国际站，所以用常规支付方式是完成不了支付的，博主又没有VISA信用卡。所以只能求助万能的淘宝了。不过折算下来汇率将近1: 8。</p>
+<p>接下来就是比较麻烦的事情了，之前本来想的是找个第三方转发平台：<a target="_blank" rel="noopener" href="https://www.mfpad.com/zh/login">米发</a>来配置一下就好了，结果发现效果不是很理想，测试过程中，始终不成功。也不知道问题出在哪里，所以只能放弃。</p>
+<p>后来仔细想了想，下面这个方案还是比较完美的。</p>
+<ul>
+<li><p>老域名重定向到新域名</p>
+<ul>
+<li>新建一个github帐号</li>
+<li>使用github page、index.html、404.md文件，来做重定向</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chuyunt/chuyunt.github.io">https://github.com/chuyunt/chuyunt.github.io</a></li>
+</ul>
+</li>
+</ul>
+<p>中间我还做了一件事，就是我把hexo的永久路径规则给修改了，这样老的外链，就跳转不到对应的文章了。这怎么行，于是就在利用404.md，做了一个地址映射，把老地址和新地址一一对应了一下，算是完美解决了。</p>
+<p>到这里算是把博客梳理清楚了。接下来就对之前fork的主题开刀了。 在这里还是要感谢一下原作者：<a target="_blank" rel="noopener" href="https://github.com/KevinOfNeu/hexo-theme-xoxo">https://github.com/KevinOfNeu/hexo-theme-xoxo</a></p>
+<h2 id="自建主题"><a href="#自建主题" class="headerlink" title="自建主题"></a>自建主题</h2><p>打开代码之后，首先干的事情是，先对结构做了一下了解。根据自己的喜好调整了部分样式。</p>
+<p>接下来对 tags、search页面都做了修改，保证在新版本hexo上，主题能够正常运行。</p>
+<p>下面大概列一下做了哪些事情：</p>
+<ul>
+<li>将主题名字改成了sprite，雪碧的意思；希望后续的主题改造，能够一直秉持着这个风格</li>
+<li>升级了gulp版本，优化了工作流</li>
+<li>添加了赞赏功能</li>
+<li>优化了footer</li>
+<li>对config做了完全的配置梳理，支持更多配置，并配有详细注释</li>
+</ul>
+<p>感兴趣的同学，可以看看这个主题：<a target="_blank" rel="noopener" href="https://github.com/lion1ou/hexo-theme-sprite">https://github.com/lion1ou/hexo-theme-sprite</a></p>
+<p>到这里，重拾博客的基础工作差不多都做完了，接下来希望可以坚持下来，持续输出一些优质文章，持续更新sprite主题。 加油！</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%87%E7%BA%A7Hexo"><span class="toc-text">升级Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%87%E7%BA%A7%E4%BE%9D%E8%B5%96%EF%BC%8C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-text">升级依赖，修改配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%8F%92%E4%BB%B6"><span class="toc-text">添加插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="toc-text">查看数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%BF%81%E7%A7%BB"><span class="toc-text">域名迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%BB%BA%E4%B8%BB%E9%A2%98"><span class="toc-text">自建主题</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2021-10/重拾博客/">https://lion1ou.tech/2021-10/重拾博客/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2020-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5/" rel="next" title="前端监控系列-数据上报">
+        前端监控系列-数据上报
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2021-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%9A%84%E8%87%AA%E5%8A%A9%E5%88%86%E6%9E%90%E8%83%BD%E5%8A%9B/" rel="prev" title="前端监控的自助分析能力">
+          前端监控的自助分析能力
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2021-10/%E9%87%8D%E6%8B%BE%E5%8D%9A%E5%AE%A2/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

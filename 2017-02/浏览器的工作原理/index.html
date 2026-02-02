@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="浏览器," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>浏览器的工作原理 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        浏览器的工作原理
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2017-02-26T14:51:29.000Z">
+            2017-02-26 22:51
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2.9k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">10 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>浏览器的主要功能是将用户选择得web资源呈现出来，它需要从服务器请求资源，并将其显示在浏览器窗口中，资源的格式通常是HTML，也包括PDF、image及其他格式。用户用URI（Uniform Resource Identifier 统一资源标识符）来指定所请求资源的位置。</p>
+<span id="more"></span>
+<h2 id="浏览器主要构成："><a href="#浏览器主要构成：" class="headerlink" title="浏览器主要构成："></a>浏览器主要构成：</h2><ul>
+<li>用户界面————包括地址栏、后退/前进按钮、书签目录等，也就是你所看到的除了用来显示你所请求页面的主窗口之外的其他部分</li>
+<li>浏览器引擎————用来查询及操作渲染引擎的接口</li>
+<li>渲染引擎————用来显示请求的内容，例如，如果请求内容为html，它负责解析html及css，并将解析后的结果显示出来</li>
+<li>网络————用来完成网络调用，例如http请求，它具有平台无关的接口，可以在不同平台上工作</li>
+<li>UI后端————用来绘制类似组合选择框及对话框等基本组件，具有不特定于某个平台的通用接口，底层使用操作系统的用户接口</li>
+<li>JS解释器————用来解释执行JS代码</li>
+<li>数据存储————属于持久层，浏览器需要在硬盘中保存类似cookie的各种数据，HTML5定义了web database技术，这是一种轻量级完整的客户端存储技术</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79ly1fdniynfby8j30dw09f0tk.jpg"></p>
+<h2 id="常用那几种浏览器测试？有哪些内核-Layout-Engine"><a href="#常用那几种浏览器测试？有哪些内核-Layout-Engine" class="headerlink" title="常用那几种浏览器测试？有哪些内核(Layout Engine)?"></a>常用那几种浏览器测试？有哪些内核(Layout Engine)?</h2><p>Ie(Ie内核) 火狐（Gecko） Safari，谷歌（webkit） opear(Presto)</p>
+<h2 id="浏览器的基本流程"><a href="#浏览器的基本流程" class="headerlink" title="浏览器的基本流程"></a>浏览器的基本流程</h2><p>解析html以构建dom树-&gt;解析CSS转化为CSSOM(CSS Object Model)-&gt;构建render树-&gt;布局render树-&gt;绘制render树</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79ly1fdniz86rwcj30hi084q32.jpg"></p>
+<ol>
+<li>渲染引擎开始解析html，并将标签转化为内容树中的dom节点。</li>
+<li>解析外部CSS文件及style标签中的样式信息。</li>
+<li>这些样式信息以及html中的可见性指令将被用来构建另一棵树——render树。(Render树由一些包含有颜色和大小等属性的矩形组成，它们将被按照正确的顺序显示到屏幕上。)</li>
+<li>Render树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标。</li>
+<li>绘制，即遍历render树，并使用UI后端层绘制每个节点。</li>
+</ol>
+<p>值得注意的是，这个过程是逐步完成的，为了更好的用户体验，渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render树。它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fdnizs50rvj30hc081754.jpg" alt="webkit主流程"></p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fdnj083n8gj30hc082dg2.jpg" alt="Geoko主流程"></p>
+<p>尽管webkit和Gecko使用的术语稍有不同，他们的主要流程基本相同。Gecko称可见的格式化元素组成的树为frame树，每个元素都是一个frame，webkit则使用render树这个名词来命名由渲染对象组成的树。Webkit中元素的定位称为布局，而Gecko中称为回流。Webkit称利用dom节点及样式信息去构建render树的过程为attachment，Gecko在html和dom树之间附加了一层，这层称为内容接收器，相当制造dom元素的工厂。</p>
+<h2 id="重排（reflow）和重绘（repaint）"><a href="#重排（reflow）和重绘（repaint）" class="headerlink" title="重排（reflow）和重绘（repaint）"></a>重排（reflow）和重绘（repaint）</h2><p>网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。以下三种情况，会导致网页重新渲染。</p>
+<ul>
+<li>修改DOM</li>
+<li>修改样式表</li>
+<li>用户事件（比如鼠标悬停、页面滚动、输入框键入文字、改变窗口大小等等）</li>
+</ul>
+<p>重新渲染，就需要重新生成布局和重新绘制。前者叫做”重排”（reflow），后者叫做”重绘”（repaint）。需要注意的是，”重绘”不一定需要”重排”，比如改变某个网页元素的颜色，就只会触发”重绘”，不会触发”重排”，因为布局没有改变。但是，”重排”必然导致”重绘”，比如改变一个网页元素的位置，就会同时触发”重排”和”重绘”，因为布局改变了。</p>
+<h2 id="性能影响"><a href="#性能影响" class="headerlink" title="性能影响"></a>性能影响</h2><p>重排和重绘会不断触发，这是不可避免的。但是，它们非常耗费资源，是导致网页性能低下的根本原因。<strong>提高网页性能，就是要降低”重排”和”重绘”的频率和成本，尽量少触发重新渲染。</strong>前面提到，DOM变动和样式变动，都会触发重新渲染。但是，浏览器已经很智能了，会尽量把所有的变动集中在一起，排成一个队列，然后一次性执行，尽量避免多次重新渲染。</p>
+<pre><code class="js">div.style.color = &#39;blue&#39;;
+div.style.marginTop = &#39;30px&#39;;
+</code></pre>
+<p>上面代码中，div元素有两个样式变动，但是浏览器只会触发一次重排和重绘。如果写得不好，就会触发两次重排和重绘。</p>
+<pre><code class="js">div.style.color = &#39;blue&#39;;
+var margin = parseInt(div.style.marginTop);
+div.style.marginTop = (margin + 10) + &#39;px&#39;;
+</code></pre>
+<p>上面代码对div元素设置背景色以后，第二行要求浏览器给出该元素的位置，所以浏览器不得不立即重排。一般来说，样式的写操作之后，如果有下面这些属性的读操作，都会引发浏览器立即重新渲染。</p>
+<pre><code class="js">offsetTop/offsetLeft/offsetWidth/offsetHeight
+scrollTop/scrollLeft/scrollWidth/scrollHeight
+clientTop/clientLeft/clientWidth/clientHeight
+getComputedStyle()
+</code></pre>
+<p>所以，从性能角度考虑，尽量不要把读操作和写操作，放在一个语句里面。</p>
+<pre><code class="js">// bad
+div.style.left = div.offsetLeft + 10 + &quot;px&quot;;
+div.style.top = div.offsetTop + 10 + &quot;px&quot;;
+
+// good
+var left = div.offsetLeft;
+var top  = div.offsetTop;
+div.style.left = left + 10 + &quot;px&quot;;
+div.style.top = top + 10 + &quot;px&quot;;
+</code></pre>
+<p>一般的规则是：</p>
+<ul>
+<li>样式表越简单，重排和重绘就越快。</li>
+<li>重排和重绘的DOM元素层级越高，成本就越高。</li>
+<li>table元素的重排和重绘成本，要高于div元素</li>
+</ul>
+<h2 id="提高性能的九个技巧"><a href="#提高性能的九个技巧" class="headerlink" title="提高性能的九个技巧"></a>提高性能的九个技巧</h2><p>有一些技巧，可以降低浏览器重新渲染的频率和成本。</p>
+<ul>
+<li>第一条是上一节说到的，DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。</li>
+<li>第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。</li>
+<li>第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。<br>```js<br>// bad<br>var left = 10;<br>var top = 10;<br>el.style.left = left + “px”;<br>el.style.top  = top  + “px”;</li>
+</ul>
+<p>// good<br>el.className += “ theclassname”;</p>
+<p>// good<br>el.style.cssText += “; left: “ + left + “px; top: “ + top + “px;”;</p>
+<pre><code>* 第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document Fragment对象，完成后再把这个对象加入DOM。再比如，使用 cloneNode() 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。
+* 第五条，先将元素设为display: none（需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。
+* 第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。
+* 第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility : hidden的元素只对重绘有影响，不影响重排。
+* 第八条，使用虚拟DOM的脚本库，比如React等。
+* 第九条，使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染
+
+## window.requestAnimationFrame()
+有一些JavaScript方法可以调节重新渲染，大幅提高网页性能。其中最重要的，就是 window.requestAnimationFrame() 方法。它可以将某些代码放到下一次重新渲染时执行。
+```js
+function doubleHeight(element) &#123;
+  var currentHeight = element.clientHeight;
+  element.style.height = (currentHeight * 2) + &#39;px&#39;;
+&#125;
+elements.forEach(doubleHeight);
+</code></pre>
+<p>上面的代码使用循环操作，将每个元素的高度都增加一倍。可是，每次循环都是，读操作后面跟着一个写操作。这会在短时间内触发大量的重新渲染，显然对于网页性能很不利。<br>我们可以使用window.requestAnimationFrame()，让读操作和写操作分离，把所有的写操作放到下一次重新渲染。</p>
+<pre><code class="js">function doubleHeight(element) &#123;
+  var currentHeight = element.clientHeight;
+  window.requestAnimationFrame(function () &#123;
+    element.style.height = (currentHeight * 2) + &#39;px&#39;;
+  &#125;);
+&#125;
+elements.forEach(doubleHeight);
+</code></pre>
+<p>页面滚动事件（scroll）的监听函数，就很适合用 window.requestAnimationFrame() ，推迟到下一次重新渲染。</p>
+<pre><code class="js">$(window).on(&#39;scroll&#39;, function() &#123;
+   window.requestAnimationFrame(scrollHandler);
+&#125;);
+</code></pre>
+<p>当然，最适用的场合还是网页动画。下面是一个旋转动画的例子，元素每一帧旋转1度。</p>
+<pre><code class="js">var rAF = window.requestAnimationFrame;
+
+var degrees = 0;
+function update() &#123;
+  div.style.transform = &quot;rotate(&quot; + degrees + &quot;deg)&quot;;
+  console.log(&#39;updated to degrees &#39; + degrees);
+  degrees = degrees + 1;
+  rAF(update);
+&#125;
+rAF(update);
+</code></pre>
+<h2 id="window-requestIdleCallback"><a href="#window-requestIdleCallback" class="headerlink" title="window.requestIdleCallback()"></a>window.requestIdleCallback()</h2><p>还有一个函数window.requestIdleCallback()，也可以用来调节重新渲染。<br>它指定只有当一帧的末尾有空闲时间，才会执行回调函数。</p>
+<pre><code class="js">requestIdleCallback(fn);
+</code></pre>
+<p>上面代码中，只有当前帧的运行时间小于16.66ms时，函数fn才会执行。否则，就推迟到下一帧，如果下一帧也没有空闲时间，就推迟到下下一帧，以此类推。</p>
+<p>它还可以接受第二个参数，表示指定的毫秒数。如果在指定的这段时间之内，每一帧都没有空闲时间，那么函数fn将会强制执行。</p>
+<pre><code class="js">requestIdleCallback(fn, 5000);
+</code></pre>
+<p>上面的代码表示，函数fn最迟会在5000毫秒之后执行。<br>函数 fn 可以接受一个 deadline 对象作为参数。</p>
+<pre><code class="js">requestIdleCallback(function someHeavyComputation(deadline) &#123;
+  while(deadline.timeRemaining() &gt; 0) &#123;
+    doWorkIfNeeded();
+  &#125;
+
+  if(thereIsMoreWorkToDo) &#123;
+    requestIdleCallback(someHeavyComputation);
+  &#125;
+&#125;);
+</code></pre>
+<p>上面代码中，回调函数 someHeavyComputation 的参数是一个 deadline 对象。<br>deadline对象有一个方法和一个属性：timeRemaining() 和 didTimeout。</p>
+<ol>
+<li><p>timeRemaining() 方法</p>
+<p> timeRemaining() 方法返回当前帧还剩余的毫秒。这个方法只能读，不能写，而且会动态更新。因此可以不断检查这个属性，如果还有剩余时间的话，就不断执行某些任务。一旦这个属性等于0，就把任务分配到下一轮requestIdleCallback。</p>
+<p> 前面的示例代码之中，只要当前帧还有空闲时间，就不断调用doWorkIfNeeded方法。一旦没有空闲时间，但是任务还没有全执行，就分配到下一轮requestIdleCallback。</p>
+</li>
+<li><p>didTimeout属性</p>
+<p> deadline对象的 didTimeout 属性会返回一个布尔值，表示指定的时间是否过期。这意味着，如果回调函数由于指定时间过期而触发，那么你会得到两个结果。</p>
+<p> <code>timeRemaining方法返回0</code></p>
+<p> <code>didTimeout 属性等于 true</code></p>
+<p> 因此，如果回调函数执行了，无非是两种原因：当前帧有空闲时间，或者指定时间到了。<br>```js<br>function myNonEssentialWork (deadline) {<br>while ((deadline.timeRemaining() &gt; 0 || deadline.didTimeout) &amp;&amp; tasks.length &gt; 0)<br> doWorkIfNeeded();</p>
+</li>
+</ol>
+<p>  if (tasks.length &gt; 0)<br>    requestIdleCallback(myNonEssentialWork);<br>}</p>
+<p>requestIdleCallback(myNonEssentialWork, 5000);</p>
+<pre><code>上面代码确保了，doWorkIfNeeded函数一定会在将来某个比较空闲的时间（或者在指定时间过期后）得到反复执行。requestIdleCallback 是一个很新的函数，刚刚引入标准，目前只有Chrome支持，不过其他浏览器可以用垫片库。
+
+参考：
+
+* [网页性能管理详解-阮一峰](http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html)
+* [现代浏览器的工作原理](http://blog.jobbole.com/12749/)
+
+
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E8%A6%81%E6%9E%84%E6%88%90%EF%BC%9A"><span class="toc-text">浏览器主要构成：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%82%A3%E5%87%A0%E7%A7%8D%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B5%8B%E8%AF%95%EF%BC%9F%E6%9C%89%E5%93%AA%E4%BA%9B%E5%86%85%E6%A0%B8-Layout-Engine"><span class="toc-text">常用那几种浏览器测试？有哪些内核(Layout Engine)?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-text">浏览器的基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%8E%92%EF%BC%88reflow%EF%BC%89%E5%92%8C%E9%87%8D%E7%BB%98%EF%BC%88repaint%EF%BC%89"><span class="toc-text">重排（reflow）和重绘（repaint）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%BD%B1%E5%93%8D"><span class="toc-text">性能影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E4%B9%9D%E4%B8%AA%E6%8A%80%E5%B7%A7"><span class="toc-text">提高性能的九个技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#window-requestIdleCallback"><span class="toc-text">window.requestIdleCallback()</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2017-02/浏览器的工作原理/">https://lion1ou.tech/2017-02/浏览器的工作原理/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2017-02/css%E4%B9%8Bbfc-%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87/" rel="next" title="CSS之BFC(块级格式化上下文)">
+        CSS之BFC(块级格式化上下文)
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2017-04/%E4%BA%91%E6%9C%8D%E5%8A%A1%E4%B9%8Blinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="云服务之Linux常用命令">
+          云服务之Linux常用命令
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2017-02/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

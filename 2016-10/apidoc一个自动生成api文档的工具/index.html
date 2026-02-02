@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Tools," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>apidoc一个自动生成API文档的工具 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        apidoc一个自动生成API文档的工具
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-10-30T03:12:31.000Z">
+            2016-10-30 11:12
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.2k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">5 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Tools/" rel="tag">Tools</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p><code>apidoc</code>是一个生成<code>RESTful API文档</code>的工具，它通过代码注释中的特定格式和内容，生成API文档。目前支持的语法有:Java、Javascript、C#、C/C++、D、Erlang、Go、Groovy、Pascal/Delphi、 Perl、PHP、Python、Ruby、Rust、Scala 和 Swift。</p>
+<ul>
+<li>项目主页：<a target="_blank" rel="noopener" href="http://apidocjs.com/">http://apidocjs.com/</a> </li>
+<li>Github：<a target="_blank" rel="noopener" href="https://github.com/apidoc/apidoc">https://github.com/apidoc/apidoc</a><span id="more"></span>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2></li>
+</ul>
+<p>可以通过<code>npm install apidoc -g</code>进行全局安装</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>仅需要在终端当前目录下创建一个apidoc.json文件和一个存放生成的文档的<code>apidoc</code>文件夹。</p>
+<p>执行以下命令：</p>
+<pre><code class="shell">apidoc -i your-project-dir/ -o apidoc/
+</code></pre>
+<p>参数说明：</p>
+<ul>
+<li>-i 表示输入，后面是文件夹路径</li>
+<li>-o 表示输出，后面是文件夹路径</li>
+<li>-c，默认会带上，在当前路径下寻找配置文件(apidoc.json)，如果找不到则会在package.json中寻找<code>&quot;apidoc&quot;: &#123; &#125;</code>对象</li>
+<li>-f 为文件过滤，后面是正则表达式，<code>-f &quot;.*\.js$&quot;</code>为只选着js文件</li>
+<li>-e 表示要排除的<code>文件/文件夹</code>，也是使用正则表达式</li>
+</ul>
+<p>另外apidoc还支持自动化构建工具：</p>
+<ul>
+<li>gulp：<a target="_blank" rel="noopener" href="https://github.com/c0b41/gulp-apidoc">https://github.com/c0b41/gulp-apidoc</a></li>
+<li>grunt：<a target="_blank" rel="noopener" href="https://github.com/apidoc/grunt-apidoc">https://github.com/apidoc/grunt-apidoc</a></li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>可以在之前创建的<code>apidoc.json</code>中添加配置内容：</p>
+<pre><code class="js">&#123;
+  &quot;name&quot; : &quot;koa-api&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;title&quot;: &quot;API文档&quot;, // 浏览器标题
+  &quot;url&quot;: &quot;http://localhost:3100&quot;,//所有API的baseUrl
+  &quot;sampleUrl&quot;: &quot;http://localhost:3100&quot;,//测试API的地址
+  &quot;description&quot;: &quot;这是一个基于koa开发的RESTful API项目&quot;
+&#125;
+</code></pre>
+<p>也可以在package.json中使用已定义的相同字段,并在<code>apidoc</code>对象定义额外字段，如下：</p>
+<pre><code class="js">&#123;
+  &quot;name&quot;: &quot;koa-api&quot;,
+  &quot;private&quot;: true,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;这是一个基于koa开发的RESTful API项目&quot;,
+  &quot;apidoc&quot;: &#123;
+    &quot;url&quot;: &quot;http://localhost:3100&quot;,//所有API的baseUrl
+    &quot;sampleUrl&quot;: &quot;http://localhost:3100&quot;,//测试API的地址
+    &quot;title&quot;: &quot;API文档&quot; //浏览器标题
+  &#125;,
+  ...
+&#125;
+</code></pre>
+<h2 id="注释规范"><a href="#注释规范" class="headerlink" title="注释规范"></a>注释规范</h2><h4 id="常规使用"><a href="#常规使用" class="headerlink" title="常规使用"></a>常规使用</h4><ul>
+<li><p><code>@api &#123;method&#125; path [title]</code></p>
+<p>  只有使用<code>@api</code>标注的注释块才会在解析之后生成文档</p>
+<p>  <code>method</code>可以有空格，如{POST GET}</p>
+<p>  <code>title</code>会被解析为API文档中导航菜单<code>@apiGroup</code>下的小菜单</p>
+</li>
+<li><p><code>@apiIgnore</code> </p>
+<p>  凡是带此标签的代码块，表示该文档暂时被忽略。父标签：@api。</p>
+</li>
+<li><p><code>@apiGroup name</code></p>
+<p>  提供了对 api 的分组信息，不同的分组，最终可能会被呈现在不同的页面。</p>
+</li>
+<li><p><code>@apiVersion verison</code></p>
+<p>  接口版本，major.minor.patch的形式，如1.1.1</p>
+</li>
+<li><p><code>@apiSampleRequest url</code></p>
+<p>  接口测试地址以供测试，发送请求时，@api method必须为POST/GET等其中一种，该参数也可以在之前的配置文件中统一配置</p>
+</li>
+<li><p><code>@apiPermission name</code></p>
+<p>  name必须独一无二，描述@api的访问权限，如admin/anyone/none</p>
+</li>
+<li><p>示例代码如下：</p>
+</li>
+</ul>
+<pre><code class="js">/**
+ * @api &#123;post&#125; /api/v1/admin  登录后台验证 
+ * @apiGroup admin
+ * @apiVersion 1.1.0
+ * @apiPermission none
+ *
+ * @apiHeader &#123;String&#125; access-key Users unique access-key.
+ * @apiHeader &#123;String&#125; Authorization 用户验证信息
+ *
+ */
+</code></pre>
+<ul>
+<li>对应生成的文档样式如下：</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006y8lVagw1fabo85xestj30r00hrjsr.jpg"></p>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>@apiParam [(group)] [&#123;type&#125;] [field=defaultValue] [description]</code></p>
+</li>
+<li><p>示例代码如下：</p>
+</li>
+</ul>
+<pre><code class="js">/**
+ * @apiParam &#123;String&#125; [firstname]  Optional Firstname of the User.
+ * @apiParam &#123;String&#125; lastname     Mandatory Lastname.
+ * @apiParam &#123;String&#125; country=&quot;DE&quot; Mandatory with default value &quot;DE&quot;.
+ * @apiParam &#123;Number&#125; [age=18]     Optional Age with default 18.
+ *
+ * @apiParam (Login) &#123;String&#125; pass Only logged in users can post this.
+ *                                 In generated documentation a separate
+ *                                 &quot;Login&quot; Block will be generated.
+ */                                 
+</code></pre>
+<ul>
+<li>对应生成的文档样式如下：</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006y8lVagw1fabo5ltbj0j31cs0nmwhr.jpg"></p>
+<h4 id="参数结果"><a href="#参数结果" class="headerlink" title="参数结果"></a>参数结果</h4><ul>
+<li><p>相关参数和结果</p>
+<p>  <code>@apiHeader [(group)] [&#123;type&#125;] [field=defaultValue] [description]</code></p>
+<p>  <code>@apiError [(group)] [&#123;type&#125;] field [description]</code></p>
+<p>  <code>@apiSuccess [(group)] [&#123;type&#125;] field [description]</code></p>
+<p>  用法基本类似，分别描述请求参数、头部，响应错误和成功；group表示参数的分组，type表示类型(不能有空格)，入参可以定义默认值(不能有空格)</p>
+</li>
+<li><p>展示示例</p>
+<p>  <code>@apiParamExample [&#123;type&#125;] [title] example</code></p>
+<p>  <code>@apiHeaderExample [&#123;type&#125;] [title] example</code></p>
+<p>  <code>@apiErrorExample [&#123;type&#125;] [title] example</code></p>
+<p>  <code>@apiSuccessExample [&#123;type&#125;] [title] example</code></p>
+<p>  用法完全一致，但是type表示的是example的语言类型example书写成什么样就会解析成什么样，所以最好是书写的时候注意格式化，(许多编辑器都有列模式，可以使用列模式快速对代码添加*号)</p>
+</li>
+<li><p>示例代码如下：</p>
+</li>
+</ul>
+<pre><code class="js">/**
+ * @apiSuccess (200) &#123;String&#125; OK 描述
+ * @apiSuccessExample &#123;json&#125; Success-Response:
+ *     HTTP/1.1 200 OK
+ *     &#123;
+ *       &quot;firstname&quot;: &quot;John&quot;,
+ *       &quot;lastname&quot;: &quot;Doe&quot;
+ *     &#125;
+ */
+</code></pre>
+<ul>
+<li>对应生成的文档样式如下：</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006y8lVagw1fabo1cxcizj316w0hggn7.jpg"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
+<li><p><code>@apiDefine MySuccess</code></p>
+<p>  定义一个注释块(不包含@api)，配合@apiUse使用可以引入注释块，在@apiDefine内部不可以使用@apiUse</p>
+</li>
+<li><p><code>@apiUse name</code></p>
+<p>  引入一个@apiDefine的注释块</p>
+</li>
+</ul>
+<ul>
+<li><p>示例代码如下：</p>
+<p>  如下代码,定义一个API调用成功的内容,然后在其他API文档中调用这个内容</p>
+</li>
+</ul>
+<pre><code class="js">/**
+ * @apiDefine MySuccess
+ * @apiSuccess &#123;string&#125; firstname The users firstname.
+ * @apiSuccess &#123;number&#125; age The users age.
+ */
+
+/**
+ * @api &#123;post&#125; /api/v1/admin  登录后台验证 
+ * @apiGroup admin
+ * @apiUse MySuccess
+ *
+ */
+</code></pre>
+<ul>
+<li>对应生成的文档样式如下：</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006y8lVagw1faboaw3539j31ce0oodit.jpg"></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83"><span class="toc-text">注释规范</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8"><span class="toc-text">常规使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E7%BB%93%E6%9E%9C"><span class="toc-text">参数结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-10/apidoc一个自动生成api文档的工具/">https://lion1ou.tech/2016-10/apidoc一个自动生成api文档的工具/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-10/css%E4%B9%8B%E4%BF%AE%E6%94%B9input-range%E6%A0%B7%E5%BC%8F/" rel="next" title="CSS之修改input range样式">
+        CSS之修改input range样式
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-11/html%E4%B9%8Bmeta%E6%A0%87%E7%AD%BE/" rel="prev" title="HTML之Meta标签">
+          HTML之Meta标签
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-10/apidoc%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90api%E6%96%87%E6%A1%A3%E7%9A%84%E5%B7%A5%E5%85%B7/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

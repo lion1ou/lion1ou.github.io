@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Linux," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>云服务之Linux常用命令 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        云服务之Linux常用命令
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2017-04-28T01:16:09.000Z">
+            2017-04-28 09:16
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2.8k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">10 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Linux/" rel="tag">Linux</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>最近买了一台学生阿里云的服务器，开始建一个属于自己的小网站和一些项目 demo，所以开始了解 Linux 系统的相关知识和相关使用，入门第一步当然是命令行操作了，下面记录了一些常用的命令语句。</p>
+<span id="more"></span>
+
+<h2 id="Mac-链接操作-Linux-服务器"><a href="#Mac-链接操作-Linux-服务器" class="headerlink" title="Mac 链接操作 Linux 服务器"></a>Mac 链接操作 Linux 服务器</h2><h3 id="SCP-命令"><a href="#SCP-命令" class="headerlink" title="SCP 命令"></a>SCP 命令</h3><p>copy 本地文件到服务器的命令如下：</p>
+<p>scp <code>local file</code> <code>remote user</code>@<code>remote machine</code>:<code>remote path</code></p>
+<p>如果想 Copy 远程文件到本地，则是：</p>
+<p>scp <code>remote user</code>@<code>remote machine</code>:<code>remote path</code> <code>local file</code></p>
+<h3 id="ssh-命令"><a href="#ssh-命令" class="headerlink" title="ssh 命令"></a>ssh 命令</h3><ol>
+<li>ssh 主机</li>
+</ol>
+<p><code>ssh 192.168.1.155</code><br>（表示用电脑用户登录到服务器）</p>
+<ol start="2">
+<li>ssh 用户@主机</li>
+</ol>
+<p><code>ssh user1@192.168.1.155</code><br>（表示用 user1 登录到服务器）</p>
+<ol start="3">
+<li>ssh 主机 -l 用户名 -p 端口</li>
+</ol>
+<p><code>ssh 192.168.1.155 -l user2 -p 8080</code><br>（表示 user2 用户用 8080 端口连接到 192.168.1.155 的服务器）</p>
+<h3 id="Linux-防火墙的关闭和开启"><a href="#Linux-防火墙的关闭和开启" class="headerlink" title="Linux 防火墙的关闭和开启"></a>Linux 防火墙的关闭和开启</h3><ol>
+<li>重启后生效</li>
+</ol>
+<p>开启： chkconfig iptables on<br>关闭： chkconfig iptables off</p>
+<ol start="2">
+<li>即时生效，重启后失效</li>
+</ol>
+<p>开启： service iptables start<br>关闭： service iptables stop</p>
+<p>需要说明的是对于 Linux 下的其它服务都可以用以上命令执行开启和关闭操作。</p>
+<h2 id="cd-命令"><a href="#cd-命令" class="headerlink" title="cd 命令"></a>cd 命令</h2><blockquote>
+<p>用于切换当前目录，参数是要切换到的目录的路径，可以是绝对路径，也可以是相对路径。</p>
+</blockquote>
+<pre><code class="shell">cd /root/Docements # 切换到目录/root/Docements
+cd ./path          # 切换到当前目录下的path目录中，“.”表示当前目录
+cd ../path         # 切换到上层目录中的path目录中，“..”表示上一层目录
+</code></pre>
+<h2 id="ls-命令"><a href="#ls-命令" class="headerlink" title="ls 命令"></a>ls 命令</h2><blockquote>
+<p>查看文件与目录的命令，以下为常用参数。</p>
+</blockquote>
+<pre><code>ls -l   # 列出长数据串，包含文件的属性与权限数据等
+ls -a   # 列出全部的文件，连同隐藏文件（开头为.的文件）一起列出来（常用）
+ls -d   # 仅列出目录本身，而不是列出目录的文件数据
+ls -h   # 将文件容量以较易读的方式（GB，kB等）列出来
+ls -R   # 连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来
+</code></pre>
+<p>可以组合使用</p>
+<pre><code>ls -l   # 以长数据串的形式列出当前目录下的数据文件和目录
+ls -lR  # 以长数据串的形式列出当前目录下的所有文件
+</code></pre>
+<h2 id="mkdir-命令"><a href="#mkdir-命令" class="headerlink" title="mkdir 命令"></a>mkdir 命令</h2><blockquote>
+<p>mkdir 命令用来创建指定的名称的目录，要求创建目录的用户在当前目录中具有写权限，并且指定的目录名不能是当前目录中已有的目录。</p>
+</blockquote>
+<pre><code>-m  --mode   模式，设定权限&lt;模式&gt; (类似 chmod)
+-p  --parents  可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录;
+-v  --verbose  每次创建新目录都显示信息
+    --help   显示此帮助信息并退出
+    --version  输出版本信息并退出
+</code></pre>
+<p>实例</p>
+<pre><code>mkdir test1             # 创建一个空目录
+mkdir -p test2/test22   # 递归创建多个目录
+mkdir -m 777 test3      # 创建权限为777的目录
+mkdir -v test4          # 创建新目录都显示信息
+mkdir -vp scf/&#123;lib/,bin/,doc/&#123;info,product&#125;,logs/&#123;info,product&#125;,service/deploy/&#123;info,product&#125;&#125;
+# 一个命令创建项目的目录结构
+</code></pre>
+<h2 id="cp-命令"><a href="#cp-命令" class="headerlink" title="cp 命令"></a>cp 命令</h2><blockquote>
+<p>该命令用于复制文件，copy 之意，它还可以把多个文件一次性地复制到一个目录下。</p>
+</blockquote>
+<pre><code class="shell">cp -a  # 将文件的特性一起复制
+cp -p  # 连同文件的属性一起复制，而非使用默认方式，与-a相似，常用于备份
+cp -i  # 若目标文件已经存在时，在覆盖时会先询问操作的进行
+cp -r  # 递归持续复制，用于目录的复制行为
+cp -u  # 目标文件与源文件有差异时才会复制
+
+# 栗子
+cp -a file1 file2 #连同文件的所有特性把文件file1复制成文件file2
+cp file1 file2 file3 dir #把文件file1、file2、file3复制到目录dir中
+</code></pre>
+<h2 id="mv-命令"><a href="#mv-命令" class="headerlink" title="mv 命令"></a>mv 命令</h2><blockquote>
+<p>该命令用于移动文件、目录或更名，move 之意，它的常用参数如下：</p>
+</blockquote>
+<pre><code class="shell">mv -f  # force强制的意思，如果目标文件已经存在，不会询问而直接覆盖
+mv -i  # 若目标文件已经存在，就会询问是否覆盖
+mv -u  # 若目标文件已经存在，且比目标文件新，才会更新
+
+# 栗子
+mv file1 file2 file3 dir # 把文件file1、file2、file3移动到目录dir中
+mv file1 file2 # 把文件file1重命名为file2
+</code></pre>
+<p>注：该命令可以把一个文件或多个文件一次移动一个文件夹中，但是最后一个目标文件一定要是“目录”。</p>
+<h2 id="rm-命令"><a href="#rm-命令" class="headerlink" title="rm 命令"></a>rm 命令</h2><blockquote>
+<p>该命令用于删除文件或目录。</p>
+</blockquote>
+<pre><code class="shell">rm -f  # 就是force的意思，忽略不存在的文件，不会出现警告消息
+rm -i  # 互动模式，在删除前会询问用户是否操作
+rm -r  # 递归删除，最常用于目录删除，它是一个非常危险的参数
+
+# 栗子
+rm -i file  # 删除文件file，在删除之前会询问是否进行该操作
+rm -fr dir  # 强制删除目录dir中的所有文件
+</code></pre>
+<h2 id="ps-命令"><a href="#ps-命令" class="headerlink" title="ps 命令"></a>ps 命令</h2><p>该命令用于将某个时间点的进程运行情况选取下来并输出，process 之意，它的常用参数如下：</p>
+<pre><code class="shell">-A ：所有的进程均显示出来
+-a ：不与terminal有关的所有进程
+-u ：有效用户的相关进程
+-x ：一般与a参数一起使用，可列出较完整的信息
+-l ：较长，较详细地将PID的信息列出
+
+其实我们只要记住ps一般使用的命令参数搭配即可，它们并不多，如下：
+
+ps aux # 查看系统所有的进程数据
+ps ax # 查看不与terminal有关的所有进程
+ps -lA # 查看系统所有的进程数据
+ps axjf # 查看连同一部分进程树状态
+</code></pre>
+<h2 id="kill-命令"><a href="#kill-命令" class="headerlink" title="kill 命令"></a>kill 命令</h2><blockquote>
+<p>该命令用于向某个工作（%jobnumber）或者是某个 PID（数字）传送一个信号，它通常与 ps 和 jobs 命令一起使用。</p>
+</blockquote>
+<pre><code class="shell">kill -signal PID
+</code></pre>
+<p>signal 的常用参数如下：注：最前面的数字为信号的代号，使用时可以用代号代替相应的信号。</p>
+<pre><code class="shell">1：SIGHUP，启动被终止的进程
+2：SIGINT，相当于输入ctrl+c，中断一个程序的进行
+9：SIGKILL，强制中断一个进程的进行
+15：SIGTERM，以正常的结束进程方式来终止进程
+17：SIGSTOP，相当于输入ctrl+z，暂停一个进程的进行
+
+# 栗子
+
+# 以正常的结束进程方式来终于第一个后台工作，可用jobs命令查看后台中的第一个工作进程
+kill -SIGTERM %1
+# 重新改动进程ID为PID的进程，PID可用ps命令通过管道命令加上grep命令进行筛选获得
+kill -SIGHUP PID
+</code></pre>
+<h2 id="killall-命令"><a href="#killall-命令" class="headerlink" title="killall 命令"></a>killall 命令</h2><blockquote>
+<p>该命令用于向一个命令启动的进程发送一个信号。</p>
+</blockquote>
+<pre><code class="shell">
+killall [-iIe] [command name]
+
+它的参数如下：
+
+-i ：交互式的意思，若需要删除时，会询问用户
+-e ：表示后面接的command name要一致，但command name不能超过15个字符
+-I ：命令名称忽略大小写
+
+# 例如：
+killall -SIGHUP syslogd # 重新启动syslogd
+</code></pre>
+<h2 id="tar-命令"><a href="#tar-命令" class="headerlink" title="tar 命令"></a>tar 命令</h2><blockquote>
+<p>该命令用于对文件进行打包，默认情况并不会压缩，如果指定了相应的参数，它还会调用相应的压缩程序（如 gzip 和 bzip 等）进行压缩和解压。</p>
+</blockquote>
+<pre><code class="shell">-c ：新建打包文件
+-t ：查看打包文件的内容含有哪些文件名
+-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中
+-j ：通过bzip2的支持进行压缩/解压缩
+-z ：通过gzip的支持进行压缩/解压缩
+-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来
+-f filename ：filename为要处理的文件
+-C dir ：指定压缩/解压缩的目录dir
+
+# 上面的解说可以已经让你晕过去了，但是通常我们只需要记住下面三条命令即可：
+
+tar -jcv -f filename.tar.bz2 要被处理的文件或目录名称  # 压缩
+tar -jtv -f filename.tar.bz2  # 查询
+tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录  # 解压
+# 注：文件名并不定要以后缀tar.bz2结尾，这里主要是为了说明使用的压缩程序为bzip2
+</code></pre>
+<h2 id="chmod-命令"><a href="#chmod-命令" class="headerlink" title="chmod 命令"></a>chmod 命令</h2><blockquote>
+<p>该命令用于改变文件的权限，一般的用法如下：</p>
+</blockquote>
+<pre><code class="shell">chmod [-R] xyz 文件或目录
+
+-R：进行递归的持续更改，即连同子目录下的所有文件都会更改
+同时，chmod还可以使用u（user）、g（group）、o（other）、a（all）和+（加入）、-（删除）、=（设置）跟rwx搭配来对文件的权限进行更改。
+# 例如：
+chmod 0755 file # 把file的文件权限改变为-rxwr-xr-x
+chmod g+w file # 向file的文件权限中加入用户组可写权限
+</code></pre>
+<h2 id="vim-命令"><a href="#vim-命令" class="headerlink" title="vim 命令"></a>vim 命令</h2><p>该命令主要用于文本编辑，它接一个或多个文件名作为参数，如果文件存在就打开，如果文件不存在就以该文件名创建一个文件。</p>
+<ul>
+<li>输入“i”，进入编辑模式</li>
+<li>使用“Esc”按钮，退出编辑模式</li>
+<li>输入“:wq”，回车，保存文件内容并退出</li>
+</ul>
+<h2 id="find-命令"><a href="#find-命令" class="headerlink" title="find 命令"></a>find 命令</h2><blockquote>
+<p>find 是一个基于查找的功能非常强大的命令.</p>
+</blockquote>
+<pre><code class="shell">find [PATH] [option] [action]
+
+# 与时间有关的参数：
+find . -mtime n   # n为数字，意思为在n天之前的“一天内”被更改过的文件；
+find . -mtime +n   # 列出在n天之前（不含n天本身）被更改过的文件名；
+find . -mtime -n   # 列出在n天之内（含n天本身）被更改过的文件名；
+find . -newer file   # 列出比file还要新的文件名
+# 例如：
+find /root -mtime 0 # 在当前目录下查找今天之内有改动的文件
+
+# 与用户或用户组名有关的参数：
+find . -user name   # 列出文件所有者为name的文件
+find . -group name   # 列出文件所属用户组为name的文件
+find . -uid n   # 列出文件所有者为用户ID为n的文件
+find . -gid n   # 列出文件所属用户组为用户组ID为n的文件
+# 例如：
+find /home/ljianhui -user ljianhui # 在目录/home/ljianhui中找出所有者为ljianhui的文件
+
+# 与文件权限及名称有关的参数：
+find . -name filename  # 找出文件名为filename的文件
+find . -size [+-]SIZE  # 找出比SIZE还要大（+）或小（-）的文件
+find . -tpye TYPE  # 查找文件的类型为TYPE的文件，TYPE的值主要有 # 一般文件（f)、设备文件（b、c）、目录（d）、连接文件（l）、socket（s）、FIFO管道文件（p）；
+find . -perm mode  # 查找文件权限刚好等于mode的文件，mode用数字表示，如0755；
+find . -perm -mode  # 查找文件权限必须要全部包括mode权限的文件，mode用数字表示
+find . -perm +mode  # 查找文件权限包含任一mode的权限的文件，mode用数字表示
+# 例如：
+find / -name passwd # 查找文件名为passwd的文件
+find . -perm 0755 # 查找当前目录中文件权限的0755的文件
+find . -size +12k # 查找当前目录中大于12KB的文件，注意c表示byte
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C-Linux-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">Mac 链接操作 Linux 服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SCP-%E5%91%BD%E4%BB%A4"><span class="toc-text">SCP 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-%E5%91%BD%E4%BB%A4"><span class="toc-text">ssh 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E5%85%B3%E9%97%AD%E5%92%8C%E5%BC%80%E5%90%AF"><span class="toc-text">Linux 防火墙的关闭和开启</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cd-%E5%91%BD%E4%BB%A4"><span class="toc-text">cd 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ls-%E5%91%BD%E4%BB%A4"><span class="toc-text">ls 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mkdir-%E5%91%BD%E4%BB%A4"><span class="toc-text">mkdir 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cp-%E5%91%BD%E4%BB%A4"><span class="toc-text">cp 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mv-%E5%91%BD%E4%BB%A4"><span class="toc-text">mv 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rm-%E5%91%BD%E4%BB%A4"><span class="toc-text">rm 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps-%E5%91%BD%E4%BB%A4"><span class="toc-text">ps 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kill-%E5%91%BD%E4%BB%A4"><span class="toc-text">kill 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#killall-%E5%91%BD%E4%BB%A4"><span class="toc-text">killall 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tar-%E5%91%BD%E4%BB%A4"><span class="toc-text">tar 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chmod-%E5%91%BD%E4%BB%A4"><span class="toc-text">chmod 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vim-%E5%91%BD%E4%BB%A4"><span class="toc-text">vim 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#find-%E5%91%BD%E4%BB%A4"><span class="toc-text">find 命令</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2017-04/云服务之linux常用命令/">https://lion1ou.tech/2017-04/云服务之linux常用命令/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2017-02/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" rel="next" title="浏览器的工作原理">
+        浏览器的工作原理
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2017-05/%E4%BA%91%E6%9C%8D%E5%8A%A1%E4%B9%8Bnodejs%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="prev" title="云服务之nodejs进程管理">
+          云服务之nodejs进程管理
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2017-04/%E4%BA%91%E6%9C%8D%E5%8A%A1%E4%B9%8Blinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

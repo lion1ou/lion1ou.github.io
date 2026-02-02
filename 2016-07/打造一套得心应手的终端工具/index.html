@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Tools," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>打造一套得心应手的终端工具 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        打造一套得心应手的终端工具
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-07-09T05:25:14.000Z">
+            2016-07-09 13:25
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">3.8k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">15 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Tools/" rel="tag">Tools</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>iTerm2 是 MAC 下最好的终端工具。可以简单的认为，iTerm2 是配置完毕开箱即用的 tmux。</p>
+<span id="more"></span>
+
+<h3 id="安装-iTerm2"><a href="#安装-iTerm2" class="headerlink" title="安装 iTerm2"></a>安装 <a target="_blank" rel="noopener" href="http://www.iterm2.com/">iTerm2</a></h3><p>官网下载安装，这里不赘述。</p>
+<h3 id="iTerm-特色功能"><a href="#iTerm-特色功能" class="headerlink" title="iTerm 特色功能"></a>iTerm 特色功能</h3><h5 id="特色快捷键"><a href="#特色快捷键" class="headerlink" title="特色快捷键"></a>特色快捷键</h5><ul>
+<li><p>command+; 根据上下文呼出自动完成窗口，上下键选择</p>
+</li>
+<li><p>全屏 command+enter</p>
+</li>
+<li><p>光标去哪了？command+/ （很少用这个，还是感觉 Zsh 的补全更好用）</p>
+</li>
+<li><p>用鼠标选中某个路径或者某个词汇就自动复制</p>
+</li>
+</ul>
+<h5 id="光标控制"><a href="#光标控制" class="headerlink" title="光标控制"></a>光标控制</h5><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ctrl + a</td>
+<td>到行首</td>
+</tr>
+<tr>
+<td>ctrl + e</td>
+<td>行末</td>
+</tr>
+<tr>
+<td>ctrl + u</td>
+<td>删除一行</td>
+</tr>
+<tr>
+<td>⌘ + r（ctrl + l）</td>
+<td>清屏，其实是滚到新的一屏，并没有清空。</td>
+</tr>
+<tr>
+<td>ctrl + r</td>
+<td>搜索命令历史，这个大家都应该很熟悉了</td>
+</tr>
+<tr>
+<td>ctrl + d</td>
+<td>删除当前字符</td>
+</tr>
+<tr>
+<td>ctrl + h</td>
+<td>删除之前的字符</td>
+</tr>
+<tr>
+<td>ctrl + w</td>
+<td>删除光标前的单词</td>
+</tr>
+<tr>
+<td>ctrl + k</td>
+<td>删除到文本末尾</td>
+</tr>
+<tr>
+<td>ctrl + t</td>
+<td>交换光标处文本</td>
+</tr>
+<tr>
+<td>⌘ + —/+/0</td>
+<td>调整字体大小</td>
+</tr>
+<tr>
+<td>ctrl + f/b</td>
+<td>前进后退，相当于左右方向键，但是显然比移开手按方向键更快</td>
+</tr>
+<tr>
+<td>ctrl + p</td>
+<td>上一条命令，相当于方向键上</td>
+</tr>
+</tbody></table>
+<h5 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h5><ul>
+<li>新建窗口：shift + command + d（横向）command + d（竖向）</li>
+<li>关闭窗口：shift + command + w</li>
+<li>前一个窗口：command + `</li>
+<li>后一个窗口：command + ~</li>
+<li>进入窗口 1,2,3：option + command + 编号</li>
+</ul>
+<h5 id="标签页操作"><a href="#标签页操作" class="headerlink" title="标签页操作"></a>标签页操作</h5><ul>
+<li>新建标签页: Command + T</li>
+<li>关闭标签页: Command + W</li>
+<li>前一个标签页: Command + 左方向键，Shift + Command + [</li>
+<li>后一个标签页: Command + 右方向键，Shitf + Command + ]</li>
+<li>进入标签页 1，2，3…: Command + 标签页编号</li>
+<li>Expose 标签页: Option + Command + E（将标签页打撒到全屏，并可以全局搜索所有的标签页）</li>
+</ul>
+<h5 id="面板操作"><a href="#面板操作" class="headerlink" title="面板操作"></a>面板操作</h5><ul>
+<li>垂直分割: Command + D</li>
+<li>水平分割: Shift + Command + D</li>
+<li>前一个面板: Command + [</li>
+<li>后一个面板: Command + ]</li>
+<li>切换到上/下/左/右面板: Option + Command + 上下左右方向键</li>
+</ul>
+<h5 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h5><ul>
+<li>支持自定义全局快捷键用于显示和隐藏 iTerm2 Preference -&gt; Keys －&gt; Show/hide iTerm2 with a system-wide hotkey 打上勾之后</li>
+<li>进入和退出全屏: Command + Enter</li>
+<li>开启和关闭背景半透明: Command + u</li>
+<li>文本选取<ul>
+<li>常见的点击并拖拽方式</li>
+<li>双击选取整个单词</li>
+<li>三击选取整行</li>
+<li>选取某一部分，按住 Shift，再点击某处，可以选取整个矩形内的文本（类似 Windows 下按住 Shift 可以批量选取图标）</li>
+<li>按住 Command + Option，可以用鼠标画出一个矩形，用类似截图的方式选取文本 另外，还可以使用鼠标完成以下操作： 按住 Command 然后点击某个 URL，会在浏览器中打开这个 URL，点击某个文件夹，会在 Finder 里打开这个文件夹（再也不用 open . 啦），点击某个文件名，会打开这个文件（文本文件支持 MacVim，TextMate 和 BBEdit，如果后面跟随一个冒号和行号，文件会在行号处打开，其它格式的文件似乎不能调用默认程序打开） 选取文本之后，按住 Command 同时拖动文本，可以将文本粘贴到目标位置（Drag and Drop） 鼠标中键粘贴（这个太感人了，一下子找回 Linux 的感觉了）</li>
+</ul>
+</li>
+</ul>
+<h5 id="位置书签"><a href="#位置书签" class="headerlink" title="位置书签"></a>位置书签</h5><p>在当前会话中按 Command + Shift + m 可以保存当前位置，之后可以按 Command + Shift + j 跳回这个位置。</p>
+<h5 id="粘贴历史"><a href="#粘贴历史" class="headerlink" title="粘贴历史"></a>粘贴历史</h5><p>使用 Command + Shift + h 可以呼出粘贴历史，支持模糊检索。还可以设置将粘贴历史保存在磁盘上（Preferences -&gt; General）</p>
+<h5 id="即时回放"><a href="#即时回放" class="headerlink" title="即时回放"></a>即时回放</h5><p>使用 Command + Opt + b 打开即时回放，按 Esc 退出。即时回放可以记录终端输出的状态，让你“穿越时间”查看终端内容。默认每个会话最多储存 4MB 的内容，可以在设置中更改（Preferences -&gt; Genernal -&gt; Instant Replay）。</p>
+<h5 id="窗口状态"><a href="#窗口状态" class="headerlink" title="窗口状态"></a>窗口状态</h5><p>通过 Window -&gt; Save Window Arrangement 可以保存当前窗口状态的快照，包括打开的窗口，标签页和面板。通过 Window -&gt; Restore Window Arrangement 还原。还可以在 Preferences -&gt; General -&gt; Open saved window arrangement 中设置在启动 iTerm2 时自动恢复窗口状态</p>
+<h5 id="修改快捷键"><a href="#修改快捷键" class="headerlink" title="修改快捷键"></a>修改快捷键</h5><p>在 iTerm2 下最不能接受的应该就是，不能使用 Command + Delete 键。在日常使用中特别影响效率，所以这里可以根据自己的使用习惯，加一些自定义快捷键，就能解决。</p>
+<ul>
+<li>删除一整行：Action 选择 Send Hex Code： 输入： 0x15</li>
+<li>删除一个字：Action 选择 Send Hex Code： 输入： 0x17</li>
+<li>跳到行头：Action 选择 Send Hex Code： 输入： 0x01</li>
+<li>跳到行尾：Action 选择 Send Hex Code： 输入： 0x05</li>
+<li>跳到前一個字：Action 选择 Send Escape Sequence： 输入： f</li>
+<li>跳到后一個字：Action 选择 Send Escape Sequence： 输入： b</li>
+</ul>
+<p><img src="https://cdn.chuyunt.com/Snipaste_2023-09-03_21-44-08.png"></p>
+<h2 id="让它变得好用"><a href="#让它变得好用" class="headerlink" title="让它变得好用"></a>让它变得好用</h2><h3 id="安装-homebrew"><a href="#安装-homebrew" class="headerlink" title="安装 homebrew"></a>安装 <a target="_blank" rel="noopener" href="https://brew.sh/index_zh-cn">homebrew</a></h3><pre><code class="shell">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+
+# 国内源
+/bin/bash -c &quot;$(curl  -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;
+</code></pre>
+<p><strong>Homebrew 的使用</strong></p>
+<ul>
+<li>安装软件：brew install 软件名，例：brew install wget</li>
+<li>搜索软件：brew search 软件名，例：brew search wget</li>
+<li>卸载软件：brew uninstall 软件名，例：brew uninstall wget</li>
+<li>更新所有软件：brew update</li>
+</ul>
+<h3 id="安装并切换成-zsh"><a href="#安装并切换成-zsh" class="headerlink" title="安装并切换成 zsh"></a>安装并切换成 zsh</h3><blockquote>
+<p>Zsh 和 bash 一样，是一种 Unix shell，大多数 Linux 发行版都默认使用 bash shell。但 Zsh 有强大的自动补全参数和自定义配置功能等等。</p>
+</blockquote>
+<pre><code class="shell">chsh -s bin/zsh
+</code></pre>
+<p>如果哪天想切回 bash</p>
+<pre><code class="shell">chsh -s bin/bash
+</code></pre>
+<p>然后重新启动 iTerm2，zsh 就已经被配置成默认的 shell 了。</p>
+<h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 <a target="_blank" rel="noopener" href="http://ohmyz.sh/">oh-my-zsh</a></h3><p>执行下面命令：</p>
+<pre><code class="shell">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+</code></pre>
+<h3 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h3><p>在<code>~/.oh-my-zsh/plugins/</code>中已经自带了很多插件，只是没有激活而已，我们可以根据下面的插件激活方式进行激活。</p>
+<p>插件介绍： <a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins">https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins</a></p>
+<p>打开.zshrc 文件，修改<code>plugins</code></p>
+<pre><code class="bash"># 命令行执行
+open ~/.zshrc
+
+# 根据自己需求，找到plugins配置项，修改成下面：
+plugins=(git adb autojump branch colored-man-pages command-not-found common-aliases encode64 extract frontend-search git-flow history npm nvm npx osx react-native sudo vscode yarn zsh-interactive-cd)
+
+# 命令行执行
+source ~/.zshrc
+</code></pre>
+<p>这样自带的插件已开启了</p>
+<h3 id="安装其他插件"><a href="#安装其他插件" class="headerlink" title="安装其他插件"></a>安装其他插件</h3><p><strong>zsh-syntax-highlighting</strong></p>
+<blockquote>
+<p>高亮你的 zsh 可用命令</p>
+</blockquote>
+<pre><code class="shell">$ cd ~/.oh-my-zsh/custom/plugins       # 打开插件的文件夹
+
+$ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git   # 克隆插件项目
+</code></pre>
+<p>打开.zshrc 文件，插件到 plugin 中</p>
+<p>plugins=( [plugins…] zsh-syntax-highlighting)</p>
+<pre><code class="shell">source ~/.zshrc    #重新加载.zshrc的修改
+</code></pre>
+<p><strong>autojump</strong></p>
+<blockquote>
+<p>autojump 就是通过记录你在 history 中的行为把你访问过的文件夹路径都 cache 下来</p>
+</blockquote>
+<pre><code class="shell">brew install autojump
+</code></pre>
+<p>打开.zshrc 文件，插件到 plugin 中</p>
+<p>plugins=( [plugins…] autojump)</p>
+<p>将下面命令加到<code>.zshrc</code>最后</p>
+<pre><code class="shell">[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; . $(brew --prefix)/etc/profile.d/autojump.sh
+</code></pre>
+<pre><code class="shell">source ~/.zshrc    #重新加载.zshrc的修改
+</code></pre>
+<blockquote>
+<p>使用 autojump 的缩写 <code>j</code>，<code>cd</code> 命令进入 <code>~/user/github/Youthink</code> 文件夹，<br>下一次再想进入 <code>Yourhink</code> 文件夹的时候，直接 <code>j youthink</code> 即可或者只输入一部分 <code>j youth</code> 都行</p>
+</blockquote>
+<p>删除无效路径</p>
+<p><code>j --purge 无效路径</code></p>
+<h3 id="其他功能-1"><a href="#其他功能-1" class="headerlink" title="其他功能"></a>其他功能</h3><ul>
+<li><p>命令历史记录</p>
+<ul>
+<li>一旦在 shell 敲入正确命令并能执行后，shell 就会存储你所敲入命令的历史记录（存放在~/.zsh_history 文件中），方便再次运行之前的命令。可以按方向键 ↑ 和 ↓ 来查看之前执行过的命令</li>
+<li>可以用 !! 来执行上一条命令</li>
+<li>使用 ctrl-r 来搜索命令历史记录</li>
+</ul>
+</li>
+<li><p>命令和文件补全(按 tab 键)</p>
+</li>
+<li><p>命令别名</p>
+<ul>
+<li>可以简化命令输入，在 .zshrc 中添加 alias shortcut=’this is the origin command’ 一行就相当于添加了别名</li>
+<li>在命令行中输入 alias 可以查看所有的命令别名</li>
+</ul>
+</li>
+</ul>
+<p>一些比较好用的设置</p>
+<pre><code class="shell">alias cls=&#39;clear&#39;
+alias ll=&#39;ls -l&#39;
+alias la=&#39;ls -a&#39;
+alias grep=&quot;grep --color=auto&quot;
+alias -s html=&#39;vim&#39;   # 在命令行直接输入后缀为 html 的文件名，会在 Vim 中打开
+alias -s rb=&#39;vim&#39;     # 在命令行直接输入 ruby 文件，会在 Vim 中打开
+alias -s py=&#39;vim&#39;      # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
+alias -s js=&#39;vim&#39;
+alias -s c=&#39;vim&#39;
+alias -s java=&#39;vim&#39;
+alias -s txt=&#39;vim&#39;
+alias -s gz=&#39;tar -xzvf&#39; # 在命令行直接输入后缀为 gz 的文件名，会自动解压打开
+alias -s tgz=&#39;tar -xzvf&#39;
+alias -s zip=&#39;unzip&#39;
+alias -s bz2=&#39;tar -xjvf&#39;
+</code></pre>
+<h3 id="Git-插件"><a href="#Git-插件" class="headerlink" title="Git 插件"></a>Git 插件</h3><p>在进入一个 git 文件夹后会切换显示的模式（不过需要配合字体才展示，下面会讲到）：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7jvh758m6j20oe0as0ws.jpg"></p>
+<p>常用命令</p>
+<table>
+<thead>
+<tr>
+<th>Alias</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gaa</td>
+<td>git add –all</td>
+</tr>
+<tr>
+<td>gb</td>
+<td>git branch</td>
+</tr>
+<tr>
+<td>gcam</td>
+<td>git commit -a -m</td>
+</tr>
+<tr>
+<td>gcf</td>
+<td>git config –list</td>
+</tr>
+<tr>
+<td>gl</td>
+<td>git pull</td>
+</tr>
+<tr>
+<td>gp</td>
+<td>git push</td>
+</tr>
+<tr>
+<td>gr</td>
+<td>git remote</td>
+</tr>
+<tr>
+<td>gra</td>
+<td>git remote add</td>
+</tr>
+<tr>
+<td>gst</td>
+<td>git status</td>
+</tr>
+</tbody></table>
+<p>自带大部分 git 命令的缩写，命令内容可以参考 <code>~/.oh-my-zsh/plugins/git/git.plugin.zsh</code></p>
+<p><code>Oh My Zsh </code>提供了一套系统别名（alias），来达到相同的功能。比如 gst 作为 git status 的别名。而且 Git 插件是 Oh My Zsh 默认启用的，相当于你使用了 Oh My Zsh，你就拥有了一套高效率的别名，而且还是全球通用的。</p>
+<p>完整列表请参考：<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git">https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git</a>或者输入<code>alias | grep git</code>命令</p>
+<h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><ol>
+<li>连按两次 Tab 会列出所有的补全列表并直接开始选择，补全项可以使用 ctrl+n/p/f/b 上下左右切换</li>
+<li>更智能的历史命令。在用或者方向上键查找历史命令时，zsh 支持限制查找。比如，输入 ls,然后再按方向上键，则只会查找用过的 ls 命令。而此时使用则会仍然按之前的方式查找，忽略 ls</li>
+<li>智能跳转，安装了 autojump 之后，zsh 会自动记录你访问过的目录，通过 j 目录名 可以直接进行目录跳转，而且目录名支持模糊匹配和自动补全，例如你访问过 hadoop-1.0.0 目录，输入 j hado 即可正确跳转。j –stat 可以看你的历史路径库。</li>
+<li>目录浏览和跳转：输入 d，即可列出你在这个会话里访问的目录列表，输入列表前的序号，即可直接跳转。</li>
+<li>在当前目录下输入 .. 或 … ，或直接输入当前目录名都可以跳转，你甚至不再需要输入 cd 命令了。在你知道路径的情况下，比如 /usr/local/bin 你可以输入 cd /u/l/b 然后按进行补全快速输入</li>
+<li>通配符搜索：ls -l **/*.sh，可以递归显示当前目录下的 shell 文件，文件少时可以代替 find。使用 **/ 来递归搜索</li>
+<li>在 .zshrc 中添加 setopt HIST_IGNORE_DUPS 可以消除重复记录，也可以利用 <code>sort -t &quot;;&quot; -k 2 -u ~/.zsh_history | sort -o ~/.zsh_history</code> 手动清除</li>
+</ol>
+<h2 id="让它变得好看"><a href="#让它变得好看" class="headerlink" title="让它变得好看"></a>让它变得好看</h2><h3 id="安装-Powerline"><a href="#安装-Powerline" class="headerlink" title="安装 Powerline"></a>安装 <a target="_blank" rel="noopener" href="http://powerline.readthedocs.io/en/latest/installation.html">Powerline</a></h3><blockquote>
+<p>Powerline 是用 Python 写的脚本可以美化终端</p>
+</blockquote>
+<h5 id="1-安装-Python-2-X"><a href="#1-安装-Python-2-X" class="headerlink" title="1. 安装 Python 2.X"></a>1. 安装 Python 2.X</h5><p>因为 Powerline 是用 Python 写的脚本，所以我们必须确保在安装 Powerline 我们的 Mac 里面已经安装了 Python（一般来说 Mac 会自带 Python 2.X）</p>
+<pre><code class="shell">$ python -V
+Python 2.7.10
+
+# 我们可以在终端里面输入下面的代码来检查 Python 版本，若此命令没有返回任何讯息说明你的 Mac 里面没有安装 Python。
+</code></pre>
+<h5 id="2-安装-pip"><a href="#2-安装-pip" class="headerlink" title="2. 安装 pip"></a>2. 安装 pip</h5><p>安装 Powerline 的方法有很多种，我们可以通过 pip 或者 git 等工具，我推荐使用 pip，</p>
+<blockquote>
+<p>由于我还没有安装过 <code>pip</code> ， 所以先执行以下命令安装：</p>
+</blockquote>
+<pre><code class="shell">$ sudo easy_install pip
+# 或者执行下面代码安装
+$ wget https://bootstrap.pypa.io/get-pip.py -O - | python
+</code></pre>
+<h5 id="3-检查-Powerline"><a href="#3-检查-Powerline" class="headerlink" title="3. 检查 Powerline"></a>3. 检查 Powerline</h5><p>用 pip 安装 Powerline</p>
+<pre><code class="shell">$ pip show powerline-status  # 检查是否已经安装Powerline
+
+# 如果以上命令执行后，如果出现如下信息，则说明已安装，可跳过下一步。如果没有任何反应说明没有安装，则进行下一步。
+</code></pre>
+<p><strong>Powerline 信息</strong></p>
+<pre><code class="shell">--
+Metadata-Version: 1.1
+Name: powerline-status
+Version: 2.2
+Summary: The ultimate statusline/prompt utility.
+Home-page: https://github.com/powerline/powerline
+Author: Kim Silkebaekken
+Author-email: kim.silkebaekken+vim@gmail.com
+License: MIT
+Location: /Users/mac/Library/Python/2.7/lib/python/site-packages #被安装到哪個路径
+Requires:
+
+# 以我的例子，我的使用者名称是 mac
+# 所以會安装到 /Users/mac/Library/Python/2.7/lib/python/site-packages 目录底下
+</code></pre>
+<h5 id="4-安装-Powerline"><a href="#4-安装-Powerline" class="headerlink" title="4. 安装 Powerline"></a>4. 安装 Powerline</h5><p>(由于权限问题，无法安装到系统目录下，所以我加上了 –user 选项，选择安装到当前用户目录下)</p>
+<pre><code class="shell">$ pip install --user powerline-status
+</code></pre>
+<ul>
+<li>配置.bash_profile(如果是已经根据上面步骤，将 bash 切换成 zsh 的，跳过此处，配置.zshrc 就可以了)</li>
+</ul>
+<p>创建、配置 <code>.bash_profile</code> 文件（mac 默认的配置文件，没有的话需要新建一个）让终端每次启动的时候自动运行 Powerline 脚本，新建如下：</p>
+<pre><code class="shell">cd ~ &amp;&amp; l -h
+
+# 输入上述命令，查看文件夹下是否有 .bash_profile 文件，没有的话执行下面命令, 如果有就跳过下一步，
+
+touch .bash_profile  # 创建 .bash_profile 文件
+
+open .bash_profile   # 打开文件
+</code></pre>
+<ul>
+<li>配置 .zshrc</li>
+</ul>
+<pre><code class="shell">open ~/.zshrc
+</code></pre>
+<p>只需将下面代码（其实就上面打印出来的安装路径）修改后，复制到你的 <code>bash_profile </code>或者<code>.zshrc</code>文件里就可以啦：</p>
+<p><code>. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh</code></p>
+<p><strong>需要注意的是最开始的 ‘.’ 和 ‘/powerline/…’ 中间是以空格分开的。</strong></p>
+<pre><code class="shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p>这里也有可能出现“powerline/bindings/bash/../../../scripts/powerline-config:: No such file or directory”的报错。原因没有将 powerline 的相关命令添加到环境变量，可以使用软链接解决:</p>
+<p>则需要将/Users/[用户名]/Library/Python/2.7/bin 加入到 PATH 中，如下：</p>
+<pre><code class="shell">export PATH=/Users/[你的用户名]/Library/Python/2.7/bin:$PATH
+
+. /Users/[你的用户名]/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+</code></pre>
+<pre><code class="shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<h5 id="5-更换主题"><a href="#5-更换主题" class="headerlink" title="5. 更换主题"></a>5. 更换主题</h5><p>下载 agnoster 主题，同样在任何目录下，执行下列命令</p>
+<pre><code class="shell">$ cd ~
+$ git clone https://github.com/fcamblor/oh-my-zsh-agnoster-fcamblor.git
+$ open oh-my-zsh-agnoster-fcamblor/
+</code></pre>
+<p>打开文件夹，双击运行 install 文件，主题将安装到<code>~/.oh-my-zsh/themes</code>目录下</p>
+<pre><code class="shell">open ~/.zshrc  # 打开.zshrc
+</code></pre>
+<p>找到<code>ZSH_THEME</code>字段，改成：<code>ZSH_THEME=&quot;agnoster&quot;</code></p>
+<pre><code class="shell">source ~/.zshrc # 保存后执行
+</code></pre>
+<p><img src="http://cdn.chuyunt.com/uPic/1816409-20ef0157329eb98f.png"></p>
+<h5 id="6-安装-Powerline-字体"><a href="#6-安装-Powerline-字体" class="headerlink" title="6. 安装 Powerline 字体"></a>6. 安装 Powerline 字体</h5><p>通过 git clone 来下载 powerline 字体，在任意目录下，执行下列命令</p>
+<pre><code class="shell">$ cd ~
+$ git clone https://github.com/Lokaltog/powerline-fonts.git
+$ cd powerline-fonts/ &amp;&amp; ./install.sh
+</code></pre>
+<p>安装完成后，提示所有字体均已下载到/Users/mac/Library/Fonts 路径下，如下提示：</p>
+<pre><code>All Powerline fonts installed to /Users/mac/Library/Fonts
+</code></pre>
+<p>这样就说明字体库安装完了。</p>
+<p>接着打开 iTerm 2<code>Preferences</code>=&gt;<code>Profile</code>=&gt;<code>Text</code>，找到<code>Font</code>和<code>Non-ASCII Font</code>的字体都设置成 带有<code>Powerline</code> 的字体，我这里设置的字体是<code>12pt Meslo LG S DZ Regular for Powerline</code>，大家可以根据喜好选择，只要是 powerline 字体就可以。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7j33aiji8j20p50f078a.jpg"></p>
+<h5 id="7-安装配色方案"><a href="#7-安装配色方案" class="headerlink" title="7. 安装配色方案"></a>7. 安装配色方案</h5><p>下载配色方案，同样在任何目录下，执行下列命令</p>
+<pre><code class="shell">$ cd ~
+$ git clone https://github.com/altercation/solarized.git
+$ open solarized/iterm2-colors-solarized
+</code></pre>
+<p>然后进入/Users/mac/solarized/iterm2-colors-solarized 下双击 <code>Solarized Dark.itermcolors</code> 和 <code>Solarized Light.itermcolors</code> 两个文件就可以把配置文件导入到 iTerm2 里</p>
+<p>把 iTerm 2 的设置里的<code>Profile</code>=&gt;<code>colors</code>选项卡中里的<code>Load Presets</code>设置为刚刚下载的配色方案就可以了。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/65e4f1e6gw1f7jumenf9ij20po0f00tl.jpg"></p>
+<p>大功告成，看看最后效果吧：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tKfTcgy1fd1yxlso6uj30wq0pgju5.jpg"></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-iTerm2"><span class="toc-text">安装 iTerm2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iTerm-%E7%89%B9%E8%89%B2%E5%8A%9F%E8%83%BD"><span class="toc-text">iTerm 特色功能</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E8%89%B2%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">特色快捷键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%89%E6%A0%87%E6%8E%A7%E5%88%B6"><span class="toc-text">光标控制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E6%93%8D%E4%BD%9C"><span class="toc-text">窗口操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E9%A1%B5%E6%93%8D%E4%BD%9C"><span class="toc-text">标签页操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E6%9D%BF%E6%93%8D%E4%BD%9C"><span class="toc-text">面板操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E4%B9%A6%E7%AD%BE"><span class="toc-text">位置书签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B2%98%E8%B4%B4%E5%8E%86%E5%8F%B2"><span class="toc-text">粘贴历史</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%B3%E6%97%B6%E5%9B%9E%E6%94%BE"><span class="toc-text">即时回放</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E7%8A%B6%E6%80%81"><span class="toc-text">窗口状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">修改快捷键</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A9%E5%AE%83%E5%8F%98%E5%BE%97%E5%A5%BD%E7%94%A8"><span class="toc-text">让它变得好用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-homebrew"><span class="toc-text">安装 homebrew</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%87%E6%8D%A2%E6%88%90-zsh"><span class="toc-text">安装并切换成 zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-oh-my-zsh"><span class="toc-text">安装 oh-my-zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E6%8F%92%E4%BB%B6"><span class="toc-text">开启插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%85%B6%E4%BB%96%E6%8F%92%E4%BB%B6"><span class="toc-text">安装其他插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD-1"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E6%8F%92%E4%BB%B6"><span class="toc-text">Git 插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-text">使用技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A9%E5%AE%83%E5%8F%98%E5%BE%97%E5%A5%BD%E7%9C%8B"><span class="toc-text">让它变得好看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Powerline"><span class="toc-text">安装 Powerline</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85-Python-2-X"><span class="toc-text">1. 安装 Python 2.X</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85-pip"><span class="toc-text">2. 安装 pip</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%A3%80%E6%9F%A5-Powerline"><span class="toc-text">3. 检查 Powerline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%AE%89%E8%A3%85-Powerline"><span class="toc-text">4. 安装 Powerline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98"><span class="toc-text">5. 更换主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-%E5%AE%89%E8%A3%85-Powerline-%E5%AD%97%E4%BD%93"><span class="toc-text">6. 安装 Powerline 字体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-%E5%AE%89%E8%A3%85%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88"><span class="toc-text">7. 安装配色方案</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-07/打造一套得心应手的终端工具/">https://lion1ou.tech/2016-07/打造一套得心应手的终端工具/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-07/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE/" rel="next" title="hexo博客搭建和配置">
+        hexo博客搭建和配置
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-07/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAcordova%E9%A1%B9%E7%9B%AE/" rel="prev" title="命令行创建一个cordova项目">
+          命令行创建一个cordova项目
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-07/%E6%89%93%E9%80%A0%E4%B8%80%E5%A5%97%E5%BE%97%E5%BF%83%E5%BA%94%E6%89%8B%E7%9A%84%E7%BB%88%E7%AB%AF%E5%B7%A5%E5%85%B7/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

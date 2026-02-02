@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="ReactNative," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>ReactNative之样式手册 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之样式手册
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-05-29T10:33:52.000Z">
+            2018-05-29 18:33
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2.1k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">9 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/ReactNative/" rel="tag">ReactNative</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>在 React Native 中，你并不需要学习什么特殊的语法来定义样式。我们仍然是使用 JavaScript 来写样式。所有的核心组件都接受名为 style 的属性。这些样式名基本上是遵循了 web 上的 CSS 的命名，只是按照 JS 的语法要求使用了驼峰命名法，例如将 background-color 改为 backgroundColor。以下备忘一下，常用的样式和用法说明。</p>
+<span id="more"></span>
+
+<h2 id="Properties-属性"><a href="#Properties-属性" class="headerlink" title="Properties 属性"></a>Properties 属性</h2><h3 id="Text-文本"><a href="#Text-文本" class="headerlink" title="Text 文本"></a>Text 文本</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>color</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 color 属性</td>
+</tr>
+<tr>
+<td>fontFamily</td>
+<td>string</td>
+<td>对应 CSS 中的 font-family 属性</td>
+</tr>
+<tr>
+<td>fontSize</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 font-size 属性</td>
+</tr>
+<tr>
+<td>fontStyle</td>
+<td>normal, italic</td>
+<td>对应 CSS 中的 font-style 属性，但阉割了 oblique 取值</td>
+</tr>
+<tr>
+<td>fontWeight</td>
+<td>normal, bold 100~900</td>
+<td>对应 CSS 中的 font-weight 属性，但阉割了 bolder, lighter 取值</td>
+</tr>
+<tr>
+<td>lineHeight</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 line-height 属性</td>
+</tr>
+<tr>
+<td>textAlign</td>
+<td>auto, left, right, center, justify<code>iOS</code></td>
+<td>对应 CSS 中的 text-align 属性，增加了 auto 取值</td>
+</tr>
+<tr>
+<td>textAlignVertical<code>Android</code></td>
+<td>auto, top, bottom, center</td>
+<td>对应 CSS 中的 vertical-align 属性，增加了 auto 取值，center 取代了 middle，并阉割了 baseline, sub 等值</td>
+</tr>
+<tr>
+<td>textShadowColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 text-shadow 属性中的颜色定义</td>
+</tr>
+<tr>
+<td>textShadowOffset</td>
+<td>{ width: <code>&lt;number&gt;</code>, height: <code>&lt;number&gt;</code> }</td>
+<td>对应 CSS 中的 text-shadow 属性中的阴影偏移定义</td>
+</tr>
+<tr>
+<td>textShadowRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>在 CSS 中，阴影的圆角大小取决于元素的圆角定义，不需要额外定义</td>
+</tr>
+<tr>
+<td>letterSpacing<code>iOS</code></td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 letter-spacing 属性，但取值不同</td>
+</tr>
+<tr>
+<td>textDecorationColor<code>iOS</code></td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 text-decoration-color 属性</td>
+</tr>
+<tr>
+<td>textDecorationLine<code>iOS</code></td>
+<td>none, underline, line-through, underline line-through</td>
+<td>对应 CSS 中的 text-decoration-line 属性，但阉割了 overline, blink 取值</td>
+</tr>
+<tr>
+<td>textDecorationStyle<code>iOS</code></td>
+<td>solid, double, dotted, dashed</td>
+<td>对应 CSS 中的 text-decoration-style 属性，但阉割了 wavy 取值</td>
+</tr>
+<tr>
+<td>writingDirection<code>iOS</code></td>
+<td>auto, ltr, rtl</td>
+<td>对应 CSS 中的 direction 属性，增加了 auto 取值</td>
+</tr>
+</tbody></table>
+<h3 id="Dimension-尺寸"><a href="#Dimension-尺寸" class="headerlink" title="Dimension 尺寸"></a>Dimension 尺寸</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 width 属性</td>
+</tr>
+<tr>
+<td>height</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 height 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Positioning-定位"><a href="#Positioning-定位" class="headerlink" title="Positioning 定位"></a>Positioning 定位</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>position</td>
+<td>absolute, relative</td>
+<td>对应 CSS 中的 position 属性，但阉割了 static, fixed 取值</td>
+</tr>
+<tr>
+<td>top</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 top 属性</td>
+</tr>
+<tr>
+<td>right</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 right 属性</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 bottom 属性</td>
+</tr>
+<tr>
+<td>left</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 left 属性</td>
+</tr>
+<tr>
+<td>zIndex</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 z-index 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Margin-外部白"><a href="#Margin-外部白" class="headerlink" title="Margin 外部白"></a>Margin 外部白</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>margin</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 margin 属性，不同的是，只能定义一个参数，用以表示上、右、下、左 4 个方位的外补白</td>
+</tr>
+<tr>
+<td>marginHorizontal</td>
+<td><code>&lt;number&gt;</code></td>
+<td>CSS 中没有对应的属性，相当于同时设置 marginRight 和 marginLeft</td>
+</tr>
+<tr>
+<td>marginVertical</td>
+<td><code>&lt;number&gt;</code></td>
+<td>CSS 中没有对应的属性，相当于同时设置 marginTop 和 marginBottom</td>
+</tr>
+<tr>
+<td>marginTop</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 margin-top 属性</td>
+</tr>
+<tr>
+<td>marginRight</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 margin-right 属性</td>
+</tr>
+<tr>
+<td>marginBottom</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 margin-bottom 属性</td>
+</tr>
+<tr>
+<td>marginLeft</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 margin-left 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Padding-内部白"><a href="#Padding-内部白" class="headerlink" title="Padding 内部白"></a>Padding 内部白</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>padding</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 padding 属性，不同的是，只能定义一个参数，用以表示上、右、下、左 4 个方位的内补白</td>
+</tr>
+<tr>
+<td>paddingHorizontal</td>
+<td><code>&lt;number&gt;</code></td>
+<td>CSS 中没有对应的属性，相当于同时设置 paddingRight 和 paddingLeft</td>
+</tr>
+<tr>
+<td>paddingVertical</td>
+<td><code>&lt;number&gt;</code></td>
+<td>CSS 中没有对应的属性，相当于同时设置 paddingTop 和 paddingBottom</td>
+</tr>
+<tr>
+<td>paddingTop</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 padding-top 属性</td>
+</tr>
+<tr>
+<td>paddingRight</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 padding-right 属性</td>
+</tr>
+<tr>
+<td>paddingBottom</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 padding-bottom 属性</td>
+</tr>
+<tr>
+<td>paddingLeft</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 padding-left 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Border-边框"><a href="#Border-边框" class="headerlink" title="Border 边框"></a>Border 边框</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>borderStyle</td>
+<td>solid, dotted, dashed</td>
+<td>对应 CSS 中的 border-style 属性，但阉割了 none, hidden, double, groove, ridge, inset, outset 取值，且无方向分拆属性</td>
+</tr>
+<tr>
+<td>borderWidth</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-width 属性</td>
+</tr>
+<tr>
+<td>borderTopWidth</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-top-width 属性</td>
+</tr>
+<tr>
+<td>borderRightWidth</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-right-width 属性</td>
+</tr>
+<tr>
+<td>borderBottomWidth</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-bottom-width 属性</td>
+</tr>
+<tr>
+<td>borderLeftWidth</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-left-width 属性</td>
+</tr>
+<tr>
+<td>borderColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 border-color 属性</td>
+</tr>
+<tr>
+<td>borderTopColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 border-top-color 属性</td>
+</tr>
+<tr>
+<td>borderRightColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 border-right-color 属性</td>
+</tr>
+<tr>
+<td>borderBottomColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 border-bottom-color 属性</td>
+</tr>
+<tr>
+<td>borderLeftColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 border-left-color 属性</td>
+</tr>
+<tr>
+<td>borderRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-radius 属性</td>
+</tr>
+<tr>
+<td>borderTopLeftRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-top-left-radius 属性</td>
+</tr>
+<tr>
+<td>borderTopRightRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-top-right-radius 属性</td>
+</tr>
+<tr>
+<td>borderBottomLeftRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-bottom-left-radius 属性</td>
+</tr>
+<tr>
+<td>borderBottomRightRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 border-bottom-right-radius 属性</td>
+</tr>
+<tr>
+<td>shadowColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 box-shadow 属性中的颜色定义</td>
+</tr>
+<tr>
+<td>shadowOffset</td>
+<td>{ width: <code>&lt;number&gt;</code>, height: <code>&lt;number&gt;</code> }</td>
+<td>对应 CSS 中的 box-shadow 属性中的阴影偏移定义</td>
+</tr>
+<tr>
+<td>shadowRadius</td>
+<td><code>&lt;number&gt;</code></td>
+<td>在 CSS 中，阴影的圆角大小取决于元素的圆角定义，不需要额外定义</td>
+</tr>
+<tr>
+<td>shadowOpacity</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 box-shadow 属性中的阴影透明度定义</td>
+</tr>
+</tbody></table>
+<h3 id="Background-背景"><a href="#Background-背景" class="headerlink" title="Background 背景"></a>Background 背景</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>backgroundColor</td>
+<td><code>&lt;color&gt;</code></td>
+<td>对应 CSS 中的 background-color 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Transform-转换"><a href="#Transform-转换" class="headerlink" title="Transform 转换"></a>Transform 转换</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>transform</td>
+<td>[{perspective: number}, {rotate: string}, {rotateX: string}, {rotateY: string}, {rotateZ: string}, {scale: number}, {scaleX: number}, {scaleY: number}, {translateX: number}, {translateY: number}, {skewX: string}, {skewY: string}]</td>
+<td>对应 CSS 中的 transform 属性</td>
+</tr>
+<tr>
+<td>transformMatrix</td>
+<td>TransformMatrixPropType</td>
+<td>类似于 CSS 中 transform 属性的 matrix() 和 matrix3d() 函数</td>
+</tr>
+<tr>
+<td>backfaceVisibility</td>
+<td>visible, hidden</td>
+<td>对应 CSS 中的 backface-visibility 属性</td>
+</tr>
+</tbody></table>
+<h3 id="Flexbox-弹性盒"><a href="#Flexbox-弹性盒" class="headerlink" title="Flexbox 弹性盒"></a>Flexbox 弹性盒</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>flex</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 flex 属性</td>
+</tr>
+<tr>
+<td>flexDirection</td>
+<td>row, column</td>
+<td>对应 CSS 中的 flex-direction 属性，但阉割了 row-reverse, column-reverse 取值，默认值是 column 而不是 row</td>
+</tr>
+<tr>
+<td>flexWrap</td>
+<td>wrap, nowrap</td>
+<td>对应 CSS 中的 flex-wrap 属性，但阉割了 wrap-reverse 取值</td>
+</tr>
+<tr>
+<td>justifyContent</td>
+<td>flex-start, flex-end, center, space-between, space-around</td>
+<td>对应 CSS 中的 justify-content 属性，但阉割了 stretch 取值。</td>
+</tr>
+<tr>
+<td>alignItems</td>
+<td>flex-start, flex-end, center, stretch</td>
+<td>对应 CSS 中的 align-items 属性，但阉割了 baseline 取值，默认值是 stretch 而不是 flex-start，stretch 只有在不设置尺寸的时候才生效</td>
+</tr>
+<tr>
+<td>alignSelf</td>
+<td>auto, flex-start, flex-end, center, stretch</td>
+<td>对应 CSS 中的 align-self 属性，但阉割了 baseline 取值</td>
+</tr>
+</tbody></table>
+<h3 id="Other-其他"><a href="#Other-其他" class="headerlink" title="Other 其他"></a>Other 其他</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>取值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>opacity</td>
+<td><code>&lt;number&gt;</code></td>
+<td>对应 CSS 中的 opacity 属性</td>
+</tr>
+<tr>
+<td>overflow</td>
+<td>visible, hidden</td>
+<td>对应 CSS 中的 overflow 属性，但阉割了 scroll, auto 取值</td>
+</tr>
+<tr>
+<td>elevation<code>Android</code></td>
+<td><code>&lt;number&gt;</code></td>
+<td>CSS 中没有对应的属性，只在 Android5.0+ 上有效</td>
+</tr>
+<tr>
+<td>resizeMode</td>
+<td>cover, contain, stretch</td>
+<td>CSS 中没有对应的属性，可以参考 background-size 属性</td>
+</tr>
+<tr>
+<td>overlayColor<code>Android</code></td>
+<td>string</td>
+<td>CSS 中没有对应的属性，当图像有圆角时，将角落都充满一种颜色</td>
+</tr>
+<tr>
+<td>tintColor<code>iOS</code></td>
+<td><code>&lt;color&gt;</code></td>
+<td>CSS 中没有对应的属性，iOS 图像上特殊的色彩，改变不透明像素的颜色</td>
+</tr>
+</tbody></table>
+<h2 id="Valuse-取值"><a href="#Valuse-取值" class="headerlink" title="Valuse 取值"></a>Valuse 取值</h2><h3 id="Color-颜色"><a href="#Color-颜色" class="headerlink" title="Color 颜色"></a>Color 颜色</h3><p>React-Native 支持了 CSS 中大部分的颜色类型：</p>
+<ul>
+<li><code>#f00 (#rgb)</code></li>
+<li><code>#f00c (#rgba)：CSS 中无对应的值</code></li>
+<li><code>#ff0000 (#rrggbb)</code></li>
+<li><code>#ff0000cc (#rrggbbaa)：CSS 中无对应的值</code></li>
+<li><code>rgb(255, 0, 0)</code></li>
+<li><code>rgba(255, 0, 0, 0.9)</code></li>
+<li><code>hsl(360, 100%, 100%)</code></li>
+<li><code>hsla(360, 100%, 100%, 0.9)</code></li>
+<li><code>transparent</code></li>
+<li><code>Color Name</code>：支持了基本颜色关键字和拓展颜色关键字，但不支持 28 个系统颜色</li>
+</ul>
+<h3 id="Number-数值"><a href="#Number-数值" class="headerlink" title="Number 数值"></a>Number 数值</h3><p>在 React-Native 中，目前仅支持 Number 这一种长度取值。默认缺省了 pt 单位</p>
+<h2 id="UI-自适应问题"><a href="#UI-自适应问题" class="headerlink" title="UI 自适应问题"></a>UI 自适应问题</h2><p>在 React-Native 中，支持百分比单位和无单位的方式，无单位即 pt 绝对长度单位，例如：</p>
+<pre><code class="js">&lt;View style=&#123;&#123; width: 100, height: 50 &#125;&#125;&gt;&lt;/View&gt;;
+var styles = StyleSheet.create(&#123;
+  box: &#123;
+    width: 100,
+    height: 50,
+  &#125;,
+&#125;);
+</code></pre>
+<p>未达到不同设备的 UI 自适应目的，我们通过等比缩放 UI 的尺寸大小，来实现不同设备的 UI 兼容问题：</p>
+<pre><code class="js">const UiBaseWidth = 750; // 以iphone6为例等比缩放
+const px2dp = (UiPx) =&gt;
+  Math.floor(((UiPx * screenWidth) / UiBaseWidth) * 10) / 10; // 根据设计稿转换，向下取整保留一位小数
+</code></pre>
+<h2 id="踩坑！！！"><a href="#踩坑！！！" class="headerlink" title=" 踩坑！！！"></a> 踩坑！！！</h2><h3 id="1-文字垂直居中-lineHeight-设置的数值实际上会离奇的多出-0-667"><a href="#1-文字垂直居中-lineHeight-设置的数值实际上会离奇的多出-0-667" class="headerlink" title="1. 文字垂直居中(lineHeight 设置的数值实际上会离奇的多出 0.667)"></a>1. 文字垂直居中(lineHeight 设置的数值实际上会离奇的多出 0.667)</h3><p>想要如下图的效果：</p>
+<p><img src="http://cdn.chuyunt.com/lineHeight1.png" alt="lineHeight1"></p>
+<p>想法：使用<code>lineHeight</code>实现</p>
+<p>设置外部容器<code>height: 36</code></p>
+<p><img src="http://cdn.chuyunt.com/lineHeight2.png" alt="lineHeight2"></p>
+<p>想让中间字体垂直居中，扣去上下两个边框的宽度，应该设置<code>lineHeight: 34</code></p>
+<p><img src="http://cdn.chuyunt.com/lineHeight3.png" alt="lineHeight3"></p>
+<p> 发现底部的边框明显少了一部分，查看元素发现一个 bug：</p>
+<p><img src="http://cdn.chuyunt.com/lineHeight4.png" alt="lineHeight4"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><blockquote>
+<ol>
+<li>如果不设置 lineHeight，Text 元素的高度也是 <code>fontSize + 0.667</code></li>
+<li>最好的文字垂直居中方式：Text 外再包一层 View，在 View 上用<code>flex</code>布局。如下图所示：<br><img src="http://cdn.chuyunt.com/lineHeight5.png" alt="lineHeight5"></li>
+</ol>
+</blockquote>
+<h3 id="2-zIndex-调整层级无效-绝对定位的同级元素"><a href="#2-zIndex-调整层级无效-绝对定位的同级元素" class="headerlink" title="2. zIndex 调整层级无效(绝对定位的同级元素)"></a>2. zIndex 调整层级无效(绝对定位的同级元素)</h3><p>实际在使用 zIndex 属性的时候发现根本没有效果，跟 web 的 z-index 所呈现的效果完全不一样</p>
+<p>解决方法：</p>
+<p>改变元素的顺序，而不使用 zIndex。默认情况下，使用了<code>position: &#39;absolute&#39;</code>后，在后面的元素会覆盖在前面的元素之上</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Properties-%E5%B1%9E%E6%80%A7"><span class="toc-text">Properties 属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text-%E6%96%87%E6%9C%AC"><span class="toc-text">Text 文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dimension-%E5%B0%BA%E5%AF%B8"><span class="toc-text">Dimension 尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Positioning-%E5%AE%9A%E4%BD%8D"><span class="toc-text">Positioning 定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Margin-%E5%A4%96%E9%83%A8%E7%99%BD"><span class="toc-text">Margin 外部白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Padding-%E5%86%85%E9%83%A8%E7%99%BD"><span class="toc-text">Padding 内部白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Border-%E8%BE%B9%E6%A1%86"><span class="toc-text">Border 边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Background-%E8%83%8C%E6%99%AF"><span class="toc-text">Background 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transform-%E8%BD%AC%E6%8D%A2"><span class="toc-text">Transform 转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flexbox-%E5%BC%B9%E6%80%A7%E7%9B%92"><span class="toc-text">Flexbox 弹性盒</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-%E5%85%B6%E4%BB%96"><span class="toc-text">Other 其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Valuse-%E5%8F%96%E5%80%BC"><span class="toc-text">Valuse 取值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Color-%E9%A2%9C%E8%89%B2"><span class="toc-text">Color 颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Number-%E6%95%B0%E5%80%BC"><span class="toc-text">Number 数值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UI-%E8%87%AA%E9%80%82%E5%BA%94%E9%97%AE%E9%A2%98"><span class="toc-text">UI 自适应问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%EF%BC%81%EF%BC%81%EF%BC%81"><span class="toc-text"> 踩坑！！！</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%87%E5%AD%97%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD-lineHeight-%E8%AE%BE%E7%BD%AE%E7%9A%84%E6%95%B0%E5%80%BC%E5%AE%9E%E9%99%85%E4%B8%8A%E4%BC%9A%E7%A6%BB%E5%A5%87%E7%9A%84%E5%A4%9A%E5%87%BA-0-667"><span class="toc-text">1. 文字垂直居中(lineHeight 设置的数值实际上会离奇的多出 0.667)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-zIndex-%E8%B0%83%E6%95%B4%E5%B1%82%E7%BA%A7%E6%97%A0%E6%95%88-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E7%9A%84%E5%90%8C%E7%BA%A7%E5%85%83%E7%B4%A0"><span class="toc-text">2. zIndex 调整层级无效(绝对定位的同级元素)</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-05/reactnative之样式手册/">https://lion1ou.tech/2018-05/reactnative之样式手册/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-05/html5%E4%B9%8B%E7%A6%BB%E7%BA%BF%E7%BC%93%E5%AD%98/" rel="next" title="HTML5之离线缓存">
+        HTML5之离线缓存
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-07/reactnative%E4%B9%8B%E5%AF%BC%E8%88%AA%E5%99%A8%E4%BD%BF%E7%94%A8/" rel="prev" title="ReactNative之导航器使用">
+          ReactNative之导航器使用
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-05/reactnative%E4%B9%8B%E6%A0%B7%E5%BC%8F%E6%89%8B%E5%86%8C/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

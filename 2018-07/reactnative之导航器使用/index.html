@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="ReactNative," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>ReactNative之导航器使用 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之导航器使用
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-07-16T16:09:07.000Z">
+            2018-07-17 00:09
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">4.9k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">20 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/ReactNative/" rel="tag">ReactNative</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>主要是介绍了 react-navigation 的相关配置和样式设置，以及 react-navigation 内的 navigation 属性。navigator 主要分为以下三种类型：StackNavigator、TabNavigator、DrawerNavigator，每种类型都有其相应的使用场景和配置项。</p>
+<span id="more"></span>
+
+<h2 id="navigator-类型"><a href="#navigator-类型" class="headerlink" title="navigator 类型"></a>navigator 类型</h2><h3 id="StackNavigator"><a href="#StackNavigator" class="headerlink" title="StackNavigator"></a>StackNavigator</h3><p>StackNavigator 组件采用堆栈式的页面导航来实现各个界面跳转。它的构造函数：</p>
+<pre><code class="js">StackNavigator(RouteConfigs, StackNavigatorConfig);
+</code></pre>
+<p>有 RouteConfigs 和 StackNavigatorConfig 两个参数。</p>
+<h5 id="RouteConfigs"><a href="#RouteConfigs" class="headerlink" title="RouteConfigs"></a>RouteConfigs</h5><p>表示各个页面路由配置，类似于前端路由配置页，它是让导航器知道需要导航的路由对应的页面。</p>
+<pre><code class="js">const RouteConfigs = &#123;
+  Home: &#123;
+    screen: HomePage,
+    navigationOptions: (&#123; navigation &#125;) =&gt; (&#123;
+      title: &quot;首页&quot;,
+    &#125;),
+  &#125;,
+  Find: &#123;
+    screen: FindPage,
+    navigationOptions: (&#123; navigation &#125;) =&gt; (&#123;
+      title: &quot;发现&quot;,
+    &#125;),
+  &#125;,
+  Mine: &#123;
+    screen: MinePage,
+    navigationOptions: (&#123; navigation &#125;) =&gt; (&#123;
+      title: &quot;我的&quot;,
+    &#125;),
+  &#125;,
+&#125;;
+</code></pre>
+<p>这里给导航器配置了三个页面，Home、Find、Mine 为路由名称，screen 属性值 HomePage、FindPage、MinePage 为对应路由的页面。</p>
+<h5 id="navigationOptions"><a href="#navigationOptions" class="headerlink" title="navigationOptions"></a>navigationOptions</h5><blockquote>
+<p>上述代码中的 navigationOptions 是配置对应路由页面的一些属性。</p>
+</blockquote>
+<ul>
+<li>title：标题，可当作 headerTitle 的备用的字符串，不推荐使用</li>
+<li>header：可以设置一些导航的属性，如果隐藏顶部导航栏只要将这个属性设置为 null</li>
+<li>headerTitle：设置导航栏标题，推荐</li>
+<li>headerTitleAllowFontScaling：标题栏中字体是否根据字体大小自动缩放设置。 默认为 true。</li>
+<li>headerBackTitle：iOS 上的返回按钮的文字使用的字符串，或者使用 null 来禁用。默认为上一个页面的 headerTitle。</li>
+<li>headerTruncatedBackTitle：设置当上个页面标题不符合返回箭头后的文字时（一般是因为文字太多），默认改成”返回”</li>
+<li>headerRight：设置导航条右侧。可以是按钮或者其他视图控件</li>
+<li>headerLeft：设置导航条左侧。可以是按钮或者其他视图控件</li>
+<li>headerStyle：设置导航条的样式。背景色，宽高等</li>
+<li>headerTitleStyle：设置导航栏文字样式</li>
+<li>headerBackTitleStyle：设置导航栏‘返回’文字样式</li>
+<li>headerTintColor：设置导航栏颜色</li>
+<li>headerPressColorAndroid：安卓独有的设置颜色纹理，需要安卓版本大于 5.0</li>
+<li>gesturesEnabled：是否支持滑动返回手势，iOS 默认支持，安卓默认关闭</li>
+<li>gestureResponseDistance：触发滑动返回手势的属性<ul>
+<li>horizontal - 数值型 - 水平方向的距离，默认值 25</li>
+<li>vertical - 数值型 - 垂直方向的距离，默认值 135.</li>
+</ul>
+</li>
+<li>gestureDirection：用来设置关闭页面的手势方向，默认 default 是从做往右，inverted 是从右往左</li>
+</ul>
+<h5 id="StackNavigatorConfig"><a href="#StackNavigatorConfig" class="headerlink" title="StackNavigatorConfig"></a>StackNavigatorConfig</h5><blockquote>
+<p>可以通过设置 StackNavigatorConfig，来全局设置 navigator 页面的基本样式和属性</p>
+</blockquote>
+<pre><code class="js">const StackNavigatorConfig = &#123;
+  initialRouteName: &quot;Home&quot;,
+  initialRouteParams: &#123; initPara: &quot;初始页面参数&quot; &#125;,
+  navigationOptions: &#123;
+    title: &quot;标题&quot;,
+    headerTitleStyle: &#123; fontSize: 18, color: &quot;#666666&quot; &#125;,
+    headerStyle: &#123; height: 48, backgroundColor: &quot;#fff&quot; &#125;,
+  &#125;,
+  paths: &quot;page/main&quot;,
+  mode: &quot;card&quot;,
+  headerMode: &quot;screen&quot;,
+  cardStyle: &#123; backgroundColor: &quot;#ffffff&quot; &#125;,
+  transitionConfig: () =&gt; (&#123;
+    screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+  &#125;),
+  onTransitionStart: () =&gt; &#123;
+    console.log(&quot;页面跳转动画开始&quot;);
+  &#125;,
+  onTransitionEnd: () =&gt; &#123;
+    console.log(&quot;页面跳转动画结束&quot;);
+  &#125;,
+&#125;;
+</code></pre>
+<ul>
+<li>initialRouteName：设置默认的页面组件，必须是上面已注册的页面组件</li>
+<li>initialRouteParams：初始路由参数</li>
+<li>navigationOptions：用于页面的默认导航选项</li>
+<li>mode：定义跳转风格<ul>
+<li>card：使用 iOS 和安卓默认的风格</li>
+<li>modal：iOS 独有的使屏幕从底部画出。类似 iOS 的 present 效果</li>
+</ul>
+</li>
+<li>headerMode：返回上级页面时动画效果<ul>
+<li>float：iOS 默认的效果，渲染一个放在顶部的标题栏，并在页面改变时显示动画。 这是 iOS 上的常见模式。</li>
+<li>screen：渲染一个放在顶部的标题栏，并在页面改变时显示动画。 这是 iOS 上的常见模式。</li>
+<li>none：无动画</li>
+</ul>
+</li>
+<li>cardStyle：自定义设置跳转效果</li>
+<li>transitionConfig： 自定义设置滑动返回的配置<ul>
+<li>transitionProps - 新页面跳转的属性。</li>
+<li>prevTransitionProps - 上一个页面跳转的属性</li>
+<li>isModal - 指定页面是否为 modal。</li>
+</ul>
+</li>
+<li>onTransitionStart：当转换动画即将开始时被调用的功能</li>
+<li>onTransitionEnd：当转换动画完成，将被调用的功能</li>
+<li>path：路由中设置的路径的覆盖映射配置，path 属性适用于其他 app 或浏览器使用 url 打开本 app 并进入指定页面。path 属性用于声明一个界面路径，例如：【/pages/Home】。此时我们可以在手机浏览器中输入：app 名称://pages/Home 来启动该 App，并进入 Home 界面。</li>
+</ul>
+<h5 id="页面内配置"><a href="#页面内配置" class="headerlink" title="页面内配置"></a>页面内配置</h5><p>页面的配置选项 navigationOptions 通常还可以在对应页面中去静态配置，比如在 HomePage 页面中：</p>
+<pre><code class="js">export default class HomePage extends Component &#123;
+  // 配置页面导航选项
+  static navigationOptions = (&#123; navigation &#125;) =&gt; (&#123;
+    title: &quot;HOME&quot;,
+    titleStyle: &#123; color: &quot;#ff00ff&quot; &#125;,
+    headerStyle: &#123; backgroundColor: &quot;#000000&quot; &#125;,
+  &#125;);
+
+  render() &#123;
+    return &lt;View&gt;&lt;/View&gt;;
+  &#125;
+&#125;
+</code></pre>
+<blockquote>
+<p>同样地，在页面里面采用静态的方式配置 navigationOptions 中的属性，会覆盖 StackNavigator 构造函数中两个参数 RouteConfigs 和 StackNavigatorConfig 配置的 navigationOptions 里面的对应属性。navigationOptions 中属性的优先级是：页面中静态配置 &gt; RouteConfigs &gt; StackNavigatorConfig</p>
+</blockquote>
+<p>已经配置好导航器以及对应的路由页面了，但是要完成页面之间的跳转，还需要 navigation。</p>
+<h5 id="navigation"><a href="#navigation" class="headerlink" title="navigation"></a>navigation</h5><p>在导航器中的每一个页面，都有 navigation 属性，该属性有以下几个属性/方法：</p>
+<ul>
+<li>navigate - 跳转到其他页面</li>
+<li>state - 当前页面导航器的状态</li>
+<li>setParams - 更改路由的参数</li>
+<li>goBack - 返回</li>
+<li>dispatch - 发送一个 action</li>
+</ul>
+<p><strong>navigete</strong></p>
+<p>调用这个方法可以跳转到导航器中的其他页面，此方法有三个参数：</p>
+<ul>
+<li>routeName 导航器中配置的路由名称</li>
+<li>params 传递参数到下一个页面</li>
+<li>action action</li>
+</ul>
+<p>比如：this.props.navigation.navigate(‘Find’, {param: ‘i am the param’});</p>
+<p><strong>state</strong></p>
+<p>state 里面包含有传递过来的参数 params、key、路由名称 routeName，打印 log 可以看得到：</p>
+<pre><code class="js">&#123;
+  params: &#123; param: &#39;i am the param&#39; &#125;,
+  key: &#39;id-1500546317301-1&#39;,
+  routeName: &#39;Mine&#39;
+&#125;
+</code></pre>
+<p><strong>setParams</strong></p>
+<p>更改当前页面路由的参数，比如可以用来更新头部的按钮或者标题。</p>
+<pre><code class="js">componentDidMount() &#123;
+    this.props.navigation.setParams(&#123;param:&#39;i am the new param&#39;&#125;)
+&#125;
+</code></pre>
+<p><strong>goBack</strong></p>
+<p>回退，可以不传，也可以传参数，还可以传 null。</p>
+<pre><code class="js">this.props.navigation.goBack(); // 回退到上一个页面
+this.props.navigation.goBack(null); // 回退到任意一个页面
+this.props.navigation.goBack(&quot;Home&quot;); // 回退到Home页面复制代码
+</code></pre>
+<p><strong>dispatch</strong></p>
+<h3 id="TabNavigator"><a href="#TabNavigator" class="headerlink" title="TabNavigator"></a>TabNavigator</h3><pre><code class="js">TabNavigator(RouteConfigs, TabNavigatorConfig);
+</code></pre>
+<p>TabNavigator 配置与 StackNavigator 配置是一样的。</p>
+<ul>
+<li>screen：和导航的功能是一样的，对应界面名称，可以在其他页面通过这个 screen 传值和跳转。</li>
+</ul>
+<h5 id="navigationOptions-1"><a href="#navigationOptions-1" class="headerlink" title="navigationOptions"></a>navigationOptions</h5><ul>
+<li>title：标题，可用作 headerTitle 和 tabBarLabel 回退标题</li>
+<li>tabBarVisible：是否隐藏标签栏。默认不隐藏(true)</li>
+<li>tabBarIcon：设置标签栏的图标。需要给每个都设置</li>
+<li>tabBarLabel：设置标签栏的 title。推荐</li>
+<li>swipeEnabled：是否允许 tab 页之间滑动切换，如果未设置，则使用 TabNavigatorConfig 的 swipeEnabled 选项</li>
+<li>tabBarOnPress：tab 被点击时的回调函数；参数是一个对象，包含一下属性：<ul>
+<li>previousScene: { route, index } ：正在离开的页面</li>
+<li>scene: { route, index } 被点击的页面</li>
+<li>jumpToIndex 执行跳转操作必须的参数</li>
+</ul>
+</li>
+</ul>
+<h5 id="TabNavigatorConfig"><a href="#TabNavigatorConfig" class="headerlink" title="TabNavigatorConfig"></a>TabNavigatorConfig</h5><ul>
+<li>tabBarComponent - 用作渲染 tab bar 的组件，例如 TabBarBottom（这是 iOS 上的默认设置），TabBarTop（这是 Android 上的默认设置）。</li>
+<li>tabBarPosition：设置 tabbar 的位置，iOS 默认在底部，安卓默认在顶部。（属性值：’top’，’bottom’）</li>
+<li>swipeEnabled：是否允许在标签之间进行滑动</li>
+<li>animationEnabled：是否在更改标签时显示动画</li>
+<li>configureTransition - 给定 currentTransitionProps 和 nextTransitionProps 的函数，其返回一个配置对象，该对象用于描述 tab 页之间的动画</li>
+<li>initialLayout - 可以传递包含初始 height 和 width 的可选对象，用以防止 react-native-tab-view 渲染中一个帧的延迟</li>
+<li>tabBarOptions - Tab 配置属性，用在 TabBarTop 和 TabBarBottom 时有些属性不一致：<ul>
+<li>用在 TabBarBottom(在 iOS 上的默认 tabBar)<ul>
+<li>activeTintColor：label 和 icon 的前景色 活跃状态下</li>
+<li>activeBackgroundColor：label 和 icon 的背景色 活跃状态下</li>
+<li>inactiveTintColor：label 和 icon 的前景色 不活跃状态下</li>
+<li>inactiveBackgroundColor：label 和 icon 的背景色 不活跃状态下</li>
+<li>showLabel：是否显示 label，默认开启</li>
+<li>style：tabbar 的样式</li>
+<li>labelStyle：label 的样式安卓属性</li>
+<li>tabStyle - tab 页的样式</li>
+<li>allowFontScaling - 文本字体大小是否可以缩放取决于该设置，默认为 true。</li>
+</ul>
+</li>
+<li>用在 TabBarTop(在 Android 上的默认 tabBar)<ul>
+<li>activeTintColor：label 和 icon 的前景色 活跃状态下</li>
+<li>inactiveTintColor：label 和 icon 的前景色 不活跃状态下</li>
+<li>showIcon：是否显示图标，默认关闭</li>
+<li>showLabel：是否显示 label，默认开启 style：tabbar 的样式</li>
+<li>upperCaseLabel - 是否将文本转换为大小，默认是 true</li>
+<li>pressColor - material design 中的波纹颜色(仅支持 Android &gt;= 5.0)</li>
+<li>pressOpacity - 按下 tab bar 时的不透明度(仅支持 iOS 和 Android &lt; 5.0).</li>
+<li>scrollEnabled - 是否允许滑动切换</li>
+<li>tabStyle - tab 页的样式</li>
+<li>indicatorStyle - tab 页指示符的样式 (tab 页下面的一条线).</li>
+<li>labelStyle - tab bar 的文本样式</li>
+<li>iconStyle - tab bar 的图标样式</li>
+<li>style - tab bar 的样式</li>
+<li>allowFontScaling - 文本字体大小是否可以缩放取决于该设置，默认为 true。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>几个被传递到底层的路由，用于修改导航逻辑的选项</p>
+<ul>
+<li>initialRouteName - 第一次加载 tab bar 时路由的 routeName</li>
+<li>order - 定义了 tab bar 顺序的一个 routeNames 数组</li>
+<li>paths - 提供 routeName 到 path config 的映射，它覆盖了 routeConfigs 中设置的 path。</li>
+<li>backBehavior - 返回按钮是否会导致 tab 切换到初始 tab 页？ 如果是，则设置为 initialRoute，否则为 none。 默认为 initialRoute。</li>
+</ul>
+<h3 id="DrawerNavigator"><a href="#DrawerNavigator" class="headerlink" title="DrawerNavigator"></a>DrawerNavigator</h3><p>在原生 Android MD 风格里面很多 app 都会采用侧滑抽屉来做主页面的导航，利用 DrawerNavigator 在 RN 中可以很方便来实现抽屉导航。</p>
+<pre><code class="js">DrawerNavigator(RouteConfigs, DrawerNavigatorConfig);
+</code></pre>
+<p>和 DrawerNavigator 的构造函数一样，参数配置也类似。</p>
+<p>可以手动去操作抽屉导航</p>
+<pre><code class="js">this.props.navigation.navigate(&quot;DrawerOpen&quot;); // open drawer
+this.props.navigation.navigate(&quot;DrawerClose&quot;); // close drawer
+this.props.navigation.navigate(&quot;DrawerToggle&quot;); // toggle drawer
+</code></pre>
+<h5 id="DrawerNavigatorConfig"><a href="#DrawerNavigatorConfig" class="headerlink" title="DrawerNavigatorConfig"></a>DrawerNavigatorConfig</h5><ul>
+<li>drawerWidth - 抽屉的宽度</li>
+<li>drawerPosition - 选项是左或右。 默认为左侧位置</li>
+<li>contentComponent - 用于呈现抽屉内容的组件，例如导航项。 接收抽屉的导航。 默认为 DrawerItems</li>
+<li>useNativeAnimations - 是否使用原生动画，默认 true.</li>
+<li>drawerBackgroundColor - 抽屉的背景色，默认是 white.</li>
+<li>contentOptions 用来配置抽屉内容的属性。<ul>
+<li>items - 路由数组，可以被修改或者覆盖</li>
+<li>activeItemKey - 当前选中页的路由的 key</li>
+<li>activeTintColor - 选中的 DrawerItem 的文本和图标颜色</li>
+<li>activeBackgroundColor - 选中的 DrawerItem 的背景色</li>
+<li>inactiveTintColor - 未选中的 DrawerItem 的文本和图标颜色</li>
+<li>inactiveBackgroundColor - 未选中的 DrawerItem 的背景色</li>
+<li>onItemPress(route) - DrawerItem 被点击时触发的事件</li>
+<li>itemsContainerStyle - DrawerItem 容器的样式</li>
+<li>itemStyle - 每个 DrawerItem 的样式, 可以包含文本或图标</li>
+<li>labelStyle - 当文本是字符串时，设置 DrawerItem 中文本的样式</li>
+<li>iconContainerStyle - 用于覆盖 View 图标容器的样式</li>
+</ul>
+</li>
+</ul>
+<p>几个被传递到底层的路由，用于修改导航逻辑的选项</p>
+<ul>
+<li>initialRouteName - 初始路由的 routeName</li>
+<li>order - 定义抽屉项目顺序的 routeNames 数组。</li>
+<li>paths - 提供 routeName 到路径配置的映射，它覆盖 routeConfigs 中设置的路径。</li>
+<li>backBehavior - 后退按钮是否会切换到初始路由？ 如果是，设置为 initialRoute，否则为 none。 默认为 initialRoute 行为</li>
+</ul>
+<h3 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h3><pre><code class="js">let _this = null;
+
+export default class WebViewPage extends Component &#123;
+    static navigationOptions = (&#123; navigation &#125;) =&gt; (&#123;
+        // ......
+                    onPress=&#123;() =&gt; _this.reload() &#125;&gt;
+        // ......
+        )
+    &#125;);
+   componentDidMount() &#123;
+       _this = this;
+   &#125;
+    _reload() &#123;
+        console.log(&quot;aaaaaaa&quot;);
+    &#125;
+</code></pre>
+<h2 id="navigation-1"><a href="#navigation-1" class="headerlink" title="navigation"></a>navigation</h2><blockquote>
+<p>应用中的每个页面组件都会自动提供 navigation prop， 该 prop 包含便捷的方法用于触发导航操作， 如下所示:</p>
+</blockquote>
+<ul>
+<li>navigate -转到另一个屏幕, 计算出需要执行的操作</li>
+<li>goBack -关闭活动屏幕并在堆栈中向后移动</li>
+<li>addListener -订阅导航生命周期的更新</li>
+<li>isFocused -函数返回 true 如果屏幕焦点和 false 否则。</li>
+<li>state -当前状态/路由</li>
+<li>setParams -对路由的参数进行更改</li>
+<li>getParam -获取具有回退的特定参数</li>
+<li>dispatch - 向路由发送 action</li>
+<li>dangerouslyGetParent - 返回父级 navigator 的函数</li>
+</ul>
+<p>重要的是要强调 navigation prop 不传递给所有组件; 只有 screen 组件会自动收到此 prop。</p>
+<h3 id="Navigator-dependent-functions"><a href="#Navigator-dependent-functions" class="headerlink" title="Navigator-dependent functions"></a>Navigator-dependent functions</h3><p>this.props.navigation 上有一些取决于当前 navigator 的附加函数</p>
+<p>如果是 StackNavigator，除了 navigate 和 goBack ，还提供了如下方法：</p>
+<ul>
+<li>push - 推一个新的路由到堆栈</li>
+<li>pop - 返回堆栈中的上一个页面</li>
+<li>popToTop - 跳转到堆栈中最顶层的页面</li>
+<li>replace - 用新路由替换当前路由</li>
+<li>reset 操作会擦除整个导航状态，并将其替换为多个操作的结果。</li>
+<li>dismiss - 关闭当前堆栈</li>
+</ul>
+<p>如果是 DrawerNavigator, 则还可以使用以下选项:</p>
+<ul>
+<li>openDrawer - 打开</li>
+<li>closeDrawer - 关闭</li>
+<li>toggleDrawer - 切换，如果是打开则关闭，反之亦然</li>
+</ul>
+<h3 id="通用-API-参考"><a href="#通用-API-参考" class="headerlink" title="通用 API 参考"></a>通用 API 参考</h3><p>与 navigation 到大部分操作都涉及到 navigate、goBack、state 、 setParams 和 getParams。</p>
+<h4 id="navigate-链接到其它页面"><a href="#navigate-链接到其它页面" class="headerlink" title="navigate - 链接到其它页面"></a>navigate - 链接到其它页面</h4><p>调用此方法可跳转到应用程序中的另一个页面. 可采用以下参数:</p>
+<pre><code class="js">navigation.navigate(&#123; routeName, params, action, key &#125;);
+</code></pre>
+<p>或者</p>
+<pre><code class="js">navigation.navigate(routeName, params, action);
+</code></pre>
+<ul>
+<li>routeName - 已在应用程序路由器中某处注册的目标 routeName</li>
+<li>params - 合并到目标路由的参数</li>
+<li>action -如果页面是 navigator，则是子路由中运行的子操作，有关支持的操作的完整列表，请参见 Actions Doc</li>
+<li>key - 要导航到的路由的可选标识符。 如果已存在，将后退到此路由</li>
+</ul>
+<pre><code class="js">class HomeScreen extends React.Component &#123;
+  render() &#123;
+    const &#123; navigate &#125; = this.props.navigation;
+
+    return (
+      &lt;View&gt;
+        &lt;Text&gt;This is the home screen of the app&lt;/Text&gt;
+        &lt;Button
+          onPress=&#123;() =&gt; navigate(&quot;Profile&quot;, &#123; name: &quot;Brent&quot; &#125;)&#125;
+          title=&quot;Go to Brent&#39;s profile&quot;
+        /&gt;
+      &lt;/View&gt;
+    );
+  &#125;
+&#125;
+</code></pre>
+<h4 id="goBack-关闭当前页面并返回上一个页面"><a href="#goBack-关闭当前页面并返回上一个页面" class="headerlink" title="goBack - 关闭当前页面并返回上一个页面"></a>goBack - 关闭当前页面并返回上一个页面</h4><p>可以选择提供一个 key, 指定要返回的路由。 默认情况下, goBack 将关闭调用该方法的页面 如果目标是在任何位置返回 <code>*</code>, 而不指定要关闭的内容, 请调用 <code>.goBack(null);</code> 注意, null 参数在嵌套 StackNavigators 的情况下很有用 如果子导航器在堆栈中已经只有一个项目, 则返回父导航器。</p>
+<pre><code class="js">class HomeScreen extends React.Component &#123;
+  render() &#123;
+    const &#123; goBack &#125; = this.props.navigation;
+    return (
+      &lt;View&gt;
+        &lt;Button onPress=&#123;() =&gt; goBack()&#125; title=&quot;Go back from this HomeScreen&quot; /&gt;
+        &lt;Button onPress=&#123;() =&gt; goBack(null)&#125; title=&quot;Go back anywhere&quot; /&gt;
+        &lt;Button
+          onPress=&#123;() =&gt; goBack(&quot;screen-123&quot;)&#125;
+          title=&quot;Go back from screen-123&quot;
+        /&gt;
+      &lt;/View&gt;
+    );
+  &#125;
+&#125;
+</code></pre>
+<p>使用 goBack 从一个指定的页面返回</p>
+<p>请记住以下导航堆栈历史记录：</p>
+<pre><code class="js">navigation.navigate(SCREEN_KEY_A);
+navigation.navigate(SCREEN_KEY_B);
+navigation.navigate(SCREEN_KEY_C);
+navigation.navigate(SCREEN_KEY_D);
+</code></pre>
+<p>现在你在 <code>* screen D</code> 上，并且想要回到 <code>screen A *</code>（销毁 D、C 和 B）。 然后你需要提供一个 <code>goBack * FROM *</code> 的 key：</p>
+<pre><code class="js">navigation.goBack(SCREEN_KEY_B); // 将从 screen B 跳转到 screen A
+</code></pre>
+<p>如果，<code>* screen A *</code> 在堆栈的顶部, 你可以使用 navigation.popToTop()方法。</p>
+<h4 id="addListener-订阅导航生命周期的更新"><a href="#addListener-订阅导航生命周期的更新" class="headerlink" title="addListener - 订阅导航生命周期的更新"></a>addListener - 订阅导航生命周期的更新</h4><p>React Navigation 将事件发送到订阅了它们的页面组件：</p>
+<ul>
+<li>willFocus -页面将获取焦点</li>
+<li>didFocus - 页面已获取到焦点（如果有过渡动画，等过渡动画执行完成后响应）</li>
+<li>willBlur - 页面将失去焦点</li>
+<li>didFocus - 页面已获取到焦点（如果有过渡动画，等过渡动画执行完成后响应）</li>
+</ul>
+<pre><code class="js">const didBlurSubscription = this.props.navigation.addListener(
+  &quot;didBlur&quot;,
+  (payload) =&gt; &#123;
+    console.debug(&quot;didBlur&quot;, payload);
+  &#125;
+);
+
+// Remove the listener when you are done
+didBlurSubscription.remove();
+</code></pre>
+<p>JSON 格式的参数:</p>
+<pre><code class="js">&#123;
+  action: &#123; type: &#39;Navigation/COMPLETE_TRANSITION&#39;, key: &#39;StackRouterRoot&#39; &#125;,
+  context: &#39;id-1518521010538-2:Navigation/COMPLETE_TRANSITION_Root&#39;,
+  lastState: undefined,
+  state: undefined,
+  type: &#39;didBlur&#39;,
+&#125;;
+</code></pre>
+<p>你也可以用 <NavigationEvents/>组件 以声明的方式订阅导航事件。</p>
+<h4 id="isFocused-查询页面是否获取到焦点"><a href="#isFocused-查询页面是否获取到焦点" class="headerlink" title="isFocused - 查询页面是否获取到焦点"></a>isFocused - 查询页面是否获取到焦点</h4><p>如果页面已获取到焦点，则返回 true 否则返回 false。</p>
+<pre><code class="js">let isFocused = this.props.navigation.isFocused();
+</code></pre>
+<p>您可能希望使用 withNavigationFocus 而不是直接使用此方法, 它将传入一个布尔型的 prop – isFocused 到你的组件。</p>
+<h4 id="state-当前的-state-或-route"><a href="#state-当前的-state-或-route" class="headerlink" title="state - 当前的 state 或 route"></a>state - 当前的 state 或 route</h4><p>页面可以通过 this.props.navigation.state 访问其路由。每一个都将返回一个对象, 其内容如下:</p>
+<pre><code class="js">&#123;
+  // the name of the route config in the router
+  routeName: &#39;profile&#39;,
+  //a unique identifier used to sort routes
+  key: &#39;main0&#39;,
+  //an optional object of string options for this screen
+  params: &#123; hello: &#39;world&#39; &#125;
+&#125;
+</code></pre>
+<p>通过 <code>navigate</code> 或 <code>setParams</code> 方法传入参数。是获取页面参数最常用的方法。</p>
+<pre><code class="js">class ProfileScreen extends React.Component &#123;
+  render() &#123;
+    return Name: &#123;this.props.navigation.state.params.name&#125;;
+  &#125;
+&#125;
+</code></pre>
+<h4 id="setParams-对路由的参数进行更改"><a href="#setParams-对路由的参数进行更改" class="headerlink" title="setParams - 对路由的参数进行更改"></a>setParams - 对路由的参数进行更改</h4><p>触发<code>setParams</code>方法允许页面更改路由中的参数，这对于更新标题按钮和标题文本很有用。 <code>setParams</code> 就像 React 的 setState -他会将原来的参数与现在的参数合并</p>
+<pre><code class="js">class ProfileScreen extends React.Component &#123;
+  render() &#123;
+    return (
+      &lt;Button
+        onPress=&#123;() =&gt; this.props.navigation.setParams(&#123; name: &quot;Lucy&quot; &#125;)&#125;
+        title=&quot;Set title name to &#39;Lucy&#39;&quot;
+      /&gt;
+    );
+  &#125;
+&#125;
+</code></pre>
+<h4 id="getParam-获取指定的的参数，可设置获取失败的返回值"><a href="#getParam-获取指定的的参数，可设置获取失败的返回值" class="headerlink" title="getParam - 获取指定的的参数，可设置获取失败的返回值"></a>getParam - 获取指定的的参数，可设置获取失败的返回值</h4><p>过去, 当 params 未定义时, 你可能在获取 params 时遇到问题。 现在，你不必直接访问参数，可以调用 getParam 方法。</p>
+<p>之前：</p>
+<pre><code class="js">const &#123; name &#125; = this.props.navigation.state.params;
+</code></pre>
+<p>如果 params 未定义, 则此操作失败</p>
+<p>现在：</p>
+<pre><code class="js">const name = this.props.navigation.getParam(&quot;name&quot;, &quot;Peter&quot;);
+</code></pre>
+<p>如果 name 或 param 未定义, 则返回 Peter。</p>
+<h3 id="Stack-Actions"><a href="#Stack-Actions" class="headerlink" title="Stack Actions"></a>Stack Actions</h3><p>下列操作将在所有 stack navigator 中起作用：</p>
+<ul>
+<li>Push</li>
+</ul>
+<p>类似于 navigate, push 将跳转到堆栈中的新的路由 与 navigate 的区别在于，如果有已经加载的页面，navigate 方法将跳转到已经加载的页面，而不会重新创建一个新的页面。 push 总是会创建一个新的页面，所以一个页面可以被多次创建</p>
+<pre><code class="js">navigation.push(routeName, params, action);
+</code></pre>
+<ul>
+<li>routeName - 已在应用程序路由器中某处注册的目标 routeName</li>
+<li>params - 合并到目标路由的参数</li>
+<li>action -如果页面是 navigator，则是子路由中运行的子操作，有关支持的操作的完整列表</li>
+<li>Pop - 返回到堆栈中的上一个页面，如果提供一个参数 n，则指定在堆栈内返回几层。</li>
+</ul>
+<pre><code class="js">navigation.pop(n);
+</code></pre>
+<ul>
+<li>PopToTop</li>
+</ul>
+<p>调用该方法将直接跳转到堆栈最顶层的路由，销毁其它所有页面。</p>
+<p>navigation.popToTop()</p>
+<ul>
+<li>Replace</li>
+</ul>
+<p>调用该方法将使用指定的路由覆盖当前的页面，可以附带参数（params 和 sub-action）</p>
+<p>navigation.replace(routeName, params, action)</p>
+<ul>
+<li>Reset</li>
+</ul>
+<p>操作会擦除整个导航状态，并将其替换为多个操作的结果。</p>
+<p>navigation.reset([NavigationActions.navigate({ routeName: ‘Profile’ })], 0)</p>
+<ul>
+<li>Dismiss</li>
+</ul>
+<p>如果你想关闭整个 stack 回到父级 stack 中，调用这个方法</p>
+<p>navigation.dismiss()</p>
+<p>虽然 dispatch 方法并不常用，但是当使用 navigate 和 goBack 无法满足要求时，该方法会是个不错的选择。</p>
+<ul>
+<li>dispatch - 向路由发送 action</li>
+</ul>
+<p>使用 dispatch 将任何导航操作发送到路由后，该操作都将具有最高优先级。</p>
+<p>请注意，如果您想分发 react-navigation 操作，则应使用此库中提供的操作创建者。</p>
+<pre><code class="js">import &#123; NavigationActions &#125; from &quot;react-navigation&quot;;
+
+const navigateAction = NavigationActions.navigate(&#123;
+  routeName: &quot;Profile&quot;,
+  params: &#123;&#125;,
+
+  // navigate can have a nested navigate action that will be run inside the child router
+  action: NavigationActions.navigate(&#123; routeName: &quot;SubProfileRoute&quot; &#125;),
+&#125;);
+this.props.navigation.dispatch(navigateAction);
+</code></pre>
+<ul>
+<li>dangerouslyGetParent - get parent navigator</li>
+</ul>
+<p>例如，如果您有一个可以在多个导航器中显示的屏幕组件，则可以使用此组件根据其所在的导航器来影响其行为。</p>
+<p>另一个很好的用例是在父路由列表中查找活动路由的索引。 因此，如果您在索引 0 处于堆栈的情况下，那么您可能不想渲染后退按钮，但如果您在列表中的其他位置，那么您将渲染后退按钮。</p>
+<p>请务必始终检查调用是否返回有效值。</p>
+<pre><code class="js">class UserCreateScreen extends Component &#123;
+  static navigationOptions = (&#123; navigation &#125;) =&gt; &#123;
+    const parent = navigation.dangerouslyGetParent();
+    const gesturesEnabled =
+      parent &amp;&amp;
+      parent.state &amp;&amp;
+      parent.state.routeName === &quot;StackWithEnabledGestures&quot;;
+
+    return &#123;
+      title: &quot;New User&quot;,
+      gesturesEnabled,
+    &#125;;
+  &#125;;
+&#125;
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#navigator-%E7%B1%BB%E5%9E%8B"><span class="toc-text">navigator 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#StackNavigator"><span class="toc-text">StackNavigator</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RouteConfigs"><span class="toc-text">RouteConfigs</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#navigationOptions"><span class="toc-text">navigationOptions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#StackNavigatorConfig"><span class="toc-text">StackNavigatorConfig</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%86%85%E9%85%8D%E7%BD%AE"><span class="toc-text">页面内配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#navigation"><span class="toc-text">navigation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabNavigator"><span class="toc-text">TabNavigator</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#navigationOptions-1"><span class="toc-text">navigationOptions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TabNavigatorConfig"><span class="toc-text">TabNavigatorConfig</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DrawerNavigator"><span class="toc-text">DrawerNavigator</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DrawerNavigatorConfig"><span class="toc-text">DrawerNavigatorConfig</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6"><span class="toc-text">监听事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#navigation-1"><span class="toc-text">navigation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Navigator-dependent-functions"><span class="toc-text">Navigator-dependent functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8-API-%E5%8F%82%E8%80%83"><span class="toc-text">通用 API 参考</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#navigate-%E9%93%BE%E6%8E%A5%E5%88%B0%E5%85%B6%E5%AE%83%E9%A1%B5%E9%9D%A2"><span class="toc-text">navigate - 链接到其它页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#goBack-%E5%85%B3%E9%97%AD%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E5%B9%B6%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2"><span class="toc-text">goBack - 关闭当前页面并返回上一个页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#addListener-%E8%AE%A2%E9%98%85%E5%AF%BC%E8%88%AA%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="toc-text">addListener - 订阅导航生命周期的更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#isFocused-%E6%9F%A5%E8%AF%A2%E9%A1%B5%E9%9D%A2%E6%98%AF%E5%90%A6%E8%8E%B7%E5%8F%96%E5%88%B0%E7%84%A6%E7%82%B9"><span class="toc-text">isFocused - 查询页面是否获取到焦点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#state-%E5%BD%93%E5%89%8D%E7%9A%84-state-%E6%88%96-route"><span class="toc-text">state - 当前的 state 或 route</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setParams-%E5%AF%B9%E8%B7%AF%E7%94%B1%E7%9A%84%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%9B%B4%E6%94%B9"><span class="toc-text">setParams - 对路由的参数进行更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#getParam-%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E7%9A%84%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%8C%E5%8F%AF%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">getParam - 获取指定的的参数，可设置获取失败的返回值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stack-Actions"><span class="toc-text">Stack Actions</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-07/reactnative之导航器使用/">https://lion1ou.tech/2018-07/reactnative之导航器使用/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-05/reactnative%E4%B9%8B%E6%A0%B7%E5%BC%8F%E6%89%8B%E5%86%8C/" rel="next" title="ReactNative之样式手册">
+        ReactNative之样式手册
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-11/reactnative%E4%B9%8Biconfont%E4%BD%BF%E7%94%A8/" rel="prev" title="ReactNative之iconfont使用">
+          ReactNative之iconfont使用
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-07/reactnative%E4%B9%8B%E5%AF%BC%E8%88%AA%E5%99%A8%E4%BD%BF%E7%94%A8/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

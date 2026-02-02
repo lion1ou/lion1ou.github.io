@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>JavaScript之前端资源预加载进度条(转) [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        JavaScript之前端资源预加载进度条(转)
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-08-20T12:36:10.000Z">
+            2016-08-20 20:36
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">7 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/JavaScript/" rel="tag">JavaScript</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>我们经常会看到，一些站点在首次进入的时候会先显示一个进度条，等资源加载完毕后再呈现页面，然后整个页面的操作就会非常流畅，因为之后没必要再等待加载资源了。尤其是在移动端，或者是页游中，这样做能避免页面出现白屏（等待加载图片），很大程度提升用户体验。那这种技术是如何实现的呢？其实非常简单，本文就来从基础细节探究一番。</p>
+<span id="more"></span>
+<h3 id="资源预加载的原因"><a href="#资源预加载的原因" class="headerlink" title="资源预加载的原因"></a>资源预加载的原因</h3><p>大多时候，我们的页面并不是一次渲染完毕的，而是随着用户的操作，不断修改DOM节点，如果你动态插入了一个图片节点，那么浏览器要马上发一个http请求，把图片加载下来然后渲染在页面上，如果用户此时的网速不佳，那么加载这张图片可能就会消耗几秒钟时间，此时页面上什么都没有（白屏）。最坏的情况，如果你的应用图片很多，半天加载不出几张图，用户很可能就在白屏的那几秒跳走了。在游戏中更严重，主角的图片如果加载不出来，让用户玩空气去？</p>
+<p>除了在DOM中插入图片节点，其他凡是涉及到要展示一张新图片的操作，浏览器都得即时去请求图片。比如，为某个节点添加如下css类来增加背景图片：</p>
+<pre><code class="css">.bg1&#123;
+    background: url(http://p2.qhimg.com/t01ed1438874f940dc0.jpg);
+&#125;
+</code></pre>
+<p>或者是动态修改了src属性、在canvas绘制图片等，这些都会即时请求新资源。</p>
+<p>那么，资源预加载为什么能解决上述问题呢？</p>
+<p>我们预加载的资源，浏览器会缓存下来，再次使用的时候，浏览器会检查是不是已经在缓存中，如果在，则直接用缓存的资源，不发送请求，或者由服务端返回<code>304 not modified</code>(304只带请求头信息，不传输资源)。这样使用一张图片的时间会大大缩减，我们的页面看起来会非常流畅。也就是说，预加载的资源我们并不需要手动保存，由浏览器自动放到缓存了。</p>
+<h3 id="资源预加载的场景"><a href="#资源预加载的场景" class="headerlink" title="资源预加载的场景"></a>资源预加载的场景</h3><h5 id="什么样的项目需要预加载资源呢？"><a href="#什么样的项目需要预加载资源呢？" class="headerlink" title="什么样的项目需要预加载资源呢？"></a>什么样的项目需要预加载资源呢？</h5><p>范围应该锁定单页面应用，SPA的视图一般都是一步一步来呈现的，各种资源通过异步请求来获取，为了追求原生app般的流畅体验，可以把一些资源预加载下来。视图、图片较多的专题页面，或者是需要逐帧图片来完成的动画效果，最好都要做预加载。HTML5游戏，图片一般都比较多，而且很多逐帧动画，必须要预加载，事实上一些游戏引擎都会提供相应功能。</p>
+<h5 id="哪些资源需要预加载呢？"><a href="#哪些资源需要预加载呢？" class="headerlink" title="哪些资源需要预加载呢？"></a>哪些资源需要预加载呢？</h5><p>web中包含的资源有很多种，图片、音视频之类的媒体文件，另外就是js、css文件，这些都需要发送请求来获取。那这些资源难道我们都预加载？当然不是了，预加载也是需要消耗时间的，总不能让用户等你加载个几十秒钟吧。具体预加载哪些资源，需要基于具体的考虑，也跟你的项目相关。</p>
+<p>以下是一些我的想法：js、css文件不需进行预加载。现在写js基本都用<code>requirejs</code>之类的加载器，而且最后都会进行压缩合并，将请求数降到最低，最终只有一个文件，有些团队甚至还将压缩后的代码直接放在行内，这样一个多余的请求都没有了。</p>
+<p>那么需要预加载的就是媒体文件了，图片、音视频之类。这类资源也得根据实际情况来选择哪些需要预加载。比如大多数页面装饰性图片就需要预加载，而由业务动态获取的图片则无法预加载（预先不知道地址）。用作音效、小动画的音视频可以预加载，一个半小时长的视频就不能预加载了。</p>
+<h3 id="预加载的原理与加载进度的获取"><a href="#预加载的原理与加载进度的获取" class="headerlink" title="预加载的原理与加载进度的获取"></a>预加载的原理与加载进度的获取</h3><p>上面都是纸上谈兵的一些观点，下面我们该从技术的角度来思考一下预加载该如何实现。原理其实也相当简单，就是维护一个资源列表，挨个去加载列表中的资源，然后在每个资源加载完成的回调函数中更新进度即可。</p>
+<p>以图片为例，大致的代码应该是这样：</p>
+<pre><code class="js">var image = new Image();
+image.onload = function()&#123;&#125;;
+image.onerror = function()&#123;&#125;;
+image.src = url;
+</code></pre>
+<p>这样就OK啦，图片已经进缓存，留着以后使用吧。</p>
+<p>再说进度，这个进度严格来讲并不是文件加载的实时进度，因为我们只能在每个文件加载完成的时候执行回调，无法像<code>timeline</code>中那样拿到文件加载的实时进度。计算方法就很简单了，当前加载完的资源个数/资源总数*100，就是加载进度的百分比了。</p>
+<p>资源预加载小插件：<code>resLoader.js</code>介绍，根据上面的原理，我写了一个插件，用来做资源预加载。</p>
+<p>具备的特征如下：</p>
+<ol>
+<li>自定义资源列表，用于预加载</li>
+<li>自定义<code>onProgress</code>，想展示成进度条还是百分比数字还是个性的设计都可</li>
+<li>开始和结束可配置回调函数</li>
+<li>只支持图片的预加载</li>
+<li>支持amd、cmd加载器加载，同时支持直接用<code>&lt;script&gt;</code>标签引入使用</li>
+<li>不依赖其他库</li>
+</ol>
+<p>用法如下：</p>
+<pre><code class="js">var loader = new resLoader(&#123;
+     resources : [
+          &#39;http://p2.qhimg.com/t01ed1438874f940dc0.jpg&#39;,
+          &#39;http://p9.qhimg.com/t01b4ff03b72c7dc6c7.jpg&#39;,
+          &#39;http://p2.qhimg.com/t01dd90dfbec92074d0.jpg&#39;,
+          &#39;http://p7.qhimg.com/t01cfec6d87cde457c5.jpg&#39;,
+          &#39;http://p9.qhimg.com/t01943ced462da67833.jpg&#39;,
+          &#39;http://p0.qhimg.com/t01943ced462da67833.jpg&#39;,
+          &#39;http://p6.qhimg.com/t01aa15a7ba7ccb49a7.jpg&#39;,
+          &#39;http://p8.qhimg.com/t010f1e8badf1134376.jpg&#39;,
+          &#39;http://p8.qhimg.com/t01cf37ea915533a032.jpg&#39;,
+          &#39;http://p3.qhimg.com/t0193d8a3963e1803e9.jpg&#39;,
+          &#39;http://p3.qhimg.com/t01cd6a4d4b4bd4457b.jpg&#39;
+     ],
+     onStart : function(total)&#123;
+          console.log(&#39;start:&#39;+total);
+     &#125;,
+     onProgress : function(current, total)&#123;
+          console.log(current+&#39;/&#39;+total);
+          var percent = current/total*100;
+          $(&#39;.progressbar&#39;).css(&#39;width&#39;, percent+&#39;%&#39;);
+          $(&#39;.progresstext .current&#39;).text(current);
+          $(&#39;.progresstext .total&#39;).text(total);
+     &#125;,
+     onComplete : function(total)&#123;
+          alert(&#39;加载完毕:&#39;+total+&#39;个资源&#39;);
+     &#125;
+&#125;);
+loader.start();
+</code></pre>
+<p>各项参数都直接明了，不再多说了。在上面的例子中，我自己定义onProgress函数，做了一个简单的进度条，你也可以做其他实现。函数为你传入了current和total，分别表示当前完成的资源个数和资源总个数，可用于计算进度。效果可看在线demo：<a target="_blank" rel="noopener" href="http://idoube.com/proj/resLoader/demo.html">点击这里</a>另外附上下载地址，感兴趣的朋友可以拿去使用：<a target="_blank" rel="noopener" href="http://files.cnblogs.com/files/lvdabao/resLoader.zip">http://files.cnblogs.com/files/lvdabao/resLoader.zip</a></p>
+<p>这里想多说的东西是关于加载进度的，我上面说了我们只能获取到的是进度其实是离散的点，不是连续的。其实利用HTML5的xhr2的新特性我们也可以尝试获取更加精确的进度。因为xhr2新增了一个非常有趣的特性：可以从服务端获取文件数据。我们以前从服务端返回的数据都是字符串，现在可以直接返回Blob类型的文件。</p>
+<p>那么在这里做一个猜想，能不能利用此特性，做更加精确的进度计算呢？我在此处只是提出一种可能性，还未做实践。我们知道xhr2新增的upload属性可以让我们获取到文件上传的进度信息，但对于返回的数据，却无法直接提供进度信息，所以要想依靠它来实现还得做其他工作。</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">资源预加载的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-text">资源预加载的场景</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9C%80%E8%A6%81%E9%A2%84%E5%8A%A0%E8%BD%BD%E8%B5%84%E6%BA%90%E5%91%A2%EF%BC%9F"><span class="toc-text">什么样的项目需要预加载资源呢？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E8%B5%84%E6%BA%90%E9%9C%80%E8%A6%81%E9%A2%84%E5%8A%A0%E8%BD%BD%E5%91%A2%EF%BC%9F"><span class="toc-text">哪些资源需要预加载呢？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%BA%A6%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="toc-text">预加载的原理与加载进度的获取</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-08/javascript之前端资源预加载进度条-转/">https://lion1ou.tech/2016-08/javascript之前端资源预加载进度条-转/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-07/cordova%E9%A1%B9%E7%9B%AE%E5%A4%87%E5%BF%98/" rel="next" title="cordova项目备忘">
+        cordova项目备忘
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-08/javascript%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="JavaScript之正则表达式">
+          JavaScript之正则表达式
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-08/javascript%E4%B9%8B%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E9%A2%84%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%BA%A6%E6%9D%A1-%E8%BD%AC/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

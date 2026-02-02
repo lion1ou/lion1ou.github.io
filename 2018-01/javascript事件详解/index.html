@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>javaScript事件详解 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        javaScript事件详解
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-01-27T02:38:32.000Z">
+            2018-01-27 10:38
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.7k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">7 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/JavaScript/" rel="tag">JavaScript</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <span id="more"></span>
+<h3 id="事件绑定和普通事件有什么区别"><a href="#事件绑定和普通事件有什么区别" class="headerlink" title="事件绑定和普通事件有什么区别"></a>事件绑定和普通事件有什么区别</h3><p>事件绑定就是针对dom元素的事件，绑定在dom元素上。普通事件即为非针对dom元素的事件。</p>
+<ul>
+<li>普通事件不能同时注册多个事件</li>
+<li>普通事件只在冒泡被调用</li>
+</ul>
+<pre><code class="js">// 普通事件
+var btn = document.getElementById(&quot;hello&quot;);
+btn.onclick = function()&#123;
+    alert(1);
+&#125;;
+btn.onclick = function()&#123;
+    alert(2);
+&#125;; //这个事件只会弹出2;
+// 在事件冒泡过程中被调用
+// 作为btn的属性绑定事件，function1会被function2覆盖而只执行function2;
+
+// 事件绑定
+var btn = document.getElementById(&quot;hello&quot;);
+btn.addEventListener(&quot;click&quot;,function()&#123;
+    alert(1);
+&#125;,false);
+btn.addEventListener(&quot;click&quot;,function()&#123;
+    alert(2);
+&#125;,false); //这个事件首先会弹出1，然后在弹出2;
+</code></pre>
+<h3 id="IE和DOM事件流的区别-事件模型"><a href="#IE和DOM事件流的区别-事件模型" class="headerlink" title="IE和DOM事件流的区别(事件模型)"></a>IE和DOM事件流的区别(事件模型)</h3><h5 id="1-执行顺序不一样，IE采用冒泡型事件，DOM使用先捕获后冒泡型事件，Netscape使用捕获型事件"><a href="#1-执行顺序不一样，IE采用冒泡型事件，DOM使用先捕获后冒泡型事件，Netscape使用捕获型事件" class="headerlink" title="1.执行顺序不一样，IE采用冒泡型事件，DOM使用先捕获后冒泡型事件，Netscape使用捕获型事件"></a>1.执行顺序不一样，IE采用冒泡型事件，DOM使用先捕获后冒泡型事件，Netscape使用捕获型事件</h5><pre><code class="html">&lt;body&gt;
+    &lt;div&gt;
+        &lt;button&gt;点击这里&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<ul>
+<li>冒泡型事件模型： button-&gt;div-&gt;body (IE事件流)</li>
+<li>捕获型事件模型： body-&gt;div-&gt;button (Netscape事件流)</li>
+<li>DOM事件模型： body-&gt;div-&gt;button-&gt;button-&gt;div-&gt;body (先捕获后冒泡)</li>
+</ul>
+<h5 id="2-事件侦听函数的区别（参数不同，事件是否”on”，this指向问题）"><a href="#2-事件侦听函数的区别（参数不同，事件是否”on”，this指向问题）" class="headerlink" title="2.事件侦听函数的区别（参数不同，事件是否”on”，this指向问题）"></a>2.事件侦听函数的区别（参数不同，事件是否”on”，this指向问题）</h5><pre><code class="js">// IE使用:
+[Object].attachEvent(&quot;onclick&quot;, fnHandler); //绑定函数
+[Object].detachEvent(&quot;onclick&quot;, fnHandler); //移除绑定
+// IE下利用attachEvent注册的处理函数调用时，this指向不再是先前注册事件的元素，这时的this为window对象了
+
+// DOM使用：(该方法既支持注册冒泡型事件处理，又支持捕获型事件处理)
+[Object].addEventListener(&quot;click&quot;, fnHandler, false/true); //绑定函数
+[Object].removeEventListener(&quot;click&quot;, fnHandler, false/true); //移除绑定
+// 第三个参数注明该处理回调函数是在事件传递过程中的捕获阶段(true)被调用还是冒泡阶段(flase)被调用
+
+// 通用方法，注册事件
+function addEvent(element, type, handler) &#123;
+    if (element.addEventListener) &#123;
+        //事件类型、需要执行的函数、是否捕捉
+        element.addEventListener(type, handler, false);
+    &#125; else if (element.attachEvent) &#123;
+        element.attachEvent(&#39;on&#39; + type, function() &#123;
+            handler.call(element);
+        &#125;);
+    &#125; else &#123;
+        element[&#39;on&#39; + type] = handler;
+    &#125;
+&#125;
+// 通用方法，移除事件
+function removeEvent(element, type, handler) &#123;
+    if (element.removeEventListener) &#123;
+        element.removeEventListener(type, handler, false);
+    &#125; else if (element.datachEvent) &#123;
+        element.detachEvent(&#39;on&#39; + type, handler);
+    &#125; else &#123;
+        element[&#39;on&#39; + type] = null;
+    &#125;
+&#125;
+// 通用方法，获取事件目标
+function getTarget(event) &#123;
+    return event.target || event.srcElement;
+&#125;
+</code></pre>
+<h5 id="如何取消浏览器事件的传递"><a href="#如何取消浏览器事件的传递" class="headerlink" title="如何取消浏览器事件的传递"></a>如何取消浏览器事件的传递</h5><p>取消事件传递是指：停止捕获型事件或冒泡型事件的进一步传递。在body处理停止事件传递后，位于上层的document的事件监听器就不再收到通知，不再被处理。</p>
+<pre><code class="js">// IE下,通过设置event对象的cancelBubble为true
+window.event.cancelBubble = true;
+
+// DOM标准情况下，通过调用event对象的stopPropagation()方法
+event.stopPropagation()
+
+// 通用方法
+function stopHandler(event) &#123;
+    window.event ? window.event.cancelBubble = true : event.stopPropagation();
+&#125;;
+</code></pre>
+<h5 id="事件传递后浏览器的默认处理"><a href="#事件传递后浏览器的默认处理" class="headerlink" title="事件传递后浏览器的默认处理"></a>事件传递后浏览器的默认处理</h5><p>事件传递后的默认处理是指：通常浏览器在事件传递并处理完后会执行与该事件关联的默认动作（如果存在这样的动作）</p>
+<pre><code class="js">// IE下通过设置event对象的returnValue为flase
+window.event.returnValue = false
+
+// DOM下调用event对象的preventDefault()方法
+event.preventDefault()
+
+// 通用方法
+function cancelHandler(event)&#123;
+  var event = event || window.event;  //用于IE
+  if(event.preventDefault) event.preventDefault();  //标准技术
+  if(event.returnValue) event.returnValue = false;  //IE
+  return false;   //用于处理使用对象属性注册的处理程序
+&#125;
+</code></pre>
+<h5 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h5><ol>
+<li>捕获型事件传递由最不精确的祖先元素一直到最精确的事件源元素，传递方式与操作系统中的全局快捷键与应用程序快捷键相似。当一个系统组合键发生时，如果注册了系统全局快捷键监听器，该事件就先被操作系统层捕获，全局监听器就先于应用程序快捷键监听器得到通知，也就是全局的先获得控制权，它有权阻止事件的进一步传递。所以捕获型事件模型适用于作全局范围内的监听，这里的全局是相对的全局，相对于某个顶层结点与该结点所有子孙结点形成的集合范围。例如你想作全局的点击事件监听，相对于document结点与document下所有的子结点，在某个条件下要求所有的子结点点击无效，这种情况下冒泡模型就解决不了了，而捕获型却非常适合，可以在最顶层结点添加捕获型事件监听器</li>
+<li>可以说我们平时用的都是冒泡事件模型，因为IE只支持这模型。这里还是说说，在恰当利用该模型可以提高脚本性能。在元素一些频繁触发的事件中，如onmousemove, onmouseover,onmouseout,如果明确事件处理后没必要进一步传递，那么就可以大胆的取消它。此外，对于子结点事件监听器的处理会对父层监听器处理造成负面影响的，也应该在子结点监听器中禁止事件进一步向上传递以消除影响。</li>
+</ol>
+<h3 id="什么是事件代理（事件委托）"><a href="#什么是事件代理（事件委托）" class="headerlink" title="什么是事件代理（事件委托）"></a>什么是事件代理（事件委托）</h3><p>当我们需要对很多元素添加事件的时候，可以通过将事件添加到它们的父节点而将事件委托给父节点来触发处理函数。这主要得益于浏览器的事件冒泡机制</p>
+<pre><code class="html">&lt;ul id=&quot;parent-list&quot;&gt;
+  &lt;li id=&quot;post-1&quot;&gt;Item 1&lt;/li&gt;
+  &lt;li id=&quot;post-2&quot;&gt;Item 2&lt;/li&gt;
+  &lt;li id=&quot;post-3&quot;&gt;Item 3&lt;/li&gt;
+  &lt;li id=&quot;post-4&quot;&gt;Item 4&lt;/li&gt;
+  &lt;li id=&quot;post-5&quot;&gt;Item 5&lt;/li&gt;
+  &lt;li id=&quot;post-6&quot;&gt;Item 6&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>当我们的鼠标移到Li上的时候，需要获取此Li的相关信息并飘出悬浮窗以显示详细信息，或者当某个Li被点击的时候需要触发相应的处理事件。我们通常的写法，是为每个Li都添加一些类似onMouseOver或者onClick之类的事件监听。</p>
+<pre><code class="js">// 获取父节点，并为它添加一个click事件
+document.getElementById(&quot;parent-list&quot;).addEventListener(&quot;click&quot;,function(e) &#123;
+  // currentTarget属性，事件绑定的对象
+  // 检查事件源e.targe是否为Li
+  if(e.target &amp;&amp; e.target.nodeName.toUpperCase == &quot;LI&quot;) &#123;
+    // 真正的处理过程在这里
+    console.log(&quot;List item &quot;,e.target.id.replace(&quot;post-&quot;),&quot; was clicked!&quot;);
+  &#125;
+&#125;);
+</code></pre>
+<p>使用事件代理的好处是可以提高性能，可以大量节省内存占用，减少事件注册，比如在table上代理所有td的click事件就非常棒，还可以实现当新增子对象时无需再次对其绑定</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%92%8C%E6%99%AE%E9%80%9A%E4%BA%8B%E4%BB%B6%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-text">事件绑定和普通事件有什么区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IE%E5%92%8CDOM%E4%BA%8B%E4%BB%B6%E6%B5%81%E7%9A%84%E5%8C%BA%E5%88%AB-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-text">IE和DOM事件流的区别(事件模型)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E4%B8%8D%E4%B8%80%E6%A0%B7%EF%BC%8CIE%E9%87%87%E7%94%A8%E5%86%92%E6%B3%A1%E5%9E%8B%E4%BA%8B%E4%BB%B6%EF%BC%8CDOM%E4%BD%BF%E7%94%A8%E5%85%88%E6%8D%95%E8%8E%B7%E5%90%8E%E5%86%92%E6%B3%A1%E5%9E%8B%E4%BA%8B%E4%BB%B6%EF%BC%8CNetscape%E4%BD%BF%E7%94%A8%E6%8D%95%E8%8E%B7%E5%9E%8B%E4%BA%8B%E4%BB%B6"><span class="toc-text">1.执行顺序不一样，IE采用冒泡型事件，DOM使用先捕获后冒泡型事件，Netscape使用捕获型事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%8F%82%E6%95%B0%E4%B8%8D%E5%90%8C%EF%BC%8C%E4%BA%8B%E4%BB%B6%E6%98%AF%E5%90%A6%E2%80%9Don%E2%80%9D%EF%BC%8Cthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98%EF%BC%89"><span class="toc-text">2.事件侦听函数的区别（参数不同，事件是否”on”，this指向问题）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%8F%96%E6%B6%88%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E4%BC%A0%E9%80%92"><span class="toc-text">如何取消浏览器事件的传递</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%90%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%BB%98%E8%AE%A4%E5%A4%84%E7%90%86"><span class="toc-text">事件传递后浏览器的默认处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%EF%BC%88%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%EF%BC%89"><span class="toc-text">什么是事件代理（事件委托）</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-01/javascript事件详解/">https://lion1ou.tech/2018-01/javascript事件详解/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-01/call%E3%80%81apply%E5%92%8Cbind%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="next" title="call、apply和bind的区别">
+        call、apply和bind的区别
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-04/vuejs%E4%B9%8Btoast%E6%8F%92%E4%BB%B6/" rel="prev" title="VueJs之Toast插件">
+          VueJs之Toast插件
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-01/javascript%E4%BA%8B%E4%BB%B6%E8%AF%A6%E8%A7%A3/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

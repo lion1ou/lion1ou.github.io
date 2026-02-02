@@ -1,0 +1,1272 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="ReactNative," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>ReactNative之入门全解 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之入门全解
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-12-16T16:13:04.000Z">
+            2018-12-17 00:13
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">9.9k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">41 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/ReactNative/" rel="tag">ReactNative</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>上手 RN 开发也有一段时间了，为了让团队其他同学也能快速上手，也算是对自己学习过程的一个记录。 这里整理了一下整个开发过程需要注意的点，因为是面向大前端所有同学，所以也包括了前端、android、ios 的相关知识。主要分成几个部分：环境搭建、基础知识（RN 基础、前端基础）、学习资源</p>
+<span id="more"></span>
+
+<h2 id="环境搭建和运行"><a href="#环境搭建和运行" class="headerlink" title="环境搭建和运行"></a>环境搭建和运行</h2><h3 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h3><p>按照官网<a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/getting-started.html">https://reactnative.cn/docs/0.51/getting-started.html</a>的教程一步一步来，不过还是遇坑无数，这里记录一下遇到的坑。</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://cdn.leoao.com/jdk-8u131-macosx-x64.dmg">jDK 1.8 下载</a>困难，这里放到我们自己服务器了。</p>
+</li>
+<li><p>安装完 SDK 后，再安装 android studio，出现如下错误</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fruoitlzesj30ym0hiaco.jpg"></p>
+<p><code>Unable to access Android SDK add-on list</code></p>
+<p>第一次安装 Android studio 时候弹出 unable to access android sdk add-on list</p>
+<p>原因：是你电脑没有 SDK 而且你下载的 android studio 又是不带 SDK 的；</p>
+<p><strong>解决方法：</strong> 在自己安装的目录下找到：bin\idea.properties 打开这个文件末尾添加一行 disable.android.first.run=true 就行了，如果打不开这个文件，可以下载安装 EditPlus 工具或者 sublime_text 工具，用工具打开修改即可；如果这都嫌麻烦的话，那就用 txt 打开再简单不过了。但是并没有从根本上解决这个问题。</p>
+</li>
+<li><p>进入 android studio 后，安装项无法选择，android SDK 无法下载。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fruoirrs0tj31a80lk41x.jpg"></p>
+<p>原因：开启了 shadowsocks ，系统访问外部的 SDK 资源，但还是未下载成功。</p>
+<p><strong>解决办法：</strong> 在打开 android Studio 时，先关闭 shadowsocks，等待进入 sdk 下载页面时，再开启 shadowsocks</p>
+</li>
+</ol>
+<h3 id="安装测试"><a href="#安装测试" class="headerlink" title="安装测试"></a>安装测试</h3><pre><code class="bash">react-native init AwesomeProject
+cd AwesomeProject
+react-native run-ios
+# 或者 react-native run-android
+</code></pre>
+<blockquote>
+<p>提示：</p>
+</blockquote>
+<ol>
+<li>如果<code>run-ios</code>无法正常运行，请使用 Xcode 运行来查看具体错误（<code>run-ios</code>的报错没有任何具体信息），命令行执行<code>react-native start</code>，双击 ios/AwesomeProject.xcodeproj 文件，然后在 Xcode 中点击 Run 按钮。</li>
+<li>你可以使用<code>--version</code>参数（注意是两个杠，版本号必须精确到两个小数点）创建指定版本的项目。例如<code>react-native init MyApp --version 0.44.3</code></li>
+</ol>
+<h3 id="运行调试"><a href="#运行调试" class="headerlink" title="运行调试"></a><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/debugging.html#content">运行调试</a></h3><p>到这里你已经成功运行了项目，我们可以开始尝试动手改一改了：</p>
+<ul>
+<li>使用你喜欢的编辑器打开 App.js 并随便改上几行。</li>
+<li>在 iOS Emulator 中按下 ⌘+R 就可以刷新 APP 并看到你的最新修改！</li>
+<li>在 Android 上可以双击 R，可以刷新 APP 并看到你的最新修改</li>
+</ul>
+<h4 id="开启调试框"><a href="#开启调试框" class="headerlink" title="开启调试框"></a>开启调试框</h4><ul>
+<li>在 iOS 模拟器中运行，还可以按下 Command⌘ + D 快捷键，Android 模拟器对应的则是 Command⌘ + M（windows 上可能是 F1 或者 F2）</li>
+<li>使用真机时，摇晃手机，会弹出调试框。（android 需要开启悬浮框权限，才会弹出调试框）</li>
+</ul>
+<p><img src="https://cdn.leoao.com/blog/RN%E8%B0%83%E8%AF%95%E7%95%8C%E9%9D%A2.jpg?imageslim"></p>
+<h4 id="刷新-JavaScript"><a href="#刷新-JavaScript" class="headerlink" title="刷新 JavaScript"></a>刷新 JavaScript</h4><ul>
+<li>在 iOS 模拟器中按下 Command⌘ + R ，Android 模拟器上对应的则是按两下 R。</li>
+<li>选择开发菜单中的”Enable Live Reload”可以开启自动刷新。(增加了新的资源(比如给 iOS 的 Images.xcassets 或是 Andorid 的 res/drawable 文件夹添加了图片)<br>更改了任何的原生代码)</li>
+</ul>
+<h4 id="应用内报错"><a href="#应用内报错" class="headerlink" title="应用内报错"></a>应用内报错</h4><ul>
+<li>红屏或黄屏提示都只会在开发版本中显示，正式的离线包中是不会显示的。</li>
+<li>可以通过在代码中执行<code>console.disableYellowBox = true;</code>，手动关闭警告</li>
+<li>可以通过指定警告类型，来指定性关闭<code>console.ignoredYellowBox = [&#39;Warning: ...&#39;];</code></li>
+</ul>
+<h4 id="访问控制台日志"><a href="#访问控制台日志" class="headerlink" title="访问控制台日志"></a>访问控制台日志</h4><ul>
+<li>可以在终端上执行<code>react-native log-ios</code>，或者在 iOS 模拟器的菜单中选择 Debug → Open System Log…来查看。</li>
+<li>可以在终端上执行<code>react-native log-android</code>，或者在 Android 模拟器或是真机上，都可以通过在终端命令行里运行<code>adb logcat *:S ReactNative:V ReactNativeJS:V</code>命令来查看。</li>
+</ul>
+<h4 id="Chrome-开发者工具"><a href="#Chrome-开发者工具" class="headerlink" title="Chrome 开发者工具"></a>Chrome 开发者工具</h4><ul>
+<li>在开发者菜单中选择”Debug JS Remotely”选项，即可以开始在 Chrome 中调试 JavaScript 代码。点击这个选项的同时会自动打开调试页面 <a target="_blank" rel="noopener" href="http://localhost:8081/debugger-ui">http://localhost:8081/debugger-ui</a>.</li>
+</ul>
+<h3 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h3><h4 id="1-ReactNative-iOS-运行出错：No-bundle-URL-present（整个页面红色）"><a href="#1-ReactNative-iOS-运行出错：No-bundle-URL-present（整个页面红色）" class="headerlink" title="1. ReactNative iOS 运行出错：No bundle URL present（整个页面红色）"></a>1. ReactNative iOS 运行出错：No bundle URL present（整个页面红色）</h4><p>此处，React Native iOS 中，iOS 模拟器运行又出现了：<code>No bundle URL present</code></p>
+<ul>
+<li>方法一，是由于：（shadowsocks 的）网络代理设置为了全局代理（去翻墙）</li>
+</ul>
+<blockquote>
+<p>导致了之前可以正常连接到本地的 packager 的 server，由于全局网络代理，从而需要绕道国外服务器，再去连接本地，所以无法正常访问了</p>
+</blockquote>
+<blockquote>
+<p>解决办法是：取消全局网络代理，改为自动模式即可。</p>
+</blockquote>
+<ul>
+<li>方法二， 怀疑是因为环境被破坏了，重新安装依赖，启动环境。在 iOS 模拟器运行的情况下，在命令行内输入：</li>
+</ul>
+<pre><code class="bash">npm i
+react-native run-ios
+</code></pre>
+<h4 id="2-ReactNative-iOS-打开-WebView-出现-Error-Domain-NSURLErrorDomain-Code-1022"><a href="#2-ReactNative-iOS-打开-WebView-出现-Error-Domain-NSURLErrorDomain-Code-1022" class="headerlink" title="2. ReactNative iOS 打开 WebView 出现 Error Domain=NSURLErrorDomain Code=-1022"></a>2. ReactNative iOS 打开 WebView 出现 <code>Error Domain=NSURLErrorDomain Code=-1022</code></h4><p>原因是：iOS 开发中依然使用 http 请求，而非 https 请求，或者 https 请求内带有 http 请求。</p>
+<p>解决方案： 修改 RN 项目中的 ios 文件夹下的项目文件内的<code>Info.plist</code>文件，如图添加下面代码</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fo99gokjf9j30w40fa3z2.jpg"></p>
+<pre><code>&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
+&lt;true/&gt;
+</code></pre>
+<p>或者是在 Xcode 中，直接修改 Info.plist 文件</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fo99jtjtixj31cg0o4gpm.jpg"></p>
+<h4 id="3-连接-android-真机无法成功安装"><a href="#3-连接-android-真机无法成功安装" class="headerlink" title="3. 连接 android 真机无法成功安装"></a>3. 连接 android 真机无法成功安装</h4><p>通过 命令行输入： <code>adb devices</code>，验证设备是否已连接，adb 安装如下：</p>
+<pre><code class="bash"># 通过 Homebrew 安装
+brew cask install android-platform-tools
+# 测试是否正常安装
+adb devices
+</code></pre>
+<p>若没有出现如下情况，说明设备还是没有成功连接，进入设备开发者模式，打开 USB 调试</p>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1fruuv5wkh3j30rs048gm5.jpg"></p>
+<h4 id="4-iOS-‘glog-logging-h’-file-not-found"><a href="#4-iOS-‘glog-logging-h’-file-not-found" class="headerlink" title="4. iOS: ‘glog/logging.h’ file not found"></a>4. iOS: ‘glog/logging.h’ file not found</h4><pre><code class="bash">cd node_modules/react-native/third-party/glog-0.3.4
+sh ../../scripts/ios-configure-glog.sh
+</code></pre>
+<h4 id="5-iOS-Xcode-10-libfishhook-a-cannot-be-found"><a href="#5-iOS-Xcode-10-libfishhook-a-cannot-be-found" class="headerlink" title="5. iOS: Xcode 10 libfishhook.a cannot be found"></a>5. iOS: Xcode 10 libfishhook.a cannot be found</h4><p>先<code>-</code>libfishhook.a，再重新 <code>+</code>libfishhook.a</p>
+<p><img src="https://cdn.leoao.com/blog/libfishhook.png?imageslim"></p>
+<hr>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="前端知识"><a href="#前端知识" class="headerlink" title="前端知识"></a>前端知识</h3><p><strong>(针对客户端同学，前端同学可跳过)</strong></p>
+<h4 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h4><p>前端包管理工具</p>
+<pre><code class="bash"># 全局安装
+$ npm install 模块名 -g
+
+# 本地安装
+$ npm install 模块名
+
+# 一次性安装多个
+$ npm install 模块1 模块2 模块n --save
+
+# 安装运行时依赖包
+$ npm install 模块名 --save
+
+# 安装开发时依赖包
+$ npm install 模块名 --save-dev
+
+# 更新模块（包）
+$ npm update 模块名
+$ npm update 模块名 -g
+</code></pre>
+<h4 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h4><h5 id="盒子模型"><a href="#盒子模型" class="headerlink" title="盒子模型"></a>盒子模型</h5><p><img src="https://cdn.leoao.com/blog/1669565-9b745c39f71db85f.bmp?imageslim"></p>
+<p><img src="https://cdn.leoao.com/blog/1669565-6e0a7f2723dfe850.png?imageslim"></p>
+<h5 id="层布局模型"><a href="#层布局模型" class="headerlink" title="层布局模型"></a>层布局模型</h5><blockquote>
+<p>1、绝对定位(position: absolute) 2、相对定位(position: relative)</p>
+</blockquote>
+<ul>
+<li>position:’relative’</li>
+</ul>
+<p>relative 指的是相对定位，配合 top, right, bottom, left 四个方位属性，加上 z-index 堆叠顺序来对一个元素进行相对于自己左上角为原点的定位。<br>没有脱离文档流，依然占据着原来的空间，不影响周边元素的位置，如果与其他元素相遇，按照 z-index 来觉得谁显示在“上面”而被我们看到，这个方式可以理解为“灵魂出窍”，“灵魂”展示在那里，但“窍”还占据着原有的空间。</p>
+<ul>
+<li>position:’absolute’</li>
+</ul>
+<p>绝对布局。它是相对于父级元素的左上角为原点来定位。绝对定位的元素不会占据原有的流式空间，后面的元素会“补上来”，这个和 html 的 position 也很大不一样。另外还有一个和 html 不一样的是，html 中 position:absolute 要求父容器的 position 必须是 absolute 或者 relative，如果第一层父容器 position 不是 absolute 或者 relative，在 html 会依次向上递归查询直到找到为止，然后居于找到的父容器绝对定位。</p>
+<h5 id="样式规则"><a href="#样式规则" class="headerlink" title="样式规则"></a>样式规则</h5><blockquote>
+<p>在 React Native 中，你并不需要学习什么特殊的语法来定义样式。我们仍然是使用 JavaScript 来写样式。所有的核心组件都接受名为 style 的属性。这些样式名基本上是遵循了 web 上的 CSS 的命名，只是按照 JS 的语法要求使用了驼峰命名法，例如将 background-color 改为 backgroundColor。</p>
+</blockquote>
+<ul>
+<li>使用 StyleSheet.create 来集中定义组件的样式，如：</li>
+</ul>
+<pre><code class="jsx">import React, &#123; Component &#125; from &quot;react&quot;;
+import &#123; AppRegistry, StyleSheet, Text, View &#125; from &quot;react-native&quot;;
+
+export default class LotsOfStyles extends Component &#123;
+  render() &#123;
+    return (
+      &lt;View&gt;
+        &lt;Text style=&#123;styles.red&#125;&gt;just red&lt;/Text&gt;
+        &lt;Text style=&#123;styles.bigblue&#125;&gt;just bigblue&lt;/Text&gt;
+        &lt;Text style=&#123;[styles.bigblue, styles.red]&#125;&gt;bigblue, then red&lt;/Text&gt;
+        &lt;Text style=&#123;[styles.red, styles.bigblue]&#125;&gt;red, then bigblue&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  &#125;
+&#125;
+
+const styles = StyleSheet.create(&#123;
+  bigblue: &#123;
+    color: &quot;blue&quot;,
+    fontWeight: &quot;bold&quot;,
+    fontSize: 30,
+  &#125;,
+  red: &#123;
+    color: &quot;red&quot;,
+  &#125;,
+&#125;);
+
+AppRegistry.registerComponent(&quot;LotsOfStyles&quot;, () =&gt; LotsOfStyles);
+</code></pre>
+<h5 id="flexBox"><a href="#flexBox" class="headerlink" title="flexBox"></a>flexBox</h5><p>可参考之前写过的文章：<a href="https://lion1ou.tech/2016/10/15/">css 之 flex 布局</a></p>
+<h4 id="react"><a href="#react" class="headerlink" title="react"></a>react</h4><h5 id="jsx-的语法规则"><a href="#jsx-的语法规则" class="headerlink" title="jsx 的语法规则"></a>jsx 的语法规则</h5><ol>
+<li>在 react 中想将 js 当作变量引入到 jsx 中需要使用{}</li>
+<li>在 jsx 中，相邻的两个 jsx 元素 ，渲染时需要外面包裹着一层元素</li>
+<li>{}取值表达式，取的是有返回值的结果， 可以放 JS 的执行结果</li>
+</ol>
+<pre><code class="js">import React, &#123; Component &#125; from &quot;react&quot;;
+import ReactDOM from &quot;react-dom&quot;;
+
+function build(str) &#123;
+  return (
+    &lt;div&gt;
+      &#123;/*这是注释*/&#125;
+      &lt;h1&gt;&#123;str.name&#125;建立学校&lt;/h1&gt;
+      &lt;h1&gt;&#123;str.name&#125;建立学校&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+&#125;
+// let el = &lt;div&gt;&#123;build(&#39;哈喽&#39;)&#125;&lt;/div&gt;;
+let el = &lt;div&gt;&#123;build(&#123; name: &quot;哈喽&quot; &#125;)&#125;&lt;/div&gt;;
+ReactDOM.render(el, document.getElementById(&quot;root&quot;));
+</code></pre>
+<h5 id="循环数组的列子"><a href="#循环数组的列子" class="headerlink" title="循环数组的列子"></a>循环数组的列子</h5><pre><code class="js">import React, &#123; Component &#125; from &quot;react&quot;;
+import ReactDOM from &quot;react-dom&quot;;
+
+let lessons = [
+  &#123; name: &quot;vue&quot;, price: 800 &#125;,
+  &#123; name: &quot;react&quot;, price: 1000 &#125;,
+];
+
+function toLesson(item) &#123;
+  return `当前课程是$&#123;item.name&#125; 价格是$&#123;item.price&#125;`;
+&#125;
+
+// 数组方法 find map filter reduce
+let ele = (
+  &lt;ul&gt;
+    &#123;lessons.map((item, index) =&gt;
+      // null在react中也是一个合法的元素 表示不存在，没有
+      item.price &lt; 1000 ? null : &lt;li key=&#123;index&#125;&gt;&#123;toLesson(item)&#125;&lt;/li&gt;
+    )&#125;
+  &lt;/ul&gt;
+);
+
+ReactDOM.render(ele, window.root);
+// window.root 直接取id
+</code></pre>
+<h5 id="组件的两种定义方式"><a href="#组件的两种定义方式" class="headerlink" title="组件的两种定义方式"></a>组件的两种定义方式</h5><p>声明组件的方式有两种：函数声明（名字开头必须大写,没有生命周期、状态、this）和类声明（有生命周期： componentDidMount 渲染完成，componentWillUnmount 组件将要卸载,有状态和 this）</p>
+<ul>
+<li>第一种方式是函数声明</li>
+</ul>
+<pre><code class="js">import React,&#123;Component&#125; from &#39;react&#39;;
+import ReactDOM,&#123;render&#125; from &#39;react-dom&#39;;
+let school1 = &#123;name:&#39;张三&#39;,age:8&#125;;
+let school2 = &#123;name:&#39;李四&#39;,age:0&#125;;
+
+function Build(props) &#123;
+    return &lt;p&gt;&#123;props.name&#125;&#123;props.age&#125;&lt;/p&gt;
+&#125;
+
+render(&lt;div&gt;
+    &#123;/*&lt;Build name=&#123;school1.name&#125; age=&#123;school1.age&#125;/&gt;*/&#125;
+    &#123;/*&lt;Build name=&#123;school2.name&#125; age=&#123;school2.age&#125;/&gt;*/&#125;
+    &#123;/*将对象中的内容解构出来传递给Build组件  不用一个个取出来传递*/&#125;
+    &lt;Build name=&#123;...school1&#125;/&gt;
+    &lt;Build name=&#123;...school2&#125;/&gt;
+&lt;/div&gt;,window.root)
+</code></pre>
+<ul>
+<li>第二种方式是类声明</li>
+</ul>
+<pre><code class="js">import React, &#123; Component &#125; from &quot;react&quot;;
+import ReactDOM, &#123; render &#125; from &quot;react-dom&quot;;
+import PropTypes from &quot;prop-types&quot;; // 属性校验的包
+
+// 1、属性是由外界传递的，外面不能改属性，只有状态是属于组件自己的
+class School extends Component &#123;
+  // Component提供了列如this.setState()方法
+  static propType = &#123;
+    // 静态属性 es7,es6只支持静态函数
+    age: PropTypes.string,
+  &#125;;
+  static defaultProps = &#123;
+    // 校验默认属性
+    age: &quot;100&quot;,
+  &#125;;
+  // 类上有自己的构造函数constructor()，super()子类继承父类私有属性,extends继承的是公有
+  constructor(props) &#123;
+    super(props);
+  &#125;
+  render() &#123;
+    // render组件长什么样子，render的返回值只能有一个根元素
+    return (
+      // 通过&#123;&#125;取值不能打印对象  可以转化成字符串打印
+      &lt;div&gt;&#123;JSON.stringify(this.props)&#125;&lt;/div&gt;
+    );
+  &#125;
+&#125;
+// School.prototype = &#123;age:PropTypes.string&#125;;
+// render将虚拟dom装换成真实dom
+render(&lt;School name=&#123;&quot;珠峰&quot;&#125; age=&#123;8&#125; /&gt;, window.root);
+</code></pre>
+<h5 id="组件内数据"><a href="#组件内数据" class="headerlink" title="组件内数据"></a>组件内数据</h5><blockquote>
+<p>组件的数据来源有两个地方, props 外界传递过来的(默认属性，属性校验); state 状态是自己的,改变状态唯一的方式就是 setState</p>
+</blockquote>
+<ul>
+<li>修改 state</li>
+</ul>
+<pre><code class="js">this.setState(&#123;
+  // 改变状态唯一的方式就是setState
+  count: &#123; number: this.state.count.number + 1 &#125;,
+&#125;);
+
+this.setState(
+  &#123;
+    // setState是异步的，依赖设置值 就需要在回调中执行
+    count: &#123; number: this.state.count.number + 1 &#125;,
+  &#125;,
+  () =&gt; &#123;
+    this.setState(&#123;
+      count: &#123; number: this.state.count.number + 1 &#125;,
+    &#125;);
+  &#125;
+);
+</code></pre>
+<ul>
+<li>组件通讯</li>
+</ul>
+<pre><code class="js">// 父传子
+class Panel extends Component &#123;
+  render() &#123;
+    let &#123; header, body &#125; = this.props;
+    return (
+      &lt;div className=&quot;container&quot; style=&#123;&#123; color: "red" &#125;&#125;&gt;
+        &lt;div className=&quot;panel-default panel&quot;&gt;
+          &lt;Header header=&#123;header&#125; /&gt;
+          &lt;Body body=&#123;body&#125; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  &#125;
+&#125;
+
+class Header extends Component &#123;
+  render() &#123;
+    return &lt;div className=&quot;panel-heading&quot;&gt;&#123;this.props.header&#125;&lt;/div&gt;;
+  &#125;
+&#125;
+
+class Body extends Component &#123;
+  render() &#123;
+    return &lt;div className=&quot;panel-body&quot;&gt;&#123;this.props.body&#125;&lt;/div&gt;;
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="js">// 子传父
+class Panel extends Component &#123;
+  constructor() &#123;
+    super();
+    this.state = &#123; color: &quot;primary&quot; &#125;;
+  &#125;
+  changColor = (color) =&gt; &#123;
+    // 到时候儿子传递一个颜色
+    this.setState(&#123; color: color &#125;);
+  &#125;;
+  render() &#123;
+    return (
+      &lt;div className=&quot;container&quot; style=&#123;&#123; color: "red" &#125;&#125;&gt;
+        &lt;div className=&#123;&quot;panel-&quot; + this.state.color + &quot; panel&quot;&#125;&gt;
+          &lt;Header header=&#123;this.props.header&#125; change=&#123;this.changColor&#125; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  &#125;
+&#125;
+
+class Header extends Component &#123;
+  handleClick = () =&gt; &#123;
+    this.props.change(&quot;danger&quot;);
+  &#125;;
+  render() &#123;
+    return (
+      &lt;div className=&quot;panel-heading&quot;&gt;
+        &#123;this.props.header&#125;
+        &lt;button className=&quot;btn btn-danger&quot; onClick=&#123;this.handleClick&#125;&gt;
+          改颜色
+        &lt;/button&gt;
+      &lt;/div&gt;
+    );
+  &#125;
+&#125;
+</code></pre>
+<h5 id="组件声明周期"><a href="#组件声明周期" class="headerlink" title="组件声明周期"></a>组件声明周期</h5><pre><code class="js">class Counter extends React.Component &#123;
+  // 他会比较两个状态相等就不会刷新视图 PureComponent是浅比较
+  static defaultProps = &#123;
+    name: &quot;名字&quot;,
+  &#125;;
+  constructor(props) &#123;
+    super();
+    this.state = &#123; number: 0 &#125;;
+    console.log(&quot;1.constructor构造函数&quot;);
+  &#125;
+  componentWillMount() &#123;
+    // 取本地的数据 同步的方式：采用渲染之前获取数据，只渲染一次
+    console.log(&quot;2.组件将要加载 componentWillMount&quot;);
+  &#125;
+  componentDidMount() &#123;
+    console.log(&quot;4.组件挂载完成 componentDidMount&quot;);
+  &#125;
+  handleClick = () =&gt; &#123;
+    this.setState(&#123; number: this.state.number + 1 &#125;);
+  &#125;;
+  // react可以shouldComponentUpdate方法中优化 PureComponent 可以帮我们做这件事
+  shouldComponentUpdate(nextProps, nextState) &#123;
+    // 代表的是下一次的属性 和 下一次的状态
+    console.log(&quot;5.组件是否更新 shouldComponentUpdate&quot;);
+    return nextState.number % 2;
+    // return nextState.number!==this.state.number; //如果此函数种返回了false 就不会调用render方法了
+  &#125; //不要随便用setState 可能会死循环
+  componentWillUpdate() &#123;
+    console.log(&quot;6.组件将要更新 componentWillUpdate&quot;);
+  &#125;
+  componentDidUpdate() &#123;
+    console.log(&quot;7.组件完成更新 componentDidUpdate&quot;);
+  &#125;
+  render() &#123;
+    console.log(&quot;3.render&quot;);
+    return (
+      &lt;div&gt;
+        &lt;p&gt;&#123;this.state.number&#125;&lt;/p&gt;
+        &#123;this.state.number &gt; 3 ? null : &lt;ChildCounter n=&#123;this.state.number&#125; /&gt;&#125;
+        &lt;button onClick=&#123;this.handleClick&#125;&gt;+&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  &#125;
+&#125;
+
+class ChildCounter extends Component &#123;
+  componentWillUnmount() &#123;
+    console.log(&quot;组件将要卸载componentWillUnmount&quot;);
+  &#125;
+  componentWillMount() &#123;
+    console.log(&quot;child componentWillMount&quot;);
+  &#125;
+  render() &#123;
+    console.log(&quot;child-render&quot;);
+    return &lt;div&gt;&#123;this.props.n&#125;&lt;/div&gt;;
+  &#125;
+  componentDidMount() &#123;
+    console.log(&quot;child componentDidMount&quot;);
+  &#125;
+  componentWillReceiveProps(newProps) &#123;
+    // 第一次不会执行，之后属性更新时才会执行
+    console.log(&quot;child componentWillReceiveProps&quot;);
+  &#125;
+  shouldComponentUpdate(nextProps, nextState) &#123;
+    return nextProps.n % 3; //子组件判断接收的属性 是否满足更新条件 为true则更新
+  &#125;
+&#125;
+
+// defaultProps
+// constructor
+// componentWillMount
+// render
+// componentDidMount
+// 状态更新会触发的
+// shouldComponentUpdate nextProps,nextState=&gt;boolean
+// componentWillUpdate
+// componentDidUpdate
+// 属性更新
+// componentWillReceiveProps newProps
+// 卸载
+// componentWillUnmount
+</code></pre>
+<h3 id="iOS-知识"><a href="#iOS-知识" class="headerlink" title="iOS 知识"></a>iOS 知识</h3><p><strong>（针对前端同学，ios 同学可跳过）</strong></p>
+<p>在使用 react-native 的时候，安装 ios 依赖时经常就会使用到 cocoapods，这里我们介绍一下 cocoaPods。</p>
+<h4 id="什么是-CocoaPods"><a href="#什么是-CocoaPods" class="headerlink" title="什么是 CocoaPods"></a>什么是 CocoaPods</h4><p>CocoaPods 是 OS X 和 iOS 下的一个第三类库管理工具，通过 CocoaPods 工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是 CocoaPods 本身所支持的），并且可以轻松管理其版本。</p>
+<ol>
+<li><p>在引入第三方库时它可以自动为我们完成各种各样的配置，包括配置编译阶段、连接器选项、甚至是 ARC 环境下的-fno-objc-arc 配置等。</p>
+</li>
+<li><p>使用 CocoaPods 可以很方便地查找新的第三方库，这些类库是比较“标准的”，而不是网上随便找到的，这样可以让我们找到真正好用的类库。</p>
+</li>
+</ol>
+<h4 id="cocoapods-的安装"><a href="#cocoapods-的安装" class="headerlink" title="cocoapods 的安装"></a>cocoapods 的安装</h4><ol>
+<li>gem 简介</li>
+</ol>
+<p>Gem 是一个管理 Ruby 库和程序的标准包，它通过 Ruby Gem（如 <a target="_blank" rel="noopener" href="http://rubygems.org/">http://rubygems.org/</a> ）源来查找、安装、升级和卸载软件包，非常的便捷。</p>
+<blockquote>
+<p>常用命令</p>
+</blockquote>
+<ul>
+<li>查看 gem 版本 gem –version</li>
+<li>更新 gem update –system</li>
+<li>查看数据源 gem source</li>
+<li>安装软件包 gem install 软件包名称</li>
+<li>卸载安装包 gem uninstall</li>
+</ul>
+<ol start="2">
+<li>使用 gem 安装 cocoapods</li>
+</ol>
+<pre><code class="bash">sudo gem install cocoapods
+</code></pre>
+<h4 id="使用-cocoapods-集成第三方"><a href="#使用-cocoapods-集成第三方" class="headerlink" title="使用 cocoapods 集成第三方"></a>使用 cocoapods 集成第三方</h4><p>1.检索第三方框架</p>
+<p><code>pod search 框架关键字</code></p>
+<p>内部原理：从本地缓存的”第三方框架描述信息” 生成的检索文件中检索到 相关框架的信息</p>
+<p>常见错误：unable to find….</p>
+<p>删除 cocoapods 索引文件</p>
+<p>2.安装第三方框架</p>
+<p>创建 Podfile 文件, 到自己工程内(一级目录)</p>
+<p>Podfile 文件作用：其实就是使用 ruby 语法编写的 “框架依赖描述文件”; 就是告诉 cocoapods 需要下载集成哪些框架</p>
+<p>创建命令: <code>pod init</code></p>
+<p>3.安装框架</p>
+<p>安装命令 <code>pod install</code></p>
+<p>原理：直接就是根据 Podfile 文件从本地索引库中找到框架信息, 然后下载集成<br>找不到目标框架</p>
+<p>更新本地框架信息源信息: pod install –no-repo-update (快速)</p>
+<p>生成的重要文件 Podfile.lock</p>
+<p>作用: 记录着上一次下载的框架最新版本</p>
+<ul>
+<li>pod install 和 pod update 区别</li>
+</ul>
+<p><code>pod install</code>: 如果 Podfile.lock 文件存在, 直接从此文件中读取框架信息下载安装, 如果不存在, 依然会读取 Podfile 文件内的框架信息,下载好之后, 再根据下载好的框架信息, 生成 Podfile.lock 文件</p>
+<p><code>pod update</code> 不管 Podfile.lock 是否存在, 都会读取 Pod file 文件的的框架信息去下载。主要区别在于, Podfile 文件内的框架信息, 版本描述没有指定具体版本</p>
+<h3 id="Android-知识"><a href="#Android-知识" class="headerlink" title="Android 知识"></a>Android 知识</h3><p><strong>（针对前端同学，android 同学可跳过）</strong></p>
+<p>android 开发环境中，ADB 是我们进行 android 开发经常要用的调试工具，它的使用当然是我们 Android 开发者必须要掌握的；</p>
+<p>Android Debug Bridge，Android 调试桥接器，简称 ADB，是用于管理模拟器或真机状态的万能工具，通俗一点讲 adb 就是 pc 和移动设备通信的桥梁，它采用了 c/s 模型，包括三个部分：</p>
+<p>1、客户端部分，运行在开发用的电脑上，可以在命令行中运行 adb 命令来调用该客户端，像 ADB 插件和 DDMS 这样的 Android 工具也可以调用 adb 客户端，需要说明的是客户端与手机或者模拟器是一对多的关系，也就是说不管连接多少设备客户端就只有唯一的一个实例存在。</p>
+<p>2、服务端部分，是运行在开发用电脑上的后台进程，用于管理客户端与运行在模拟器或真机的守护进程通信。</p>
+<p>3、守护进程部分，运行于模拟器或手机的后台（简称 adb daemon）。</p>
+<h4 id="常用的-ADB-命令"><a href="#常用的-ADB-命令" class="headerlink" title="常用的 ADB 命令"></a>常用的 ADB 命令</h4><p>1：<code>adb devices/adb get-serialno</code> 作用：列举当前连接的设备（可以是多个设备）；</p>
+<p>执行结果如下所示：</p>
+<pre><code class="bash">Listof devices attached
+
+emulator-5554device
+
+emulator-5556device
+
+emulator-5558device
+</code></pre>
+<blockquote>
+<p>adb get-serialno 只能当连接一个设备时使用，并拿到设备的序列号；</p>
+</blockquote>
+<p>2：<code>adb -s / －e / -d</code> 作用：指定对某个连接成功的设备执行命令；</p>
+<pre><code class="bash">adb -s emulator-5556  install helloWorld.apk
+</code></pre>
+<p>这条命令就是往 emulator-5556 模拟器安装 apk 文件；</p>
+<p>-s: 指定要操作的设备;</p>
+<p>-e: 默认操作模拟器；</p>
+<p>-d:默认操作硬件设备；</p>
+<p>3：<code>adb install -r/-s</code> 作用：使用 adb install 命令可以从开发用电脑中复制应用程序并且安装到模拟器或手机上，adb install 命令必须指定待安装的.apk 文件的路径；</p>
+<p>-r:保留数据和缓存文件，重新安装 apk</p>
+<p>-s:安装 apk 到 sd 卡</p>
+<p>4：<code>adb uninstall [-k] &#123;package&#125;</code> 作用：卸载指定包名的 apk 文件，(-k:不删除程序运行所产生的数据和缓存目录)</p>
+<p>5：<code>adb pull [-a] &#123;remote-path&#125; &#123;local-path&#125;</code> 作用：从模拟器或手机拷贝文件或文件夹(包括文件夹的子目录)到电脑(-a:保留文件时间戳及属性)，remote-path 为手机端文件路径，local-path 为文件复制到的路径；</p>
+<p>6：<code>adb push &#123;loacal-path&#125; &#123;remote-path&#125;</code> 作用：将文件或文件夹(包括文件夹的子目录)拷贝到模拟器或手机;</p>
+<p>比如，我想把桌面的 log.txt 复制到手机的 dev 目录下，则命令如下：</p>
+<pre><code class="bash">adb push /Users/littlejie/Desktop/log.txt  /dev
+</code></pre>
+<p>7:  <code>adb kill-server</code> 和 <code>adb start-server</code> 作用：在某些情况下需要重启 adb 服务来解决问题，比如 adb 无响应，这时你可以通过 adb kill-server 来实现这一操作，之后，通过 adb start-server 命令来重启 adb 服务；</p>
+<p>8:  <code>adb help</code> 作用：调出 adb 命令提示；</p>
+<p>9:  <code>adb reboot</code> 作用：重启连接成功的设备。</p>
+<p>如果连接了多个设备可以指定重启其中一个设备，命令如下</p>
+<pre><code class="bash">adb -s xxx reboot
+</code></pre>
+<p>10:  <code>adb shell cat /sys/class/net/wlan0/address</code> 作用：获取机器 mac 地址；</p>
+<p>说明：adb shell 命令表示进入设备或模拟器的 shell 环境中，在这个 Linux Shell 中，你可以执行各种 Linux 的命令;</p>
+<p>adb shell netcfg  //查看当前连接成功手机的 ip 地址；</p>
+<p>11:  <code>adb shell am start -n &#123;packagename&#125;</code> 作用：启动指定包名的应用</p>
+<p>12:  <code>adb shell ps</code> 作用 ：列出当前运行的进程；</p>
+<p>13:  <code>adb shell mkdir path/foldelname</code> 作用：新建文件夹；</p>
+<p><code>adb shell chmod777 &#123;folder&#125;</code>设置文件的权限;</p>
+<p><code>adb shell cat &#123;folder/file&#125;</code> 查看文件内容；</p>
+<h3 id="RN-基础知识"><a href="#RN-基础知识" class="headerlink" title="RN 基础知识"></a>RN 基础知识</h3><h4 id="样式-1"><a href="#样式-1" class="headerlink" title="样式"></a>样式</h4><blockquote>
+<p>在 React Native 中，你并不需要学习什么特殊的语法来定义样式。我们仍然是使用 JavaScript 来写样式。所有的核心组件都接受名为 style 的属性。这些样式名基本上是遵循了 web 上的 CSS 的命名，只是按照 JS 的语法要求使用了驼峰命名法，例如将 background-color 改为 backgroundColor。</p>
+</blockquote>
+<ul>
+<li>使用 StyleSheet.create 来集中定义组件的样式，如：</li>
+</ul>
+<blockquote>
+<p>可以直接写在 style 上，也可以创建对象，相当于前端的 css 类</p>
+</blockquote>
+<blockquote>
+<p>RN 布局主要使用 flexbox 布局，几乎所有样式都可以使用</p>
+</blockquote>
+<pre><code class="js">import React, &#123; Component &#125; from &quot;react&quot;;
+import &#123; AppRegistry, StyleSheet, Text, View &#125; from &quot;react-native&quot;;
+
+export default class LotsOfStyles extends Component &#123;
+  render() &#123;
+    return (
+      &lt;View&gt;
+        &lt;Text style=&#123;&#123; color: "red" &#125;&#125;&gt;just red&lt;/Text&gt;
+        &lt;Text style=&#123;styles.bigblue&#125;&gt;just bigblue&lt;/Text&gt;
+        &lt;Text style=&#123;[styles.bigblue, styles.red]&#125;&gt;bigblue, then red&lt;/Text&gt;
+        &lt;Text style=&#123;[styles.red, styles.bigblue]&#125;&gt;red, then bigblue&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  &#125;
+&#125;
+
+const styles = StyleSheet.create(&#123;
+  bigblue: &#123;
+    color: &quot;blue&quot;,
+    fontWeight: &quot;bold&quot;,
+    fontSize: 30,
+  &#125;,
+  red: &#123;
+    color: &quot;red&quot;,
+  &#125;,
+&#125;);
+
+AppRegistry.registerComponent(&quot;LotsOfStyles&quot;, () =&gt; LotsOfStyles);
+</code></pre>
+<ul>
+<li><code>&lt;Text&gt;</code> 元素布局不同于其他组件</li>
+</ul>
+<p>在 Text 内部的元素不再使用 flexbox 布局，而是采用文本布局。这意味着<code>&lt;Text&gt;</code>内部的元素不再是一个个矩形，而可能会在行末进行折叠。</p>
+<ul>
+<li>样式继承限制</li>
+</ul>
+<p>在 CSS 中，我们可以在 html 上设置可继承样式（font-size），浏览器在渲染每个节点，会在渲染树上，一路向上查询，直到根节点。但在 RN 中，第一，你必须把你的文本节点放在<code>&lt;Text&gt;</code>组件内，不能直接在<code>&lt;View&gt;</code>下放置文本。第二，不能设置全局的可继承样式，可使用组件和全局样式来实现。第三，只有在文本标签的子节点，才可以继承样式。</p>
+<pre><code class="js">&lt;Text style=&#123;&#123; fontWeight: "bold" &#125;&#125;&gt;
+  I am bold
+  &lt;Text style=&#123;&#123; color: "red" &#125;&#125;&gt;and red&lt;/Text&gt;
+&lt;/Text&gt;
+</code></pre>
+<ul>
+<li>不同设备样式尺寸样式兼容，使用封装的方法对设计稿的尺寸进行转换</li>
+</ul>
+<pre><code class="js">const UIBaseWidth = 750; // 设计稿基础尺寸
+const px2dp = (UIPx) =&gt;
+  Math.floor(((UIPx * screenWidth) / UIBaseWidth) * 10) / 10; // 根据设计稿转换，向下取整保留一位小数
+
+// 具体使用
+
+&lt;View
+  style=&#123;&#123;
+    height: px2dp(222),
+    marginHorizontal: px2dp(32),
+    paddingVertical: px2dp(12),
+    backgroundColor: baseColor.veinsColorF5F5F5,
+    borderRadius: px2dp(8),
+    marginBottom: px2dp(80),
+  &#125;&#125;
+&gt;&lt;/View&gt;;
+</code></pre>
+<ul>
+<li>zIndex 调整层级无效(绝对定位的同级元素)</li>
+</ul>
+<p>实际在使用 zIndex 属性的时候发现根本没有效果，跟 web 的 z-index 所呈现的效果完全不一样</p>
+<p><strong>解决方法：</strong></p>
+<p>改变元素的顺序，而不使用 zIndex。默认情况下，使用了<code>position: &#39;absolute&#39;</code>后，在后面的元素会覆盖在前面的元素之上</p>
+<ul>
+<li>常用的样式</li>
+</ul>
+<p>详见之前写过的内容：<a href="http://lion1ou.tech/2018/05/29/">样式手册</a></p>
+<h4 id="高度与宽度"><a href="#高度与宽度" class="headerlink" title="高度与宽度"></a>高度与宽度</h4><h5 id="弹性宽高"><a href="#弹性宽高" class="headerlink" title="弹性宽高"></a>弹性宽高</h5><ul>
+<li>使用<code>flex: 1</code>来指定某个组件扩张以撑满所有剩余空间</li>
+<li>多个并列子组件使用<code>flex: 1</code>，则这几个组件平分父组件剩余空间，如果数值不同比例也相应不同</li>
+<li>前提是父组件的尺寸不为零（设置固定的 width，height，或 flex）</li>
+</ul>
+<pre><code class="html">&lt;View style=&quot;&#123;&#123;flex:" 1&#125;&#125;&gt;
+  &lt;View style=&quot;&#123;&#123;flex:" 2&#125;&#125;&gt;&lt;/View&gt;
+  &lt;View style=&quot;&#123;&#123;flex:" 1&#125;&#125;&gt;&lt;/View&gt;
+&lt;/View&gt;
+</code></pre>
+<h5 id="Dimensions"><a href="#Dimensions" class="headerlink" title="Dimensions"></a>Dimensions</h5><p>本模块用于获取设备屏幕的宽高。</p>
+<ul>
+<li>初始的尺寸信息应该在 runApplication 之后被执行，这样才可以在任何其他的 require 被执行之前使用。不过在稍后可能还会更新。</li>
+</ul>
+<p>注意：尽管尺寸信息立即就可用，但它可能会在将来被修改（譬如设备的方向改变），所以基于这些常量的渲染逻辑和样式应当每次 render 之后都调用此函数，而不是将对应的值保存下来。（举例来说，你可能需要使用内联的样式而不是在 StyleSheet 中保存相应的尺寸）。</p>
+<p>示例： <code>var &#123;height, width&#125; = Dimensions.get(&#39;window&#39;);</code></p>
+<h4 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a>触摸事件</h4><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/handling-touches.html#content">官方文档</a></p>
+<blockquote>
+<p>在 React Native 上处理点击等常见的触摸手势，不像在 web 上直接在标签上绑定相应的手势事件就好了。需要在对应的标签外包裹一个手势组件，再使用相应的事件进行触发。</p>
+</blockquote>
+<p>点击、长按事件，可以使用”Touchable”开头的一系列组件。这些组件通过<code>onPress</code>属性接受一个点击事件的处理函数，使用<code>onLongPress</code>属性来实现长按事件。默认以冒泡形式调用，可以通过处理代码，达到捕获形式调用。</p>
+<pre><code class="js">class MyButton extends Component &#123;
+  _onPressButton() &#123;
+    console.log(&quot;You tapped the button!&quot;);
+  &#125;
+  render() &#123;
+    return (
+      &lt;TouchableHighlight onPress=&#123;this._onPressButton&#125;&gt;
+        &lt;View&gt;
+          &lt;Text&gt;Button&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/TouchableHighlight&gt;
+    );
+  &#125;
+&#125;
+</code></pre>
+<ul>
+<li>TouchableHighlight: 背景会在用户手指按下时变暗</li>
+<li>TouchableNativeFeedback: 在用户手指按下时形成类似墨水涟漪的视觉效果(在 Android)</li>
+<li>TouchableOpacity: 在用户手指按下时降低按钮的透明度，而不会改变背景的颜色</li>
+<li>TouchableWithoutFeedback: 在处理点击事件的同时不显示任何视觉反馈</li>
+</ul>
+<p>如果你想实现视图的拖拽，或是实现自定义的手势，那么请参阅 <a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/panresponder.html">PanResponder API</a> 或是手势识别系统的文档。</p>
+<h4 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h4><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/network.html#content">官方文档</a></p>
+<ul>
+<li>Fetch</li>
+</ul>
+<blockquote>
+<p>React Native 提供了和 web 标准一致的 Fetch API，用于满足开发者访问网络的需求。如果你之前使用过 XMLHttpRequest(即俗称的 ajax)或是其他的网络 API，那么 Fetch 用起来将会相当容易上手。</p>
+</blockquote>
+<pre><code class="js">fetch(&quot;https://mywebsite.com/endpoint/&quot;, &#123;
+  method: &quot;POST&quot;,
+  headers: &#123;
+    Accept: &quot;application/json&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+  &#125;,
+  body: JSON.stringify(&#123;
+    firstParam: &quot;yourValue&quot;,
+    secondParam: &quot;yourOtherValue&quot;,
+  &#125;),
+&#125;);
+</code></pre>
+<blockquote>
+<p>注：默认情况下，iOS 会阻止所有非 HTTPS 的请求。如果你请求的接口是 http 协议，那么首先需要添加一个 App Transport Securty 的例外，或者干脆完全禁用 ATS，</p>
+</blockquote>
+<ul>
+<li>使用其他的网络库（Axios）</li>
+</ul>
+<blockquote>
+<p>React Native 中已经内置了 XMLHttpRequest API(也就是俗称的 ajax)。一些基于 XMLHttpRequest 封装的第三方库也可以使用，例如 frisbee 或是 axios 等，但注意不能使用 jQuery。<br>需要注意的是，安全机制与网页环境有所不同：在应用中你可以访问任何网站，没有跨域的限制。</p>
+</blockquote>
+<ul>
+<li>WebSocket 支持</li>
+</ul>
+<blockquote>
+<p>React Native 还支持 WebSocket，这种协议可以在单个 TCP 连接上提供全双工的通信信道。</p>
+</blockquote>
+<h4 id="基础-API"><a href="#基础-API" class="headerlink" title="基础 API"></a>基础 API</h4><h5 id="AppRegistry"><a href="#AppRegistry" class="headerlink" title="AppRegistry"></a>AppRegistry</h5><p>AppRegistry 负责注册运行 React Native 应用程序的入口。通过 AppRegistry.registerComponent 来注册，当注册完成后，Native 系统就会加载 jsbundle 文件并且触发 AppRegistry.runApplication 运行应用。有以下方法：</p>
+<ol>
+<li>registerConfig(config: Array):静态方法，注册配置。</li>
+<li>registerComponent(appKey: string, getComponentFunc: ComponentProvider):注册入口组件。</li>
+<li>registerRunnable(appKey: string, func: Function):注册函数监听。</li>
+<li>getAppKeys():获取 registerRunnable 注册的监听键。</li>
+<li>runApplication(appKey: string, appParameters: any):运行 App。</li>
+</ol>
+<h5 id="AsyncStorage"><a href="#AsyncStorage" class="headerlink" title="AsyncStorage"></a>AsyncStorage</h5><p>AsyncStorage 是一个简单的、具有异步特性的键值对的存储系统。相对整个 App 而言，它是全局的，应该用于替代 LocalStorage。</p>
+<p>AsyncStorage 提供了比较安全的方法供我们使用。每个方法都有一个回调函数，而回调函数的第一个参数都是错误对象。如果发生错误该对象就会展示错误信息，否则为 null。所有的方法执行后，都会返回一个 Promise 对象。</p>
+<h5 id="Linking"><a href="#Linking" class="headerlink" title="Linking"></a>Linking</h5><p>Linking 提供了一个通用的接口来与传入和传出的 App 链接进行交互。可以简单的理解为，跟其他 APP 的通讯。</p>
+<ul>
+<li>被外部链接打开(仅用在原生代码的项目, 本节仅适用于使用 react-native init 或使用 Create React Native App 创建的项目，这些项目已经弹出。 有关”弹出”的详细信息，请参阅 Create React Native App 代码库中的指南。)</li>
+</ul>
+<p>如果你的应用被其注册过的外部 url 调起，则可以在任何组件内这样获取和处理它：</p>
+<pre><code class="js">componentDidMount() &#123;
+  Linking.getInitialURL().then((url) =&gt; &#123;
+    if (url) &#123;
+      console.log(&#39;Initial url is: &#39; + url);
+    &#125;
+  &#125;).catch(err =&gt; console.error(&#39;An error occurred&#39;, err));
+&#125;
+</code></pre>
+<ul>
+<li>打开外部链接</li>
+</ul>
+<p>要启动一个链接相对应的应用（打开浏览器、邮箱或者其它的应用），只需调用：</p>
+<pre><code class="js">Linking.openURL(url).catch((err) =&gt; console.error(&quot;An error occurred&quot;, err));
+</code></pre>
+<p>如果想在打开链接前先检查是否安装了对应的应用，则调用以下方法：</p>
+<pre><code class="js">Linking.canOpenURL(url)
+  .then((supported) =&gt; &#123;
+    if (!supported) &#123;
+      console.log(&quot;Can&#39;t handle url: &quot; + url);
+    &#125; else &#123;
+      return Linking.openURL(url);
+    &#125;
+  &#125;)
+  .catch((err) =&gt; console.error(&quot;An error occurred&quot;, err));
+</code></pre>
+<h5 id="PixelRatio"><a href="#PixelRatio" class="headerlink" title="PixelRatio"></a>PixelRatio</h5><p>PixelRatio 类提供了访问设备的像素密度的方法。</p>
+<h5 id="AppState"><a href="#AppState" class="headerlink" title="AppState"></a>AppState</h5><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/0.51/appstate.html#content">官方文档</a></p>
+<p>APP 状态有三种：</p>
+<ul>
+<li>active - 应用正在前台运行。</li>
+<li>background - 应用正在后台运行。用户既可能在别的应用中，也可能在桌面。</li>
+<li>inactive - 此状态表示应用正在前后台的切换过程中，或是处在系统的多任务视图，又或是处在来电状态中。</li>
+</ul>
+<p>要获取当前的状态，你可以使用 AppState.currentState，这个变量会一直保持更新。不过在启动的过程中，currentState 可能为 null，直到 AppState 从原生代码得到通知为止。</p>
+<h5 id="Platform"><a href="#Platform" class="headerlink" title="Platform"></a>Platform</h5><p>React Native 也没有完全做到说真正的跨平台使用，所以我们有时候会针对不同的平台做一些事情，使用 Platform.OS 可以获取到当前的设备平台：</p>
+<pre><code class="js">import &#123; Text, Platform &#125; from &quot;react-native&quot;;
+
+&lt;Text&gt;
+  当前平台是：&#123;Platform.OS&#125;, Version: &#123;Platform.Version&#125;
+&lt;/Text&gt;;
+</code></pre>
+<p>Platform.OS 在 iOS 上会返回 ios，而在 Android 设备或模拟器上则会返回 android。</p>
+<p>还有个实用的方法是 Platform.select()，它可以以 Platform.OS 为 key，从传入的对象中返回对应平台的值，见下面的示例：</p>
+<pre><code class="js">import &#123; Platform, StyleSheet &#125; from &quot;react-native&quot;;
+
+var styles = StyleSheet.create(&#123;
+  container: &#123;
+    flex: 1,
+    ...Platform.select(&#123;
+      ios: &#123;
+        backgroundColor: &quot;red&quot;,
+      &#125;,
+      android: &#123;
+        backgroundColor: &quot;blue&quot;,
+      &#125;,
+    &#125;),
+  &#125;,
+&#125;);
+</code></pre>
+<h4 id="常用组件"><a href="#常用组件" class="headerlink" title="常用组件"></a>常用组件</h4><h5 id="View，ScrollView，FlatList"><a href="#View，ScrollView，FlatList" class="headerlink" title="View，ScrollView，FlatList"></a>View，ScrollView，FlatList</h5><p>ScrollView 和 FlatList 应该如何选择？ScrollView 会简单粗暴地把所有子元素一次性全部渲染出来。其原理浅显易懂，使用上自然也最简单。然而这样简单的渲染逻辑自然带来了性能上的不足。想象一下你有一个特别长的列表需要显示，可能有好几屏的高度。创建和渲染那些屏幕以外的 JS 组件和原生视图，显然对于渲染性能和内存占用都是一种极大的拖累和浪费。</p>
+<p>这就是为什么我们还有专门的 FlatList 组件。FlatList 会惰性渲染子元素，只在它们将要出现在屏幕中时开始渲染。这种惰性渲染逻辑要复杂很多，因而 API 在使用上也更为繁琐。除非你要渲染的数据特别少，否则你都应该尽量使用 FlatList，哪怕它们用起来更麻烦。</p>
+<h5 id="TextInput"><a href="#TextInput" class="headerlink" title="TextInput"></a>TextInput</h5><p>TextInput 是一个允许用户在应用中通过键盘输入文本的基本组件。本组件的属性提供了多种特性的配置，譬如自动完成、自动大小写、占位文字，以及多种不同的键盘类型（如纯数字键盘）等等。</p>
+<h5 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h5><p>一个用于显示文本的 React 组件，并且它也支持嵌套、样式，以及触摸处理。</p>
+<p>在下面的例子里，嵌套的标题和正文文字会继承来自 styles.baseText 的 fontFamily 字体样式，不过标题上还附加了它自己额外的样式。标题和文本会在顶部依次堆叠，并且被代码中内嵌的换行符分隔开。</p>
+<pre><code class="js">// ...
+render() &#123;
+  return (
+    &lt;Text style=&#123;styles.baseText&#125;&gt;
+      &lt;Text style=&#123;styles.titleText&#125; onPress=&#123;this.onPressTitle&#125;&gt;
+        &#123;this.state.titleText&#125;
+      &lt;/Text&gt;
+      &lt;Text numberOfLines=&#123;5&#125;&gt;
+        &#123;this.state.bodyText&#125;
+      &lt;/Text&gt;
+    &lt;/Text&gt;
+  );
+&#125;
+
+const styles = StyleSheet.create(&#123;
+  baseText: &#123;
+    fontFamily: &#39;Cochin&#39;,
+  &#125;,
+  titleText: &#123;
+    fontSize: 20,
+    fontWeight: &#39;bold&#39;,
+  &#125;,
+&#125;);
+</code></pre>
+<h5 id="Image-ImageBackground"><a href="#Image-ImageBackground" class="headerlink" title="Image, ImageBackground"></a>Image, ImageBackground</h5><p>用于显示多种不同类型图片的 React 组件，包括网络图片、静态资源、临时的本地图片、以及本地磁盘上的图片（如相册）等。</p>
+<h5 id="KeyboardAvoidingView"><a href="#KeyboardAvoidingView" class="headerlink" title="KeyboardAvoidingView"></a>KeyboardAvoidingView</h5><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/keyboardavoidingview.html">官方文档</a></p>
+<p>本组件用于解决一个常见的尴尬问题：手机上弹出的键盘常常会挡住当前的视图。本组件可以自动根据键盘的位置，调整自身的 position 或底部的 padding，以避免被遮挡。</p>
+<p>用法：</p>
+<pre><code>import &#123; KeyboardAvoidingView &#125; from &#39;react-native&#39;;
+
+&lt;KeyboardAvoidingView style=&#123;styles.container&#125; behavior=&quot;padding&quot; enabled&gt;
+  ... 在这里放置需要根据键盘调整位置的组件 ...
+&lt;/KeyboardAvoidingView&gt;
+</code></pre>
+<p><img src="https://cdn.leoao.com/Mar-24-2019%2019-05-25.gif"></p>
+<h5 id="Modal"><a href="#Modal" class="headerlink" title="Modal"></a>Modal</h5><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/modal.html">官方文档</a></p>
+<p>Modal 组件是一种简单的覆盖在其他视图之上显示内容的方式。</p>
+<h5 id="RefreshControl"><a href="#RefreshControl" class="headerlink" title="RefreshControl"></a>RefreshControl</h5><p>此组件用在 ScrollView 及其衍生组件的内部，用于添加下拉刷新的功能。</p>
+<h3 id="两端兼容"><a href="#两端兼容" class="headerlink" title="两端兼容"></a>两端兼容</h3><h4 id="TextInput-1"><a href="#TextInput-1" class="headerlink" title="TextInput"></a>TextInput</h4><blockquote>
+<ul>
+<li>iOS 下的 textAlign 取值 auto left right center justify</li>
+<li>android 下的 textAlign 取值为 start center end</li>
+<li>安卓平台有黑色边框和选中黄框，可通过设置 underlineColorAndroid=’rgba(0,0,0,0)’去掉</li>
+<li>安卓平台无清除按钮，可以使用 react-native-textinput 来兼容双平台</li>
+</ul>
+</blockquote>
+<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><blockquote>
+<ul>
+<li>iOS 下 resizeMode 可以写在行间属性，也可以写在 style，后者覆盖前者</li>
+<li>android 下 resizeMode 只可以写在行间，写在 style 无效</li>
+</ul>
+</blockquote>
+<pre><code class="js">//android
+&lt;Image resizeMode=&#123;&#39;stretch&#39;&#125;&gt;&lt;/Image&gt;
+//ios, style中的cover会覆盖掉stretch
+&lt;Image resizeMode=&#123;&#39;stretch&#39;&#125; style=&#123;&#123;'resizeMode': 'cover'&#125;&#125;&gt;&lt;/Image&gt;
+</code></pre>
+<h4 id="Text-1"><a href="#Text-1" class="headerlink" title="Text"></a>Text</h4><blockquote>
+<ul>
+<li>allowFontScaling，控制字体是否要根据系统的“字体大小”辅助选项来进行缩放。默认值为 true。</li>
+<li>textAlign: enum(‘auto’, ‘left’, ‘right’, ‘center’, ‘justify’)，指定文本的对齐方式。其中’justify’值仅 iOS 支持，在 Android 上会变为 left。</li>
+</ul>
+</blockquote>
+<h4 id="style-position-‘absolute’"><a href="#style-position-‘absolute’" class="headerlink" title="style position: ‘absolute’"></a>style position: ‘absolute’</h4><blockquote>
+<ul>
+<li>iOS 下正常</li>
+<li>android 下，position: ‘absolute’ 超过父节点高宽部分，会隐藏掉。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>解决办法：当需要用 position: ‘absolute’的时候，恰巧要求：子节点定位超出父节点高或宽，放弃使用，改用别的布局，或者将子节点放到于父节点同级，再定位。</p>
+</blockquote>
+<h4 id="picker-完全不一致"><a href="#picker-完全不一致" class="headerlink" title="picker 完全不一致"></a>picker 完全不一致</h4><blockquote>
+<ul>
+<li>iOS 组件是一个滚动的滚轮样式，</li>
+<li>android 组件是一个下拉选框的样式</li>
+</ul>
+</blockquote>
+<h4 id="有关屏幕的高度-Dimensions-get-‘window’-height"><a href="#有关屏幕的高度-Dimensions-get-‘window’-height" class="headerlink" title="有关屏幕的高度 Dimensions.get(‘window’).height"></a>有关屏幕的高度 Dimensions.get(‘window’).height</h4><blockquote>
+<ul>
+<li>两个平台都是整个屏幕的高度(包含 statusBar, 安卓端不包含虚拟按键)</li>
+<li>iOS 平台的布局是从 statusBar 的顶端开始</li>
+<li>android 平台的布局是从 statusBar 的底端开始(设置 translucent: true 后也从 statusBar 顶端开始)</li>
+</ul>
+</blockquote>
+<p>如果设置 view 的高度是 Dimensions.get(‘window’).height，然后设置 position: ‘absolute’, top: 0，会发现 android 平台 view 的底端被遮住了一小部分，这一小部分正好就是 android 平台 statusBar 的高度<br>安卓端 statusBar 通常是 25dp，虚拟按键通常是 48dp</p>
+<p>解决方法有四：</p>
+<ul>
+<li>设置 view 的高度是整屏的高度减去 statusBar 的高度</li>
+<li>设置 top 值为负的 statusBar 的高度</li>
+<li>设置 bottom: -Dimensions.get(‘window’).height 替代 top: 0</li>
+<li>在每一个 Navigator 的入口设置&lt; StatusBar translucent={true}/ &gt;</li>
+</ul>
+<p>大坑: 有些手机通过上述方法获取到的屏幕高度竟然包含了虚拟按键的高度，如魅族 pro4，只能引入 react-native-device-info 这个库来 hack 一下了</p>
+<h4 id="zIndex-层级问题"><a href="#zIndex-层级问题" class="headerlink" title="zIndex 层级问题"></a>zIndex 层级问题</h4><p>shadow（阴影）开头样式可以在 iOS 上应用，但在安卓中是不生效的，而 Android 上对应的属性是 elevation。设置 elevation 属性就等价于使用原生的 elevation API，因而也有同样的限制（比如最明显的就是需要 Android 5.0 以上版本）。此外还会影响到层叠视图在空间 z 轴上的顺序，结论：</p>
+<ul>
+<li><p>对于 Android，两个同一层级的定位组件（position：“absolute”）</p>
+<p>1、 既没有 ZIndex 属性，又没有 elevation 属性时，在 z 轴的层叠关系由其摆放位置决定的，放在下面的组件会在上层；<br>2、 两个组件只有 zIndex 没有 elevation 属性时，zIndex 大的在上层<br>3、 两个组件有 elevation 属性时，elevation 大的在上层<br>4、 两个组件既有 zIndex 属性 elevation 属性时，以 elevation 为准</p>
+</li>
+<li><p>对于 IOS，同层级的组件，z 轴的层叠关系只与摆放顺序与 zIndex 有关，与 elevation 无关</p>
+</li>
+</ul>
+<h3 id="外部组件库"><a href="#外部组件库" class="headerlink" title="外部组件库"></a>外部组件库</h3><h4 id="IconFont"><a href="#IconFont" class="headerlink" title="IconFont"></a>IconFont</h4><p><a href="http://lion1ou.tech/2018/11/17/">具体使用详情</a></p>
+<h3 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h3><ol>
+<li>分为两个一级页面组件，每个组件独立维护一套自己的路由地址</li>
+<li>通过默认页面的路由重置，实现 RN 页面和 Native 页面的跳转</li>
+</ol>
+<p><img src="https://cdn.leoao.com/blog/coach-page-test.png?imageslim"></p>
+<h2 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h2><h3 id="ES6-语法"><a href="#ES6-语法" class="headerlink" title="ES6 语法"></a>ES6 语法</h3><ul>
+<li>阮一峰 ECMAScript 6 入门 <a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">http://es6.ruanyifeng.com/</a></li>
+</ul>
+<h3 id="React-js"><a href="#React-js" class="headerlink" title="React.js"></a>React.js</h3><ul>
+<li><p>react.js 入门教程(gitbook) <a target="_blank" rel="noopener" href="https://hulufei.gitbooks.io/react-tutorial/content/introduction.html">https://hulufei.gitbooks.io/react-tutorial/content/introduction.html</a></p>
+</li>
+<li><p><strong>react.js 快速入门教程 - 阮一峰</strong> <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/03/react.html">http://www.ruanyifeng.com/blog/2015/03/react.html</a></p>
+</li>
+<li><p>react.js 视频教程  <a target="_blank" rel="noopener" href="http://react-china.org/t/reactjs/584">http://react-china.org/t/reactjs/584</a></p>
+</li>
+<li><p>React Native 之 React 速学教程<a target="_blank" rel="noopener" href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E4%B9%8BReact%E9%80%9F%E5%AD%A6%E6%95%99%E7%A8%8B">https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E4%B9%8BReact%E9%80%9F%E5%AD%A6%E6%95%99%E7%A8%8B</a></p>
+</li>
+</ul>
+<h3 id="React-Native"><a href="#React-Native" class="headerlink" title="React-Native"></a>React-Native</h3><ul>
+<li><p>react-native 官方 api 文档  <a target="_blank" rel="noopener" href="http://facebook.github.io/react-native/docs/getting-started.html">http://facebook.github.io/react-native/docs/getting-started.html</a></p>
+</li>
+<li><p>react-native 中文文档(react native 中文网，人工翻译，官网完全同步) <a target="_blank" rel="noopener" href="http://react-native.cn/docs/getting-started.html">http://react-native.cn/docs/getting-started.html</a></p>
+</li>
+<li><p>react-native 中文文档(极客学院) <a target="_blank" rel="noopener" href="http://wiki.jikexueyuan.com/project/react-native/">http://wiki.jikexueyuan.com/project/react-native/</a></p>
+</li>
+<li><p>React Native 布局篇  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002658374">https://segmentfault.com/a/1190000002658374</a></p>
+</li>
+<li><p>React Native 基础练习指北（一） <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002645929">https://segmentfault.com/a/1190000002645929</a></p>
+</li>
+<li><p>React Native 基础练习指北（二） <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002647733">https://segmentfault.com/a/1190000002647733</a></p>
+</li>
+</ul>
+<h3 id="进阶内容"><a href="#进阶内容" class="headerlink" title="进阶内容"></a>进阶内容</h3><ul>
+<li><p><strong>React-native 组件库</strong>（比较全的组件库，可以直接搜索） <a target="_blank" rel="noopener" href="https://js.coach/">https://js.coach/</a></p>
+</li>
+<li><p><strong>最佳轮播类组件</strong> <a target="_blank" rel="noopener" href="https://github.com/leecade/react-native-swiper">https://github.com/leecade/react-native-swiper</a></p>
+</li>
+<li><p>选择器  <a target="_blank" rel="noopener" href="https://github.com/beefe/react-native-picker">https://github.com/beefe/react-native-picker</a></p>
+</li>
+<li><p>导航器 <a target="_blank" rel="noopener" href="https://github.com/react-navigation/react-navigation">https://github.com/react-navigation/react-navigation</a></p>
+</li>
+</ul>
+<h3 id="资源网站"><a href="#资源网站" class="headerlink" title="资源网站"></a>资源网站</h3><ul>
+<li><p>React-native 官网  <a target="_blank" rel="noopener" href="http://facebook.github.io/react-native/">http://facebook.github.io/react-native/</a></p>
+</li>
+<li><p><strong>React-China 社区</strong> <a target="_blank" rel="noopener" href="http://react-china.org/">http://react-china.org/</a></p>
+</li>
+<li><p><strong>React Native 中文社区</strong> <a target="_blank" rel="noopener" href="http://bbs.react-native.cn/">http://bbs.react-native.cn/</a></p>
+</li>
+<li><p><strong>React-native 组件库</strong>（比较全的组件库） <a target="_blank" rel="noopener" href="http://react.parts/">http://react.parts/</a></p>
+</li>
+<li><p><strong>React Native Modules</strong> <a target="_blank" rel="noopener" href="http://reactnativemodules.com/">http://reactnativemodules.com/</a></p>
+</li>
+<li><p><strong>Use React Native 资讯站</strong>(使用技巧及新闻) <a target="_blank" rel="noopener" href="http://www.reactnative.com/">http://www.reactnative.com/</a></p>
+</li>
+<li><p>React Native Tools <a target="_blank" rel="noopener" href="http://www.rntools.co/">http://www.rntools.co/</a></p>
+</li>
+<li><p>11 款 React Native 开源移动 UI 组件  <a target="_blank" rel="noopener" href="http://www.oschina.net/news/61214/11-react-native-ui-components">http://www.oschina.net/news/61214/11-react-native-ui-components</a></p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E8%BF%90%E8%A1%8C"><span class="toc-text">环境搭建和运行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83"><span class="toc-text">基础环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%B5%8B%E8%AF%95"><span class="toc-text">安装测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E8%B0%83%E8%AF%95"><span class="toc-text">运行调试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E8%B0%83%E8%AF%95%E6%A1%86"><span class="toc-text">开启调试框</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B7%E6%96%B0-JavaScript"><span class="toc-text">刷新 JavaScript</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%86%85%E6%8A%A5%E9%94%99"><span class="toc-text">应用内报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%97%A5%E5%BF%97"><span class="toc-text">访问控制台日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chrome-%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="toc-text">Chrome 开发者工具</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95"><span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ReactNative-iOS-%E8%BF%90%E8%A1%8C%E5%87%BA%E9%94%99%EF%BC%9ANo-bundle-URL-present%EF%BC%88%E6%95%B4%E4%B8%AA%E9%A1%B5%E9%9D%A2%E7%BA%A2%E8%89%B2%EF%BC%89"><span class="toc-text">1. ReactNative iOS 运行出错：No bundle URL present（整个页面红色）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-ReactNative-iOS-%E6%89%93%E5%BC%80-WebView-%E5%87%BA%E7%8E%B0-Error-Domain-NSURLErrorDomain-Code-1022"><span class="toc-text">2. ReactNative iOS 打开 WebView 出现 Error Domain&#x3D;NSURLErrorDomain Code&#x3D;-1022</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%BF%9E%E6%8E%A5-android-%E7%9C%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85"><span class="toc-text">3. 连接 android 真机无法成功安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-iOS-%E2%80%98glog-logging-h%E2%80%99-file-not-found"><span class="toc-text">4. iOS: ‘glog&#x2F;logging.h’ file not found</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-iOS-Xcode-10-libfishhook-a-cannot-be-found"><span class="toc-text">5. iOS: Xcode 10 libfishhook.a cannot be found</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86"><span class="toc-text">前端知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NPM"><span class="toc-text">NPM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F"><span class="toc-text">样式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">盒子模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B1%82%E5%B8%83%E5%B1%80%E6%A8%A1%E5%9E%8B"><span class="toc-text">层布局模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E8%A7%84%E5%88%99"><span class="toc-text">样式规则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flexBox"><span class="toc-text">flexBox</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#react"><span class="toc-text">react</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#jsx-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99"><span class="toc-text">jsx 的语法规则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%97%E5%AD%90"><span class="toc-text">循环数组的列子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="toc-text">组件的两种定义方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%86%85%E6%95%B0%E6%8D%AE"><span class="toc-text">组件内数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F"><span class="toc-text">组件声明周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E7%9F%A5%E8%AF%86"><span class="toc-text">iOS 知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-CocoaPods"><span class="toc-text">什么是 CocoaPods</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cocoapods-%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-text">cocoapods 的安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-cocoapods-%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9"><span class="toc-text">使用 cocoapods 集成第三方</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-%E7%9F%A5%E8%AF%86"><span class="toc-text">Android 知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84-ADB-%E5%91%BD%E4%BB%A4"><span class="toc-text">常用的 ADB 命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RN-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">RN 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F-1"><span class="toc-text">样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E5%BA%A6%E4%B8%8E%E5%AE%BD%E5%BA%A6"><span class="toc-text">高度与宽度</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%B9%E6%80%A7%E5%AE%BD%E9%AB%98"><span class="toc-text">弹性宽高</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dimensions"><span class="toc-text">Dimensions</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6"><span class="toc-text">触摸事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80-API"><span class="toc-text">基础 API</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AppRegistry"><span class="toc-text">AppRegistry</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AsyncStorage"><span class="toc-text">AsyncStorage</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Linking"><span class="toc-text">Linking</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PixelRatio"><span class="toc-text">PixelRatio</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AppState"><span class="toc-text">AppState</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Platform"><span class="toc-text">Platform</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="toc-text">常用组件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#View%EF%BC%8CScrollView%EF%BC%8CFlatList"><span class="toc-text">View，ScrollView，FlatList</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TextInput"><span class="toc-text">TextInput</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Text"><span class="toc-text">Text</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Image-ImageBackground"><span class="toc-text">Image, ImageBackground</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#KeyboardAvoidingView"><span class="toc-text">KeyboardAvoidingView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Modal"><span class="toc-text">Modal</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RefreshControl"><span class="toc-text">RefreshControl</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%AB%AF%E5%85%BC%E5%AE%B9"><span class="toc-text">两端兼容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TextInput-1"><span class="toc-text">TextInput</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-1"><span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#style-position-%E2%80%98absolute%E2%80%99"><span class="toc-text">style position: ‘absolute’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#picker-%E5%AE%8C%E5%85%A8%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text">picker 完全不一致</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E5%B1%8F%E5%B9%95%E7%9A%84%E9%AB%98%E5%BA%A6-Dimensions-get-%E2%80%98window%E2%80%99-height"><span class="toc-text">有关屏幕的高度 Dimensions.get(‘window’).height</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zIndex-%E5%B1%82%E7%BA%A7%E9%97%AE%E9%A2%98"><span class="toc-text">zIndex 层级问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="toc-text">外部组件库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IconFont"><span class="toc-text">IconFont</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-text">项目介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-text">学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6-%E8%AF%AD%E6%B3%95"><span class="toc-text">ES6 语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-js"><span class="toc-text">React.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-Native"><span class="toc-text">React-Native</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E5%86%85%E5%AE%B9"><span class="toc-text">进阶内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%BD%91%E7%AB%99"><span class="toc-text">资源网站</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-12/reactnative之入门全解/">https://lion1ou.tech/2018-12/reactnative之入门全解/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-11/reactnative%E4%B9%8Biconfont%E4%BD%BF%E7%94%A8/" rel="next" title="ReactNative之iconfont使用">
+        ReactNative之iconfont使用
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2019-07/mac%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/" rel="prev" title="Mac软件推荐">
+          Mac软件推荐
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-12/reactnative%E4%B9%8B%E5%85%A5%E9%97%A8%E5%85%A8%E8%A7%A3/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

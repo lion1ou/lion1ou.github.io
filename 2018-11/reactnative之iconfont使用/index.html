@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="ReactNative," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>ReactNative之iconfont使用 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        ReactNative之iconfont使用
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-11-16T16:10:16.000Z">
+            2018-11-17 00:10
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.4k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">6 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/ReactNative/" rel="tag">ReactNative</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>iconfont 显示成图形图标的字体，因为字体是矢量化图形，具有分辨率无关的特性，在任何分辨率和 ppi 下面，都可以做到完美缩放，不像传统位图如：png，jpg 一样，放大后会有锯齿或者模糊。<br>为什么使用 iconfont 对比图片大小来说容量更小，支持样式修改(大小，颜色)，适应多分辨率，网上有很多现成的 iconfont 资源可以使用。</p>
+<span id="more"></span>
+
+<h3 id="在-RN-中使用-iconfont"><a href="#在-RN-中使用-iconfont" class="headerlink" title="在 RN 中使用 iconfont"></a>在 RN 中使用 iconfont</h3><p>简单介绍完 iconfont，现在说说在 RN 中整么用它。这里推荐使用 react-native-vector-icons，它会把字体文件转换成相应的 iconSets 在 RN 供我们使用。</p>
+<ul>
+<li>安装 react-native-vector-icons</li>
+</ul>
+<pre><code class="bash">npm i --save react-native-vector-icons
+</code></pre>
+<h3 id="ios-下配置"><a href="#ios-下配置" class="headerlink" title="ios 下配置"></a>ios 下配置</h3><p>用 XCode 打开项目目录下的 ios，为了管理字体，我们新建一个 fonts 目录，字体文件统一放在里面，把字体文件拖进这个文件夹。会有弹框提示并且记得 Add to targets 选中当前项目。</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon1.png"></p>
+<p>确保 Build Phases 的 Copy Bundle REsources 中有字体文件</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon2.png"></p>
+<p>接着修改 info.plist，在 information Property List 下新增 Fonts provided by application，在 Fonts provided by application 下在增加字体文件，到这里 ios 就配置好了。</p>
+<p><img src="http://cdn.chuyunt.com/ios-icon3.png"></p>
+<h3 id="android-配置"><a href="#android-配置" class="headerlink" title="android 配置"></a>android 配置</h3><p>安卓下会从 android/app/src/main/assets/fonts 目录读取字体文件，所以我们需要把字体文件<code>*.ttf</code>放在这个目录下，然后在 android/app/build.gradle 文件中按需增加下面的配置。</p>
+<pre><code class="java">//使用内置的iconSets
+apply from: &quot;../../node_modules/react-native-vector-icons/fonts.gradle&quot;
+//使用自定义iconSets
+project.ext.vectoricons = [
+   iconFontNames: [ &#39;iconfont.ttf&#39;] // Name of the font files you want to copy
+]
+</code></pre>
+<p>使用内置的 iconSets</p>
+<pre><code class="java">import Icon from &#39;react-native-vector-icons/FontAwesome&#39;;
+&lt;Icon name=&#39;rocket&#39; size=&#123;60&#125; color=&quot;#4F8EF7&quot; /&gt;
+</code></pre>
+<p>上面的方式引用的是 react-native-vector-icons 内置的一种 iconSets, 除了 FontAwesome 还有其他 iconSets，可以到<a target="_blank" rel="noopener" href="https://github.com/oblador/react-native-vector-icons">react-native-vector-icons</a>查看</p>
+<p>虽然内置了很多 iconSets 给我们使用，但往往我们做项目时一般都会使用自己的 iconfont，整么使用自己的 iconfont 呢？</p>
+<p>react-native-vector-icons/FontAwesome 这个返回的是一个 iconSets，简单理解这个 iconSets 是一个可以帮我们显示字体图标的组件。其中 name 对应图标在 glyphMap.json 文件中对应的 key。</p>
+<p>看 react-native-vector-icons/FontAwesome 的源码</p>
+<pre><code class="java">/**
+ * FontAwesome icon set component.
+ * Usage: &lt;FontAwesome name=&quot;icon-name&quot; size=&#123;20&#125; color=&quot;#4F8EF7&quot; /&gt;
+ */
+
+import createIconSet from &#39;./lib/create-icon-set&#39;;
+import glyphMap from &#39;./glyphmaps/FontAwesome.json&#39;;
+
+const iconSet = createIconSet(glyphMap, &#39;FontAwesome&#39;, &#39;FontAwesome.ttf&#39;);
+
+export default iconSet;
+</code></pre>
+<p>createIconSet(glyphMap, fontFamily, fontFile)</p>
+<p>参数说明：</p>
+<ul>
+<li>glyphMap: json 对象(key 是图标的 name, value 是图标对应的 10 进制数)</li>
+<li>fontFamily: 字体库对应的 fontFamily</li>
+<li>fontFile：字体文件名称(注意这里只声明字体库名称，字体库路径分平台配置)</li>
+</ul>
+<p>看 glyphMap 对应的 glyphmaps/FontAwesome.json</p>
+<pre><code class="json">&#123;
+  &quot;glass&quot;: 61440,
+  &quot;music&quot;: 61441,
+  &quot;search&quot;: 61442,
+  &quot;envelope-o&quot;: 61443,
+  &quot;heart&quot;: 61444,
+  &quot;star&quot;: 61445
+&#125;
+</code></pre>
+<p>总结一下：</p>
+<p>就是根据字体文件(.ttf|.otf)和 glyphMap.json 创建对应的 IconSets，所以要想使用自定义的 iconfont 我们需要准备这两样东西。</p>
+<h3 id="使用自定义的-iconSets"><a href="#使用自定义的-iconSets" class="headerlink" title="使用自定义的 iconSets"></a>使用自定义的 iconSets</h3><p>看完上面的源码分析，我们开始自定义 iconSets，先准备一套 iconfont，作者习惯使用阿里巴巴矢量图标库，这里就拿这个来作为栗子。选取你需要的图标，添加为一个项目，如下：</p>
+<p>项目默认的 fontFamily 为 iconfont，还记得上面创建 iconSets 函数的第二个参数吗，每次对应的就是这个，这里我修改一下。</p>
+<p>下载项目，里面的 iconfont.ttf 就是我们需要的 iconfont 了。</p>
+<p>回想一下，创建 createIconSet 需要的东西，还少了 glyphMap，glyphMap 整么来呢。看这里</p>
+<p>其中 e69b 是图标对应的 16 进制 unicode 我们需要的是 10 进制，所以把它转换一下， 下面使用的是 js</p>
+<pre><code class="js">parseInt(&quot;e69b&quot;, 16);
+59035;
+</code></pre>
+<p>每个图标都需要转换一次很麻烦，所以基于阿里巴巴图标矢量库下载的文件，我用 js 写了一个生成 json 的工具类。把刚下载下来的 iconfont.css，iconfont.json, genJson.js 放在同一目录。�node 执行 genJson.js，所需要的 json 对象就被写入 iconfont.json 中了。</p>
+<pre><code class="css">/*iconfont.css*/
+/* ...省略... */
+.ica &#123;
+  font-family: &quot;ica&quot; !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+&#125;
+
+.icon-all:before &#123;
+  content: &quot;\e696&quot;;
+&#125;
+
+.icon-back:before &#123;
+  content: &quot;\e697&quot;;
+&#125;
+
+.icon-cart:before &#123;
+  content: &quot;\e698&quot;;
+&#125;
+
+.icon-category:before &#123;
+  content: &quot;\e699&quot;;
+&#125;
+
+.icon-close:before &#123;
+  content: &quot;\e69a&quot;;
+&#125;
+
+.icon-comments:before &#123;
+  content: &quot;\e69b&quot;;
+&#125;
+</code></pre>
+<pre><code class="js">/*genJson.js*/
+const path = require(&quot;path&quot;);
+
+const oldPath = path.resolve(__dirname, &quot;iconfont.css&quot;);
+const newPath = path.resolve(__dirname, &quot;iconfont.json&quot;);
+
+var gen = (module.exports = function () &#123;
+  const readline = require(&quot;readline&quot;);
+  const fs = require(&quot;fs&quot;);
+
+  const fRead = fs.createReadStream(oldPath);
+  const fWrite = fs.createWriteStream(newPath, &#123;
+    flags: &quot;w+&quot;,
+    defaultEncoding: &quot;utf8&quot;,
+  &#125;);
+
+  const objReadLine = readline.createInterface(&#123;
+    input: fRead,
+  &#125;);
+
+  var ret = &#123;&#125;;
+
+  objReadLine.on(&quot;line&quot;, (line) =&gt; &#123;
+    line = line &amp;&amp; line.trim();
+    if (!line.includes(&quot;:before&quot;) || !line.includes(&quot;content&quot;)) return;
+    var keyMatch = line.match(/\.(.*?):/);
+    var valueMatch = line.match(/content:.*?\\(.*?);/);
+    var key = keyMatch &amp;&amp; keyMatch[1];
+    var value = valueMatch &amp;&amp; valueMatch[1];
+    value = parseInt(value, 16);
+    key &amp;&amp; value &amp;&amp; (ret[key] = value);
+  &#125;);
+
+  objReadLine.on(&quot;close&quot;, () =&gt; &#123;
+    console.log(&quot;readline close&quot;);
+    fWrite.write(JSON.stringify(ret), &quot;utf8&quot;);
+  &#125;);
+&#125;);
+
+gen();
+</code></pre>
+<p>创建 iconSets 需要的东西都准备好了，开始创建吧。</p>
+<pre><code class="js">／*iconfont.json*／
+&#123;
+  &quot;icon-comments&quot;:  59035,
+  &quot;icon-close&quot;: 59034
+&#125;
+/*iconSets.js*/
+
+import createIconSet from &#39;react-native-vector-icons/lib/create-icon-set&#39;;
+import glyphMap from &#39;./assets/fonts/iconfont.json&#39;;
+
+const iconSet = createIconSet(glyphMap, &quot;ica&quot;, &#39;iconfont.ttf&#39;);
+
+export default iconSet;
+
+/* componet.js*/
+...
+import Icon from &#39;./iconSets&#39;;
+&lt;Icon name=&#39;icon-comments&#39; size=&#123;60&#125; color=&quot;#4F8EF7&quot; /&gt;
+</code></pre>
+<p>运行一下，看字体显示出来了</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-RN-%E4%B8%AD%E4%BD%BF%E7%94%A8-iconfont"><span class="toc-text">在 RN 中使用 iconfont</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios-%E4%B8%8B%E9%85%8D%E7%BD%AE"><span class="toc-text">ios 下配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android-%E9%85%8D%E7%BD%AE"><span class="toc-text">android 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84-iconSets"><span class="toc-text">使用自定义的 iconSets</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-11/reactnative之iconfont使用/">https://lion1ou.tech/2018-11/reactnative之iconfont使用/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-07/reactnative%E4%B9%8B%E5%AF%BC%E8%88%AA%E5%99%A8%E4%BD%BF%E7%94%A8/" rel="next" title="ReactNative之导航器使用">
+        ReactNative之导航器使用
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-12/reactnative%E4%B9%8B%E5%85%A5%E9%97%A8%E5%85%A8%E8%A7%A3/" rel="prev" title="ReactNative之入门全解">
+          ReactNative之入门全解
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-11/reactnative%E4%B9%8Biconfont%E4%BD%BF%E7%94%A8/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

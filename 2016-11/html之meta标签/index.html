@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="HTML," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>HTML之Meta标签 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        HTML之Meta标签
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-11-16T12:31:03.000Z">
+            2016-11-16 20:31
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2.1k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">8 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/HTML/" rel="tag">HTML</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>meta是html语言head区的一个辅助性标签。也许你认为这些代码可有可无。其实如果你能够用好meta标签，会给你带来意想不到的效果，meta标签的作用有：搜索引擎优化（SEO），定义页面使用语言，自动刷新并指向新的页面，实现网页转换时的动态效果，控制页面缓冲，网页定级评价，控制网页显示的窗口等！</p>
+<span id="more"></span>
+<h2 id="桌面端"><a href="#桌面端" class="headerlink" title="桌面端"></a>桌面端</h2><h3 id="Name属性"><a href="#Name属性" class="headerlink" title="Name属性"></a>Name属性</h3><h5 id="Meta-Description"><a href="#Meta-Description" class="headerlink" title="Meta Description"></a>Meta Description</h5><p>这个标签曾经在搜索排名中占有很大的权重，但随着算法的不断更新升级，它的地位也逐渐降低。它虽然不会提高网站排名，但是，因为它会被用在搜索引擎的结果页，所以依然有用。</p>
+<pre><code class="html">&lt;meta name=&quot;description&quot; content=&quot;You can write everything!&quot;&gt;
+</code></pre>
+<p>Meta description标签可能是最有用的标签之一。顾名思义，它会给搜索引擎提供关于这个网页的简短的描述。推荐的description长度为160 个字符。</p>
+<h5 id="Meta-Robots"><a href="#Meta-Robots" class="headerlink" title="Meta Robots"></a>Meta Robots</h5><p>Meta robots标签管理着搜索引擎是否可以进入网页，你可以用它来允许或不允许搜索引擎来获取你的网页、进入你网页中的子链接或对你的网页存档。</p>
+<pre><code class="html">&lt;meta name=&quot;robots&quot; content=&quot;robotterms&quot; /&gt;
+</code></pre>
+<p>robotterms是一组使用逗号(,)分割的值，通常有如下几种取值：none，noindex，nofollow，all，index和follow。</p>
+<ul>
+<li>none    搜索引擎将忽略此网页，等价于noindex，nofollow。</li>
+<li>noindex 搜索引擎不索引此网页。</li>
+<li>nofollow    搜索引擎不继续通过此网页的链接索引搜索其它的网页。</li>
+<li>all 搜索引擎将索引此网页与继续通过此网页的链接索引，等价于index，follow。</li>
+<li>index   搜索引擎索引此网页。</li>
+<li>follow  搜索引擎继续通过此网页的链接索引搜索其它的网页。</li>
+</ul>
+<p>如果网页没有提供robots，搜索引擎认为网页的robots属性为all(index，follow)；</p>
+<h5 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h5><p>专业的讲，title标签不是meta标签，但他们都放在相同位置。我之所以把title标签放在这里是因为它对搜索引擎优化很重要。在所有的HTML文档中，title标签都是不可缺少的。它定义了整个文档的标题。</p>
+<pre><code class="html">&lt;title&gt;Examples&lt;/title&gt;
+</code></pre>
+<p>浏览器会以特殊的方式来使用标题，并且通常把它放置在浏览器窗口的标题栏或状态栏上。同样，当把文档加入用户的链接列表或者收藏夹或书签列表时，标题将成为该文档链接的默认名称。</p>
+<h5 id="Meta-keywords"><a href="#Meta-keywords" class="headerlink" title="Meta keywords"></a>Meta keywords</h5><p>keywords用于定义网页关键词，keywords出现在name属性中，使用content属性提供网页的关键词。</p>
+<pre><code class="html">&lt;meta name=&quot;keywords&quot; content=&quot;HTML XHTML&quot; /&gt;
+</code></pre>
+<ul>
+<li>keywords提供的网页关键词通常是为搜索引擎分类网页使用的；</li>
+<li>可以为网页提供多个关键词，多个关键词应该使用空格分开；</li>
+<li>不要给网页定义过多的关键词，最好保持在10个以下，过多的关键词，搜索引擎将忽略；</li>
+<li>不要给网页定义与网页描述内容无关的关键词；</li>
+<li>由于网页制作者滥用keywords(提供过多的关键词或者提供与网页无关的关键词)，导致目前常用的搜索引擎降低了keywords的重要性。</li>
+</ul>
+<h5 id="Meta-refresh"><a href="#Meta-refresh" class="headerlink" title="Meta refresh"></a>Meta refresh</h5><p>定义文档在规定的时间内容刷新或跳转到新的 URL 上。</p>
+<pre><code class="html">&lt;meta name=&quot;refresh&quot; content=&quot;10&quot;&gt;&lt;meta name=&quot;refresh&quot; content=&quot;10;URL=http://www.chuyunt.com&quot;&gt;
+</code></pre>
+<p>name值还有：</p>
+<ul>
+<li><p>abstract  定义了一个二级描述</p>
+</li>
+<li><p>author  定义文档的作者。<br>  实例：<code>&lt;meta name=&quot;author&quot; content=&quot;Hege Refsnes&quot;&gt;</code></p>
+</li>
+<li><p>classification  归类站点到正确类别</p>
+</li>
+<li><p>copyright   定义文档的版权信息。<br>  实例：<code>&lt;meta name=&quot;copyright&quot; content=&quot;2016 © lion1ou&quot;&gt;</code></p>
+</li>
+<li><p>distribution  规定文件是否可用于Web或Intranet。（web - 互联网，intranet - 内网）<br>  实例：<code>&lt;meta name=&quot;distribution&quot; content=&quot;web&quot;&gt;</code></p>
+</li>
+<li><p>doc-class   指定文档完成的状态</p>
+</li>
+<li><p>doc-rights  文档的版权声明</p>
+</li>
+<li><p>doc-type    指定文档的类型</p>
+</li>
+<li><p>DownloadOptions 控制下载对话框按钮的显示。noopen - 隐藏打开按钮，nosave - 隐藏保存按钮。</p>
+</li>
+<li><p>expires 设置网页过期时间<br>  实例：<code>&lt;meta name=&quot;expires&quot; content=&quot;Fri, 10 Jun 2011 12:00:00 GMT&quot;&gt;</code></p>
+</li>
+<li><p>generator   指定文档生成的工具名称</p>
+</li>
+<li><p>googlebot   设置 Google 搜索隐藏的收入规则：</p>
+<ul>
+<li>noarchive - 告诉爬虫,不要为本网页建立快照</li>
+<li>nofollow - 网页可以被追踪，但网页的链接不要去追终</li>
+<li>noindex - 链接可以被追踪，但含此标签的网页不能建立索引</li>
+<li>nosnippet - 告诉Google不要在搜索结果页的列表里显示含此标签的网站的描述语句，并且不要在列表里显示快照链接。</li>
+</ul>
+<p>  实例：<code>&lt;meta http-equiv=&quot;googlebot&quot; content=&quot;noarchive&quot;&gt;</code></p>
+</li>
+<li><p>MSSmartTagsPreventParsing   防止微软页面编辑软件在页面上自动添加标签、链接等。</p>
+<ul>
+<li>name    指定文档的名称</li>
+<li>owner   定义网页的所有者</li>
+<li>progid  定义程序 id 用于生成文档。</li>
+<li>rating  定义内容分级，如：14 years（14岁以上），general(普通人)，mature（成年人），restricted（限制级），safe for kids(孩童)。</li>
+<li>reply-to    定义网页开发者的邮件地址</li>
+<li>resource-type   定义 web 资源类型</li>
+<li>revisit-after   定义搜索引擎爬取网页的时间频率</li>
+<li>Template    内容属性可以指定用于编译文档的模板位置</li>
+<li>others  你可以定义自己的名字</li>
+</ul>
+</li>
+</ul>
+<h3 id="httpEquiv-属性"><a href="#httpEquiv-属性" class="headerlink" title="httpEquiv 属性"></a>httpEquiv 属性</h3><h5 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h5><pre><code class="html">&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;
+</code></pre>
+<p>content：</p>
+<ul>
+<li>public - cached in public shared caches/缓存在共享缓存中</li>
+<li>private - cached in private cache/缓存在私有缓存中</li>
+<li>no-cache - not cached/不缓存</li>
+<li>no-store - cached but not archived/缓存但不存档</li>
+</ul>
+<h5 id="文本语言"><a href="#文本语言" class="headerlink" title="文本语言"></a>文本语言</h5><pre><code class="html">&lt;meta http-equiv=&quot;content-language&quot; content=&quot;en-US&quot;&gt;
+</code></pre>
+<h5 id="编码格式"><a href="#编码格式" class="headerlink" title="编码格式"></a>编码格式</h5><pre><code class="html">&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;   
+</code></pre>
+<h5 id="定义页面本身刷新的时间"><a href="#定义页面本身刷新的时间" class="headerlink" title="定义页面本身刷新的时间"></a>定义页面本身刷新的时间</h5><pre><code class="html">&lt;meta http-equiv=&quot;refresh&quot; content=&quot;300&quot;&gt;
+</code></pre>
+<h5 id="创建带有指定名称的cookie，过期日期和值"><a href="#创建带有指定名称的cookie，过期日期和值" class="headerlink" title="创建带有指定名称的cookie，过期日期和值"></a>创建带有指定名称的cookie，过期日期和值</h5><pre><code class="html">&lt;meta http-equiv=&quot;set-cookie&quot; content=&quot;cookie=myContent;expires=Fri, 30 Dec 2011 12:00:00 GMT; path=http://www.chuyunt.com&quot;&gt;
+</code></pre>
+<h3 id="scheme-属性"><a href="#scheme-属性" class="headerlink" title="scheme 属性"></a>scheme 属性</h3><p>scheme 属性设置或返回用于解释 content 属性的值的格式。</p>
+<h3 id="content-属性"><a href="#content-属性" class="headerlink" title="content 属性"></a>content 属性</h3><p>content 属性可设置或者返回 meta 元素 content 属性值。content 属性指定了 meta 信息的内容。这个属性可用的值依赖于name 和 httpEquiv 属性的值。</p>
+<h2 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h2><h3 id="Meta-之-viewport"><a href="#Meta-之-viewport" class="headerlink" title="Meta 之 viewport"></a>Meta 之 viewport</h3><p>　viewport即可视区域，有如下几种属性值可以设置：</p>
+<ul>
+<li>width: viewport 的宽度 (范围从 200 到 10,000 ，默认为 980 像素 )</li>
+<li>height: viewport 的高度 (范围从 223 到 10,000 )</li>
+<li>initial-scale: 初始的缩放比例 (范围从&gt;0到 10 )</li>
+<li>minimum-scale: 允许用户缩放到的最小比例</li>
+<li>maximum-scale: 允许用户缩放到的最大比例</li>
+<li>user-scalable: 用户是否可以手动缩放</li>
+</ul>
+<p>对于这些属性，我们可以设置其中的一个或者多个，并不需要你同时都设置，手机会根据你设置的属性自动推算其他属性值，而非直接采用默认值。</p>
+<pre><code class="html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width;&quot; user-scalable=&quot;0;&quot; maximum-scale=&quot;1.0;&quot; initial-scale=&quot;1.0;&quot;&gt;
+</code></pre>
+<h3 id="Meta-之-format-detection"><a href="#Meta-之-format-detection" class="headerlink" title="Meta 之 format-detection"></a>Meta 之 format-detection</h3><pre><code class="html">&lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;&gt;
+</code></pre>
+<p>telephone=no就禁止了把数字转化为拨号链接!telephone=yes就开启了把数字转化为拨号链接，要开启转化功能，这个meta就不用写了,在默认是情况下就是开启!</p>
+<h3 id="Meta-之-apple-mobile-web-app-capable"><a href="#Meta-之-apple-mobile-web-app-capable" class="headerlink" title="Meta 之 apple-mobile-web-app-capable"></a>Meta 之 apple-mobile-web-app-capable</h3><pre><code class="html">&lt;meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;
+</code></pre>
+<p>这meta的作用就是删除默认的苹果工具栏和菜单栏。content有两个值”yes”和”no”,当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。</p>
+<h3 id="Meta-之-apple-mobile-web-app-status-bar-style"><a href="#Meta-之-apple-mobile-web-app-status-bar-style" class="headerlink" title="Meta 之 apple-mobile-web-app-status-bar-style"></a>Meta 之 apple-mobile-web-app-status-bar-style</h3><pre><code class="html">&lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;default&quot;&gt;&lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black&quot;&gt;&lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black-translucent&quot;&gt;
+</code></pre>
+<p>作用是控制状态栏显示样式</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E7%AB%AF"><span class="toc-text">桌面端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Name%E5%B1%9E%E6%80%A7"><span class="toc-text">Name属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Meta-Description"><span class="toc-text">Meta Description</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Meta-Robots"><span class="toc-text">Meta Robots</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Title"><span class="toc-text">Title</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Meta-keywords"><span class="toc-text">Meta keywords</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Meta-refresh"><span class="toc-text">Meta refresh</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#httpEquiv-%E5%B1%9E%E6%80%A7"><span class="toc-text">httpEquiv 属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%AD%98"><span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E8%AF%AD%E8%A8%80"><span class="toc-text">文本语言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="toc-text">编码格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2%E6%9C%AC%E8%BA%AB%E5%88%B7%E6%96%B0%E7%9A%84%E6%97%B6%E9%97%B4"><span class="toc-text">定义页面本身刷新的时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%A6%E6%9C%89%E6%8C%87%E5%AE%9A%E5%90%8D%E7%A7%B0%E7%9A%84cookie%EF%BC%8C%E8%BF%87%E6%9C%9F%E6%97%A5%E6%9C%9F%E5%92%8C%E5%80%BC"><span class="toc-text">创建带有指定名称的cookie，过期日期和值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scheme-%E5%B1%9E%E6%80%A7"><span class="toc-text">scheme 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#content-%E5%B1%9E%E6%80%A7"><span class="toc-text">content 属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF"><span class="toc-text">移动端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-%E4%B9%8B-viewport"><span class="toc-text">Meta 之 viewport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-%E4%B9%8B-format-detection"><span class="toc-text">Meta 之 format-detection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-%E4%B9%8B-apple-mobile-web-app-capable"><span class="toc-text">Meta 之 apple-mobile-web-app-capable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-%E4%B9%8B-apple-mobile-web-app-status-bar-style"><span class="toc-text">Meta 之 apple-mobile-web-app-status-bar-style</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-11/html之meta标签/">https://lion1ou.tech/2016-11/html之meta标签/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-10/apidoc%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90api%E6%96%87%E6%A1%A3%E7%9A%84%E5%B7%A5%E5%85%B7/" rel="next" title="apidoc一个自动生成API文档的工具">
+        apidoc一个自动生成API文档的工具
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2017-01/eslint%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" rel="prev" title="ESLint入门指南">
+          ESLint入门指南
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-11/html%E4%B9%8Bmeta%E6%A0%87%E7%AD%BE/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

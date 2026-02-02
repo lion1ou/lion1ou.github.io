@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="HTML," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>HTML5之离线缓存 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        HTML5之离线缓存
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-05-28T08:46:56.000Z">
+            2018-05-28 16:46
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">2.4k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">8 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/HTML/" rel="tag">HTML</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>乐刻教练端业务是一个 Hybrid APP，通过原生 APP 提供调用原生能力的外壳，内部逻辑全部使用 H5 页面实现。 这种方式在早期产品需求快速迭代，客户端资源紧张的情况下，解决了很大一部分问题。但随着业务需要和使用人数的增加，教练端已经有点力不从心的。在 3 月份，已经对教练端进行过一次优化，主要集中在资源加载、初始数据、转场动画等。接下来，想要结合 HTML5 离线缓存机制，进行一些优化尝试。</p>
+<span id="more"></span>
+
+<h2 id="HTML5-离线缓存"><a href="#HTML5-离线缓存" class="headerlink" title="HTML5 离线缓存"></a>HTML5 离线缓存</h2><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>HTML5 的新增了很多浏览器本地存储的技术，Application Cache（简称 AppCache）使得基于 web 的应用程序可以离线运行，似乎是为支持 Web App 离线使用而开发的缓存机制。它的缓存机制类似于浏览器的缓存（Cache-Control 和 Last-Modified）机制，都是以文件为单位进行缓存，且文件有一定更新机制。但 AppCache 是对浏览器缓存机制的补充，不是替代。</p>
+<h3 id="有什么用"><a href="#有什么用" class="headerlink" title="有什么用"></a>有什么用</h3><ul>
+<li>离线浏览: 用户可以在离线状态下浏览网站内容。</li>
+<li>更快的速度: 因为数据被存储在本地，所以速度会更快。</li>
+<li>减轻服务器的负载: 浏览器只会下载在服务器上发生改变的资源。</li>
+</ul>
+<h3 id="怎么用"><a href="#怎么用" class="headerlink" title="怎么用"></a>怎么用</h3><blockquote>
+<p>通过在站点根目录维护一个 manifest 文件，在需要缓存的 html 页面中引入这个文件。manifest 相当于一个配置文件，配置需要缓存的文件等规则，下面会详细列出。</p>
+</blockquote>
+<p>假如在根目录下新建一个名为 manifest.appcache 的文件（该文件名和后缀名可以自定义），配置内容如下：</p>
+<pre><code>CACHE MANIFEST
+# version 1.0.0  以 # 声明注释，浏览器根据manifest文件变化来检测是否需要重新加载新文件。
+# 注释：需要缓存的文件，无论在线与否，均从缓存里读取
+/images/cached.png
+/css/cached.css
+/js/cached.js
+
+# 需要特殊声明的缓存文件，也可以都在这里声明
+CACHE:
+/css/otherCached.css
+/js/otherCached.js
+
+# 注释：不缓存的文件，无论缓存中存在与否，均从新获取(如果与上面的缓存内容重复，依旧会缓存)
+NETWORK:
+*
+
+# 注释：获取不到资源时的备选路径，如index.html访问失败，则返回404页面
+FALLBACK:
+index.html 404.html
+</code></pre>
+<pre><code>  1、CACHE MANIFEST — 文件开头第一行必须声明 CACHE MANIFEST 字段标识，然后紧接着声明需要缓存的文件路径，作用是标识出哪些文件需要缓存，可以是相对路径也可以是绝对路径；
+  2、# — #号开头的是注释，一般会在第二行写个版本号，用来在缓存的文件更新时，更改manifest的作用，可以是版本号，时间戳或者md5码等等；
+  3、CACHE — 我们也可以在CACHE下面声明需要缓存的资源路径；
+  4、NETWORK可选，这一部分是要直接读取的文件，可以使用通配符 * ；
+  5、FALLBACK可选，指定了一个后备页面，当资源无法访问时，浏览器会使用该页面。
+</code></pre>
+<p>接下来只需要在 html 文件上，引入该配置文件即可</p>
+<p>在文档的 <code>&lt;html&gt;</code> 标签中添加 manifest 属性，将 manifest.appcache 文件引入:</p>
+<pre><code class="html">&lt;html manifest=&quot;manifest.appcache&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta
+      name=&quot;viewport&quot;
+      content=&quot;width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no&quot;
+    /&gt;
+    &lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot; /&gt;
+    &lt;title&gt;乐刻教练&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>这样浏览器在读取 HTML 页面时会将 manifest.appcache 中声明的资源下载并进行离线存储，下次请求直接使用离线存储中的资源，HTTP 请求表现为：200 (from disk cache)</p>
+</blockquote>
+<p><strong>注意：</strong></p>
+<p>一般情况下，manifest 文件需要在 web 服务器上配置正确的 MIME-type，即 “text/cache-manifest”，才能正常的被浏览器正常请求。</p>
+<ul>
+<li>webpack 自动化配置</li>
+</ul>
+<p>在使用 webpack 自动化构建的项目中，我们可以利用<a target="_blank" rel="noopener" href="https://github.com/lettertwo/appcache-webpack-plugin">appcache-webpack-plugin</a>这个插件轻松生成 manifest 文件，并将打包的资源路径更新到 manifest 文件中，配置如下</p>
+<pre><code class="js">const AppCachePlugin = require(&quot;appcache-webpack-plugin&quot;);
+
+plugins: [
+  new AppCachePlugin(&#123;
+    cache: [&quot;otherAsset.png&quot;],
+    network: [&quot;*&quot;], // 除了声明的缓存资源其他都通过网络访问
+    fallback: [&quot;index.html&quot;, &quot;error.html&quot;],
+    settings: [&quot;prefer-online&quot;],
+    exclude: [&quot;file.txt&quot;, /.*\.html$/], // Exclude file.txt and all .html files
+    output: &quot;/manifest.appcache&quot;,
+  &#125;),
+];
+</code></pre>
+<h3 id="什么效果"><a href="#什么效果" class="headerlink" title="什么效果"></a>什么效果</h3><p>浏览器离线存储缓存机制示意图：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/1120909-20170616133714306-301385248.png"></p>
+<ul>
+<li>用户在初次访问网站时，浏览器读取到 HTML 上的 manifest 属性声明的 mainfest.appcache 文件，根据文件内的配置项下载相应的资源进行离线缓存。在 chrome 中可以看到，被缓存的资源。（浏览器在下载 manifest 中的文件时，会一次性下载所有的文件，一旦因为某些原因某一个资源下载失败，会导致所有的资源更新失败，浏览器继续适应旧的资源。）</li>
+</ul>
+<p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1frs1vkgf1cj31bi0pidr5.jpg"></p>
+<ul>
+<li><p>已经缓存离线存储后，用户再次访问网站，浏览器（无论在线与否）将会使用已缓存的资源加载页面，然后浏览器会对比新的 manifest 文件，如果文件发生变化，就重新下载文件中的资源进行离线，如果没有变化，就不做改变。</p>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>站点中的其他页面即使没有设置 manifest 属性，请求的资源如果在缓存中也从缓存中访问。</li>
+<li>浏览器下载完新的更新资源后并不会立即使用，需要刷新页面后才有效果，解决办法：</li>
+</ul>
+</li>
+</ul>
+<pre><code class="js">var appCache = window.applicationCache;
+appCache.onupdateready = function (e) &#123;
+  appCache.swapCache();
+  window.location.reload();
+&#125;;
+</code></pre>
+<ul>
+<li><p>离线情况下，浏览器直接访问离线资源</p>
+</li>
+<li><p>与传统浏览器缓存的区别</p>
+<ul>
+<li>离线缓存是针对整个应用，浏览器缓存是单个文件。</li>
+<li>离线缓存断网了还是可以打开页面，浏览器缓存不行。</li>
+<li>离线缓存可以通过代码主动通知浏览器更新资源。</li>
+</ul>
+</li>
+<li><p>chrome 浏览器下通过访问 <a href="chrome://appcache-internals/">chrome://appcache-internals/</a> 可以查看缓存在本地的资源文件.</p>
+</li>
+</ul>
+<h2 id="API-介绍"><a href="#API-介绍" class="headerlink" title="API 介绍"></a>API 介绍</h2><h3 id="applicationCache-对象"><a href="#applicationCache-对象" class="headerlink" title="applicationCache 对象"></a>applicationCache 对象</h3><p>该对象是 window 对象的直接子对象 window.applicationCache</p>
+<p>基类：DOMApplicationCache</p>
+<p>事件列表</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>接口</th>
+<th>触发条件</th>
+<th>后续事件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>checking</td>
+<td>Event</td>
+<td>用户代理检查更新或者在第一次尝试下载 manifest 文件的时候，本事件往往是事件队列中第一个被触发的</td>
+<td>noupdate, downloading, obsolete, error</td>
+</tr>
+<tr>
+<td>noupdate</td>
+<td>Event</td>
+<td>检测出 manifest 文件没有更新</td>
+<td>无</td>
+</tr>
+<tr>
+<td>downloading</td>
+<td>Event</td>
+<td>用户代理发现更新并且正在取资源，或者第一次下载 manifest 文件列表中列举的资源</td>
+<td>progress, error, cached, updateready</td>
+</tr>
+<tr>
+<td>progress</td>
+<td>ProgressEvent</td>
+<td>用户代理正在下载资源 manifest 文件中的需要缓存的资源</td>
+<td>progress, error, cached, updateready</td>
+</tr>
+<tr>
+<td>cached</td>
+<td>Event</td>
+<td>manifest 中列举的资源已经下载完成，并且已经缓存</td>
+<td>无</td>
+</tr>
+<tr>
+<td>updateready</td>
+<td>Event</td>
+<td>manifest 中列举的文件已经重新下载并更新成功，接下来 js 可以使用 swapCache()方法更新到应用程序中</td>
+<td>无</td>
+</tr>
+<tr>
+<td>obsolete</td>
+<td>Event</td>
+<td>manifest 的请求出现 404 或者 410 错误，应用程序缓存被取消</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>另外还有一个 error 事件，触发条件如下：</p>
+<ul>
+<li>manifest 的请求出现 404 或者 410 错误，更新缓存的请求失败；</li>
+<li>无 manifest 文件没有改变，但是页面引用的 manifest 文件没有被正确地下载；</li>
+<li>在取 manifest 列举的资源的过程中发生致命的错误；</li>
+<li>在更新过程中 manifest 文件发生变化用户代理会尝试立即再次获取文件。</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>status 属性返回缓存的状态</p>
+<table>
+<thead>
+<tr>
+<th>可选值</th>
+<th>匹配常量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>appCache.UNCACHED</td>
+<td>未缓存</td>
+</tr>
+<tr>
+<td>1</td>
+<td>appCache.IDLE</td>
+<td>闲置</td>
+</tr>
+<tr>
+<td>2</td>
+<td>appCache.CHECKING</td>
+<td>检查中</td>
+</tr>
+<tr>
+<td>3</td>
+<td>appCache.DOWNLOADING</td>
+<td>下载中</td>
+</tr>
+<tr>
+<td>4</td>
+<td>appCache.UPDATEREADY</td>
+<td>已更新</td>
+</tr>
+<tr>
+<td>5</td>
+<td>appCache.OBSOLETE</td>
+<td>失效</td>
+</tr>
+</tbody></table>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>update()</td>
+<td>发起应用程序缓存下载进程</td>
+</tr>
+<tr>
+<td>abort()</td>
+<td>取消正在进行的缓存下载</td>
+</tr>
+<tr>
+<td>swapcache()</td>
+<td>切换成本地最新的缓存环境</td>
+</tr>
+</tbody></table>
+<h2 id="支持程度"><a href="#支持程度" class="headerlink" title="支持程度"></a>支持程度</h2><p><img src="http://cdn.chuyunt.com/uPic/006tNc79gy1frs2pw7xmoj30ol071jsu.jpg"></p>
+<p>不过在 H5 标准中, Offline Web applications 部分有如下描述:</p>
+<p><code>This feature is in the process of being removed from the Web platform. (This is a long process that takes many years.) Using any of the offline Web application features at this time is highly discouraged. Use service workers instead. [SW]</code></p>
+<p>因此后续我将在其他文章中继续介绍 service workers.</p>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li>首次访问时会加载所有数据，如果缓存的数据很多的话，将拖慢加载速度（只使用一个 manifest 文件，缓存少量必要文件）</li>
+<li>有时候会出现即使 manifest 文件改变后，应用还是不能及时更新（对于业务代码不使用 manifest 缓存，只缓存一些类库文件和不经常改变的文件）</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>在教练端 APP 上加载速率上没有明显变化，且在断网情况下 APP 有默认缺省图（在 chrome 浏览器上，加载速率提升明显）</li>
+<li>H5 离线缓存机制 Manifest 将被废除，由 PWA 技术取代</li>
+<li>网上有讨论：会出现更新代码后，页面无法更新问题（没有复现）</li>
+<li>结合上述现象，决定不再继续深究此方案</li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML5-%E7%A6%BB%E7%BA%BF%E7%BC%93%E5%AD%98"><span class="toc-text">HTML5 离线缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-text">有什么用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-text">怎么用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%95%88%E6%9E%9C"><span class="toc-text">什么效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API-%E4%BB%8B%E7%BB%8D"><span class="toc-text">API 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#applicationCache-%E5%AF%B9%E8%B1%A1"><span class="toc-text">applicationCache 对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-text">属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%A8%8B%E5%BA%A6"><span class="toc-text">支持程度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-05/html5之离线缓存/">https://lion1ou.tech/2018-05/html5之离线缓存/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-04/javascript%E4%B9%8B%E6%95%B0%E7%BB%84%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/" rel="next" title="JavaScript之数组的常用操作函数">
+        JavaScript之数组的常用操作函数
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-05/reactnative%E4%B9%8B%E6%A0%B7%E5%BC%8F%E6%89%8B%E5%86%8C/" rel="prev" title="ReactNative之样式手册">
+          ReactNative之样式手册
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-05/html5%E4%B9%8B%E7%A6%BB%E7%BA%BF%E7%BC%93%E5%AD%98/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

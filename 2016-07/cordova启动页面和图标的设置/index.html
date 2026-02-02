@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Cordova," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>Cordova启动页面和图标的设置 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Cordova启动页面和图标的设置
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-07-20T00:31:47.000Z">
+            2016-07-20 08:31
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.7k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">9 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Cordova/" rel="tag">Cordova</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <span id="more"></span>
+<h2 id="一、config-xml配置"><a href="#一、config-xml配置" class="headerlink" title="一、config.xml配置"></a>一、config.xml配置</h2><blockquote>
+<p>在cordova5.0版本以后，需要安装<code>cordova-plugin-splashscreen</code>插件以后才能修改和设置App的启动页面。</p>
+</blockquote>
+<h3 id="安装splashscreen插件："><a href="#安装splashscreen插件：" class="headerlink" title="安装splashscreen插件："></a>安装splashscreen插件：</h3><pre><code class="shell">cordova plugin add cordova-plugin-splashscreen
+
+cordova plugin add https://github.com/apache/cordova-plugin-splashscreen.git
+</code></pre>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>然后在你的config.xml文件中，添加以下代码</p>
+<pre><code class="xml">&lt;platform name=&quot;android&quot;&gt;  
+    &lt;icon density=&quot;ldpi&quot; src=&quot;res/icon/android/drawable-ldpi/icon.png&quot; /&gt;
+    &lt;icon density=&quot;mdpi&quot; src=&quot;res/icon/android/drawable-mdpi/icon.png&quot; /&gt;
+    &lt;icon density=&quot;hdpi&quot; src=&quot;res/icon/android/drawable-hdpi/icon.png&quot; /&gt;
+    &lt;icon density=&quot;xhdpi&quot; src=&quot;res/icon/android/drawable-xhdpi/icon.png&quot; /&gt;
+    &lt;icon density=&quot;xxhdpi&quot; src=&quot;res/icon/android/drawable-xxhdpi/icon.png&quot; /&gt;
+    &lt;!-- 以下是欢迎页面，可根据需要进行添加 --&gt;
+    &lt;splash density=&quot;land-hdpi&quot; src=&quot;res/screen/android/splash-land-hdpi.png&quot; /&gt;  
+    &lt;splash density=&quot;land-ldpi&quot; src=&quot;res/screen/android/splash-land-ldpi.png&quot; /&gt;  
+    &lt;splash density=&quot;land-mdpi&quot; src=&quot;res/screen/android/splash-land-mdpi.png&quot; /&gt;  
+    &lt;splash density=&quot;land-xhdpi&quot; src=&quot;res/screen/android/splash-land-xhdpi.png&quot; /&gt;  
+    &lt;splash density=&quot;port-hdpi&quot; src=&quot;res/screen/android/splash-port-hdpi.png&quot; /&gt;  
+    &lt;splash density=&quot;port-ldpi&quot; src=&quot;res/screen/android/splash-port-ldpi.png&quot; /&gt;  
+    &lt;splash density=&quot;port-mdpi&quot; src=&quot;res/screen/android/splash-port-mdpi.png&quot; /&gt;  
+    &lt;splash density=&quot;port-xhdpi&quot; src=&quot;res/screen/android/splash-port-xhdpi.png&quot; /&gt;  
+&lt;/platform&gt;  
+&lt;platform name=&quot;ios&quot;&gt;  
+    &lt;!-- iOS 8.0+ --&gt;  
+    &lt;!-- iPhone 6 Plus  --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-60@3x.png&quot; width=&quot;180&quot; height=&quot;180&quot; /&gt;  
+    &lt;!-- iOS 7.0+ --&gt;  
+    &lt;!-- iPhone / iPod Touch  --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-60.png&quot; width=&quot;60&quot; height=&quot;60&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-60@2x.png&quot; width=&quot;120&quot; height=&quot;120&quot; /&gt;  
+    &lt;!-- iPad --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-76.png&quot; width=&quot;76&quot; height=&quot;76&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-76@2x.png&quot; width=&quot;152&quot; height=&quot;152&quot; /&gt;  
+    &lt;!-- iOS 6.1 --&gt;  
+    &lt;!-- Spotlight Icon --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-40.png&quot; width=&quot;40&quot; height=&quot;40&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-40@2x.png&quot; width=&quot;80&quot; height=&quot;80&quot; /&gt;  
+    &lt;!-- iPhone / iPod Touch --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon.png&quot; width=&quot;57&quot; height=&quot;57&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon@2x.png&quot; width=&quot;114&quot; height=&quot;114&quot; /&gt;  
+    &lt;!-- iPad --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-72.png&quot; width=&quot;72&quot; height=&quot;72&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-72@2x.png&quot; width=&quot;144&quot; height=&quot;144&quot; /&gt;  
+    &lt;!-- iPhone Spotlight and Settings Icon --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-small.png&quot; width=&quot;29&quot; height=&quot;29&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-small@2x.png&quot; width=&quot;58&quot; height=&quot;58&quot; /&gt;  
+    &lt;!-- iPad Spotlight and Settings Icon --&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-50.png&quot; width=&quot;50&quot; height=&quot;50&quot; /&gt;  
+    &lt;icon src=&quot;res/icon/ios/icon-50@2x.png&quot; width=&quot;100&quot; height=&quot;100&quot; /&gt;  
+    &lt;!-- 以下是欢迎页面，可根据需要进行添加 --&gt;
+    &lt;splash src=&quot;res/screen/ios/Default~iphone.png&quot; width=&quot;320&quot; height=&quot;480&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default@2x~iphone.png&quot; width=&quot;640&quot; height=&quot;960&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-Portrait~ipad.png&quot; width=&quot;768&quot; height=&quot;1024&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-Portrait@2x~ipad.png&quot; width=&quot;1536&quot; height=&quot;2048&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-Landscape~ipad.png&quot; width=&quot;1024&quot; height=&quot;768&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-Landscape@2x~ipad.png&quot; width=&quot;2048&quot; height=&quot;1536&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-568h@2x~iphone.png&quot; width=&quot;640&quot; height=&quot;1136&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-667h.png&quot; width=&quot;750&quot; height=&quot;1334&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-736h.png&quot; width=&quot;1242&quot; height=&quot;2208&quot;/&gt;  
+    &lt;splash src=&quot;res/screen/ios/Default-Landscape-736h.png&quot; width=&quot;2208&quot; height=&quot;1242&quot;/&gt;  
+&lt;/platform&gt;
+</code></pre>
+<h3 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h3><ul>
+<li>自动隐藏启动页面<code>AutoHideSplashScreen</code>（默认为：true）</li>
+</ul>
+<pre><code class="xml">&lt;preference name=&quot;AutoHideSplashScreen&quot; value=&quot;true&quot; /&gt;
+</code></pre>
+<ul>
+<li>显示启动页面的时间长度<code>SplashScreenDelay</code>(默认为：3000)</li>
+</ul>
+<pre><code class="xml">&lt;preference name=&quot;SplashScreenDelay&quot; value=&quot;3000&quot; /&gt;
+</code></pre>
+<p>若想禁用启动页面，可设置为：</p>
+<pre><code class="xml">&lt;preference name=&quot;SplashScreenDelay&quot; value=&quot;0&quot;/&gt;
+</code></pre>
+<p>如果是iOS平台上想禁止启动页面，还需要添加</p>
+<pre><code class="xml">&lt;preference name=&quot;FadeSplashScreenDuration&quot; value=&quot;0&quot;/&gt;
+</code></pre>
+<ul>
+<li>启动页面淡入淡出的效果</li>
+</ul>
+<p>是否显示淡入淡出效果<code>FadeSplashScreen</code>(默认为：true)</p>
+<pre><code class="xml">&lt;preference name=&quot;FadeSplashScreen&quot; value=&quot;false&quot;/&gt;
+</code></pre>
+<p>淡入淡出效果的执行时间长度<code>FadeSplashScreenDuration</code>(默认为：500)</p>
+<pre><code class="xml">&lt;preference name=&quot;FadeSplashScreenDuration&quot; value=&quot;750&quot;/&gt;
+</code></pre>
+<p>注意：<code>FadeSplashScreenDuration</code>时间是包含在<code>SplashScreenDelay</code>的时间里的。</p>
+<ul>
+<li>启动页面是否允许旋转（默认为：true）</li>
+</ul>
+<pre><code class="xml">&lt;preference name=&quot;ShowSplashScreenSpinner&quot; value=&quot;false&quot;/&gt;
+</code></pre>
+<ul>
+<li>插件还可以通过js代码调用，提供有以下两个方法：</li>
+</ul>
+<pre><code class="js">navigator.splashscreen.hide();//隐藏启动页面
+navigator.splashscreen.show();//显示启动页面
+</code></pre>
+<ul>
+<li>在Android平台下的特殊设置</li>
+</ul>
+<pre><code class="xml">&lt;preference name=&quot;SplashMaintainAspectRatio&quot; value=&quot;true|false&quot; /&gt;
+&lt;preference name=&quot;SplashShowOnlyFirstTime&quot; value=&quot;true|false&quot; /&gt;
+</code></pre>
+<p><code>SplashMaintainAspectRatio</code>：选填项，默认为false。当设置为true时，则不会拉伸图片来填充屏幕，会以图片原始比例显示图片。</p>
+<p><code>SplashShowOnlyFirstTime</code>：选填项，默认为true。当设置为false时，APP通过<code>navigator.app.exitApp()</code>代码退出app后，在下次打开APP时，还会显示启动页面。若为true时，就不会出现。</p>
+<h2 id="二、图标文件夹内容"><a href="#二、图标文件夹内容" class="headerlink" title="二、图标文件夹内容"></a>二、图标文件夹内容</h2><p>根据上面的配置信息，你需要准备好你自己的app图标和启动画面png文件：</p>
+<p>存放路径不是以<code>www文件夹</code>为依据，而是以<code>当前项目文件夹</code>为依据</p>
+<pre><code>projectRoot
+    hooks
+    platforms
+    plugins
+    www
+        css
+        img
+        js
+    res
+        screen
+            android
+            ios
+        icon
+            android
+            ios
+</code></pre>
+<h3 id="应用程序图标"><a href="#应用程序图标" class="headerlink" title="应用程序图标"></a>应用程序图标</h3><p>可通过<a target="_blank" rel="noopener" href="http://icon.wuruihong.com/">图标工场</a>一键生成多尺寸图标。</p>
+<ul>
+<li><p>安卓图标具体规格如下（存放目录：res/icon/android/）</p>
+<pre><code>  36*36    drawable-ldpi/icon.png
+  48*48    drawable-mdpi/icon.png
+  72*72    drawable-hdpi/icon.png
+  96*96    drawable-xhdpi/icon.png
+  144*144     drawable-xxhdpi/icon.png
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>iOS图标具体规格如下（存放目录：res/icon/ios/）</p>
+<pre><code>  57*57   icon.png
+  114*114 icon@2x.png
+  29*29    icon-small.png
+  58*58    icon-small@2x.png
+  40*40    icon-40.png
+  80*80    icon-40@2x.png
+  50*50    icon-50.png
+  100*100    icon-50@2x.png
+  60*60    icon-60.png
+  120*120    icon-60@2x.png
+  180*180    icon-60@3x.png
+  72*72    icon-72.png
+  144*144    icon-72@2x.png
+  76*76    icon-76.png
+  152*152    icon-76@2x.png
+</code></pre>
+</li>
+</ul>
+<h3 id="应用程序启动页面"><a href="#应用程序启动页面" class="headerlink" title="应用程序启动页面"></a>应用程序启动页面</h3><ul>
+<li><p>安卓启动画面具体规格如下（存放目录：res/screen/android/）</p>
+<pre><code>  960*720    splash-land-xhdpi.png
+  640*480    splash-land-hdpi.png
+  470*320    splash-land-mdpi.png
+  426*320    splash-land-ldpi.png
+  720*960    splash-port-xhdpi.png
+  480*640    splash-port-hdpi.png
+  320*470    splash-port-mdpi.png
+  320*426    splash-port-ldpi.png
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>iOS启动画面具体规格如下（存放目录：res/screen/ios/）</p>
+<pre><code>  320*480    Default~iphone.png
+  640*960    Default@2x~iphone.png
+  768*1024    Default-Portrait~ipad.png
+  1536*2048    Default-Portrait@2x~ipad.png
+  1024*768    Default-Landscape~ipad.png
+  2048*1536    Default-Landscape@2x~ipad.png
+  640*1136    Default-568h@2x~iphone.png
+  750*1334    Default-667h.png
+  1242*2208    Default-736h.png
+  2208*1242    Default-Landscape-736h.png
+</code></pre>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81config-xml%E9%85%8D%E7%BD%AE"><span class="toc-text">一、config.xml配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85splashscreen%E6%8F%92%E4%BB%B6%EF%BC%9A"><span class="toc-text">安装splashscreen插件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-text">基本配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="toc-text">其他配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BE%E6%A0%87%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E5%AE%B9"><span class="toc-text">二、图标文件夹内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9B%BE%E6%A0%87"><span class="toc-text">应用程序图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2"><span class="toc-text">应用程序启动页面</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-07/cordova启动页面和图标的设置/">https://lion1ou.tech/2016-07/cordova启动页面和图标的设置/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-07/cordova-phonegap%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/" rel="next" title="cordova/phoneGap开发调试工具">
+        cordova/phoneGap开发调试工具
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-07/cordova%E9%A1%B9%E7%9B%AE%E5%A4%87%E5%BF%98/" rel="prev" title="cordova项目备忘">
+          cordova项目备忘
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-07/cordova%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2%E5%92%8C%E5%9B%BE%E6%A0%87%E7%9A%84%E8%AE%BE%E7%BD%AE/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

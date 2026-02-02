@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Cordova," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>命令行创建一个cordova项目 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        命令行创建一个cordova项目
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-07-16T06:02:08.000Z">
+            2016-07-16 14:02
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">663</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">2 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Cordova/" rel="tag">Cordova</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <span id="more"></span>
+
+<h2 id="创建cordova项目"><a href="#创建cordova项目" class="headerlink" title="创建cordova项目"></a>创建cordova项目</h2><p>在某个目录下创建cordova项目，打开命令行，</p>
+<p>输入：<code>cordova create sensor com.jkinfo.sensor sensor</code></p>
+<p>创建cordova工程  &lt; 文件夹名 &gt; &lt; 包名 &gt; &lt; app名 &gt;</p>
+<blockquote>
+<p>注意：当第一次创建或编译项目的时候，可能系统会自动下载一些东西，需要一些时间。</p>
+</blockquote>
+<p>文件夹目录：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5sa2a3kckj207y06mt90.jpg" alt="72f96cbagw1f5sa2a3kckj207y06mt90"></p>
+<ul>
+<li><p>hooks：存放自定义cordova命令的脚本文件。每个project命令都可以定义before和after的Hook，比如：before_build、after_build。没用过，不展开了。</p>
+</li>
+<li><p>platforms：平台目录，各自的平台代码就放在这里，可以放一下平台专属的代码，现在这个目录应该是空的，后面会介绍如何创建平台。</p>
+</li>
+<li><p>plugins：插件目录，安装的插件会放在这里。后面会有专门的文章介绍开发插件。</p>
+</li>
+<li><p><strong>www</strong>：最重要的目录，存放项目主题的HTML5和JS代码的目录。app一开始打开的就是这个目录中index.html文件。</p>
+</li>
+<li><p><strong>config.xml</strong>：主要是cordova的一些配置，比如：项目使用了哪些插件、应用图标icon和启动页面SplashScreen，修改app的版本，名字等信息，还有平台的配置。</p>
+</li>
+</ul>
+<h2 id="添加平台支持"><a href="#添加平台支持" class="headerlink" title="添加平台支持"></a>添加平台支持</h2><p><code>cd</code> 到对应的文件目录，<code>cd sensor</code></p>
+<ul>
+<li>添加平台</li>
+</ul>
+<p>输入：<code>cordova platforms add android（ios）</code></p>
+<p>Android:</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5sa8m5bqaj20lh09nmy7.jpg" alt="72f96cbagw1f5sa8m5bqaj20lh09nmy7"></p>
+<p>iOS:</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5sa7w5t1aj20dl036t9b.jpg" alt="72f96cbagw1f5sa7w5t1aj20dl036t9b"></p>
+<ul>
+<li>移除平台</li>
+</ul>
+<p>输入：cordova platforms rm android  （移除android平台支持）</p>
+<p>也可以通过@版本号，来添加不同版本的android平台，如：</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5saaazgq7j20l80a275c.jpg" alt="72f96cbagw1f5saaazgq7j20l80a275c"></p>
+<p>现在就可以在www文件夹内写自己的js和html代码了。</p>
+<h2 id="添加和删除项目插件"><a href="#添加和删除项目插件" class="headerlink" title="添加和删除项目插件"></a>添加和删除项目插件</h2><ul>
+<li>添加插件</li>
+</ul>
+<p>输入:<code>cordova plugin add cordova-plugin-device</code> (cordova plugin add &lt;插件官方名称&gt;)</p>
+<blockquote>
+<p>插件搜索地址：<a target="_blank" rel="noopener" href="http://cordova.apache.org/plugins/">http://cordova.apache.org/plugins/</a>，也可以通过 <a target="_blank" rel="noopener" href="https://github.com/">github</a> 查找一些第三方插件，</p>
+</blockquote>
+<p>输入：</p>
+<pre><code class="shell"># 这个是扫描二维码插件  (github项目地址)
+cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner.git
+</code></pre>
+<ul>
+<li>删除插件</li>
+</ul>
+<p>输入：<code>cordova plugin rm cordova-plugin-device</code>（使用rm和remove都可以）</p>
+<ul>
+<li>插件列表</li>
+</ul>
+<p>输入：<code>cordova plugin list</code>（查看当前安装了哪些插件）</p>
+<h2 id="编译调试程序"><a href="#编译调试程序" class="headerlink" title="编译调试程序"></a>编译调试程序</h2><p>不是每一句代码都需要运行，根据自己的需求进行选择。</p>
+<ul>
+<li><code>cordova install android</code> //将编译好的应用程序安装到模拟器上。</li>
+<li><code>cordova emulate android</code> //在模拟器上运行（前提是创建好AVD）</li>
+<li><code>cordova serve android</code> //在浏览器运行</li>
+<li><code>cordova build android</code> //打包cordova项目到android平台。</li>
+<li><code>cordova run android</code> //通过USB直接安装到真机（该语句已经包括了build命令）</li>
+</ul>
+<p>例如：我现在是手边直接连着测试手机，所以我就会直接用cordova run android</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5sajqxqg0j20j007r0t9.jpg" alt="72f96cbagw1f5sajqxqg0j20j007r0t9"></p>
+<p>中间省略…</p>
+<p><img src="http://cdn.chuyunt.com/uPic/72f96cbagw1f5sajxbxxhj20iz07ct9g.jpg" alt="72f96cbagw1f5sajxbxxhj20iz07ct9g"></p>
+<p>出现LAUNCH SUCCESS则编译成功，已经安装到手机上了。</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAcordova%E9%A1%B9%E7%9B%AE"><span class="toc-text">创建cordova项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%B9%B3%E5%8F%B0%E6%94%AF%E6%8C%81"><span class="toc-text">添加平台支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%92%8C%E5%88%A0%E9%99%A4%E9%A1%B9%E7%9B%AE%E6%8F%92%E4%BB%B6"><span class="toc-text">添加和删除项目插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-text">编译调试程序</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-07/命令行创建一个cordova项目/">https://lion1ou.tech/2016-07/命令行创建一个cordova项目/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-07/%E6%89%93%E9%80%A0%E4%B8%80%E5%A5%97%E5%BE%97%E5%BF%83%E5%BA%94%E6%89%8B%E7%9A%84%E7%BB%88%E7%AB%AF%E5%B7%A5%E5%85%B7/" rel="next" title="打造一套得心应手的终端工具">
+        打造一套得心应手的终端工具
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-07/cordova-phonegap%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/" rel="prev" title="cordova/phoneGap开发调试工具">
+          cordova/phoneGap开发调试工具
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-07/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAcordova%E9%A1%B9%E7%9B%AE/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

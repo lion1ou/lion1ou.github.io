@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="CSS," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>CSS之响应式页面布局 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        CSS之响应式页面布局
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2016-10-10T08:36:42.000Z">
+            2016-10-10 16:36
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.5k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">6 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/CSS/" rel="tag">CSS</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>要说到”响应式布局设计”，我们先来介绍一下另外一个名词：”自适应网页设计”（Responsive Web Design），最早是Ethan Marcotte在2010年提出的。指的是可以自动识别屏幕宽度、并对页面的布局会基于一定的因素搭建做出相应调整的网页设计。自适应布局能够提供一种更加实用的解决方案，使得项目的实现成本更低，并且更加易于测试。自适应布局可以被看作是响应式布局的一个更加廉价的替代品，换句话说自适应网页设计就是一个精简版的响应式布局。当固定宽度与流动宽度结合起来时，自适应就变成了响应式，响应式网页设计指的是页面的布局（流动网格、灵活的图像及媒介查询），响应式布局等于流动网格布局，而自适应布局等于使用固定分割点来进行布局。</p>
+<span id="more"></span>
+
+<h2 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h2><p>这里有2个关键点：如何在不修改Dom结构的前提下调整布局，如何判断屏幕分辨率并应用对应的CSS。且这两点都应该不依赖与JS。</p>
+<h3 id="使用CSS3-Media-Queries（媒介查询）"><a href="#使用CSS3-Media-Queries（媒介查询）" class="headerlink" title="使用CSS3 Media Queries（媒介查询）"></a>使用CSS3 Media Queries（媒介查询）</h3><blockquote>
+<p>根据不同的屏幕分辨率，选择应用不同的Css规则</p>
+</blockquote>
+<p>基本使用</p>
+<pre><code class="css">/* 当屏幕分辨率小于等于400px时，会立即套用以下样式 */
+@media screen and (max-width:400px)&#123; 
+    .class  &#123;
+        background:#ccc; 
+    &#125;
+&#125;
+/* 当屏幕分辨率大于等于800px时，会立即套用以下样式 */
+@media screen and (min-width:800px)&#123;
+    .class  &#123;
+        background:#666;
+    &#125;
+&#125;
+/* 当屏幕分辨率x&gt;=800px和600px&gt;=x&gt;=520px区间时，会立即套用以下样式 */
+@media screen and (max-width: 600px) and (min-width: 520px), (min-width: 800px)&#123;
+   .class  &#123;
+        background:#ff0;
+    &#125;
+&#125;
+</code></pre>
+<p>link标签引入</p>
+<pre><code class="html">/* 设备屏幕的输出宽度Device Width小于400px时，会立即套用style.css样式 */
+&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot; media=&quot;screen and (max-width:400px)&quot; type=&quot;text/css&quot;&gt;
+
+/* 专门针对iPhone4 */
+&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (-webkit-min-device-pixel-ratio: 2)&quot; type=&quot;text/css&quot; href=&quot;iphone4.css&quot; /&gt;
+
+/* iPad 在纵向(portrait)时采用portrait.css来渲染页面；在横向（landscape）时采用landscape.css来渲染页面。 */
+&lt;link rel=&quot;stylesheet&quot; media=&quot;all and (orientation:portrait)&quot; href=&quot;portrait.css&quot; type=&quot;text/css&quot; /&gt; 
+&lt;link rel=&quot;stylesheet&quot; media=&quot;all and (orientation:landscape)&quot; href=&quot;landscape.css&quot;  type=&quot;text/css&quot; /&gt;
+
+/* Android设备 */
+/*240px的宽度*/
+&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (max-device-width:240px)&quot; href=&quot;android240.css&quot; type=&quot;text/css&quot; /&gt;
+/*360px的宽度*/
+&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (min-device-width:241px) and (max-device-width:360px)&quot; href=&quot;android360.css&quot; type=&quot;text/css&quot; /&gt;
+/*480px的宽度*/
+&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (min-device-width:361px) and (max-device-width:480px)&quot; href=&quot;android480.css&quot; type=&quot;text/css&quot; /&gt;
+</code></pre>
+<h3 id="网页添加-viewport-meta-标签"><a href="#网页添加-viewport-meta-标签" class="headerlink" title="网页添加 viewport meta 标签"></a>网页添加 viewport meta 标签</h3><p>在网页html head 中添加：</p>
+<pre><code class="html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, user-scalable=no&quot;&gt;
+</code></pre>
+<p>该属性可以控制视窗口宽度的大小。viewport设置属性如下：</p>
+<ul>
+<li>width：可设定数值，或者指定为 device-width <blockquote>
+<p>device-width ，主要是为了让整个页面宽度与手机可视宽度相同，这样就可以简单相容于不同机型屏幕大小，如果这边width沒有设定的话，就会依照html/css给予的width当作预设值。</p>
+</blockquote>
+</li>
+<li>height：可设定数值，或者指定为 device-height </li>
+<li>initial-scale：第一次进入页面的初始比例 </li>
+<li>minimum-scale：允许缩小最小比例 </li>
+<li>maximum-scale：允许放大最大比例 </li>
+<li>user-scalable：允许使用者缩放，1 or 0 (yes or no)</li>
+</ul>
+<p>如果希望在不同device使用不同缩放大小，就必须使用javascript，检测UA(User agent)，动态设定viewport，如下：</p>
+<pre><code class="js">viewport = document.querySelector(&quot;meta[name=viewport]&quot;);
+viewport.setAttribute(&#39;content&#39;, &#39;width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;&#39;);
+</code></pre>
+<h3 id="流动布局"><a href="#流动布局" class="headerlink" title="流动布局"></a>流动布局</h3><h4 id="float"><a href="#float" class="headerlink" title="float"></a>float</h4><p>流动布局的含义是各个位置都是浮动的，不是固定不变的</p>
+<pre><code class="css">.main &#123; float: right; width: 70%; &#125; 
+.leftBar &#123; float: left; width: 25%; &#125; 
+</code></pre>
+<p>float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向overflow（溢出），避免了水平滚动条的出现。</p>
+<h4 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h4><p>Flex是Flexible Box的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。任何一个容器都可以指定为Flex布局。详细内容参见<a href="http://lion1ou.tech/2016/10/15/">css之flex布局</a></p>
+<h3 id="流式媒体"><a href="#流式媒体" class="headerlink" title="流式媒体"></a>流式媒体</h3><pre><code class="css">img, video, canvas &#123;
+  max-width: 100%;
+&#125;
+</code></pre>
+<p>要使媒体按等比缩放，一般不需要规定媒体高度。且图片最好不用background-image,因为这样不会按照等比缩放。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="不使用绝对宽度"><a href="#不使用绝对宽度" class="headerlink" title="不使用绝对宽度"></a>不使用绝对宽度</h4><p>不能使用绝对宽度（margin-left:5px）的布局，也不能使用具有绝对宽度(例如：width：200px)的元素,而最好使用百分比宽度width:20%;或者with:auto;</p>
+<h4 id="字体单位"><a href="#字体单位" class="headerlink" title="字体单位"></a>字体单位</h4><p>不使用绝度单位<code>px</code>，最好使用<code>rem</code>（参考<code>&lt;html&gt;</code>的字体大小、全局性、CSS3）、<code>em</code>(参考父元素的字体大小)。</p>
+<pre><code class="css">html &#123; font-size: 100%; &#125; 
+/*上面的代码指定，字体大小是页面默认大小的100%，即16像素。*/
+
+h1 &#123; font-size: 1.5rem; &#125;  
+/*h1的大小是默认大小的1.5倍，即24像素（24/16=1.5）*/
+
+.small &#123; font-size: 0.875rem; &#125; 
+/*small元素的大小是默认大小的0.875倍，即14像素（14/16=0.875）*/
+</code></pre>
+<h4 id="普通元素的栅格布局"><a href="#普通元素的栅格布局" class="headerlink" title="普通元素的栅格布局"></a>普通元素的栅格布局</h4><p>对于普通的div布局，使用了通用简单的栅格布局，相信这个大家都知道原理：</p>
+<pre><code class="css">.row&#123;
+  width: 100%;
+&#125;
+.row .col-1 &#123;
+  width: 8.33333333333%
+&#125;
+
+/* ...比较多，这里省略 */
+
+.row .col-12 &#123;
+  width: 100%
+&#125;
+</code></pre>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.alloyteam.com/2015/04/zi-shi-ying-she-ji-yu-xiang-ying-shi-wang-ye-she-ji-qian-tan/">自适应设计与响应式网页设计</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3cplus.com/content/css3-media-queries">CSS3 Media Queries_media queries 教程_w3cplus</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3cplus.com/css/advanced-html-css-lesson4-responsive-web-design.html">HTML和CSS高级指南之四——响应式设计_HTML和CSS高级指南 教程_w3cplus</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html">使用Flexible实现手淘H5页面的终端适配_双11前端技术连载</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-text">实现方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8CSS3-Media-Queries%EF%BC%88%E5%AA%92%E4%BB%8B%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-text">使用CSS3 Media Queries（媒介查询）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E6%B7%BB%E5%8A%A0-viewport-meta-%E6%A0%87%E7%AD%BE"><span class="toc-text">网页添加 viewport meta 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%8A%A8%E5%B8%83%E5%B1%80"><span class="toc-text">流动布局</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#float"><span class="toc-text">float</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flex"><span class="toc-text">flex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E5%AA%92%E4%BD%93"><span class="toc-text">流式媒体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E5%AE%BD%E5%BA%A6"><span class="toc-text">不使用绝对宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E4%BD%93%E5%8D%95%E4%BD%8D"><span class="toc-text">字体单位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%85%83%E7%B4%A0%E7%9A%84%E6%A0%85%E6%A0%BC%E5%B8%83%E5%B1%80"><span class="toc-text">普通元素的栅格布局</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2016-10/css之响应式页面布局/">https://lion1ou.tech/2016-10/css之响应式页面布局/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2016-09/git%E5%AD%A6%E4%B9%A0/" rel="next" title="git学习">
+        git学习
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2016-10/css%E4%B9%8B%E4%BF%AE%E6%94%B9input-range%E6%A0%B7%E5%BC%8F/" rel="prev" title="CSS之修改input range样式">
+          CSS之修改input range样式
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2016-10/css%E4%B9%8B%E5%93%8D%E5%BA%94%E5%BC%8F%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

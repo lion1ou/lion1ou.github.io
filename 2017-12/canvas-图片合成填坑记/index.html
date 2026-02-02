@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="HTML," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>canvas 图片合成填坑记 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        canvas 图片合成填坑记
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2017-12-01T07:59:06.000Z">
+            2017-12-01 15:59
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">900</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">3 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/HTML/" rel="tag">HTML</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <p>在实际开发过程中，经常会接到产品关于分享海报，生成海报，照片合成等需求，这里就简单总结一下。关于一次海报合成的填坑过程，欢迎指正。</p>
+<span id="more"></span>
+
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>要用代码来实现多张外部图片和文字的合并而且要上传到七牛云，再将图片链接通过客户端分享出去。图片背景需要支持用户自定义更换。</p>
+<p><img src="http://cdn.chuyunt.com/uPic/WX20200803-120638@2x.png"></p>
+<h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><p>在一个canvas上多次调用drawImage函数，分别绘制在canvas中，多次之后canvas中是多个图片合并的效果，然后再调用toDataURL函数将canvas转成dataURL格式的图片，再将dataURL格式装换为blob文件，上传至七牛云。</p>
+<h3 id="需要注意的坑"><a href="#需要注意的坑" class="headerlink" title="需要注意的坑"></a>需要注意的坑</h3><h4 id="canvas图片模糊的问题"><a href="#canvas图片模糊的问题" class="headerlink" title="canvas图片模糊的问题"></a>canvas图片模糊的问题</h4><blockquote>
+<p>将canvas的长宽设为样式长宽的2倍或更大， 如下：</p>
+</blockquote>
+<pre><code class="js">var canvas = document.getElementById(&quot;myCanvas&quot;);
+canvas.width = &quot;600&quot;;
+canvas.height = &quot;600&quot;
+canvas.style.height = &quot;300px&quot;
+canvas.style.height = &quot;300px&quot;
+</code></pre>
+<h4 id="报安全性错误"><a href="#报安全性错误" class="headerlink" title="报安全性错误"></a>报安全性错误</h4><p>如果你的图片url和页面不在同一域下，在调用toDataURL函数的时候就会报安全性错误。chrome中：</p>
+<p><code>Uncaught SecurityError: Failed to execute ‘toDataURL’ on ‘HTMLCanvasElement’: Tainted canvases may not be exported.</code></p>
+<p>Safari中貌似更严格，根域名相同子域不同依然会报错：</p>
+<p><code>Cross-origin image load denied by Cross-Origin Resource Sharing policy.</code></p>
+<p>原因：</p>
+<p>没有CORS授权虽然可以在 canvas 中使用图像, 但这样做就会污染(taints)画布。 只要 canvas 被污染, 就不能再从画布中提取数据, 也就是说不能再调用 toBlob(), toDataURL() 和 getImageData() 等方法, 否则会抛出安全错误(security error).这实际上是为了保护用户的个人信息,避免未经许可就从远程web站点加载用户的图像信息,造成隐私泄漏。</p>
+<p>解决方法：</p>
+<p>为每个图片创建一个新的img对象，再赋给其src等参数，用这种方式要等到img加载完毕再进行canvas其他操作，在img的load事件处理函数中进行操作，否则可能会绘制出空内容。</p>
+<pre><code class="js">let img = new Image()
+img.setAttribute(&#39;crossorigin&#39;, &#39;anonymous&#39;)
+img.src = imgUrl
+img.onload = function () &#123;
+    // do Something
+&#125;
+img.error = function () &#123;&#125;
+</code></pre>
+<p><strong>在mac和pc的浏览器上运行正常，但是在ios11以下的手机内无法toDataURL</strong></p>
+<p>解决办法：</p>
+<ul>
+<li>改变图片的载入方式，先在DOM上新建img标签，如下：</li>
+</ul>
+<pre><code class="html">&lt;img crossOrigin=&quot;Anonymous&quot; id=&quot;bgImg&quot; src=&quot;https://www.test.com/test.png&quot; alt=&quot;&quot;&gt;
+</code></pre>
+<p><strong>注意：<code>crossOrigin=&quot;Anonymous&quot;</code>一定要在<code>src</code>属性前面</strong></p>
+<blockquote>
+<p>被这个坑了很久</p>
+</blockquote>
+<ul>
+<li>利用js获取img元素</li>
+</ul>
+<pre><code class="js">var img = document.getElementById(&#39;bgImg&#39;)
+ctx.drawImage(img, 0, 0, 700, 700)
+</code></pre>
+<h4 id="canvas-toBlob-safari上无效"><a href="#canvas-toBlob-safari上无效" class="headerlink" title="canvas.toBlob() safari上无效"></a>canvas.toBlob() safari上无效</h4><p>解决办法：</p>
+<p>将canvas使用toDataURL方法转为base64,再将base64通过file API 转为 blob</p>
+<pre><code class="js">function dataURLtoBlob (dataurl) &#123; // 将dataUrl 转为 Blob
+  let arr = dataurl.split(&#39;,&#39;)
+  let mime = arr[0].match(/:(.*?);/)[1]
+  let bstr = atob(arr[1])
+  let n = bstr.length
+  let u8arr = new Uint8Array(n)
+  while (n--) &#123;
+      u8arr[n] = bstr.charCodeAt(n)
+  &#125;
+  return new Blob([u8arr], &#123;type: mime&#125;)
+&#125;
+var resultBase64 = canvas.toDataURL(&#39;image/jpeg&#39;) // 转为jpeg压缩图片大小
+var canvasBlob = dataURLtoBlob(resultBase64)
+</code></pre>
+<p>formData 上传方式</p>
+<pre><code class="js">var formData = new FormData(); 
+formData.append(&quot;file&quot;, document.getElementById(&#39;file&#39;).files[0]); 
+formData.append(&quot;token&quot;, token_value); // 其他参数按这样子加入
+
+var xhr = new XMLHttpRequest();
+xhr.open(&#39;POST&#39;, &#39;/uploadurl&#39;);
+// 上传完成后的回调函数
+xhr.onload = function () &#123;
+  if (xhr.status === 200) &#123;
+　　console.log(&#39;上传成功&#39;);
+  &#125; else &#123;
+  　console.log(&#39;上传出错&#39;);
+  &#125;
+&#125;;
+// 获取上传进度
+xhr.upload.onprogress = function (event) &#123;
+  if (event.lengthComputable) &#123;
+    var percent = Math.floor(event.loaded / event.total * 100) ;
+    // 设置进度显示
+    $(&quot;#J_upload_progress&quot;).progress(&#39;set progress&#39;, percent);
+  &#125;
+&#125;;
+xhr.send(formData);
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-text">实现方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9D%91"><span class="toc-text">需要注意的坑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#canvas%E5%9B%BE%E7%89%87%E6%A8%A1%E7%B3%8A%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">canvas图片模糊的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%AE%89%E5%85%A8%E6%80%A7%E9%94%99%E8%AF%AF"><span class="toc-text">报安全性错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#canvas-toBlob-safari%E4%B8%8A%E6%97%A0%E6%95%88"><span class="toc-text">canvas.toBlob() safari上无效</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2017-12/canvas-图片合成填坑记/">https://lion1ou.tech/2017-12/canvas-图片合成填坑记/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2017-05/%E4%BA%91%E6%9C%8D%E5%8A%A1%E4%B9%8Bngnix%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" rel="next" title="云服务之ngnix安装配置">
+        云服务之ngnix安装配置
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-01/%E4%BD%BF%E7%94%A8aws%E6%90%AD%E5%BB%BA%E4%B8%80%E5%B9%B4%E5%85%8D%E8%B4%B9%E7%9A%84shadowscoke/" rel="prev" title="使用AWS搭建一年免费的Shadowscoke">
+          使用AWS搭建一年免费的Shadowscoke
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2017-12/canvas-%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90%E5%A1%AB%E5%9D%91%E8%AE%B0/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>

@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>JavaScript之数组的常用操作函数 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        JavaScript之数组的常用操作函数
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2018-04-23T23:31:30.000Z">
+            2018-04-24 07:31
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">3.7k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">16 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/JavaScript/" rel="tag">JavaScript</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <span id="more"></span>
+
+<p>字符串的操作在js中非常繁琐，但也非常重要。在使用过程中，也会经常忘记，今天就对这个进行一下整理。</p>
+<!--more-->
+
+<h2 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串 String"></a>字符串 String</h2><p>String 对象用于处理文本（字符串）。</p>
+<pre><code>new String(s); // 返回一个新创建的 String 对象，存放的是字符串 s 或 s 的字符串表示。
+String(s);     // 只把 s 转换成原始的字符串，并返回转换后的值。
+</code></pre>
+<h3 id="String-属性"><a href="#String-属性" class="headerlink" title="String 属性"></a>String 属性</h3><ul>
+<li>constructor 对创建该对象的函数的引用</li>
+<li>length  字符串的长度</li>
+<li>prototype   允许您向对象添加属性和方法<br>prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的实例上共享。因此也常用来扩展js内置对象，如下面的代码给字符串添加了一个去除两边空格的方法：</li>
+</ul>
+<pre><code class="js">String.prototype.trim = function()&#123;
+    return this.replace(/^\s*|\s*$/g, &#39;&#39;);
+&#125;
+</code></pre>
+<h3 id="String-函数"><a href="#String-函数" class="headerlink" title="String 函数"></a>String 函数</h3><h4 id="获取类函数"><a href="#获取类函数" class="headerlink" title="获取类函数"></a>获取类函数</h4><ul>
+<li>charAt()</li>
+</ul>
+<pre><code class="js">StringObj.charAt()
+</code></pre>
+<p>charAt()方法可用来获取指定位置的字符串，index为字符串索引值，从0开始到string.leng - 1，若不在这个范围将返回一个空字符串。如：</p>
+<pre><code class="js">var str = &#39;qwertyuiop&#39;
+str.charAt(3)
+// &quot;r&quot;
+str.charAt(11)
+// &quot;&quot;
+</code></pre>
+<ul>
+<li>charCodeAt()</li>
+</ul>
+<p>charCodeAt()用于返回指定位置的Unicode 编码，于charAt()使用类似。</p>
+<pre><code class="js">var str = &#39;qwertyuiop&#39;
+str.charCodeAt(3)
+// 114
+str.charCodeAt(11)
+// NaN
+</code></pre>
+<ul>
+<li>fromCharCode()</li>
+</ul>
+<p>fromCharCode()可接受一个或多个Unicode值，然后返回一个字符串。另外该方法是String 的静态方法，字符串中的每个字符都由单独的数字Unicode编码指定。</p>
+<pre><code class="js">String.fromCharCode(99, 99, 100)
+// &quot;ccd&quot;
+</code></pre>
+<h4 id="查找类函数"><a href="#查找类函数" class="headerlink" title="查找类函数"></a>查找类函数</h4><ul>
+<li>indexOf()</li>
+</ul>
+<p>indexOf()用来检索指定的字符串值在字符串中首次出现的位置。它可以接收两个参数，searchvalue表示要查找的子字符串，fromindex表示查找的开始位置，省略的话则从开始位置进行检索。lastIndexOf()，从后向前搜索字符串。</p>
+<pre><code class="js">var str = &#39;abcdabcd&#39;
+str.indexOf(&#39;a&#39;)
+// 0
+str.indexOf(&#39;s&#39;)
+// -1
+str.indexOf(&#39;a&#39;, 2)
+// 4
+</code></pre>
+<ul>
+<li>search()</li>
+</ul>
+<p>search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。它会返回第一个匹配的子字符串的起始位置，如果没有匹配的，则返回-1。</p>
+<pre><code class="js">var str = &#39;abcdabcd&#39;
+str.search(&#39;b&#39;)
+// 1
+str.search(&#39;s&#39;)
+// -1
+str.search(/d/i)
+// 3
+</code></pre>
+<ul>
+<li>match()</li>
+</ul>
+<p>match()方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。</p>
+<p>如果参数中传入的是子字符串或是没有进行全局匹配的正则表达式，那么match()方法会从开始位置执行一次匹配，如果没有匹配到结果，则返回null。否则则会返回一个数组，该数组的第0个元素存放的是匹配文本，除此之外，返回的数组还含有两个对象属性index和input，分别表示匹配文本的起始字符索引和stringObject 的引用(即原字符串)。</p>
+<pre><code class="js">var str = &#39;qwer23tyqwer23ty&#39;
+str.match(&#39;ba&#39;)
+// null
+str.match(&#39;y&#39;)
+// [&quot;y&quot;, index: 7, input: &quot;qwer23tyqwer23ty&quot;, groups: undefined]
+str.match(/y/)
+// [&quot;y&quot;, index: 7, input: &quot;qwer23tyqwer23ty&quot;, groups: undefined]
+str.match(/y/g)  // 正则全局匹配
+// [&quot;y&quot;, &quot;y&quot;, &quot;y&quot;, &quot;y&quot;]
+</code></pre>
+<p>如果参数传入的是具有全局匹配的正则表达式，那么match()从开始位置进行多次匹配，直到最后。如果没有匹配到结果，则返回null。否则则会返回一个数组，数组中存放所有符合要求的子字符串，并且没有index和input属性。</p>
+<pre><code class="js">var str = &#39;qwer23tyqwer23ty&#39;
+
+str.match(/y/g)  // 正则全局匹配
+// [&quot;y&quot;, &quot;y&quot;, &quot;y&quot;, &quot;y&quot;]
+
+str.match(/\d/g) // 正则全局匹配
+// [&quot;2&quot;, &quot;3&quot;, &quot;2&quot;, &quot;3&quot;]
+</code></pre>
+<h4 id="截取类函数"><a href="#截取类函数" class="headerlink" title="截取类函数"></a>截取类函数</h4><ul>
+<li>substring</li>
+</ul>
+<p>substring()是最常用到的字符串截取方法，它可以接收两个参数(参数不能为负值)，分别是要截取的开始位置和结束位置，它将返回一个新的字符串，其内容是从start处到end-1处的所有字符。若结束参数(end)省略，则表示从start位置一直截取到最后。</p>
+<pre><code class="js">var str = &#39;qazwsxedc&#39;
+str.substring(1,4)
+// &quot;azw&quot;
+str.substring(3)
+// &quot;wsxedc&quot;
+str.substring(-1, 4)
+// &quot;qazwsxedc&quot;
+</code></pre>
+<ul>
+<li>slice()</li>
+</ul>
+<p>slice()方法与substring()方法非常类似，它传入的两个参数也分别对应着开始位置和结束位置。而区别在于，slice()中的参数可以为负值，如果参数是负数，则该参数规定的是从字符串的尾部开始算起的位置。也就是说，-1 指字符串的最后一个字符。</p>
+<pre><code class="js">var str = &#39;qazwsxedc&#39;
+str.slice(1,4)
+// &quot;azw&quot;
+str.slice(-1)
+// &quot;c&quot;
+str.slice(3)
+// &quot;wsxedc&quot;
+</code></pre>
+<ul>
+<li>substr()</li>
+</ul>
+<p>substr()方法可在字符串中抽取从start下标开始的<code>指定数目</code>的字符。其返回值为一个字符串，包含从 stringObject的start（包括start所指的字符）处开始的length个字符。如果没有指定 length，那么返回的字符串包含从start到stringObject的结尾的字符。另外如果start为负数，则表示从字符串尾部开始算起。</p>
+<pre><code class="js">var str = &#39;asdfghjkl&#39;
+str.substr(0, 4)
+// &quot;asdf&quot;
+str.substr(-1, 9)
+// &quot;l&quot;
+</code></pre>
+<h4 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h4><ul>
+<li>replace()</li>
+</ul>
+<p>replace()方法用来进行字符串替换操作，它可以接收两个参数，前者为被替换的子字符串（可以是正则），后者为用来替换的文本。</p>
+<p>如果第一个参数传入的是子字符串或是没有进行全局匹配的正则表达式，那么replace()方法将只进行一次替换（即替换最前面的），返回经过一次替换后的结果字符串。</p>
+<pre><code class="js">var str = &#39;abcdeabcde&#39;
+str.replace(&#39;a&#39;, &#39;A&#39;)
+// &quot;Abcdeabcde&quot;
+str.replace(/\w/, &#39;Q&#39;)
+// &quot;Qbcdeabcde&quot;
+</code></pre>
+<p>如果第一个参数传入的全局匹配的正则表达式，那么replace()将会对符合条件的子字符串进行多次替换，最后返回经过多次替换的结果字符串。</p>
+<pre><code class="js">var str = &#39;abcdeabcde&#39;
+str.replace(/a/g, &#39;A&#39;)
+// &quot;AbcdeAbcde&quot;
+str.replace(/\w/g, &#39;$&#39;)
+// &quot;$$$$$$$$$$&quot;
+</code></pre>
+<ul>
+<li>split()</li>
+</ul>
+<p>split()方法用于把一个字符串分割成字符串数组。第一个参数separator表示分割位置(参考符)，第二个参数howmany表示返回数组的允许最大长度(一般情况下不设置)。</p>
+<pre><code class="js">var str = &#39;a|b|c|d|e&#39;
+str.split(&#39;|&#39;)
+// [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+str.split(&#39;&#39;)
+// [&quot;a&quot;, &quot;|&quot;, &quot;b&quot;, &quot;|&quot;, &quot;c&quot;, &quot;|&quot;, &quot;d&quot;, &quot;|&quot;, &quot;e&quot;]
+str.split(&#39;|&#39;, 3)
+// [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+</code></pre>
+<p>也可以用正则来进行分割</p>
+<pre><code class="js">var str = &#39;a1b2c3d4e&#39;
+str.split(/\d/)
+// [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+</code></pre>
+<ul>
+<li>toLowerCase()和toUpperCase()</li>
+</ul>
+<p>toLowerCase()方法可以把字符串中的大写字母转换为小写，toUpperCase()方法可以把字符串中的小写字母转换为大写。</p>
+<pre><code class="js">var str = &#39;JavaScript&#39;;
+str.toLowerCase()
+// javascript
+str.toUpperCase()
+// JAVASCRIPT
+</code></pre>
+<h2 id="数组-Array"><a href="#数组-Array" class="headerlink" title="数组 Array"></a>数组 Array</h2><p>js对数组的操作非常频繁，但是每次用到的时候都会被搞混，都需要去查相关API，感觉这样很浪费时间。为了加深印象，所以整理一下对数组的相关操作。</p>
+<h4 id="concat"><a href="#concat" class="headerlink" title="concat()"></a>concat()</h4><p>连接两个或更多的数组，并返回结果。方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。</p>
+<pre><code class="js">var arr1 = [1, 2, 3]
+var arr2 = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]
+var arr3 = arr1.concat(arr2)
+console.log(arr1, arr2, arr3)
+// [1, 2, 3] [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;] [1, 2, 3, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+var arr4 = arr1.concat(1)
+console.log(arr4)
+// [1, 2, 3, 1]
+</code></pre>
+<h4 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h4><p>把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var str = arr1.join(&#39;-&#39;)
+console.log(str)
+// 1-2-3-4-5-6-7-8-9
+var str1 = arr1.join()
+console.log(str1)
+// 1,2,3,4,5,6,7,8,9
+</code></pre>
+<h4 id="pop"><a href="#pop" class="headerlink" title="pop()"></a>pop()</h4><p>删除并返回数组的最后一个元素，pop() 方法将删除 arrayObject 的最后一个元素，把数组长度减 1，并且返回它删除的元素的值。如果数组已经为空，则 pop() 不改变数组，并返回 undefined 值。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.pop()
+console.log(arr1, arr2)
+// [1, 2, 3, 4, 5, 6, 7, 8]   9
+var arr3 = []
+var arr4 = arr3.pop()
+console.log(arr3, arr4)
+// []   undefined
+</code></pre>
+<h4 id="shift"><a href="#shift" class="headerlink" title="shift()"></a>shift()</h4><p>删除并返回数组的第一个元素，如果数组是空的，那么 shift() 方法将不进行任何操作，返回 undefined 值。请注意，该方法不创建新数组，而是直接修改原有的 arrayObject。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.shift()
+console.log(arr1, arr2)
+// [2, 3, 4, 5, 6, 7, 8, 9]   1
+</code></pre>
+<h3 id="unshift"><a href="#unshift" class="headerlink" title="unshift()"></a>unshift()</h3><p>向数组的开头添加一个或更多元素，并返回新的长度。unshift() 方法将把它的参数插入 arrayObject 的头部，并将已经存在的元素顺次地移到较高的下标处，以便留出空间。unshift() 方法不创建新的创建，而是直接修改原有的数组。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.unshift(0, 0, 0, 0)
+console.log(arr1, arr2)
+// [0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]     13
+</code></pre>
+<h4 id="push"><a href="#push" class="headerlink" title="push()"></a>push()</h4><p>向数组的末尾添加一个或更多元素，并返回新的长度。push() 方法可把它的参数顺序添加到 arrayObject 的尾部。它直接修改 arrayObject，而不是创建一个新的数组。push() 方法和 pop() 方法使用数组提供的先进后出栈的功能。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4]
+var arr2 = [5, 6, 7, 8, 9]
+var arr3 = arr1.push(arr2)
+console.log(arr1, arr2, arr3)
+// [1, 2, 3, 4, [5, 6, 7, 8, 9]]   [5, 6, 7, 8, 9]   5
+var arr4 = [1]
+var arr5 = arr4.push(5, 6, 7, 8, 9)
+console.log(arr4, arr5)
+// [1, 5, 6, 7, 8, 9]  6
+</code></pre>
+<h4 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h4><p>从某个已有的数组返回选定的元素，请注意，该方法并不会修改数组，而是返回一个子数组。您可使用负值从数组的尾部选取元素。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.slice(-5, -2)
+console.log(arr1, arr2)
+// [1, 2, 3, 4, 5, 6, 7, 8, 9]   [5, 6, 7]
+var arr3 = arr1.slice(2, 8)
+console.log(arr3)
+// [3, 4, 5, 6, 7, 8]
+var arr4 = arr1.slice(5)
+console.log(arr4)
+// [6, 7, 8, 9]
+</code></pre>
+<h4 id="splice"><a href="#splice" class="headerlink" title="splice()"></a>splice()</h4><p>删除元素，并向数组添加新元素。方法向/从数组中添加/删除项目，然后返回被删除的项目。该方法会改变原始数组。splice() 方法可删除从 index 处开始的零个或多个元素，并且用参数列表中声明的一个或多个值来替换那些被删除的元素。如果从 arrayObject 中删除了元素，则返回的是含有被删除的元素的数组。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.splice(1, 5)
+console.log(arr1, arr2)
+// [1, 7, 8, 9]   [2, 3, 4, 5, 6]
+var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr3 = arr1.splice(2, 3, [0, 0, 0, 0])
+console.log(arr1, arr3)
+// [1, 2, [0, 0, 0, 0], 6, 7, 8, 9]   [3, 4, 5]
+var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr4 = arr1.splice(2, 3, 0, 0, 0, 0)
+console.log(arr1, arr4)
+// [1, 2, 0, 0, 0, 0, 6, 7, 8, 9]   [3, 4, 5]
+</code></pre>
+<h4 id="sort"><a href="#sort" class="headerlink" title="sort()"></a>sort()</h4><p>对数组的元素进行排序，规定排序顺序。参数必须是函数。对数组的引用。请注意，数组在原数组上进行排序，不生成副本。</p>
+<p>如果调用该方法时没有使用参数，将按字母顺序对数组中的元素进行排序，说得更精确点，是按照字符编码的顺序进行排序。要实现这一点，首先应把数组的元素都转换成字符串（如有必要），以便进行比较。</p>
+<p>如果想按照其他标准进行排序，就需要提供比较函数，该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下：</p>
+<p>若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。<br>若 a 等于 b，则返回 0。<br>若 a 大于 b，则返回一个大于 0 的值。</p>
+<pre><code class="js">var arr1 = [&#39;A&#39;, &#39;VCBJN&#39;, &#39;ksjn&#39;, &#39;adf&#39;, &#39;uuu&#39;]
+var arr2 = arr1.sort()
+console.log(arr1, arr2)
+// [&quot;A&quot;, &quot;VCBJN&quot;, &quot;adf&quot;, &quot;ksjn&quot;, &quot;uuu&quot;]   [&quot;A&quot;, &quot;VCBJN&quot;, &quot;adf&quot;, &quot;ksjn&quot;, &quot;uuu&quot;]
+var arr1 = [&#39;11&#39;, &#39;2222&#39;, &#39;3&#39;, &#39;44&#39;, &#39;555&#39;]
+arr1.sort()
+console.log(arr1)
+// [&quot;11&quot;, &quot;2222&quot;, &quot;3&quot;, &quot;44&quot;, &quot;555&quot;]
+var arr1 = [&#39;11&#39;, &#39;2222&#39;, &#39;3&#39;, &#39;44&#39;, &#39;555&#39;]
+arr1.sort((a, b) =&gt; a-b)
+console.log(arr1)
+// [&quot;3&quot;, &quot;11&quot;, &quot;44&quot;, &quot;555&quot;, &quot;2222&quot;]
+</code></pre>
+<h4 id="reverse"><a href="#reverse" class="headerlink" title="reverse()"></a>reverse()</h4><p>颠倒数组中元素的顺序。该方法会改变原来的数组，而不会创建新的数组。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.reverse()
+console.log(arr1, arr2)
+// [9, 8, 7, 6, 5, 4, 3, 2, 1]   [9, 8, 7, 6, 5, 4, 3, 2, 1]
+</code></pre>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h4><p>把数组转换为字符串，并返回结果。当数组用于字符串环境时，JavaScript 会调用这一方法将数组自动转换成字符串。但是在某些情况下，需要显式地调用该方法。arrayObject 的字符串表示。返回值与没有参数的 join() 方法返回的字符串相同。</p>
+<pre><code class="js">var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var arr2 = arr1.toString()
+console.log(arr1, arr2)
+// [1, 2, 3, 4, 5, 6, 7, 8, 9]     &quot;1,2,3,4,5,6,7,8,9&quot;
+</code></pre>
+<h4 id="toLocaleString-NaN"><a href="#toLocaleString-NaN" class="headerlink" title="toLocaleString()"></a>toLocaleString()</h4><p>把数组转换为本地数组，并返回结果。首先调用每个数组元素的 toLocaleString() 方法，然后使用地区特定的分隔符把生成的字符串连接起来，形成一个字符串。</p>
+<pre><code class="js">var arr1 = [&#39;jssj&#39;, 2, 3, &#39;测试&#39;, 5, 6, 7, 8, 9]
+var arr2 = arr1.toLocaleString()
+console.log(arr1, arr2)
+// [&quot;jssj&quot;, 2, 3, &quot;测试&quot;, 5, 6, 7, 8, 9]     &quot;jssj,2,3,测试,5,6,7,8,9&quot;
+</code></pre>
+<h4 id="valueOf-NaN"><a href="#valueOf-NaN" class="headerlink" title="valueOf()"></a>valueOf()</h4><p>valueOf() 方法返回 Array 对象的原始值。该原始值由 Array 对象派生的所有对象继承。valueOf() 方法通常由 JavaScript 在后台自动调用，并不显式地出现在代码中。</p>
+<h4 id="toSource"><a href="#toSource" class="headerlink" title="toSource()"></a>toSource()</h4><p>返回该对象的源代码。该原始值由 Array 对象派生的所有对象继承。toSource() 方法通常由 JavaScript 在后台自动调用，并不显式地出现在代码中。只有 Gecko 核心的浏览器（比如 Firefox）支持该方法，也就是说 IE、Safari、Chrome、Opera 等浏览器均不支持该方法。</p>
+<pre><code class="js">function employee(name,job,born) &#123;
+    this.name=name;
+    this.job=job;
+    this.born=born;
+&#125;
+var bill = new employee(&quot;Bill Gates&quot;,&quot;Engineer&quot;,1985);
+console.log(bill.toSource());
+//  (&#123;name:&quot;Bill Gates&quot;, job:&quot;Engineer&quot;, born:1985&#125;)
+</code></pre>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2-String"><span class="toc-text">字符串 String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#String-%E5%B1%9E%E6%80%A7"><span class="toc-text">String 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-%E5%87%BD%E6%95%B0"><span class="toc-text">String 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%87%BD%E6%95%B0"><span class="toc-text">获取类函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E7%B1%BB%E5%87%BD%E6%95%B0"><span class="toc-text">查找类函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%AA%E5%8F%96%E7%B1%BB%E5%87%BD%E6%95%B0"><span class="toc-text">截取类函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="toc-text">其他函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84-Array"><span class="toc-text">数组 Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#concat"><span class="toc-text">concat()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#join"><span class="toc-text">join()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pop"><span class="toc-text">pop()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shift"><span class="toc-text">shift()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unshift"><span class="toc-text">unshift()</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#push"><span class="toc-text">push()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#slice"><span class="toc-text">slice()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#splice"><span class="toc-text">splice()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sort"><span class="toc-text">sort()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reverse"><span class="toc-text">reverse()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toString-NaN"><span class="toc-text">toString()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toLocaleString-NaN"><span class="toc-text">toLocaleString()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#valueOf-NaN"><span class="toc-text">valueOf()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toSource"><span class="toc-text">toSource()</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2018-04/javascript之数组的常用操作函数/">https://lion1ou.tech/2018-04/javascript之数组的常用操作函数/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2018-04/%E5%A4%A7%E5%AD%A6%E6%AF%95%E4%B8%9A%E5%90%8E%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%BB%93/" rel="next" title="大学毕业后的第一个小结">
+        大学毕业后的第一个小结
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2018-05/html5%E4%B9%8B%E7%A6%BB%E7%BA%BF%E7%BC%93%E5%AD%98/" rel="prev" title="HTML5之离线缓存">
+          HTML5之离线缓存
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2018-04/javascript%E4%B9%8B%E6%95%B0%E7%BB%84%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>
