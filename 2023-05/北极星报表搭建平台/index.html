@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="低代码,搭建平台,报表系统," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>北极星报表搭建平台 [ lion个人学习站 ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion个人学习站" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion个人学习站" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion个人学习站</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        北极星报表搭建平台
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2023-05-29T07:20:10.000Z">
+            2023-05-29 15:20
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">1.8k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">6 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E4%BD%8E%E4%BB%A3%E7%A0%81/" rel="tag">低代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E6%8A%A5%E8%A1%A8%E7%B3%BB%E7%BB%9F/" rel="tag">报表系统</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0/" rel="tag">搭建平台</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随着公司内部对各类报表需求的不断攀升，原有的极光系统已经无法满足移动端、实时大屏等各类场景；另外由于页面逻辑中涵盖了大量计算，导致页面性能偏差且无法支持灵活的外部拓展，导致数据源单一；最后由于项目比较久远，整体UI风格相对老旧、交互方式单一。为了满足公司内部各业务灵活的数据报表产出需求，以及保证数据团队报表产出效率，就有了我们的北极星报表搭建平台。</p>
+<span id="more"></span>
+
+<h2 id="伽利略数据平台"><a href="#伽利略数据平台" class="headerlink" title="伽利略数据平台"></a>伽利略数据平台</h2><p>首先我们来介绍一下伽利略数据平台，伽利略数据平台主要由三个部分组成，一个是报表展示层，就是目前的伽利略报表系统，同时支持运行于钉钉微应用和PC端。一个是伽利略管理后台，主要用于报表各数据源管理配置和报表目录与发布管理。最后一个部分就是我们的报表搭建平台–北极星。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685280924909-7294cce3-3a3b-4898-a7a1-d51afdd0727f.png"></p>
+<p>由上图我们也可以看出三个系统之间相互关联，又完全解耦，可完全独立运行。北极星搭建系统，作为数据报表产出工具，支持高度复用，可随意对接外部展示系统和数据来源系统。</p>
+<h2 id="北极星报表搭建平台"><a href="#北极星报表搭建平台" class="headerlink" title="北极星报表搭建平台"></a>北极星报表搭建平台</h2><p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685282357145-b6d4eeeb-b5dc-4cf7-8789-e6a443f60ae6.png"></p>
+<p>首先我们从一张流程示意图来看看，北极星主要实现原理。我们通过管理后台的编辑器以及组件管理模块，抽象维护数据、组件、树结构、样式、组件属性等模块信息，再通过解析器解析渲染，控制页面上下线、版本以及页面中包含的组件，接着通过接口调用获取数据源信息，生成适配各个场景的报表能力。</p>
+<p>北极星报表搭建系统主要分成四个层面，有展示层，包括渲染器，编辑管理后台，以及多端的适配能力。有基础层，通过抽象页面、组件、数据、协议、权限等模块，来支持展示层的复用。有框架层，主要依赖业界成熟的antd (antd-mobile) + react、图表使用F2和G2。还有服务层，通过自建node服务，提供页面、组件、报表和权限等管理能力。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685282735456-252c24d2-fa09-40d0-bb88-f13cbacb2e4c.png"></p>
+<h2 id="组件设计"><a href="#组件设计" class="headerlink" title="组件设计"></a>组件设计</h2><p>北极星搭建系统支持antd 现成组件、自定义业务组件的灵活接入，只需要组件配合引入属性配置表和默认数据信息，通过发布平台发布npm包，最后在北极星系统上线后，即可快速接入到各报表页面。在一些特殊的属性场景上，我们还支持对组件属性的配置能力进行自定义开发。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685364137957-690cba8c-454b-4e08-867f-3ecd39904e38.png"></p>
+<h3 id="组件版本控制"><a href="#组件版本控制" class="headerlink" title="组件版本控制"></a>组件版本控制</h3><p>在搭建系统中，其实我们用的最多的就是组件，而且组件随着项目的不断迭代，可能会出现很多版本，那么在多个版本的情况下，我们如何来保障页面可以快速读取对应版本组件的信息呢？ 如果使用npm形式引入，我们需要将所有组件拆分成独立的npm包，进行管理。而且这种情况下，我们也不能做到在一个页面需要多个版本组件的情况下共存，只能同时更新所有组件版本，这样很可能存在潜在的问题，导致页面出现版本不兼容的bug。</p>
+<h3 id="组件按需加载"><a href="#组件按需加载" class="headerlink" title="组件按需加载"></a>组件按需加载</h3><p>在通常的前端项目中，我们都是通过引用npm组件，然后加载并渲染在页面上。这种形式有个问题，在我们不知道用户引用哪个组件时，那我们就需要将所有组件都引用，打到最终的渲染包里，然后根据用户需求，去读取对应的组件。这个过程就浪费了很多资源，也会造成页面性能问题。</p>
+<h3 id="动态组件方案"><a href="#动态组件方案" class="headerlink" title="动态组件方案"></a>动态组件方案</h3><p>为了解决上面的问题，保障页面性能和准确的版本控制。我们使用的cdn方式，我们将每次发布的后的组件都上传至cdn，再通过组件类型、组件版本等字段拼接cdn链接，最后通过ajax请求动态获取组件文件，渲染成相应的组件，提供给页面使用。这也是为什么，我们需要对现成可用的antd组件，进行简单封装上架到北极星。另外我们后续还将提供更加灵活的升级配置，支持快速、批量修复线上bug。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685361764841-9fb95d11-ddf3-4bf8-ba99-b73ff9f8f34f.png"></p>
+<p>动态组件在实现上我们提供了两个方案，一个是通过ajax获取文件，通过eval进行代码执行，导出对应的组件实例。另一个方案是，通过动态加载script标签的方式加载指定组件。两种方案有各自的优缺点，通过ajax方式获取，可以通过indexedDB进行缓存，减少了后续请求，性能提升明显，但这种方案组件报错后，无法获取具体报错信息。动态加载script标签的方式容易出现缓存泄露问题，且无法支持缓存。所以我们目前的方案是，在测试开发环境，使用动态script标签方式，在线上使用ajax获取文件方式。具体代码如下：</p>
+<pre><code class="javascript">// 使用eval解析, 无法catch组件内部的错误
+export const loadScriptModule = async (
+  url: string, packageName: string,
+) =&gt; new Promise(async (reslove, reject) =&gt; &#123;
+  const id = getIdformUrl(url);
+  const Reg = /[http://|https://]/;
+  if (url &amp;&amp; Reg.test(url) &amp;&amp; id) &#123;
+    try &#123;
+      // 这里可添加缓存获取逻辑
+
+      
+      const &#123; data &#125; = await axios.get(url, &#123; timeout: 30 * 1000 &#125;);
+      
+      if (!data) &#123;
+        const err = new Error(&#39;文件加载失败，请检查链接&#39;);
+        reject(err);
+        return;
+      &#125;
+
+      // 这里可添加缓存存储逻辑
+
+      
+      
+      window.eval(`$&#123;data&#125;`);
+      const res = (window as any)[packageName] || &#123;&#125;;
+      reslove(res);
+      (window as any)[packageName] = null;
+    &#125; catch (error) &#123;
+      console.error(error);
+      reject(error);
+    &#125;
+  &#125; else &#123;
+    const error = new Error(&#39;url 格式错误，请检查链接&#39;);
+    reject(error);
+  &#125;
+&#125;);
+</code></pre>
+<pre><code class="javascript">// 动态加载js文件， 可能存在内存泄露的问题
+export const loadScriptModule = async (
+  url: string, packageName: string,
+) =&gt; new Promise(async (resolve, reject) =&gt; &#123;
+  const id = getIdformUrl(url);
+  const Reg = /[http://|https://]/;
+  if (url &amp;&amp; Reg.test(url)) &#123;
+    let script: any = document.createElement(&#39;script&#39;);
+    script.setAttribute(&#39;src&#39;, url);
+    document.head.appendChild(script);
+
+    // 监听加载完成事件
+    script.addEventListener(&#39;load&#39;, async () =&gt; &#123;
+      const res = (window as any)[packageName] || &#123;&#125;;
+      resolve(res);
+      (window as any)[packageName] = null;
+      script = null;
+    &#125;);
+
+    // 监听加载失败情况
+    script.addEventListener(&#39;error&#39;, (error: any) =&gt; &#123;
+      message.error(&#39;组件加载失败，请检查是否已同步CDN&#39;);
+      reject(error);
+    &#125;);
+    
+  &#125; else &#123;
+    reject(error);
+  &#125;
+&#125;);
+</code></pre>
+<h2 id="内测招募"><a href="#内测招募" class="headerlink" title="内测招募"></a>内测招募</h2><p>就在近日我们已经是上线了一个支持15个组件的版本，目前在做线上测试回归，以及交互优化。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/174505/1685363867758-50e3bf7d-1ba3-45e8-9732-c5f91c708bfd.png"></p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%BD%E5%88%A9%E7%95%A5%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0"><span class="toc-text">伽利略数据平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%97%E6%9E%81%E6%98%9F%E6%8A%A5%E8%A1%A8%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0"><span class="toc-text">北极星报表搭建平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="toc-text">组件设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">组件版本控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="toc-text">组件按需加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E6%96%B9%E6%A1%88"><span class="toc-text">动态组件方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E6%B5%8B%E6%8B%9B%E5%8B%9F"><span class="toc-text">内测招募</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech/2023-05/北极星报表搭建平台/">https://lion1ou.tech/2023-05/北极星报表搭建平台/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2023-02/%E5%B0%8F%E5%89%8D%E7%AB%AF%E7%9C%8B%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BC%9A-%E2%80%94-gmtc-%E6%80%BB%E7%BB%93/" rel="next" title="小前端看大前端大会 — GMTC 总结">
+        小前端看大前端大会 — GMTC 总结
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+        <a href="/2023-09/linux-%E9%80%9A%E8%BF%87-nvm-%E5%AE%89%E8%A3%85-node/" rel="prev" title="Linux 通过 nvm 安装 Node">
+          Linux 通过 nvm 安装 Node
+        </a>
+        <span>〉</span>
+      
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2023-05/%E5%8C%97%E6%9E%81%E6%98%9F%E6%8A%A5%E8%A1%A8%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3503 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script defer src="https://umami.lion1ou.xyz:16666/script.js" data-website-id="0d735dad-52fd-4970-8da1-1664747941c9"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>
