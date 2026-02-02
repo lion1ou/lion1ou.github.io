@@ -6,7 +6,7 @@
   <link href="https://lion1ou.tech/atom.xml" rel="self"/>
   
   <link href="https://lion1ou.tech/"/>
-  <updated>2026-02-02T09:28:18.198Z</updated>
+  <updated>2026-02-02T09:47:16.258Z</updated>
   <id>https://lion1ou.tech/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://lion1ou.tech/2023-09/linux-%E9%80%9A%E8%BF%87-nvm-%E5%AE%89%E8%A3%85-node/"/>
     <id>https://lion1ou.tech/2023-09/linux-%E9%80%9A%E8%BF%87-nvm-%E5%AE%89%E8%A3%85-node/</id>
     <published>2023-09-10T02:00:00.000Z</published>
-    <updated>2026-02-02T09:28:18.198Z</updated>
+    <updated>2026-02-02T09:47:16.258Z</updated>
     
     
     <summary type="html">&lt;p&gt;在 CentOS 7 下，无法安装 Node 18 以上版本，该如何解决？本文给出完整步骤与常见错误的处理。&lt;/p&gt;</summary>
@@ -40,7 +40,7 @@
     <link href="https://lion1ou.tech/2023-05/%E5%8C%97%E6%9E%81%E6%98%9F%E6%8A%A5%E8%A1%A8%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0/"/>
     <id>https://lion1ou.tech/2023-05/%E5%8C%97%E6%9E%81%E6%98%9F%E6%8A%A5%E8%A1%A8%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0/</id>
     <published>2023-05-29T07:20:10.000Z</published>
-    <updated>2026-02-02T09:36:17.642Z</updated>
+    <updated>2026-02-02T09:46:04.790Z</updated>
     
     
     <summary type="html">&lt;p&gt;随着公司内部对各类报表需求的不断攀升，原有的极光系统已经无法满足移动端、实时大屏等各类场景；另外由于页面逻辑中涵盖了大量计算，导致页面性能偏差且无法支持灵活的外部拓展，导致数据源单一；最后由于项目比较久远，整体UI风格相对老旧、交互方式单一。为了满足公司内部各业务灵活的数据报表产出需求，以及保证数据团队报表产出效率，就有了我们的北极星报表搭建平台。&lt;/p&gt;</summary>
@@ -63,7 +63,7 @@
     <link href="https://lion1ou.tech/2023-02/%E5%B0%8F%E5%89%8D%E7%AB%AF%E7%9C%8B%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BC%9A-%E2%80%94-gmtc-%E6%80%BB%E7%BB%93/"/>
     <id>https://lion1ou.tech/2023-02/%E5%B0%8F%E5%89%8D%E7%AB%AF%E7%9C%8B%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BC%9A-%E2%80%94-gmtc-%E6%80%BB%E7%BB%93/</id>
     <published>2023-02-09T02:00:00.000Z</published>
-    <updated>2026-02-02T09:34:41.759Z</updated>
+    <updated>2026-02-02T09:45:22.707Z</updated>
     
     
     <summary type="html">&lt;p&gt;很荣幸跟几位同事一起参加了 GMTC 全球大前端技术大会。本文按主题梳理我的现场笔记与思考，涵盖工程化、性能与监控、团队管理等方向。&lt;/p&gt;</summary>
