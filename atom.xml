@@ -6,7 +6,7 @@
   <link href="https://lion1ou.tech/atom.xml" rel="self"/>
   
   <link href="https://lion1ou.tech/"/>
-  <updated>2026-02-02T14:53:06.282Z</updated>
+  <updated>2024-10-20T13:30:00.000Z</updated>
   <id>https://lion1ou.tech/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>日均 10 亿条日志的前端监控，是怎么从 2 小时延迟降到 2 分钟的</title>
+    <link href="https://lion1ou.tech/2024-10/fe-monitoring-pipeline-latency/"/>
+    <id>https://lion1ou.tech/2024-10/fe-monitoring-pipeline-latency/</id>
+    <published>2024-10-20T13:30:00.000Z</published>
+    <updated>2024-10-20T13:30:00.000Z</updated>
+    
+    
+    <summary type="html">一次 Flink 积压事故的定位、止损、治理和防复发：监控链路要联合看指标，采样要保留统计口径，查询要按 SLA 分流。</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    <category term="前端监控" scheme="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/"/>
+    
+    <category term="ClickHouse" scheme="https://lion1ou.tech/tag/ClickHouse/"/>
+    
+    <category term="Flink" scheme="https://lion1ou.tech/tag/Flink/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux 通过 nvm 安装 Node</title>
@@ -73,15 +98,15 @@
     <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
+    <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
+    
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
     <category term="GMTC" scheme="https://lion1ou.tech/tag/GMTC/"/>
     
     <category term="前端" scheme="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF/"/>
     
-    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="监控" scheme="https://lion1ou.tech/tag/%E7%9B%91%E6%8E%A7/"/>
-    
-    <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   
@@ -190,25 +215,6 @@
     <summary type="html">&lt;p&gt;什么是性能监控，主要要监控哪些指标，有什么意义呢？&lt;/p&gt;
 &lt;p&gt;我们经常会遇到这样一个情况，发布在线上的页面，有一天老板或者是其他同学跟你反馈，你的页面怎么这么慢，是不是有bug。然后你会自己打开对应的页面，看了看感觉速度正常，也算是秒开吧。然后你再关闭缓存，再试了一下，还是好的呀，哪里慢了？这个时候你就很难评估出来这个页面到底是真慢还是某个设备的网络问题。&lt;/p&gt;
 &lt;p&gt;这种在单个设备上的表现，其实很难准确反映我们的页面在线上运行的真实情况。线上环境包括不同的设备、不同的宿主环境、不同的运营商网络、不同的地区这些关联因素，所以我们就需要有一套可以监控线上环境运行情况的系统。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="JavaScript" scheme="https://lion1ou.tech/tag/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过ESLint和Prettier统一团队代码规范.</title>
-    <link href="https://lion1ou.tech/2020-06/%E9%80%9A%E8%BF%87eslint%E5%92%8Cprettier%E7%BB%9F%E4%B8%80%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/"/>
-    <id>https://lion1ou.tech/2020-06/%E9%80%9A%E8%BF%87eslint%E5%92%8Cprettier%E7%BB%9F%E4%B8%80%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</id>
-    <published>2020-06-23T04:56:08.000Z</published>
-    <updated>2026-01-11T13:01:41.860Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;随着业务的需求的增加，前端项目也越来越多，项目之间的代码风格也不尽相同。如果一个项目涉及多个同学维护的话，那这个项目的代码风格就会比较糟糕了。而且有的同学本地可能用了格式化插件，所以保存之后会造成整个文件的代码被格式化，其实可能只修改了一行代码。这样在做合并代码 review 时，很容易就会被忽略，也失去了 review 的意义。&lt;/p&gt;</summary>
     
     
     
