@@ -6,7 +6,7 @@
   <link href="https://lion1ou.tech/atom.xml" rel="self"/>
   
   <link href="https://lion1ou.tech/"/>
-  <updated>2024-10-20T13:30:00.000Z</updated>
+  <updated>2025-02-16T13:30:00.000Z</updated>
   <id>https://lion1ou.tech/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>企业知识问答从 40% 到 85%：一条 RAG 落地的真实路径</title>
+    <link href="https://lion1ou.tech/2025-02/enterprise-rag-40-to-85/"/>
+    <id>https://lion1ou.tech/2025-02/enterprise-rag-40-to-85/</id>
+    <published>2025-02-16T13:30:00.000Z</published>
+    <updated>2025-02-16T13:30:00.000Z</updated>
+    
+    
+    <summary type="html">内部问答平台「海螺」的准确率从约 40% 做到 85% 以上的过程：先跑最小闭环，再靠查询改写、混合召回、精排、拒答、知识治理和 BadCase 回流一点点抬上去，模型只是其中一环。</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    
+    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    <category term="RAG" scheme="https://lion1ou.tech/tag/RAG/"/>
+    
+    <category term="知识库" scheme="https://lion1ou.tech/tag/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>日均 10 亿条日志的前端监控，是怎么从 2 小时延迟降到 2 分钟的</title>
@@ -194,27 +219,6 @@
     
     
     <summary type="html">&lt;p&gt;错误监控主要是为了在sls看板上，能更加全面的展示我们项目的情况，所以这边加了个错误上报的口子，其实错误上报很简单，只需要全局捕获几种类型的错误就好了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="JavaScript" scheme="https://lion1ou.tech/tag/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端监控系列-性能监控</title>
-    <link href="https://lion1ou.tech/2020-10/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
-    <id>https://lion1ou.tech/2020-10/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/</id>
-    <published>2020-10-30T07:00:29.000Z</published>
-    <updated>2026-01-11T13:01:41.861Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;什么是性能监控，主要要监控哪些指标，有什么意义呢？&lt;/p&gt;
-&lt;p&gt;我们经常会遇到这样一个情况，发布在线上的页面，有一天老板或者是其他同学跟你反馈，你的页面怎么这么慢，是不是有bug。然后你会自己打开对应的页面，看了看感觉速度正常，也算是秒开吧。然后你再关闭缓存，再试了一下，还是好的呀，哪里慢了？这个时候你就很难评估出来这个页面到底是真慢还是某个设备的网络问题。&lt;/p&gt;
-&lt;p&gt;这种在单个设备上的表现，其实很难准确反映我们的页面在线上运行的真实情况。线上环境包括不同的设备、不同的宿主环境、不同的运营商网络、不同的地区这些关联因素，所以我们就需要有一套可以监控线上环境运行情况的系统。&lt;/p&gt;</summary>
     
     
     
