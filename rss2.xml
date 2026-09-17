@@ -15,8 +15,35 @@
     <atom:link href="https://lion1ou.tech/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>「做一个脚踏实地的前端学徒」</description>
-    <pubDate>Sun, 28 Sep 2025 13:30:00 GMT</pubDate>
+    <pubDate>Thu, 20 Aug 2026 13:00:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>一次 UI 自动化 Agent 探索，我们为什么没有继续投入</title>
+      <link>https://lion1ou.tech/2025-12/ui-automation-agent-exploration/</link>
+      <guid>https://lion1ou.tech/2025-12/ui-automation-agent-exploration/</guid>
+      <pubDate>Sun, 07 Dec 2025 13:30:00 GMT</pubDate>
+      
+      <description>我和测试团队做了一次移动端 UI 自动化 Agent 探索。技术闭环跑通后，我们结合投入成本、当时的模型能力和频繁中断的执行流程，判断短期内很难获得明显收益，于是停止追加投入，并把可复用成果补进现有测试平台。</description>
+      
+      
+      
+      
+      <category domain="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/">杂记</category>
+      
+      
+      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
+      
+      <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</category>
+      
+      
+      <comments>https://lion1ou.tech/2025-12/ui-automation-agent-exploration/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>带 20 多人的前端团队，我在管什么</title>
@@ -32,11 +59,11 @@
       <category domain="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/">杂记</category>
       
       
-      <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
-      
       <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
       <category domain="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/">团队管理</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
       
       
       <comments>https://lion1ou.tech/2025-09/what-i-manage-in-a-20-person-frontend-team/#disqus_thread</comments>
@@ -231,27 +258,6 @@
       
       
       <comments>https://lion1ou.tech/2021-10/%E9%87%8D%E6%8B%BE%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>前端监控系列-数据上报</title>
-      <link>https://lion1ou.tech/2020-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5/</link>
-      <guid>https://lion1ou.tech/2020-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5/</guid>
-      <pubDate>Mon, 02 Nov 2020 07:10:40 GMT</pubDate>
-      
-      <description>&lt;p&gt;性能监控和错误上报只是辅助功能，不应阻塞页面加载，因此只有当页面完成加载后，我们才进行数据获取和上报（实际上，页面加载完成前也获取不到必要信息），性能数据可以在页面加载完之后上报，尽量不要对页面性能造成影响。&lt;/p&gt;</description>
-      
-      
-      
-      
-      <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
-      
-      
-      <category domain="https://lion1ou.tech/tag/JavaScript/">JavaScript</category>
-      
-      
-      <comments>https://lion1ou.tech/2020-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%B3%BB%E5%88%97-%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5/#disqus_thread</comments>
       
     </item>
     

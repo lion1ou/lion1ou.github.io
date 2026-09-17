@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  
+    <meta name="keywords" content="Agent,AI 工程化,复盘,自动化测试," />
+  
+
+  
+    <meta name="description" content="「做一个脚踏实地的前端学徒」" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <title>一次 UI 自动化 Agent 探索，我们为什么没有继续投入 [ lion1ou ]</title>
+
+  <!-- pure样式 -->
+  <link rel="stylesheet" href="//unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <!-- 自建样式 -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 高亮样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/monokai-sublime.min.css">
+
+  
+  
+  
+    <script>
+      const href = window.location.href 
+      if(window.location.protocol === 'http:' && window.location.hostname !== 'localhost'){
+        // 强制重定向https
+        window.location.href = href.replace('http:', 'https:')
+      }
+    </script>
+  
+
+  <!-- 百度统计 -->
+  
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?980b59730f9572301f5df13e0eaa93c0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  <!-- 谷歌分析 -->
+  
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          ga('create', 'G-2Z1CFBMZXR', 'auto');
+          ga('send', 'pageview');
+    </script>
+  
+
+  <!-- 友盟分析 -->
+  
+    <script type="text/javascript">
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_1280415470'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280415470%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+      document.getElementById('cnzz_stat_icon_1280415470').style.display = 'none'
+    </script>
+  
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="lion1ou" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lion1ou" type="application/rss+xml">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <div class="nav-container">
+    <nav class="home-menu">
+  <a class="menu-heading" id="logo" href="https://lion1ou.tech">
+    <img class="avatar" src="https://i.loli.net/2019/11/15/FpoMI3UCqyKxnb8.jpg">
+    <span class="title">lion1ou</span>
+  </a>
+
+  <ul class="menu-list">
+      
+          
+            <li class="menu-item"><a href="/" class="menu-link">首页</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/archives" class="menu-link">归档</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/tags" class="menu-link">标签</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/projects" class="menu-link">项目</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/search" class="menu-link">搜索</a></li>
+          
+      
+          
+            <li class="menu-item"><a href="/about" class="menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        一次 UI 自动化 Agent 探索，我们为什么没有继续投入
+      </h1>
+
+      
+        <div class="post-meta">
+          <time class="time" datetime="2025-12-07T13:30:00.000Z">
+            2025-12-07 21:30
+          </time>
+        </div>
+      
+      
+      
+        <span class="read">
+          字数 <span class="post-count">9.2k</span>
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          <span class="post-count">32 min</span> 读完
+        </span>
+      
+
+      
+        <span class="slash">/</span>
+        <span class="read">
+          阅读 <span id="busuanzi_value_page_pv"></span>
+        </span>
+      
+     
+      <div class="post-meta">
+        
+          <span class="post-tags">
+            <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag">AI 工程化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E5%A4%8D%E7%9B%98/" rel="tag">复盘</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tag/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag">自动化测试</a></li></ul>
+          </span>
+        
+      </div>
+     
+    </header>
+
+    <div class="post-content">
+      <span id="more"></span>
+
+
+
+
+
+
+
+<p>今年我们团队在 AI Coding 上投入挺多，开发这一侧的交付速度确实快了。但很快发现一个问题：需求出得快，测不过来。回归测试还是靠人点，多机型兼容还是靠人堆，很多小需求排不到测试资源，前端同学自己点两遍就上了。<strong>瓶颈从写代码挪到了测试。</strong></p>
+<p>那时候各种 GUI Agent 的 Demo 也很多，模型看一眼截图就能说出页面上有什么、该点哪里。我们就动了念头：能不能让 Agent 去操控真机做测试？于是我和测试团队一起发起了一个探索性项目，代号「海螺智控」。项目直接改造测试团队已有的平台和云真机能力，没有再建一套新平台。投入人力不多，定位很明确，就是验证一件事：测试能不能从「脚本执行」走到具备感知、规划、行动、评估能力的引擎，走通「需求 / 用例 → Agent 操控真机 → 报告」这条链路。</p>
+<p>最后我们没有继续投入。从结项结果看，无测试资源需求的实际覆盖率约 35.9%。用例要人确认，账号和测试数据要人准备，执行中间设备的稳定性，需要多设备系统场景比如扫码、多端协作等都是需要高投入才能打通的。当时的模型也撑不住这么长的链路。再加人可以继续把数字往上抬，但短期很难抵掉这些成本。所以项目就收在这里，用例生成、异常分类、弹窗处理和执行轨迹被拆出来，补进了原有测试平台。</p>
+<!--more-->
+
+<h2 id="我们想验证什么"><a href="#我们想验证什么" class="headerlink" title="我们想验证什么"></a>我们想验证什么</h2><p>立项时的假设是这样的：在有需求文档或者冒烟用例的前提下，Agent 可以生成可执行的测试步骤，然后在真实设备上根据环境反馈自己把回归跑完。业务侧的目标定为覆盖 50% 无测试资源的需求。</p>
+<p>为什么按探索项目来做？模型能力当时还在快速变化，我们前端团队对测试这个专业的理解也有限。大家先用小投入跑通链路，再拿真实需求判断要不要加大投入。回头看，探索方向没有问题，欠缺的是立项时，对于实际测试场景的调研不够全面，低估了难度并高估了模型的能力。</p>
+<h2 id="整体是怎么设计的"><a href="#整体是怎么设计的" class="headerlink" title="整体是怎么设计的"></a>整体是怎么设计的</h2><p>链路从需求侧开始。输入可以是需求文档、测试平台上已有的冒烟用例，或者用户直接描述的意图。没有冒烟用例的话先拆功能点，再生成初级用例；有冒烟用例就直接进用例补充环节。这里有一道人工确认：使用者必须补齐「开始路径」、期望结果、设备和账号，确认之后才创建成任务。我们没有追求「文档一贴就全自动」，原因是需求文档粒度参差不齐，生成出来的用例质量波动很大。<strong>把错误前置到任务创建阶段，比让设备带着错误用例空跑更有效。</strong>代价是无人化的收益被稀释了一部分。</p>
+<p><img src="/images/2025-12/05-screenshot-create-plan-case-and-env.png" alt="创建测试计划：每条用例补齐开始路径、测试路径、期望结果，再选择设备和测试账号"></p>
+<p>任务创建之后、真机循环开始之前，还有一道计划环节。确认后的用例只有路径描述和期望，先拆成若干测试阶段，每个阶段三个字段：<code>path</code>（怎么走到这里）、<code>expect</code>（到了之后验证什么）、<code>process</code>（默认「未到达」）。</p>
+<p>拿一条真实跑过的用例看这两步的产出。人工确认后的用例长这样，字段名当时就写成了 <code>except</code>，这里照抄：</p>
+<pre><code class="json">&#123;
+  &quot;id&quot;: &quot;1&quot;,
+  &quot;name&quot;: &quot;退出登录测试01&quot;,
+  &quot;path&quot;: &quot;1.打开哈啰APP，检查是否已登录，如果已登录，则退出登录。&quot;,
+  &quot;desc&quot;: &quot;1.打开哈啰APP，检查是否已登录，如果已登录，则退出登录&quot;,
+  &quot;except&quot;: &quot;1.用户未登录或退出登录成功。&quot;
+&#125;
+</code></pre>
+<p>这条用例只有一句路径和一句期望，模型拿着它直接上真机，很容易走到一半就忘了要验证什么。计划环节把它拆成三个阶段：</p>
+<pre><code class="json">&#123;
+  &quot;caseName&quot;: &quot;退出登录测试01&quot;,
+  &quot;startPath&quot;: &quot;使用测试账号登录，App 冷启动后停留在首页&quot;,
+  &quot;device&quot;: &quot;Android 云真机&quot;,
+  &quot;stages&quot;: [
+    &#123;
+      &quot;stage&quot;: 1,
+      &quot;path&quot;: &quot;首页 → 点击底部「我的」&quot;,
+      &quot;expect&quot;: &quot;个人中心页展示当前账号的昵称和脱敏手机号，确认处于已登录状态&quot;,
+      &quot;process&quot;: &quot;未到达&quot;
+    &#125;,
+    &#123;
+      &quot;stage&quot;: 2,
+      &quot;path&quot;: &quot;个人中心 → 点击右上角「设置」&quot;,
+      &quot;expect&quot;: &quot;设置页出现「退出登录」按钮&quot;,
+      &quot;process&quot;: &quot;未到达&quot;
+    &#125;,
+    &#123;
+      &quot;stage&quot;: 3,
+      &quot;path&quot;: &quot;设置页 → 点击「退出登录」→ 在确认弹窗点击「确定」&quot;,
+      &quot;expect&quot;: &quot;回到首页；再进入「我的」时显示「登录 / 注册」入口，不再出现账号昵称&quot;,
+      &quot;process&quot;: &quot;未到达&quot;
+    &#125;
+  ]
+&#125;
+</code></pre>
+<p>阶段里的页面名称和文案是示意，字段结构和当时一致。<code>path</code> 写的是从上一个阶段的终点怎么走到这里，<code>expect</code> 是到达以后要核对的现象，<code>process</code> 只由评估角色改写，计划阶段全部是「未到达」。三个阶段合起来是这条用例的测试目标，运行时每次只盯当前阶段。</p>
+<p>计划定下来之后进运行时。外面套调度状态机，里面固定走「分析 → 规划 → 行动 → 评估」循环：</p>
+<ul>
+<li>分析：拿当前截图、DOM / 控件树，结合页面画像库和上一次评估结果，判断页面加载完了没、是否登录、能不能滚动、有没有广告或权限弹窗；命中特例就走固定脚本（关弹窗、登录检查），否则预测当前单步意图。</li>
+<li>规划：对照阶段计划的进度，明确当前路径目标和当前阶段预期，再决定下一步动作和坐标，输出规划原因、规划内容和 action。</li>
+<li>行动：把 tap / input / scroll / back 经云真机 Socket 下发，回传截图。</li>
+<li>评估：先做步骤评估，用 t0 和 t0+2s 的截图判断这一步动作有没有做成；失败就做错误分析，给出根因和建议，不改测试进度。步骤成功之后做测试评估：有没有到达当前阶段的测试点，到达了再对照 <code>expect</code>，把 <code>process</code> 写成「未到达 / 测试通过 / 测试不通过」。每几步再做一次周期评估，抓连续相同操作和「点进去再返回」这类循环问题。</li>
+</ul>
+<p>报告里每一步都能看到这四个角色各自留下了什么。下面是一次真实运行中「点击登录/注册」这一步的详情：分析角色留下标注过元素的截图，规划角色写出推理和结论，行动角色记录下发的 <code>tap</code> 坐标，评估角色给出结果、分数和原因。</p>
+<p><img src="/images/2025-12/06-screenshot-step-detail-four-roles.png" alt="一步的执行详情：分析、规划、行动、评估各自留下的记录"></p>
+<p><strong>步骤失败记流程错误，只有到达测试点后的断言失败才记测试不通过。</strong>两者混在一起，报告里就分不清是 Agent 没走到、还是走到了但功能有问题。结项时流程完成率和执行准确率也因此分开统计。</p>
+<p>回到前面那条退出登录的用例，阶段 1 在运行时的走法是这样的。分析角色从截图和控件树里发现首页被「天降大红包」弹窗挡住，命中特例，直接调用固定脚本关闭弹窗；步骤评估对比 t0 与 t0+2s 的截图，弹窗消失，这一步记成功，但还没有到达阶段 1 的测试点，<code>process</code> 仍然是「未到达」。接着规划角色对照「首页 → 点击底部「我的」」输出 tap 和坐标，行动角色下发到云真机；步骤评估确认页面已经切换，测试评估再判断是否到达了个人中心，到达以后对照 <code>expect</code>，昵称和手机号都在，把阶段 1 的 <code>process</code> 改成「测试通过」，当前阶段推进到 2。阶段 3 里有两种失败要分开：点击「退出登录」以后页面没有任何变化，属于步骤失败，记流程错误并重试；确认退出以后再进「我的」仍然显示账号昵称，说明到达了测试点但 <code>expect</code> 不成立，这才记「测试不通过」，同时标记疑似 Bug 交给人核对。</p>
+<p><img src="/images/2025-12/03-flowchart-logout-case-trace.png" alt="退出登录用例：阶段计划与运行轨迹"></p>
+<p>循环外面还有三层东西，当时花的精力并不比循环里少。</p>
+<p>调度器是第一层。它自己不点任何东西，负责把四个角色按固定顺序串起来，并维护运行状态：<code>step</code> 是当前已经走了多少步；<code>steps</code> 是每一步的完整记录，包括分析结论、规划原因、下发的 action、操作前后的截图和评估结果；<code>completed_path</code> 是已经走通的页面节点序列，尝试过的分支也记在里面，回溯时只能回到这条路径上已有的节点。此外还有当前阶段编号、连续失败次数和重试预算。每轮评估结束后，调度器根据评估结果在六种决策里选一种：步骤成功但未到测试点就继续；步骤失败先重试；连续失败到阈值、阶段超时或者判定迷失就重规划或回溯；到达测试点且 <code>expect</code> 成立就推进到下一阶段，全部阶段有结论就终止；疑似 Bug、超过步数上限，或者回溯也没有路可走，就交给人。「四个真实的难点」一节里那段伪代码，就是这里的判断骨架。</p>
+<p>这一层现在有不少开源方案。OpenAI 的 Swarm 用 handoff 在多个 Agent 之间转交控制权，本身无状态，代码很轻，适合验证角色切换的思路，后来由 OpenAI Agents SDK 接替；LangGraph 把状态机显式建成图，节点、边、持久化状态和中断恢复都由框架管；AutoGen 和 CrewAI 分别以多 Agent 对话和角色分工为核心。当时的调度器是自己写的，原因是 <code>completed_path</code>、设备锁、重试预算这些状态和云真机强绑定。<strong>这类框架管的是 Agent 之间怎么交接，设备会话、评估口径和回溯规则仍然要自己写。</strong>如果现在做，我会用 LangGraph 这类带持久化状态和检查点的框架搭调度骨架，省掉自己维护 <code>steps</code> 和恢复逻辑的代码，设备和评估两部分照旧自己实现。</p>
+<p><img src="/images/2025-12/02-framework-four-roles-scheduler-ring.png" alt="四角色循环与调度器的六种决策"></p>
+<p>设备会话是第二层。云真机的连接、心跳、设备锁和空闲回收都由运行时管理。同一台设备上的动作有状态依赖，只能串行执行；任务开始前要拿到设备锁并打开 App，结束或者交人时释放。设备未连上、控件树获取失败这类问题在这一层就被拦下并归类，不会进入循环消耗模型调用。任务运行时有一个实时监控页，左侧是云真机当前画面，中间是正在进行的规划、行动和评估，右侧是设备的 CPU、内存和网络延迟。</p>
+<p><img src="/images/2025-12/07-screenshot-realtime-monitor-device-session.png" alt="实时监控页：云真机画面、当前步骤的规划与评估、设备性能指标"></p>
+<p>报告和知识回流是第三层。任务结束时，<code>steps</code> 里的记录直接生成报告：每一步有标注过元素的截图、规划原因、action 和评估的分数与理由，可以逐步回放；每个阶段有最终的 <code>process</code>；任务维度再汇总成流程是否完成、测试是否通过，以及失败归类属于设备、流程、超时、评估误判还是疑似 Bug。下面这份报告是一条登录用例的结果：14 个步骤里，连接设备、打开应用这类由运行时完成的步骤只标「成功」；模型走的步骤带阶段标签，结果分成「执行成功」「测试通过」「测试不通过」；周期评估在第 9 步发现「输入手机号 → 点击输入框 → 再输入」重复出现，把整条用例判成测试不通过并写明原因。</p>
+<p><img src="/images/2025-12/08-screenshot-report-steps-and-stages.png" alt="测试报告：步骤列表带阶段标签，执行成功与测试通过分开标记，周期评估检出循环操作"></p>
+<p>报告页同时是知识回流的入口：测试同学核对结果时，可以从报告页把正确的页面结构、icon 位置和成功路径反补进页面画像库、icon 库和历史操作库；被判定为死循环的轨迹进错误操作库作负例。</p>
+<p>后来再看，这套结构更接近分层的 Plan-and-Execute。人工确认后的用例是计划层，里面有路径、预期和阶段列表；执行层一次只走当前能验证的一步，再根据页面反馈调整。评估单独由一个角色负责，又分成步骤评估和测试评估。模型写下的 Thought 只是推理过程。<strong>真正能说明执行结果的，是截图、控件树、工具回执和断言。</strong></p>
+<p>模型上，分析和规划用一个视觉理解模型加一个推理模型搭配，元素定位额外引入了 ShowUI 这类 GUI 专用视觉模型。知识库分三类：页面画像库存页面结构、可滚动性、地图这类特殊组件，以及一些业务规则（比如支付前要先勾选协议，模型不会稳定想到这种事）；历史优秀操作库把成功路径连同页面分析、意图和评估结果向量化，相似任务召回复用；特殊技能库用代码处理弹窗关闭这种确定性特例，不让模型每次重新推理。</p>
+<h2 id="四个真实的难点"><a href="#四个真实的难点" class="headerlink" title="四个真实的难点"></a>四个真实的难点</h2><h3 id="「看见」不等于「可操作」"><a href="#「看见」不等于「可操作」" class="headerlink" title="「看见」不等于「可操作」"></a>「看见」不等于「可操作」</h3><p>第一个遇到的问题是定位。云真机给回来的 DOM / 控件树经常是残缺的，属性不标准，bounds 漂移，冗余节点多；在 APP 中获取内嵌 webview 的 H5 页面尤其严重，很多元素在树里根本找不到。下面左图是原生页面按控件树标注的结果，两百多个框叠在一起，其中大量是不可点击的冗余节点；右图是一个 H5 活动页，整页只标出一个元素。单纯依赖控件树走不通。</p>
+<p><img src="/images/2025-12/10-screenshot-dom-marks-vs-h5-no-elements.png" alt="左：原生页面按控件树标注出两百多个元素；右：H5 活动页只能标出一个元素"></p>
+<p>所以引入了 ShowUI 做视觉定位。它能在截图上找到「那个按钮」，但坐标输出常常只到百分位，比如 <code>[0.21, 0.23]</code>。在千级像素的屏幕上，这就是 10 到 20 像素的误差，大按钮无所谓，小 icon 直接点偏。我们的办法是多尺度识别：第一次拿到坐标后，以它为中心裁一张 300×150 的小图再识别一次，把局部精度抬上去。执行阶段再用 icon 知识库按「操作描述 + pageId」补坐标，人工标过的 icon 就不再依赖模型。</p>
+<p>策略上定的是 DOM 优先、视觉补充。控件树可信时更便宜，也更容易排查；视觉只在树里找不到元素时补位。这套组合解决了一部分定位问题。「标注成功」离「真的点得中」还有距离，视觉框和可点击区域可能错位，Toast 也很难从画面里稳定读出。地图、多滚动容器和权限弹窗仍要写特例。人工补 icon 库确实能提高局部成功率，页面一改版又得重来。<strong>所谓「越用越准」，前提是一直有人维护。</strong></p>
+<h3 id="动作发出不等于动作成功"><a href="#动作发出不等于动作成功" class="headerlink" title="动作发出不等于动作成功"></a>动作发出不等于动作成功</h3><p>第二个问题出在连接层。云真机的动作下发走 Socket，设备连接依赖主 Socket、终端 Socket、屏幕 Socket 三条通道齐备，心跳大约 20 秒，长时间无操作会释放连接，断连最多重连 3 次。问题是部分能力只有「消息发出去了」，没有可靠的成功回执。这种回执一般叫 ACK（acknowledgement，确认应答）：设备收到指令并执行完成后，回传一条「这一下已经点了」的确认消息。有了它，调用方才能区分「指令没送到」「送到了没执行」和「执行完了页面没变」。</p>
+<p>没有 ACK，Agent 就只能 sleep 一段时间再截图、再拉控件树，用页面变化去间接判断刚才那一下点上了没。评估侧因此做成了多帧对比，比如 t0、t0+200ms、t0+2s 各截一张。但这个窗口很难选：选短了，加载慢的页面会被判成失败，且还有步骤全对、只因为加载慢被评估打成失败的案例；选长了，整条链路的延迟又上去了。</p>
+<p>连接层还有一批做不了的事：缺接口调用信息，没有多点触控和拖拽，扫码、蓝牙这类硬件能力更是超出工具边界。在测试过程中还多次出现「设备未连上」「获取 DOM 失败」，这些直接计入未完成，也成了拉低完成率和覆盖率的场景。</p>
+<p><strong>Prompt 补不齐环境能力。</strong>云真机属于外部环境，连接、设备锁、超时、空闲回收都要由运行时约束。同一台设备上的动作有状态依赖，只能串行并加设备锁。多台设备要并发，还得保证账号、测试数据和业务状态互不干扰。这些写进提示词是没有用，是需要工程层面的完善和联动。</p>
+<h3 id="长链路会迷失，也会死循环"><a href="#长链路会迷失，也会死循环" class="headerlink" title="长链路会迷失，也会死循环"></a>长链路会迷失，也会死循环</h3><p>第三个问题是步骤一长，模型会出两种毛病。一种是遗忘，把「完成了一次动作」当成「达到了测试目标」，或者忘了自己是来测什么的；另一种是循环，在同一个页面反复做同一个动作。退出登录这条用例把两者都碰上了。首页被「天降大红包」弹窗挡住，规划先点关闭，动作本身正确，弹窗也确实消失了，但评估侧仍然判失败、打了 0 分。排查下来，规划写下的 Thought、实际下发的 tap 坐标和评估提示词里的预期三者说的不是同一个动作，评估拿着错误的预期去核对截图。这一次误判被调度器当成步骤失败，于是重试关闭，弹窗再出现再关，Agent 卡在「关弹窗」这个子目标上，始终进不了测试页面。</p>
+<p>对策分几层。计划层面把用例拆成多个阶段，每阶段带着路径和预期；运行时再拆成单步意图。评估分步骤评估和测试评估。记忆层面的改法和提示词长度问题绑在一起，放在下一节说。运行时层面是硬限制，下面这段伪代码是当时终止条件的骨架：</p>
+<pre><code class="typescript">type Decision = &#39;continue&#39; | &#39;retry&#39; | &#39;replan&#39; | &#39;backtrack&#39; | &#39;handoff&#39; | &#39;stop&#39;;
+
+// 阈值为示意，实际按用例长度和设备情况配置
+const LIMITS = &#123; maxSteps: 40, stageTimeoutMs: 180_000, maxRepeat: 3, maxConsecutiveFail: 3 &#125;;
+
+function decide(run: RunState, obs: Observation, evalResult: EvalResult): Decision &#123;
+  // 1. 步数预算：整条链路的绝对上限，不看模型说了什么
+  if (run.step &gt;= LIMITS.maxSteps) return &#39;handoff&#39;;
+
+  // 2. 阶段超时：以整个测试阶段计时，超时视为迷失
+  if (Date.now() - run.stageStartedAt &gt; LIMITS.stageTimeoutMs) return &#39;replan&#39;;
+
+  // 3. Observation 指纹重复：页面没变、动作也没变，就是死循环
+  const fp = fingerprint(obs.screenshotHash, obs.elementListHash, run.lastAction);
+  run.fingerprints.set(fp, (run.fingerprints.get(fp) ?? 0) + 1);
+  if (run.fingerprints.get(fp)! &gt;= LIMITS.maxRepeat) &#123;
+    markLoopSample(run, fp); // 打标，沉淀到错误操作库作负例
+    return run.completedPath.length &gt; 0 ? &#39;backtrack&#39; : &#39;handoff&#39;;
+  &#125;
+
+  // 4. 连续失败阈值：评估连续判失败，先重试，超过阈值回溯或交人
+  if (!evalResult.stepSuccess) &#123;
+    run.consecutiveFail += 1;
+    if (run.consecutiveFail &lt; LIMITS.maxConsecutiveFail) return &#39;retry&#39;;
+    return run.completedPath.length &gt; 0 ? &#39;backtrack&#39; : &#39;handoff&#39;;
+  &#125;
+  run.consecutiveFail = 0;
+
+  // 5. 阶段目标达成或疑似 Bug，交给上层决定继续还是终止
+  if (evalResult.expectationMet) return &#39;stop&#39;;
+  if (evalResult.suspectedBug) return &#39;handoff&#39;;
+  return &#39;continue&#39;;
+&#125;
+</code></pre>
+<p>指纹要用原始 Observation 计算，不能用模型摘要，否则事后分不清页面没变还是评估错了。回溯也只能回到 <code>completed_path</code> 里已经走过的节点。换条路径重来时，App 账号态、服务端数据和其他终端的状态都回滚不了。</p>
+<p>人工接管是运行时的正常出口。死循环轨迹可被标进错误操作库，后续遇到相似意图时可以避开。<strong>只在提示词里写一句「请勿重复操作」，却不给步数上限，基本没用。</strong></p>
+<h3 id="每一步都想把所有东西塞给模型"><a href="#每一步都想把所有东西塞给模型" class="headerlink" title="每一步都想把所有东西塞给模型"></a>每一步都想把所有东西塞给模型</h3><p>第四个问题是提示词越跑越长。如果循环里每一步都要调用模型，把能拿到的全部给它：完整用例、整棵控件树、当前截图、从第一步到现在每一步的 Thought、action、Observation 和评估结论，再加上知识库召回的内容。控件树本身就是几百个节点，前面那张标注了两百多个元素的截图，对应的元素列表就是这个量级；历史记录每走一步再增加几百字。十几步之后，一次规划的输入里大部分是历史，当前页面和当前目标只占很小一块。那样费用和延迟先上去，接着模型开始分不清哪些是当前该关心的：目标被埋在历史里，前面某一步的失败理由被当成当前页面的状态，评估侧也更容易被历史里的「成功」带偏。下面是最初无脑版本的历史操作记录，每一步的 Thought、Action、Observation 全文拼进提示词。</p>
+<p><img src="/images/2025-12/11-screenshot-history-record-before.png" alt="改造前的历史操作记录：每一步全文拼接进提示词"></p>
+<p>后续优化的对策是按角色拆输入、按远近压历史，让每次调用只拿这一步需要的东西。</p>
+<p>输入按角色拆开。分析角色拿截图、页面画像和上一次评估结果；规划角色拿分析结论、当前阶段的路径目标和预期、历史操作总结；步骤评估只拿这一步的规划 CoT、下发的 action 和操作前后的截图；测试评估只拿当前阶段内的规划和评估记录。完整用例只在计划环节出现一次，运行时每个角色看到的是当前阶段。</p>
+<p>控件树不直接进提示词。原始树先做数据清洗和元素标注，再整理成页面画像：页面结构、可滚动方向、有没有地图这类特殊组件标注、页面上的业务规则。页面画像按 appName + 页面 id + 版本号 存进 MongoDB，同一个页面第二次遇到直接查库，不再让模型分析。分析角色的输入后来去掉了 DOM 节点，只保留截图和页面画像；规划角色需要的元素坐标由标注结果和 icon 库单独提供。</p>
+<p>历史记录按远近重写。规划提示词里把记忆分成两层：长期记忆是测试目标和阶段进度，写清已经完成了什么、当前在第几个阶段；短期记忆是前两步的具体动作、结果和评估理由。更早的步骤压成一句话摘要，只保留哪个页面、做了什么、结果如何。这份总结会在每次循环后重新生成，规划输入的长度因此基本稳定。评估侧的历史只留一个短窗口，避免拿着历史里的成功记录给当前失败的动作打高分。<strong>每个角色只看到自己这一步需要的信息，提示词长度才能不随步数增长。</strong></p>
+<p>知识库承担了原来靠堆历史才能做到的事。当前页面在之前的任务里怎么走通的，不需要把那次任务的全部记录带进来，召回一条就够。这条辅助流程在循环里是这样跑的：</p>
+<ol>
+<li>分析阶段先查页面画像库。命中就复用；没有命中，让模型分析一次并写回。</li>
+<li>用当前页面的元素描述加上单步意图，去历史操作库做向量检索。库里每条记录是一次成功步骤的页面分析、意图目标、路径规划和评估理由整合成的一段文本；检索到的相似操作再由模型筛一次，挑最贴近的一条。</li>
+<li>页面画像、召回的相似操作和针对当前页面的分析聚合成当前步骤的页面分析结果，交给规划角色。规划角色以它为参考，动作仍然根据当前截图决定。</li>
+<li>执行阶段按操作描述加 pageId 从 icon 库召回坐标，定位一节已经说过。</li>
+<li>评估阶段负责回流。步骤评估判定成功后，报告页给出「历史操作库补充」入口，把这一步的目标意图、历史操作记录、当前页面和规划路径存成一条新记录；周期评估每 N 步回顾一次，连续结论一致且预期匹配度低，标记异常并结束任务，修正信息可以录入错误操作库；</li>
+</ol>
+<p><img src="/images/2025-12/12-screenshot-step-eval-three-frames-knowledge-entry.png" alt="一步的评估详情：t0、t0+200ms、t0+2s 三帧截图，步骤评估成功后可以从这里补充进历史操作库"></p>
+<p>回流靠人点。模型判成功的步骤不会自动进库，测试同学核对后才录入，自动入库会把评估误判一起沉淀下去。这让知识库的增长速度和使用量绑在一起：独立入口没人用，库就长不起来。定位一节说的「越用越准的前提是有人维护」，在这里是同一件事。</p>
+<h2 id="还没解决的"><a href="#还没解决的" class="headerlink" title="还没解决的"></a>还没解决的</h2><p>有几件事到结项也没有答案。</p>
+<p>测试账号和测试数据的准备费时费力。很多需求要特定状态的账号、特定的订单或者优惠券，这些造数工作目前的 Agent 做不了，得靠人。所谓「可支持」的需求里，多数仍然需要测试包和测试账号，离「无人值守」还远。</p>
+<p>多端协同联动覆盖不了。像车主端和用户端配合、PC 管理后台操作触发用户端变化这种场景，一台云真机上做不了，Agent 的状态机也管不到另一端，需要适配的联动工程也存在巨大的工程成本。</p>
+<p>硬件场景覆盖不了。扫码、蓝牙、生物指纹认证等，工具层面就没有。</p>
+<p>模型升级只能改善其中一部分。账号、测试数据、多端状态和硬件能力，本来就是测试工程的问题。我们立项时对这些工作估计得太轻了。</p>
+<h2 id="结项：数据、停止投入的原因，以及留下了什么"><a href="#结项：数据、停止投入的原因，以及留下了什么" class="headerlink" title="结项：数据、停止投入的原因，以及留下了什么"></a>结项：数据、停止投入的原因，以及留下了什么</h2><p>结项样本取自一条业务线一个迭代周期内的全部无测试资源需求。我们逐条人工分析需求和需求下的测试用例，判断用例的功能流程能否在自动化测试平台上验证，去掉前一节列出的多端、硬件、造数这类无法支持的场景后，无测试资源需求的实际覆盖率约 35.9%。在这部分可支持的需求上再看真实执行结果：完成率 73.7%，指 Agent 能按阶段计划跑完全部阶段；准确率 57.1%，指步骤评估和测试评估给出的结论与人工核对一致。</p>
+<p>三个数字要放在一起读。<strong>覆盖率说的是有多少需求能进系统，完成率和准确率说的是进了系统的需求能不能跑对。</strong>三分之二的需求进不了系统；进了系统的需求，四分之一跑不完，跑完的里面评估结论只有一半多一点可信。合在一起就是：测试同学拿到一份报告，仍然要自己重新核对大半内容。测试团队实际的使用情况也是这样，报告没有替代人工验证。要让这条链路覆盖完整的测试流程，分母和分子都得抬起来，当时的投入规模离这一步很远。</p>
+<p>停止追加投入有三个原因。</p>
+<p>第一是账算不过来。用例生成要人确认，账号和测试数据要人准备，页面画像、icon 和特殊逻辑要长期维护，页面改版以后一部分知识会直接过期。这些都是持续支出，对应的产出却拿不出能证明价值的数字。</p>
+<p>第二是模型和执行环境还没有稳定到可以接住通用的移动端测试。视觉模型能看页面、规划动作，小图标定位、长链路记忆和结果判断仍会出错。设备断连、DOM 获取失败、加载时间波动和动作缺少 ACK，会让原本正确的计划停在半路，每次都需要重试、重规划，最后还是交给人。</p>
+<p>第三是项目中途核心成员变动，团队收缩了范围，放下多端、硬件和端外小程序。继续做还能把数字再抬几个点，只是离收益门槛仍然很远。到这里，再维护一个独立的全自主测试入口已经不划算了。</p>
+<p>收口时我们把能单独使用的部分拆开，补进已有的测试与云真机平台。用例生成链路可以把需求或冒烟用例转换成结构化步骤，再生成 tap、input、scroll 等动作，人工确认后用于半自动执行。设备未连接、DOM 获取失败、流程错误、超时、评估误判和疑似 Bug 被整理成统一的异常分类，平台可以按类型展示和处理。弹窗识别与关闭属于确定性较高的能力，直接复用。</p>
+<p>另一块留下的是执行证据。每一步的截图、元素标注、规划原因、action 和评估结果都可以回放。现有平台因此多了一套生成、辅助执行、异常识别和过程回放能力，测试没有因此无人化，但核对一条用例时有了可以逐步查看的依据。<strong>相比继续维护一个全自主测试入口，这种保留方式更贴近当时能获得的收益。</strong></p>
+<h2 id="如果重来"><a href="#如果重来" class="headerlink" title="如果重来"></a>如果重来</h2><p>如果现在再做一次，我会先把范围缩得更小。</p>
+<p>先做窄场景基准，再谈平台。固定 App 版本、机型、账号种子和一小批用例，从页面稳定、账号固定、步骤短、断言明确的冒烟流程开始，分开统计覆盖率、成功率、人工介入率、耗时和单次成功成本。</p>
+<p>投入边界在立项时写下来。连续两三个迭代，实际覆盖、准确率或者使用量达不到线，就停止扩场景。我们当时有数据，缺的是这条事先约定的线。</p>
+<p>环境能力当作前置门槛。动作回执、稳定的控件树、设备状态、测试数据接口，这些不满足就不走全自主路线，降级成半自动或者固定脚本。</p>
+<p>稳定路径用确定性脚本守住，Agent 只处理变化和异常。高频、断言明确的回归，用 Appium 或录制回放更稳也更便宜；弹窗、文案变化和探索性冒烟才留给 Agent。全程让视觉模型点选，成本和噪声都太高。</p>
+<p>立项前找测试同学把「测试数据怎么准备」「断言能不能机器判定」「哪些场景天然多端」问透。我们低估了测试专业的复杂度，模型能理解页面这件事，被过早外推成了「可以通用完成移动端测试」。</p>
+<p>测试瓶颈还在。现在再评估类似项目，我会先问几个很具体的问题：真实需求里有多少能进系统？一次成功要花多少人力和模型成本？设备或工具断掉以后谁来接？这些问题答不清楚，Demo 再顺，也不急着扩平台。</p>
+<h2 id="补记：八个月后对照业界方案再看"><a href="#补记：八个月后对照业界方案再看" class="headerlink" title="补记：八个月后对照业界方案再看"></a>补记：八个月后对照业界方案再看</h2><blockquote>
+<p>本节为 2026 年 8 月补充。下面引用的模型、框架和基准数据截至 2026 年 8 月。</p>
+</blockquote>
+<p>结项八个月，业界在同一个问题上的进展值得对照着看。模型层，字节的 UI-TARS-2（2025 年 9 月）和阿里通义的 GUI-Owl-1.5（2026 年 2 月）在 AndroidWorld 上分别到 73.3 和 71.6 分，定位、长程记忆和工具调用都在模型内部处理。框架层，Midscene.js 把 GUI Agent 做成测试工具包，用 Gemini-3.5-Flash 在 AndroidWorld 上自测到 Pass@1 93.10%。基准层还有另一面：2026 年 5 月的 AndroidDaily 换成 94 个真实闭源 App，最强模型成功率 62.0%；2026 年 6 月的 OSWorld 2.0 换成人类要一个多小时才能完成的长流程，Claude Opus 4.8 只完成 20.6%，失败原因是丢失约束、错过中途信息、该问用户时自己猜、跳过验证、依赖必须自己恢复的隐藏状态。<strong>基准从模拟器换成真实 App、从短任务换成长流程，成功率从九成掉到六成再到两成，掉下去的部分正是我们当时遇到的问题。</strong></p>
+<h3 id="和业界方案的异同"><a href="#和业界方案的异同" class="headerlink" title="和业界方案的异同"></a>和业界方案的异同</h3><p>相同的部分不少。步骤评估和测试评估分开、先框区域再二次定位、页面知识和成功路径复用、弹窗这类确定性特例交给代码、每一步留截图和依据供回放，这些在 Midscene 里都有对应物：<code>aiAssert</code>、<code>deepThink</code>、应用知识文档与规划缓存、可编程 Node、HTML 报告。GUI-Owl-1.5 的 Manager、Worker、Reflector、Notetaker 四角色，和我们的分析、规划、行动、评估也是同一种拆法。方向上我们没有走错。</p>
+<p>不同的地方有三处。定位上我们 DOM 优先、视觉补充，Midscene 走纯视觉，截图是唯一输入，token 消耗只随分辨率变化，一次绕开了控件树残缺和上下文膨胀两个问题，代价是必须用定位过关的模型。规划权上我们让模型全程规划每一步，Midscene 除了自主规划的 <code>aiAct</code>，还提供 <code>aiTap</code>、<code>aiInput</code> 这类即时动作，模型只负责找元素，稳定路径由脚本写死。工程形态上我们自建了调度、评估和知识库，<code>@midscene/test</code> 把 Agent 做成现有 E2E 框架里的一种步骤，造数、账号、接口准备仍然走确定性 Node，自然语言只描述意图。</p>
+<p>值得学的是这三处不同背后的取舍。<strong>把规划权交回给人，只在需要判断的地方让模型规划，完成率和成本都会好看很多。</strong>把 Agent 嵌进现有测试工程而不另建平台，造数和断言不用重做，知识库也有稳定的使用量来养。纯视觉在模型能力过关之后是更省维护的路线，我们当时依赖 DOM 是受模型能力限制的过渡选择。</p>
+<p>也有业界同样没解决的部分。账号与测试数据、多端联动、扫码蓝牙这类硬件能力，<code>@midscene/test</code> 的答案是交给确定性 Node，也就是交还给测试工程。闭源 App 拿不到内部状态，AndroidDaily 只能用外部可观察的规则打分，我们 57.1% 的评估准确率背后是同一个限制。</p>
+<h3 id="这次探索的意义"><a href="#这次探索的意义" class="headerlink" title="这次探索的意义"></a>这次探索的意义</h3><p>在 2025 年下半年那个时点，用通用视觉模型和残缺的云真机控件树，我们把分层计划、两路评估、调度终止条件、知识回流这套结构跑通了，后来业界成熟方案里的对应物说明这套结构本身成立。项目留下了三样东西：一组用真实需求算出来的覆盖率、完成率和准确率，让停止投入的决定有据可查；一套异常分类和执行回放能力，已经进了现有平台；以及对「哪些问题模型升级能解决、哪些本来就是测试工程问题」的判断。这些是只看 Demo 得不到的。</p>
+
+    </div>
+
+    <div class="post-end-tip">
+      <div>全文完。</div>
+    </div>
+
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E6%83%B3%E9%AA%8C%E8%AF%81%E4%BB%80%E4%B9%88"><span class="toc-text">我们想验证什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%E7%9A%84"><span class="toc-text">整体是怎么设计的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%9C%9F%E5%AE%9E%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="toc-text">四个真实的难点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%8C%E7%9C%8B%E8%A7%81%E3%80%8D%E4%B8%8D%E7%AD%89%E4%BA%8E%E3%80%8C%E5%8F%AF%E6%93%8D%E4%BD%9C%E3%80%8D"><span class="toc-text">「看见」不等于「可操作」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9C%E5%8F%91%E5%87%BA%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%A8%E4%BD%9C%E6%88%90%E5%8A%9F"><span class="toc-text">动作发出不等于动作成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E9%93%BE%E8%B7%AF%E4%BC%9A%E8%BF%B7%E5%A4%B1%EF%BC%8C%E4%B9%9F%E4%BC%9A%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">长链路会迷失，也会死循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%80%E6%AD%A5%E9%83%BD%E6%83%B3%E6%8A%8A%E6%89%80%E6%9C%89%E4%B8%9C%E8%A5%BF%E5%A1%9E%E7%BB%99%E6%A8%A1%E5%9E%8B"><span class="toc-text">每一步都想把所有东西塞给模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E8%A7%A3%E5%86%B3%E7%9A%84"><span class="toc-text">还没解决的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E9%A1%B9%EF%BC%9A%E6%95%B0%E6%8D%AE%E3%80%81%E5%81%9C%E6%AD%A2%E6%8A%95%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%95%99%E4%B8%8B%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">结项：数据、停止投入的原因，以及留下了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E9%87%8D%E6%9D%A5"><span class="toc-text">如果重来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E8%AE%B0%EF%BC%9A%E5%85%AB%E4%B8%AA%E6%9C%88%E5%90%8E%E5%AF%B9%E7%85%A7%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E5%86%8D%E7%9C%8B"><span class="toc-text">补记：八个月后对照业界方案再看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-text">和业界方案的异同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E6%8E%A2%E7%B4%A2%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">这次探索的意义</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+
+<!-- 文章版权 -->
+<div class="post-copyright">
+  <span>本作品采用</span>
+  <a href="//creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+  <span>进行许可。 </span>
+  <div>转载请注明原文链接 <a href="https://lion1ou.tech//2025-12/ui-automation-agent-exploration/">https://lion1ou.tech//2025-12/ui-automation-agent-exploration/</a></div>
+</div>
+
+<!-- 文章翻页器 -->
+
+  <div class="post-nav">
+    <div class="post-nav-item post-nav-next">
+      
+        <span>〈 </span>
+        <a href="/2025-09/what-i-manage-in-a-20-person-frontend-team/" rel="next" title="带 20 多人的前端团队，我在管什么">
+        带 20 多人的前端团队，我在管什么
+        </a>
+      
+    </div>
+
+    <div class="post-nav-item post-nav-prev">
+        
+    </div>
+  </div>
+
+
+
+<div class="admire">
+  <div class="admire-images">
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/wx_skm_tiny.png"/>
+        <div class="bottom-tip">微信</div>
+      </div>
+    
+    
+      <div class="image-item">
+        <img src="https://cdn.chuyunt.com/ali_skm_tiny.png"/>
+        <div class="bottom-tip">支付宝</div>
+      </div>
+    
+  </div>
+  
+  
+    <div class="admire-msg">
+      觉得写的不错，请我喝杯奶茶呗~
+    </div>
+  
+
+  <div class="admire-icon">
+    <svg class="icon-svg" t="1633605698524" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10476" width="200" height="200"><path d="M117.142106 642.360412h789.978512l-42.856868 203.906738s-42.692665 53.135948-85.680895 59.966775-661.440749 0-661.440749 0z" fill="#9FD4FF" p-id="10477"></path><path d="M772.343158 945.806741H139.079568a69.29348 69.29348 0 0 1-69.26064-69.359161L70.081652 486.039575a69.490523 69.490523 0 0 1 60.557904-68.70235c100.032199-12.84064 179.571919-35.172188 207.519195-58.291909 44.137648-36.452968 82.856611-108.209487 82.856611-153.627914a136.255284 136.255284 0 0 1 267.518809-36.617171 35.631955 35.631955 0 0 1 2.068953 6.338219 409.389821 409.389821 0 0 1 9.852153 87.651326 405.843045 405.843045 0 0 1-9.031141 85.089766l-0.492607 2.265995h151.066354a62.396973 62.396973 0 0 1 8.669895 0.59113 138.619801 138.619801 0 0 1 110.278439 65.221256 134.186331 134.186331 0 0 1 20.591001 80.295052 69.424842 69.424842 0 0 1-2.331676 20.689522l-75.533177 333.922325a71.88788 71.88788 0 0 1-8.899779 20.755203A137.634585 137.634585 0 0 1 772.343158 945.806741zM557.270646 137.30618A66.534877 66.534877 0 0 0 489.323627 205.351721c0 73.464225-54.712293 162.560534-107.618358 206.271255-50.0161 41.247683-159.013758 62.626856-241.673326 73.267181l-1.609186 0.229884-0.328405 391.984349H774.937558a69.326321 69.326321 0 0 0 59.67121-38.390558 31.494051 31.494051 0 0 1 2.495879-4.203585l0.229884-0.328405 75.533177-333.988006v-0.262724a40.262468 40.262468 0 0 1 0.164202-5.057439v-1.379301a67.060325 67.060325 0 0 0-9.917834-41.182002 70.639941 70.639941 0 0 0-57.339534-33.398801 38.390558 38.390558 0 0 1-4.761874-0.525448h-195.335365a34.088451 34.088451 0 0 1-32.183701-45.352747A334.973221 334.973221 0 0 0 632.048491 262.724095a340.424746 340.424746 0 0 0-7.027869-67.881338v-0.164203a27.027741 27.027741 0 0 1-1.379302-4.433469 67.782816 67.782816 0 0 0-66.370674-52.938905z" fill="#333333" p-id="10478"></path><path d="M214.251499 547.418492m36.255925 0l5.648568 0q36.255925 0 36.255926 36.255925l0 198.947821q0 36.255925-36.255926 36.255925l-5.648568 0q-36.255925 0-36.255925-36.255925l0-198.947821q0-36.255925 36.255925-36.255925Z" fill="#333333" p-id="10479"></path></svg>
+  </div>
+</div>
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'lion1ou';
+    
+    var disqus_url = 'https://lion1ou.tech/2025-12/ui-automation-agent-exploration/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//lion1ou.disqus.com/count.js" async></script>
+
+
+
+    </div>
+    
+    <!-- 分页 -->
+    
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer-container">
+    <footer class="footer text-center">
+   
+
+  <div class="bottom-row">
+     
+     
+      <sapn class="bottom-item">已运行 <span>3730 天  </span></sapn>
+     
+     
+  </div>
+
+  <div class="bottom-row">
+     
+      <a style="display: block;" class="bottom-item" href="https://lion1ou.tech ">© 2016-2026  lion1ou  版权所有</a>
+     
+
+     
+      <a class="bottom-item" href="https://beian.miit.gov.cn" target="_blank">浙ICP备2021029843号 </a>
+     
+
+    <span class="bottom-item">
+      Powered By <a href="https://hexo.io" target="_blank">Hexo</a>
+    </span>
+
+    <span class="bottom-item">
+      Theme By <a href="https://github.com/lion1ou/hexo-theme-sprite" target="_blank">Sprite</a>
+    </span>
+
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="https://cdn.lion1ou.tech/fanta-report-0.0.3-umd.js"></script>
+  
+
+
+<script src="/js/main.js"></script>
+
+<!-- 不蒜子 http://ibruce.info/2015/04/04/busuanzi/ -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 代码高亮 https://highlightjs.org/-->
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+<script defer src="https://umami.n.lion1ou.tech:16666/script.js" data-website-id="0d735dad-52fd-4970-8da1-1664747941c9"></script>
+<script> window.hljs.initHighlightingOnLoad() </script>
+
+<!-- 搜索页面 -->
+
+
+  
+</html>
