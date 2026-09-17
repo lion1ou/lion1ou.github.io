@@ -66,10 +66,10 @@
   
   <entry>
     <title>企业知识问答从 40% 到 85%：一条 RAG 落地的真实路径</title>
-    <link href="https://lion1ou.tech/2025-02/enterprise-rag-40-to-85/"/>
-    <id>https://lion1ou.tech/2025-02/enterprise-rag-40-to-85/</id>
-    <published>2025-02-16T13:30:00.000Z</published>
-    <updated>2025-02-16T13:30:00.000Z</updated>
+    <link href="https://lion1ou.tech/2024-12/enterprise-rag-40-to-85/"/>
+    <id>https://lion1ou.tech/2024-12/enterprise-rag-40-to-85/</id>
+    <published>2024-12-22T13:30:00.000Z</published>
+    <updated>2024-12-22T13:30:00.000Z</updated>
     
     
     <summary type="html">内部问答平台「海螺」的准确率从约 40% 做到 85% 以上的过程：先跑最小闭环，再靠查询改写、混合召回、精排、拒答、知识治理和 BadCase 回流一点点抬上去，模型只是其中一环。</summary>
