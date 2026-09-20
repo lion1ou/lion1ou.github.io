@@ -6,7 +6,7 @@
   <link href="https://lion1ou.tech/atom.xml" rel="self"/>
   
   <link href="https://lion1ou.tech/"/>
-  <updated>2026-01-18T13:30:00.000Z</updated>
+  <updated>2026-09-20T15:00:00.000Z</updated>
   <id>https://lion1ou.tech/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>概率规划，确定执行：为什么 Agent 时代我们还在认真做 CLI</title>
+    <link href="https://lion1ou.tech/2026-09/probabilistic-planning-deterministic-execution-cli/"/>
+    <id>https://lion1ou.tech/2026-09/probabilistic-planning-deterministic-execution-cli/</id>
+    <published>2026-09-06T13:30:00.000Z</published>
+    <updated>2026-09-20T15:00:00.000Z</updated>
+    
+    
+    <summary type="html">团队的 AI Coding 工作流分成三层：开源的项目推进逻辑、公司规范、项目特殊要求。这套 Markdown 规范跑起来之后，瓶颈变成了 Agent 怎么安全地碰内部基建。这篇记录三层工作流怎么分、怎么管，以及 hbcli 作为 Agent 调用基建的执行面是怎么设计的：基座与插件、命令与 Skill 的双轨契约、星枢网关的登记与分级确认、工程上下文、观测与经验回流。</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    
+    <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
+    
+    <category term="CLI" scheme="https://lion1ou.tech/tag/CLI/"/>
+    
+  </entry>
   
   <entry>
     <title>告警太多没人看之后：我们把排障拆成了快思考和慢思考</title>
@@ -31,13 +58,13 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
-    
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
-    <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
     <category term="稳定性" scheme="https://lion1ou.tech/tag/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
+    
+    <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
     
   </entry>
   
@@ -56,9 +83,9 @@
     <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
-    
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
     <category term="复盘" scheme="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/"/>
     
@@ -104,11 +131,11 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    <category term="RAG" scheme="https://lion1ou.tech/tag/RAG/"/>
     
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
-    <category term="RAG" scheme="https://lion1ou.tech/tag/RAG/"/>
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
     <category term="知识库" scheme="https://lion1ou.tech/tag/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -129,13 +156,13 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="前端监控" scheme="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/"/>
     
     <category term="ClickHouse" scheme="https://lion1ou.tech/tag/ClickHouse/"/>
     
     <category term="Flink" scheme="https://lion1ou.tech/tag/Flink/"/>
+    
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
   </entry>
   
@@ -224,26 +251,6 @@
     
     
     <category term="杂记" scheme="https://lion1ou.tech/tag/%E6%9D%82%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端监控的自助分析能力</title>
-    <link href="https://lion1ou.tech/2021-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%9A%84%E8%87%AA%E5%8A%A9%E5%88%86%E6%9E%90%E8%83%BD%E5%8A%9B/"/>
-    <id>https://lion1ou.tech/2021-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%9A%84%E8%87%AA%E5%8A%A9%E5%88%86%E6%9E%90%E8%83%BD%E5%8A%9B/</id>
-    <published>2021-11-17T13:42:04.000Z</published>
-    <updated>2026-01-11T13:01:41.862Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在来新公司差不多3个月的时候，老板让我完成一下组内的KPI — 在公司内部的技术分享会上来波分享。刚开始还是有点慌的，但是换位想想，其实可以把这个机会当成自己这段时间的工作总结，也可以锻炼锻炼分享能力，何乐而不为呢。然后果(you)断(yu)的就答应了。&lt;/p&gt;
-&lt;p&gt;其实想起来写这篇文章，分享已经结束差不多要一个月了。想想不能就这样结束了，还是要整理一些资料做为产出。所以就有了这篇文章，对分享PPT做了删减和去敏。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="JavaScript" scheme="https://lion1ou.tech/tag/JavaScript/"/>
     
   </entry>
   
