@@ -139,14 +139,14 @@
       
       
         <span class="read">
-          字数 <span class="post-count">9.2k</span>
+          字数 <span class="post-count">9k</span>
         </span>
       
 
       
         <span class="slash">/</span>
         <span class="read">
-          <span class="post-count">32 min</span> 读完
+          <span class="post-count">31 min</span> 读完
         </span>
       
 
@@ -168,21 +168,11 @@
     </header>
 
     <div class="post-content">
-      <span id="more"></span>
-
-
-
-
-
-
-
-<p>今年我们团队在 AI Coding 上投入挺多，开发这一侧的交付速度确实快了。但很快发现一个问题：需求出得快，测不过来。回归测试还是靠人点，多机型兼容还是靠人堆，很多小需求排不到测试资源，前端同学自己点两遍就上了。<strong>瓶颈从写代码挪到了测试。</strong></p>
+      <p>今年我们团队在 AI Coding 上投入挺多，开发这一侧的交付速度确实快了。但很快发现一个问题：需求出得快，测不过来。回归测试还是靠人点，多机型兼容还是靠人堆，很多小需求排不到测试资源，前端同学自己点两遍就上了。<strong>瓶颈从写代码挪到了测试。</strong></p>
 <p>那时候各种 GUI Agent 的 Demo 也很多，模型看一眼截图就能说出页面上有什么、该点哪里。我们就动了念头：能不能让 Agent 去操控真机做测试？于是我和测试团队一起发起了一个探索性项目，代号「海螺智控」。项目直接改造测试团队已有的平台和云真机能力，没有再建一套新平台。投入人力不多，定位很明确，就是验证一件事：测试能不能从「脚本执行」走到具备感知、规划、行动、评估能力的引擎，走通「需求 / 用例 → Agent 操控真机 → 报告」这条链路。</p>
-<p>最后我们没有继续投入。从结项结果看，无测试资源需求的实际覆盖率约 35.9%。用例要人确认，账号和测试数据要人准备，执行中间设备的稳定性，需要多设备系统场景比如扫码、多端协作等都是需要高投入才能打通的。当时的模型也撑不住这么长的链路。再加人可以继续把数字往上抬，但短期很难抵掉这些成本。所以项目就收在这里，用例生成、异常分类、弹窗处理和执行轨迹被拆出来，补进了原有测试平台。</p>
-<!--more-->
+<span id="more"></span>
 
-<h2 id="我们想验证什么"><a href="#我们想验证什么" class="headerlink" title="我们想验证什么"></a>我们想验证什么</h2><p>立项时的假设是这样的：在有需求文档或者冒烟用例的前提下，Agent 可以生成可执行的测试步骤，然后在真实设备上根据环境反馈自己把回归跑完。业务侧的目标定为覆盖 50% 无测试资源的需求。</p>
-<p>为什么按探索项目来做？模型能力当时还在快速变化，我们前端团队对测试这个专业的理解也有限。大家先用小投入跑通链路，再拿真实需求判断要不要加大投入。回头看，探索方向没有问题，欠缺的是立项时，对于实际测试场景的调研不够全面，低估了难度并高估了模型的能力。</p>
+<p>立项时的假设是：在有需求文档或者冒烟用例的前提下，Agent 可以生成可执行的测试步骤，然后在真实设备上根据环境反馈自己把回归跑完。业务侧的目标定为覆盖 50% 无测试资源的需求。为什么按探索项目来做？模型能力当时还在快速变化，我们前端团队对测试这个专业的理解也有限。大家先用小投入跑通链路，再拿真实需求判断要不要加大投入。回头看，探索方向没有问题，欠缺的是立项时，对于实际测试场景的调研不够全面，低估了难度并高估了模型的能力。</p>
 <h2 id="整体是怎么设计的"><a href="#整体是怎么设计的" class="headerlink" title="整体是怎么设计的"></a>整体是怎么设计的</h2><p>链路从需求侧开始。输入可以是需求文档、测试平台上已有的冒烟用例，或者用户直接描述的意图。没有冒烟用例的话先拆功能点，再生成初级用例；有冒烟用例就直接进用例补充环节。这里有一道人工确认：使用者必须补齐「开始路径」、期望结果、设备和账号，确认之后才创建成任务。我们没有追求「文档一贴就全自动」，原因是需求文档粒度参差不齐，生成出来的用例质量波动很大。<strong>把错误前置到任务创建阶段，比让设备带着错误用例空跑更有效。</strong>代价是无人化的收益被稀释了一部分。</p>
 <p><img src="/images/2025-12/05-screenshot-create-plan-case-and-env.png" alt="创建测试计划：每条用例补齐开始路径、测试路径、期望结果，再选择设备和测试账号"></p>
 <p>任务创建之后、真机循环开始之前，还有一道计划环节。确认后的用例只有路径描述和期望，先拆成若干测试阶段，每个阶段三个字段：<code>path</code>（怎么走到这里）、<code>expect</code>（到了之后验证什么）、<code>process</code>（默认「未到达」）。</p>
@@ -349,7 +339,7 @@ function decide(run: RunState, obs: Observation, evalResult: EvalResult): Decisi
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E6%83%B3%E9%AA%8C%E8%AF%81%E4%BB%80%E4%B9%88"><span class="toc-text">我们想验证什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%E7%9A%84"><span class="toc-text">整体是怎么设计的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%9C%9F%E5%AE%9E%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="toc-text">四个真实的难点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%8C%E7%9C%8B%E8%A7%81%E3%80%8D%E4%B8%8D%E7%AD%89%E4%BA%8E%E3%80%8C%E5%8F%AF%E6%93%8D%E4%BD%9C%E3%80%8D"><span class="toc-text">「看见」不等于「可操作」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9C%E5%8F%91%E5%87%BA%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%A8%E4%BD%9C%E6%88%90%E5%8A%9F"><span class="toc-text">动作发出不等于动作成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E9%93%BE%E8%B7%AF%E4%BC%9A%E8%BF%B7%E5%A4%B1%EF%BC%8C%E4%B9%9F%E4%BC%9A%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">长链路会迷失，也会死循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%80%E6%AD%A5%E9%83%BD%E6%83%B3%E6%8A%8A%E6%89%80%E6%9C%89%E4%B8%9C%E8%A5%BF%E5%A1%9E%E7%BB%99%E6%A8%A1%E5%9E%8B"><span class="toc-text">每一步都想把所有东西塞给模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E8%A7%A3%E5%86%B3%E7%9A%84"><span class="toc-text">还没解决的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E9%A1%B9%EF%BC%9A%E6%95%B0%E6%8D%AE%E3%80%81%E5%81%9C%E6%AD%A2%E6%8A%95%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%95%99%E4%B8%8B%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">结项：数据、停止投入的原因，以及留下了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E9%87%8D%E6%9D%A5"><span class="toc-text">如果重来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E8%AE%B0%EF%BC%9A%E5%85%AB%E4%B8%AA%E6%9C%88%E5%90%8E%E5%AF%B9%E7%85%A7%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E5%86%8D%E7%9C%8B"><span class="toc-text">补记：八个月后对照业界方案再看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-text">和业界方案的异同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E6%8E%A2%E7%B4%A2%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">这次探索的意义</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%E7%9A%84"><span class="toc-text">整体是怎么设计的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%9C%9F%E5%AE%9E%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="toc-text">四个真实的难点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%8C%E7%9C%8B%E8%A7%81%E3%80%8D%E4%B8%8D%E7%AD%89%E4%BA%8E%E3%80%8C%E5%8F%AF%E6%93%8D%E4%BD%9C%E3%80%8D"><span class="toc-text">「看见」不等于「可操作」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9C%E5%8F%91%E5%87%BA%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%A8%E4%BD%9C%E6%88%90%E5%8A%9F"><span class="toc-text">动作发出不等于动作成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E9%93%BE%E8%B7%AF%E4%BC%9A%E8%BF%B7%E5%A4%B1%EF%BC%8C%E4%B9%9F%E4%BC%9A%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">长链路会迷失，也会死循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%80%E6%AD%A5%E9%83%BD%E6%83%B3%E6%8A%8A%E6%89%80%E6%9C%89%E4%B8%9C%E8%A5%BF%E5%A1%9E%E7%BB%99%E6%A8%A1%E5%9E%8B"><span class="toc-text">每一步都想把所有东西塞给模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E8%A7%A3%E5%86%B3%E7%9A%84"><span class="toc-text">还没解决的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E9%A1%B9%EF%BC%9A%E6%95%B0%E6%8D%AE%E3%80%81%E5%81%9C%E6%AD%A2%E6%8A%95%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%95%99%E4%B8%8B%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">结项：数据、停止投入的原因，以及留下了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E9%87%8D%E6%9D%A5"><span class="toc-text">如果重来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E8%AE%B0%EF%BC%9A%E5%85%AB%E4%B8%AA%E6%9C%88%E5%90%8E%E5%AF%B9%E7%85%A7%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E5%86%8D%E7%9C%8B"><span class="toc-text">补记：八个月后对照业界方案再看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E4%B8%9A%E7%95%8C%E6%96%B9%E6%A1%88%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-text">和业界方案的异同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E6%8E%A2%E7%B4%A2%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">这次探索的意义</span></a></li></ol></li></ol>
   </div>
 
 
@@ -378,6 +368,11 @@ function decide(run: RunState, obs: Observation, evalResult: EvalResult): Decisi
 
     <div class="post-nav-item post-nav-prev">
         
+        <a href="/2026-01/alert-noise-fast-slow-troubleshooting/" rel="prev" title="告警太多没人看之后：我们把排障拆成了快思考和慢思考">
+          告警太多没人看之后：我们把排障拆成了快思考和慢思考
+        </a>
+        <span>〉</span>
+      
     </div>
   </div>
 
@@ -449,7 +444,7 @@ function decide(run: RunState, obs: Observation, evalResult: EvalResult): Decisi
   <div class="bottom-row">
      
      
-      <sapn class="bottom-item">已运行 <span>3730 天  </span></sapn>
+      <sapn class="bottom-item">已运行 <span>3733 天  </span></sapn>
      
      
   </div>

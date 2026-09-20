@@ -15,8 +15,35 @@
     <atom:link href="https://lion1ou.tech/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>「做一个脚踏实地的前端学徒」</description>
-    <pubDate>Thu, 20 Aug 2026 13:00:00 GMT</pubDate>
+    <pubDate>Sun, 18 Jan 2026 13:30:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>告警太多没人看之后：我们把排障拆成了快思考和慢思考</title>
+      <link>https://lion1ou.tech/2026-01/alert-noise-fast-slow-troubleshooting/</link>
+      <guid>https://lion1ou.tech/2026-01/alert-noise-fast-slow-troubleshooting/</guid>
+      <pubDate>Sun, 18 Jan 2026 13:30:00 GMT</pubDate>
+      
+      <description>一个 AI 应用平台从告警降噪做到应急跟进，再做到排障，三期的题目都由业务的下一个问题推出来。记录我们怎么用 fail-open 控制漏报，怎么把排障拆成快思考和有界的慢思考，慢思考的每一步在代码里怎么跑，以及方案里的审批流和修复自愈为什么最后转到了通用 Agent 加 Skill。</description>
+      
+      
+      
+      
+      <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
+      
+      
+      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
+      
+      <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
+      
+      <category domain="https://lion1ou.tech/tag/MCP/">MCP</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</category>
+      
+      
+      <comments>https://lion1ou.tech/2026-01/alert-noise-fast-slow-troubleshooting/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>一次 UI 自动化 Agent 探索，我们为什么没有继续投入</title>
@@ -186,13 +213,13 @@
       
       <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
+      <category domain="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/">团队管理</category>
+      
       <category domain="https://lion1ou.tech/tag/GMTC/">GMTC</category>
       
       <category domain="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF/">前端</category>
       
       <category domain="https://lion1ou.tech/tag/%E7%9B%91%E6%8E%A7/">监控</category>
-      
-      <category domain="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/">团队管理</category>
       
       
       <comments>https://lion1ou.tech/2023-02/%E5%B0%8F%E5%89%8D%E7%AB%AF%E7%9C%8B%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BC%9A-%E2%80%94-gmtc-%E6%80%BB%E7%BB%93/#disqus_thread</comments>
@@ -239,25 +266,6 @@
       
       
       <comments>https://lion1ou.tech/2021-11/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E7%9A%84%E8%87%AA%E5%8A%A9%E5%88%86%E6%9E%90%E8%83%BD%E5%8A%9B/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>重拾博客</title>
-      <link>https://lion1ou.tech/2021-10/%E9%87%8D%E6%8B%BE%E5%8D%9A%E5%AE%A2/</link>
-      <guid>https://lion1ou.tech/2021-10/%E9%87%8D%E6%8B%BE%E5%8D%9A%E5%AE%A2/</guid>
-      <pubDate>Sun, 10 Oct 2021 14:10:30 GMT</pubDate>
-      
-      <description>&lt;p&gt;已经有将近一年没有发文章了，中间换了一次主题，然后大致配置了一下，就一直没关注了。 然后一直忙，直到这段时间，翻了翻博客发现，评价好像有问题，数据统计分析也有问题。而且之前在阿里云申请的lion1ou.win的域名被签到国际站了，而且还备案不了。而且由于刚换工作，周末时间也空闲了一些。然后就萌生重拾博客的想法，顺便再梳理一下自己做过的一些小项目。说干就干，9月底开始动手。&lt;/p&gt;</description>
-      
-      
-      
-      
-      
-      <category domain="https://lion1ou.tech/tag/%E6%9D%82%E8%AE%B0/">杂记</category>
-      
-      
-      <comments>https://lion1ou.tech/2021-10/%E9%87%8D%E6%8B%BE%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
       
     </item>
     
