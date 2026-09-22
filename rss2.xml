@@ -32,11 +32,11 @@
       <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
       
       
-      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
-      
       <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
       
       <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
       <category domain="https://lion1ou.tech/tag/MCP/">MCP</category>
       
@@ -80,7 +80,7 @@
       <guid>https://lion1ou.tech/2025-12/ui-automation-agent-exploration/</guid>
       <pubDate>Sun, 07 Dec 2025 13:30:00 GMT</pubDate>
       
-      <description>我和测试团队做了一次移动端 UI 自动化 Agent 探索。技术闭环跑通后，我们结合投入成本、当时的模型能力和频繁中断的执行流程，判断短期内很难获得明显收益，于是停止追加投入，并把可复用成果补进现有测试平台。</description>
+      <description>我和测试团队做了一次移动端 UI 自动化 Agent 探索。模型只负责看懂页面和给出下一步，计划、循环调度、云真机设备会话、按角色供给上下文、两路评估和终止条件全部由自研 Harness 承担。技术闭环跑通后，我们结合投入成本、当时的模型能力和频繁中断的执行流程，判断短期内很难获得明显收益，于是停止追加投入，并把可复用成果补进现有测试平台。</description>
       
       
       
@@ -93,6 +93,8 @@
       <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
       
       <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
+      
+      <category domain="https://lion1ou.tech/tag/Agent-Harness/">Agent Harness</category>
       
       <category domain="https://lion1ou.tech/tag/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</category>
       
@@ -167,13 +169,13 @@
       <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
       
       
-      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
-      
       <category domain="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/">前端监控</category>
       
       <category domain="https://lion1ou.tech/tag/ClickHouse/">ClickHouse</category>
       
       <category domain="https://lion1ou.tech/tag/Flink/">Flink</category>
+      
+      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
       
       <comments>https://lion1ou.tech/2024-10/fe-monitoring-pipeline-latency/#disqus_thread</comments>
@@ -240,11 +242,11 @@
       <category domain="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/">杂记</category>
       
       
+      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
+      
       <category domain="https://lion1ou.tech/tag/GMTC/">GMTC</category>
       
       <category domain="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF/">前端</category>
-      
-      <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
       <category domain="https://lion1ou.tech/tag/%E7%9B%91%E6%8E%A7/">监控</category>
       
