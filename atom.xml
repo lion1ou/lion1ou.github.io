@@ -31,15 +31,15 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
-    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    <category term="CLI" scheme="https://lion1ou.tech/tag/CLI/"/>
     
     <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
-    
-    <category term="CLI" scheme="https://lion1ou.tech/tag/CLI/"/>
     
   </entry>
   
@@ -62,9 +62,9 @@
     
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
-    <category term="稳定性" scheme="https://lion1ou.tech/tag/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
-    
     <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
+    
+    <category term="稳定性" scheme="https://lion1ou.tech/tag/%E7%A8%B3%E5%AE%9A%E6%80%A7/"/>
     
   </entry>
   
@@ -73,7 +73,7 @@
     <link href="https://lion1ou.tech/2025-12/ui-automation-agent-exploration/"/>
     <id>https://lion1ou.tech/2025-12/ui-automation-agent-exploration/</id>
     <published>2025-12-07T13:30:00.000Z</published>
-    <updated>2026-09-22T08:00:00.000Z</updated>
+    <updated>2026-08-20T13:00:00.000Z</updated>
     
     
     <summary type="html">我和测试团队做了一次移动端 UI 自动化 Agent 探索。模型只负责看懂页面和给出下一步，计划、循环调度、云真机设备会话、按角色供给上下文、两路评估和终止条件全部由自研 Harness 承担。技术闭环跑通后，我们结合投入成本、当时的模型能力和频繁中断的执行流程，判断短期内很难获得明显收益，于是停止追加投入，并把可复用成果补进现有测试平台。</summary>
@@ -83,11 +83,11 @@
     <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
+    <category term="复盘" scheme="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/"/>
+    
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
-    
-    <category term="复盘" scheme="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/"/>
     
     <category term="Agent Harness" scheme="https://lion1ou.tech/tag/Agent-Harness/"/>
     
@@ -110,9 +110,9 @@
     <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
+    
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="复盘" scheme="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/"/>
     
@@ -158,13 +158,13 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
+    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
     <category term="前端监控" scheme="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/"/>
     
     <category term="ClickHouse" scheme="https://lion1ou.tech/tag/ClickHouse/"/>
     
     <category term="Flink" scheme="https://lion1ou.tech/tag/Flink/"/>
-    
-    <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
   </entry>
   
@@ -225,6 +225,8 @@
     <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
+    <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
+    
     <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="GMTC" scheme="https://lion1ou.tech/tag/GMTC/"/>
@@ -232,8 +234,6 @@
     <category term="前端" scheme="https://lion1ou.tech/tag/%E5%89%8D%E7%AB%AF/"/>
     
     <category term="监控" scheme="https://lion1ou.tech/tag/%E7%9B%91%E6%8E%A7/"/>
-    
-    <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   
