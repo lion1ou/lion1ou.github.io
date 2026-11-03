@@ -6,7 +6,7 @@
   <link href="https://lion1ou.tech/atom.xml" rel="self"/>
   
   <link href="https://lion1ou.tech/"/>
-  <updated>2026-09-20T15:00:00.000Z</updated>
+  <updated>2026-11-03T08:40:00.000Z</updated>
   <id>https://lion1ou.tech/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>秋寿眉泡出草腥？我后来只改了两处</title>
+    <link href="https://lion1ou.tech/2026-10/autumn-shoumei-brew/"/>
+    <id>https://lion1ou.tech/2026-10/autumn-shoumei-brew/</id>
+    <published>2026-10-30T13:30:00.000Z</published>
+    <updated>2026-11-03T08:40:00.000Z</updated>
+    
+    
+    <summary type="html">秋寿眉按春白茶习惯泡，容易草腥或发沉。我后来改掉的其实就两处：水要够热，出汤别拖。这篇聊聊日常盖碗怎么泡顺口，以及什么时候再考虑煮。</summary>
+    
+    
+    
+    <category term="杂记" scheme="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+    <category term="白茶" scheme="https://lion1ou.tech/tag/%E7%99%BD%E8%8C%B6/"/>
+    
+    <category term="寿眉" scheme="https://lion1ou.tech/tag/%E5%AF%BF%E7%9C%89/"/>
+    
+    <category term="喝茶" scheme="https://lion1ou.tech/tag/%E5%96%9D%E8%8C%B6/"/>
+    
+    <category term="盖碗" scheme="https://lion1ou.tech/tag/%E7%9B%96%E7%A2%97/"/>
+    
+  </entry>
   
   <entry>
     <title>概率规划，确定执行：为什么 Agent 时代我们还在认真做 CLI</title>
@@ -33,11 +58,11 @@
     
     <category term="工程化" scheme="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
-    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
     <category term="CLI" scheme="https://lion1ou.tech/tag/CLI/"/>
+    
+    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
     
@@ -58,9 +83,9 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    
+    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="MCP" scheme="https://lion1ou.tech/tag/MCP/"/>
     
@@ -85,9 +110,9 @@
     
     <category term="复盘" scheme="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/"/>
     
-    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
-    
     <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    
+    <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
     <category term="Agent Harness" scheme="https://lion1ou.tech/tag/Agent-Harness/"/>
     
@@ -133,11 +158,11 @@
     <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="RAG" scheme="https://lion1ou.tech/tag/RAG/"/>
+    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
     
     <category term="AI 工程化" scheme="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
-    <category term="Agent" scheme="https://lion1ou.tech/tag/Agent/"/>
+    <category term="RAG" scheme="https://lion1ou.tech/tag/RAG/"/>
     
     <category term="知识库" scheme="https://lion1ou.tech/tag/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
@@ -234,25 +259,6 @@
     <category term="监控" scheme="https://lion1ou.tech/tag/%E7%9B%91%E6%8E%A7/"/>
     
     <category term="团队管理" scheme="https://lion1ou.tech/tag/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>而立之年的年终总结</title>
-    <link href="https://lion1ou.tech/2022-01/%E8%80%8C%E7%AB%8B%E4%B9%8B%E5%B9%B4%E7%9A%84%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
-    <id>https://lion1ou.tech/2022-01/%E8%80%8C%E7%AB%8B%E4%B9%8B%E5%B9%B4%E7%9A%84%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</id>
-    <published>2021-12-31T16:00:10.000Z</published>
-    <updated>2026-01-11T13:01:41.862Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;随着2022年新年钟声敲响，我开始在键盘上敲下了第一行字。这篇年终总结其实在12月中旬就想写了，当时就大概想了下，列了下提纲，然后就因为各种原因搁置到了现在（拖延症真的很难治）。晚上趁儿子睡熟，老婆在忙，还没入睡的这段时间，来完成一下去年的任务吧。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="前端技术" scheme="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="杂记" scheme="https://lion1ou.tech/tag/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
