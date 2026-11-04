@@ -15,35 +15,8 @@
     <atom:link href="https://lion1ou.tech/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>「做一个脚踏实地的前端学徒」</description>
-    <pubDate>Tue, 03 Nov 2026 08:40:00 GMT</pubDate>
+    <pubDate>Sun, 20 Sep 2026 15:00:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
-    
-    <item>
-      <title>秋寿眉泡出草腥？我后来只改了两处</title>
-      <link>https://lion1ou.tech/2026-10/autumn-shoumei-brew/</link>
-      <guid>https://lion1ou.tech/2026-10/autumn-shoumei-brew/</guid>
-      <pubDate>Fri, 30 Oct 2026 13:30:00 GMT</pubDate>
-      
-      <description>秋寿眉按春白茶习惯泡，容易草腥或发沉。我后来改掉的其实就两处：水要够热，出汤别拖。这篇聊聊日常盖碗怎么泡顺口，以及什么时候再考虑煮。</description>
-      
-      
-      
-      
-      <category domain="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/">杂记</category>
-      
-      
-      <category domain="https://lion1ou.tech/tag/%E7%99%BD%E8%8C%B6/">白茶</category>
-      
-      <category domain="https://lion1ou.tech/tag/%E5%AF%BF%E7%9C%89/">寿眉</category>
-      
-      <category domain="https://lion1ou.tech/tag/%E5%96%9D%E8%8C%B6/">喝茶</category>
-      
-      <category domain="https://lion1ou.tech/tag/%E7%9B%96%E7%A2%97/">盖碗</category>
-      
-      
-      <comments>https://lion1ou.tech/2026-10/autumn-shoumei-brew/#disqus_thread</comments>
-      
-    </item>
     
     <item>
       <title>概率规划，确定执行：为什么 Agent 时代我们还在认真做 CLI</title>
@@ -61,13 +34,13 @@
       
       <category domain="https://lion1ou.tech/tag/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</category>
       
-      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
-      
-      <category domain="https://lion1ou.tech/tag/CLI/">CLI</category>
-      
       <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
       
+      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
+      
       <category domain="https://lion1ou.tech/tag/MCP/">MCP</category>
+      
+      <category domain="https://lion1ou.tech/tag/CLI/">CLI</category>
       
       
       <comments>https://lion1ou.tech/2026-09/probabilistic-planning-deterministic-execution-cli/#disqus_thread</comments>
@@ -88,13 +61,13 @@
       <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
       
       
-      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
-      
       <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
       
-      <category domain="https://lion1ou.tech/tag/MCP/">MCP</category>
+      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
       
       <category domain="https://lion1ou.tech/tag/%E7%A8%B3%E5%AE%9A%E6%80%A7/">稳定性</category>
+      
+      <category domain="https://lion1ou.tech/tag/MCP/">MCP</category>
       
       
       <comments>https://lion1ou.tech/2026-01/alert-noise-fast-slow-troubleshooting/#disqus_thread</comments>
@@ -115,11 +88,11 @@
       <category domain="https://lion1ou.tech/categories/%E6%9D%82%E8%AE%B0/">杂记</category>
       
       
-      <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
+      <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
       
       <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
       
-      <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
+      <category domain="https://lion1ou.tech/tag/%E5%A4%8D%E7%9B%98/">复盘</category>
       
       <category domain="https://lion1ou.tech/tag/Agent-Harness/">Agent Harness</category>
       
@@ -169,11 +142,11 @@
       <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
       
       
-      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
+      <category domain="https://lion1ou.tech/tag/RAG/">RAG</category>
       
       <category domain="https://lion1ou.tech/tag/AI-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</category>
       
-      <category domain="https://lion1ou.tech/tag/RAG/">RAG</category>
+      <category domain="https://lion1ou.tech/tag/Agent/">Agent</category>
       
       <category domain="https://lion1ou.tech/tag/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</category>
       
@@ -281,6 +254,27 @@
       
       
       <comments>https://lion1ou.tech/2023-02/%E5%B0%8F%E5%89%8D%E7%AB%AF%E7%9C%8B%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BC%9A-%E2%80%94-gmtc-%E6%80%BB%E7%BB%93/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>而立之年的年终总结</title>
+      <link>https://lion1ou.tech/2022-01/%E8%80%8C%E7%AB%8B%E4%B9%8B%E5%B9%B4%E7%9A%84%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
+      <guid>https://lion1ou.tech/2022-01/%E8%80%8C%E7%AB%8B%E4%B9%8B%E5%B9%B4%E7%9A%84%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</guid>
+      <pubDate>Fri, 31 Dec 2021 16:00:10 GMT</pubDate>
+      
+      <description>&lt;p&gt;随着2022年新年钟声敲响，我开始在键盘上敲下了第一行字。这篇年终总结其实在12月中旬就想写了，当时就大概想了下，列了下提纲，然后就因为各种原因搁置到了现在（拖延症真的很难治）。晚上趁儿子睡熟，老婆在忙，还没入睡的这段时间，来完成一下去年的任务吧。&lt;/p&gt;</description>
+      
+      
+      
+      
+      <category domain="https://lion1ou.tech/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</category>
+      
+      
+      <category domain="https://lion1ou.tech/tag/%E6%9D%82%E8%AE%B0/">杂记</category>
+      
+      
+      <comments>https://lion1ou.tech/2022-01/%E8%80%8C%E7%AB%8B%E4%B9%8B%E5%B9%B4%E7%9A%84%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/#disqus_thread</comments>
       
     </item>
     
